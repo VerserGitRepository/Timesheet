@@ -45,22 +45,7 @@
 
         <div id="calender" class="col-md-10" style="width:100%; display: inline-block;"></div>
 
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" style="background-color:lightgray">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><span id="eventTitle"></span></h4>
-                    </div>
-                    <div class="modal-body">
-                        <p id="pDetails"></p>
-                    </div>
-                    <div class="modal-footer" style="background-color:lightgray;height:20%; padding:2px 2px;">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     <div class="row">
         <div id="myModalSave" class="modal fade" role="dialog">
@@ -278,9 +263,9 @@
                             $description.append($('<p/>').html('<b>End:</b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
                         }
                         $description.append($('<p/>').html('<b>Description:</b>' + calEvent.description));
-                        $('#myModal #pDetails').empty().html($description);
+                        //$('#myModal #pDetails').empty().html($description);
 
-                        $('#myModal').modal();
+                        //$('#myModal').modal();
                     },
                     selectable: true,
                     select: function (start, end) {
@@ -293,8 +278,13 @@
                             allDay: false,
                             color: ''
                         };
-                        openAddEditForm();
+                    
+                        var loadUrl = @Url("Register", "Resource");
+                         $.post(loadUrl, data, function (response) {
+                            
+                        });
                         $('#calendar').fullCalendar('unselect');
+                      
                     },
                     editable: true,
                     eventDrop: function (event) {
@@ -310,11 +300,15 @@
                         SaveEvent(data);
                     }
                 })
-            }
+
+        }
+
+
             function openAddEditForm() {
 
                 $('#myModal').modal('hide');
                 $('#myModalSave').modal();
+
             }
             $(document).ready(function () {
                 var events = [];
@@ -323,6 +317,7 @@
 
                 $('#btnEdit').click(function () {
                     openAddEditForm();
+                  
                 })
 
                 $('#btnregister').click(function () {

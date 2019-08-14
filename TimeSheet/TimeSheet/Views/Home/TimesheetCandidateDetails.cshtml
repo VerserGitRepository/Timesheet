@@ -32,19 +32,19 @@
                     </td>
                     <td class="Activity">
                         @Html.DisplayFor(modelItem => item.Activity)
-                    </td> 
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Day)
                     </td>
 
                     <td class="StartTime">
-                        <span>@item.StartTime</span>
-                        <input type="time" value="@item.StartTime" style="display:none" />
+                        <span>@item.StartTime.Value.ToShortTimeString()</span>
+                        <input type="time" id ="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
                     </td>
 
                     <td class="EndTime">
-                        <span>@item.EndTime</span>
-                        <input type="time" value="@item.EndTime" style="display:none" />
+                        <span>@item.EndTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
                     </td>
 
                     <td class="OLATarget">
@@ -55,15 +55,13 @@
                         <input type="text" value="@item.ActualQuantity" style="display:none;width:30px" />
                     </td>
                     <td class="Status">
-                        <span text="Status" span/>
+                        <span text="Status" span />
                         @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status")
-                    </td>                    
+                    </td>
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
                         <input type="text" value="@item.TimeSheetComments" style="display:none" />
-                    </td>
-
-
+                    </td>                
                     <td>
                         <a class="Edit" href="javascript:;">Edit</a>
                         <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
@@ -76,8 +74,6 @@
         </table>
     </div>
 </div>
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
 <script type="text/javascript">
     //$(function () {
@@ -124,13 +120,16 @@
 
     //Edit event handler.
     $("body").on("click", "#tblCustomers .Edit", function () {
+       // debugger;
         var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
                 $(this).find("input").show();
                 $(this).find("span").hide();
+             
             }
         });
+      
         row.find(".Update").show();
         row.find(".Cancel").show();
       
@@ -139,6 +138,7 @@
 
     //Update event handler.
     $("body").on("click", "#tblCustomers .Update", function () {
+        debugger;
         var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
@@ -154,6 +154,7 @@
         $(this).hide();
 
         var CandidateEdit = {};
+        debugger;
         CandidateEdit.Id= row.find(".Id").find("span").html();      
         CandidateEdit.ActualQuantity = row.find(".ActualQuantity").find("span").html();
         CandidateEdit.TimeSheetComments = row.find(".TimeSheetComments").find("span").html();
