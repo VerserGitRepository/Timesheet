@@ -1,0 +1,93 @@
+﻿
+
+@*@model TimeSheet.Models.TimeSheetViewModel
+@{
+    Layout = "~/Views/Shared/_popuplayout.cshtml";
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" type="text/javascript"></script>
+<style>
+    .body-content {
+        padding-left: 10px;
+        padding-right: 10px;
+        max-width: 100%;
+    }
+</style>
+@using (Html.BeginForm("Register", "TimeSheet", FormMethod.Post))
+{
+   
+    @*<div style="padding-top:10px;">
+        <div class="form-group col-md-6">
+            <label>Date:</label>
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.Day, new { htmlAttributes = new { @class = "form-control date-picker" } })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Warehouse</label>
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.WarehouseNameId, Model.WarehouseNameList, "Opp No", new { @class = "form-control",id= "ddlregWarehouseNameId" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Opportunity Number:</label>
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, Model.OpportunityNumberList, "Opp No", new { @class = "form-control Opportunity" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Project:</label>
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.ProjectID, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Candidate:</label>
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.CandidateNameId, Model.CandidateNameList, "Select a Project", new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.CandidateNameId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Activity:</label>
+
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.ActivityId, new SelectList(Enumerable.Empty<SelectListItem>()), "Activity", new { @class = "form-control .OpportunityNumberID" })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.ActivityId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Start Time:</label>
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.StartTime, new { htmlAttributes = new { @class = "form-control", id="" } })
+        </div>
+        <div class="form-group col-md-6">
+            <label>End Time:</label>
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.EndTime, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" id="btnregister" class="btn btn-warning btn-lg" style="width:100%;" onclick="Validate()"><span class="glyphicon glyphicon-ok-sign"></span> Submit</button>
+        </div>
+    </div>
+}*@
+    @*<script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+<script>
+
+    function Validate() {
+        if ($('#ddlregWarehouseNameId').val() == null) {
+            $('#ddlregWarehouseNameId').css("border", "1px solid red");
+            alert("Please Select Warehouse")
+            evt.PreventDafault();
+        }
+    }
+    $(document).ready(function () {
+        $('.Opportunity').change(function () {
+            var loadUrl = '@Url.Action("OpportunityActivities", "Timesheet")';
+            var loads = $('#OpportunityNumberID');
+            var id = $(this).val();
+            $.getJSON(loadUrl, { OpportunityID: id }, function (response)
+            {
+                loads.empty(); // remove any existing options
+                loads.append($('<option></option>').text("Select a Activities").val(0));
+                $.each(response, function (index, item) {
+                    loads.append($('<option></option>').text(item.Value).val(item.Id));
+                });
+            });
+
+        });
+    });
+
+</script>*@

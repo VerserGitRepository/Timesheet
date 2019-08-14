@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
+using TimeSheet.Models;
+
+namespace TimeSheet.ServiceHelper
+{
+    public class RegisterTimesheetService
+    {
+        private static readonly string TimeSheetAPIURl = ConfigurationManager.AppSettings["TimeSheetBaseURL"] + ConfigurationManager.AppSettings["TimeSheetRootDirectory"];
+        public static async Task<ReturnModel> RegisterTimesheetModel(TimeSheetRegisterModel RegisterModel)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("TimeSheet/Register"), RegisterModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult; 
+        }
+
+        public static async Task<ReturnModel> EditTimesheetModel(UpdateTimeSheetModel UpdateModel)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("TimeSheet/UpdateTimeSheet"), UpdateModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult; 
+        }
+
+    }
+}

@@ -1,0 +1,243 @@
+﻿@using System.Linq;
+
+@*@model  IEnumerable<TimeSheet.Models.ResourceAvailable>*@
+@model  TimeSheet.Models.ResourceAvailable
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<div class="container" style="margin-left:1032px">
+    @*<div class="row">*@
+    <div class="col-md-10">
+        <a href="https://app.powerbi.com/view?r=eyJrIjoiZGM2OGY3NTktMGFhMi00MzU0LThlZmEtMzIxNmM5MWI3ZGRhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9"
+           target="popup" style="color:white;font-size:14px;margin-right:1px" class="btn btn-warning btn-lg col-md-offset-1"
+           onclick="window.open('https://app.powerbi.com/view?r=eyJrIjoiZGM2OGY3NTktMGFhMi00MzU0LThlZmEtMzIxNmM5MWI3ZGRhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9','popup','width=1000,height=900,align=center'); return false;">
+            Schedule
+        </a>
+    </div>
+</div>
+
+    <div class="container" style="margin-left:20px">
+        @*<div class="row">*@
+        <div class="col-md-12">
+
+            <table class="table table-bordered  table-responsive table-hover" id="mainTable" style="font-size:12px;width:100%; text-align:center">
+                <thead style="background-color:#FFA500;text-align:center">
+                    <tr>
+
+                        <th style="text-align:center">Warehouse</th>
+                        <th style="text-align:center">Resource Name</th>
+                        <th style="text-align:center">Date</th>
+                        <th style="text-align:center">Hours</th>
+                        @*<th>Check Schedule</th>*@
+                        <th style="width:20px">Book Resource</th>
+
+                    </tr>
+                </thead>
+
+                @foreach (TimeSheet.Models.ResourceAvailable item in Model.ResourceAvailableList)
+
+                {
+                    <tr>
+                        <td>@item.Warehouse</td>
+                        <td>
+                            @item.ResourceName
+
+                        </td>
+                        <td>@item.availableDate.Value.ToShortDateString()</td>
+                        <td>@item.Hours</td>
+
+
+                        <td>
+
+
+                            <p href="javascript:void(0);" class="btn btn-warning btn-edit" style="font-size:10px">
+
+                                <span class="glyphicon glyphicon-plus"></span>
+
+                            </p>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    @*</div>*@
+
+
+
+
+    <div id='myModal' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <div id='EditModal' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='EditModalContent'></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#mainTable').DataTable({
+                pagingType: "simple"
+            });
+
+            $('#edit').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+        });
+
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        $('#opportunity').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        $('#edit').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        $('#opportunity').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        //var CandidateDetailsURL = './_ResourceBooked';
+        //$(function () {
+        //    $("#mainTable").on("click", ".CandidateDetail", function () {
+        //        //debugger;
+        //        var $buttonClicked = $(this);
+        //        var ResourceName = $buttonClicked.attr('data-id');
+        //        var options = { "backdrop": "static", keyboard: true };
+        //        $.ajax({
+        //            type: "GET",
+        //            url: CandidateDetailsURL,
+        //            contentType: "application/json; charset=utf-8",
+        //            data: { "ResourceName": ResourceName },
+        //            datatype: "json",
+        //            success: function (data) {
+        //                //  debugger;
+        //                $('#myModalContent').html(data);
+        //                $('#myModal').modal(options);
+        //                $('#myModal').modal('show');
+        //            },
+        //            error: function () {
+        //                alert("Dynamic content load failed.");
+        //            }
+        //        });
+        //    });
+
+        var EditTimesheetRecordURL = './Register';
+        $(function () {
+            $("#mainTable").on("click", ".btn-edit", function () {
+                // debugger;
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: EditTimesheetRecordURL,
+                    contentType: "application/json; charset=utf-8",
+                    //data: { "id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        //debugger;
+                        $('#EditModalContent').html(data);
+                        $('#EditModal').modal(options);
+                        $('#EditModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+
+
+
+            //$("#closebtn").on('click',function(){
+            //    $('#myModal').modal('hide');
+
+            $("#closbtn").click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+
+
+        function doSomething() {
+            alert("hello")
+        }
+
+    </script>
+
+
+    <style>
+
+        .body-content {
+            padding-left: 0px;
+            padding-right: 0px;
+            max-width: 100%;
+        }
+
+        .container {
+            padding-left: 0px;
+            padding-right: 5px;
+            max-width: 100%;
+        }
+
+
+        .btn-warning {
+            background-color: #FFA500;
+            font-size: 11px;
+        }
+
+        .modal-header {
+            border-bottom: 0 none;
+        }
+
+        .modal-footer {
+            border-top: 0 none;
+        }
+
+        .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+            background-color: #FFA500;
+            border-color: white;
+        }
+
+
+
+            .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                background-color: #FFA500;
+                border-color: white;
+            }
+
+
+        .page-item.active .page-link {
+            color: white !important;
+            background-color: orange !important;
+            border-color: gray !important;
+        }
+    </style>
+
+

@@ -1,0 +1,89 @@
+﻿
+@model TimeSheet.Models.CandidateTimeSheetsModel
+@{
+    Layout = "~/Views/Shared/_popuplayout.cshtml";
+}
+
+@using (Html.BeginForm("EditDetails", "TimeSheet", FormMethod.Post))
+{
+    <div style="padding-top:10px;">
+        <div class="form-group col-md-6">
+            <label>Date:</label>
+            @Html.EditorFor(model => model.Day, new { htmlAttributes = new { @class = "form-control date-picker" } })
+            @Html.ValidationMessageFor(model => model.Day, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Warehouse</label>
+            @Html.DropDownListFor(Model => Model.WarehouseName, new List<SelectListItem>
+        { new SelectListItem {Text="NSW",Value="NSW" },
+        new SelectListItem {Text="ACT", Value="ACT" },
+        new SelectListItem {Text="QLD", Value="QLD" },
+        new SelectListItem {Text="VIC",Value="VIC" },
+        new SelectListItem {Text="SA", Value="SA" },
+        new SelectListItem {Text="WA", Value="WA" },
+        new SelectListItem {Text="NT", Value="NT" },
+        new SelectListItem {Text="TAS", Value="TAS" }
+        }, " ", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group col-md-6">
+            <label>Opportunity Number:</label>
+            @Html.DropDownListFor(model => model.Id, Model.OpportunityNumberList, "Opp No", new { @class = "form-control project" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Project:</label>
+            @Html.DropDownListFor(model => model.Id, Model.Customerlist, "Select a Project", new { @class = "form-control project" })
+        </div>
+
+        <div class="form-group col-md-6">
+            <label>JobNo:</label>
+
+
+            @Html.EditorFor(model => model.JobNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.JobNo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Candidate:</label>
+            @Html.EditorFor(model => model.CandidateName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CandidateName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Activity:</label>
+
+            @Html.DropDownListFor(model => model.Id, Model.ActivityList, "Activity", new { @class = "form-control project" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Start Time:</label>
+            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+
+        </div>
+        <div class="form-group col-md-6">
+            <label>End Time:</label>
+            @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control date-picker" } })
+            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group col-md-6">
+            <label>OLA Target:</label>
+            @Html.EditorFor(model => model.OLATarget, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.OLATarget, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Actual Quantity:</label>
+            @Html.EditorFor(model => model.ActualQuantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ActualQuantity, "", new { @class = "text-danger" })
+        </div>
+        <div class="modal-footer">
+            <br />
+
+            <button type="submit" class="btn btn-warning btn-lg" style="width:100%;"><span class="glyphicon glyphicon-ok-sign"></span> Submit</button>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            // This will make every element with the class "date-picker" into a DatePicker element
+            $('.date-picker').datepicker();
+         });
+</script>

@@ -1,0 +1,160 @@
+﻿
+@model TimeSheet.Models.TimeSheetViewModel
+
+
+
+
+<div class="modal-header" style="background-color:lightgray ">
+    <h5 class="modal-title text-center">Register TimeSheet</h5>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+</div>
+<div class="modal-body">
+
+    @using (Html.BeginForm("Register", "TimeSheet", FormMethod.Post))
+    {
+        <div class="form-group col-md-6">
+            <label>Date:</label>
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.Day, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Project:</label>
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID" })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.ProjectID, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Warehouse:</label>
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.WarehouseNameId, Model.WarehouseNameList, "Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Opportunity Number:</label>
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberID" })
+
+        </div>
+        <div class="form-group col-md-6">
+            <label>Resource:</label>
+            @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @class = "form-control", @multiple = "multiple" })
+
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.CandidateNameId, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Activity:</label>
+            @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group col-md-6">
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.StartTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>End Time:</label>
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.EndTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Theme Color</label>
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control" })
+
+        </div>
+        <div class="form-group col-md-6">
+            <label>OLA Target:</label>
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="modal-footer" style="height:20%; padding:2px 2px">
+            <button type="submit" class="btn btn-warning btn-lg" id="btnregister"
+                    style="width:100%;">
+                <span class="glyphicon glyphicon-ok-sign"></span> Submit
+            </button>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+}
+
+<style>
+    .form-group {
+        margin-bottom: 2px;
+        padding-right: 5px;
+        padding-left: 5px;
+        font-size: 12px;
+        border-radius: 9px;
+        padding-bottom: 5px;
+        margin-top: 2px;
+    }
+</style>
+
+
+<script>
+
+     @*$('.project').change(function () {
+                        var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
+                    var loads = $('#OpportunityID');
+                        var id = $(this).val();
+                        $.getJSON(loadUrl, { projectid: id }, function (response) {
+                            loads.empty(); // remove any existing options
+                            loads.append($('<option></option>').text("Opportunity").val(0));
+                            $.each(response, function (index, item) {
+                                loads.append($('<option></option>').text(item.Value).val(item.Id));
+                            });
+                        });
+                });
+
+                $('.ddlregCustomerID').change(function () {
+                        var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
+                    var loads = $('#ddlRegOpportunityNumberID');
+                        var id = $(this).val();
+                        $.getJSON(loadUrl, { projectid: id }, function (response) {
+                            loads.empty(); // remove any existing options
+                            loads.append($('<option></option>').text("Select Opportunity").val(0));
+                            $.each(response, function (index, item) {
+                                loads.append($('<option></option>').text(item.Value).val(item.Id));
+                            });
+                        });
+                });
+                $('#ddlRegOpportunityNumberID').change(function () {
+
+                    var ActivityUrl = '@Url.Action("ProjectActivities", "ManageCalender")';
+                    var Activities = $('#ServiceActivityID');
+                        var id = $(this).val();
+                    $.getJSON(ActivityUrl, { OpportunityId: id }, function (response) {
+                            Activities.empty();
+                        Activities.append($('<option></option>').text("Select Activity").val(0));
+                            $.each(response, function (index, item) {
+                                Activities.append($('<option></option>').text(item.Value).val(item.Id));
+                            });
+                        });
+                });
+
+    $('#ddlregWarehouseNameId').change(function () {
+
+                    var warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
+                    var WarehouseResource = $('#ResourceID');
+                        var id = $(this).val();
+                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
+                        WarehouseResource.empty();
+                        WarehouseResource.append($('<option></option>').text("Select Resource").val(0));
+                            $.each(response, function (index, item) {
+                                WarehouseResource.append($('<option></option>').text(item.Value).val(item.Id));
+                            });
+                        });
+    });*@
+
+   
+
+
+</script>
