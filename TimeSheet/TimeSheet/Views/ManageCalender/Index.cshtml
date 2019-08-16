@@ -26,18 +26,34 @@
             </div>
         </div>
     </div>
+
+
     <div class="row" style="display:flex; margin-left:0px">
+        <div class="demo-container">
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-4" style="width:80px;">
+                    <input id="myInput" type="text" placeholder="Search.." style="width:80px;">
+                </div>
+            </div>
+            <div class="table" id="table">
 
-        <div class="col-md-2  list-group  text-center" id="Asia" style="width:190px; border-left-style:solid;border-left-color:lightgray;border-left-width:0.5px; font-size:14px;margin-left:1px;">
+                <div id="myTable">
 
-            @foreach (var item in Model.CandidateNameList)
-            {
-                <a href="#" onclick="SearchCandidateCalendar(@item.Value.ToString())" style="text-decoration: none;">
-                    <div class="list-group-item">
-                        @item.Text
-                    </div>
-                </a>
-            }
+                    @foreach (var item in Model.CandidateNameList)
+                    {
+                        <div id="tabletr">
+
+                            <a href="#" onclick="SearchCandidateCalendar(@item.Value.ToString())" style="text-decoration: none;">
+                                <div class="list-group-item">
+                                    @item.Text
+                                </div>
+                            </a>
+
+
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
 
         <div id="calender" class="col-md-10" style="width:100%; display: inline-block;"></div>
@@ -97,6 +113,16 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+        $(document).ready(function(){
+              $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable *").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                     //FetchEventAndRenderCalendar();
+                });
+     
+              });
+            });
             function FetchEventAndRenderCalendar() {
                 events = [];
                 $.ajax({
@@ -387,6 +413,11 @@
         background: #ff8300;
         cursor: pointer;
         color: #fff;
+    }
+    .table{
+        display: block;
+        max-height: 300px;
+        overflow-y: scroll;
     }
 </style>
 
