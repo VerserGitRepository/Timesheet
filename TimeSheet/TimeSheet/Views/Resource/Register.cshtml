@@ -1,8 +1,6 @@
 ﻿
 @model TimeSheet.Models.TimeSheetViewModel
 
-<link href="~/Scripts/listbox.css" rel="stylesheet" />
-<script src="~/Scripts/listbox.js"></script>
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -11,29 +9,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
-<script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
-
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+<link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
 <div class="modal-header" style="background-color:lightgray ">
     <h5 class="modal-title text-center">Register TimeSheet</h5>
 </div>
-<div class="modal-body">
-
+<div class="modal-body table-bordered">
     @using (Html.BeginForm("Register", "TimeSheet", FormMethod.Post))
     {
         <div class="form-group col-md-6">
-            <label>Date:</label><br />
-            @Html.EditorFor(model => model.TimeSheetRegisterModel.Day, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
-            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })
+            <label>Warehouse:</label><br />
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.WarehouseNameId, Model.WarehouseNameList, "Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
         </div>
         <div class="form-group col-md-6">
             <label>Project:</label><br />
-            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID" })
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerID" })
             @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.ProjectID, "", new { @class = "text-danger" })
         </div>
         <div class="form-group col-md-6">
-            <label>Warehouse:</label><br />
-            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.WarehouseNameId, Model.WarehouseNameList, "Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
+            <label>Resource:</label><br />
+            @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
+
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.CandidateNameId, "", new { @class = "text-danger" })
         </div>
         <div class="form-group col-md-6">
             <label>Opportunity Number:</label><br />
@@ -41,47 +38,46 @@
 
         </div>
         <div class="form-group col-md-6">
-            <label>Resource:</label><br />
-            @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style="height:10px; width:10px;", @multiple = "multiple" })
-
-            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.CandidateNameId, "", new { @class = "text-danger" })
+            <label>Date:</label><br />
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.Day, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
+            @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })
         </div>
         <div class="form-group col-md-6">
             <label>Activity:</label><br />
-            @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityID" })
             @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
 
         </div>
         <div class="form-group col-md-6">
             <label>Start Time:</label><br />
-            @Html.EditorFor(model => model.TimeSheetRegisterModel.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.StartTime, new { htmlAttributes = new { @class = "form-control", id = "txtStartTime" } })
             @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.StartTime, "", new { @class = "text-danger" })
         </div>
         <div class="form-group col-md-6">
+            <label>Theme Color</label><br />
+            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColour" })
+
+        </div>
+
+        <div class="form-group col-md-6">
             <label>End Time:</label><br />
-            @Html.EditorFor(model => model.TimeSheetRegisterModel.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.EndTime, new { htmlAttributes = new { @class = "form-control", id = "txtEndTime" } })
             @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.EndTime, "", new { @class = "text-danger" })
         </div>
         <div class="form-group col-md-6">
-            <label>Theme Color</label><br />
-            @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control" })
-
-        </div>
-        <div class="form-group col-md-6">
             <label>OLA Target:</label><br />
-            @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
             @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
         </div>
-
-        <div class="modal-footer" style="height:20%; padding:2px 2px">
+        <div class="form-group">
             <button type="submit" class="btn btn-warning btn-lg" id="btnregister"
-                    style="width:180px; a">
+                    style="width:180px;">
                 <span class="glyphicon glyphicon-ok-sign"></span> Submit
             </button>
         </div>
+
     }
 </div>
-
 
 
 
@@ -94,9 +90,13 @@
         border-radius: 9px;
         padding-bottom: 5px;
         margin-top: 2px;
+    }    .multiselect.dropdown-toggle {
+        text-align: left;
+    }
+    .form-group {
+        margin-bottom: 6px;
     }
 </style>
-
 
 <script>
 
@@ -139,26 +139,40 @@
                         });
                 });
 
-    $('#ddlregWarehouseNameId').change(function () {
+   
+                $('#btnregister').click(function () {
+                    @if (!ViewData.ModelState.IsValid)
+                    {
 
-                    var warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
-                    var WarehouseResource = $('#ResourceID');
-                        var id = $(this).val();
-                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
-                        WarehouseResource.empty();
-                        WarehouseResource.append($('<option></option>').text("Select Resource").val(0));
-                            $.each(response, function (index, item) {
-                                WarehouseResource.append($('<option></option>').text(item.Value).val(item.Id));
-                            });
-                        });
+                    }
+                var loadUrl = '@Url.Action("PostResourceData", "ManageCalender")';
+                var loads = $('#ddlRegOpportunityNumberID');
+                var test = $('#CandidateNameId').val();
+                var data = {
+                    'Day' : $('#DatePickId').val(),
+                    'ProjectID' : $('#ddlregCustomerID').val(),
+                    'WarehouseID' : $('#ddlregWarehouseNameId').val(),
+                    'OpportunityID': $('#ddlRegOpportunityNumberID').val(),
+                    'ResourceIds': $('#CandidateNameId').val(),
+                    'ServiceActivityID': $('#ServiceActivityID').val(),
+                    'StartTime' :  $('#txtStartTime').val(),
+                    'EndTime' :  $('#txtEndTime').val(),
+                    'Colour' :  $('#ddlColour').val(),
+                    'OLATarget' : $('#txtOLA').val()
+                };                      
+                $.post(loadUrl, data, function (response) {                            
+                });
+            })
+
+
+    $('#CandidateNameId').multiselect({
+        includeSelectAllOption: true,
+        maxHeight: 250,
+        buttonWidth: '280px',
+        enableFiltering: true
     });
 
-
-        $('#CandidateNameId').multiselect({
-includeSelectAllOption: true
-        });
-
-    $(function() {
-  $("#CandidateNameId").width(70).height(70);
-});
+//    $(function() {
+//  $("#CandidateNameId").width(70).height(100);
+//});
 </script>

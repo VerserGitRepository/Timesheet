@@ -29,21 +29,34 @@
             <div class="navbar-collapse collapse">
                 @if (@Session["Username"] != null)
                 {
-                <ul class="nav navbar-nav">
-                    @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                    <li>@Html.ActionLink("HOME", "Index", "Home")</li>
-                    <li>@Html.ActionLink("CALENDAR", "Index", "ManageCalender")</li>
-                    <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
-                    <li>@Html.ActionLink("AVAILABLE RESOURCE", "Index", "Resource")</li>
-                    <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
-                    @*<li>@Html.ActionLink("COSTMODEL", "Index", "CostModelListItems")</li>*@
+                    <ul class="nav navbar-nav">
+                        @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                        <li>@Html.ActionLink("HOME", "Index", "Home")</li>
+                        <li>@Html.ActionLink("CALENDAR", "Index", "ManageCalender")</li>
+                        <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                        <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
+                        <li>@Html.ActionLink("AVAILABLE RESOURCE", "Index", "Resource")</li>
 
-                    <li>
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">REPORT</a>
-                    </li>
-                </ul>
+
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TimeSheet</a></li>
+
+                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiZGM2OGY3NTktMGFhMi00MzU0LThlZmEtMzIxNmM5MWI3ZGRhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">Schedule</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li>
+
+                        </li>
+                    </ul>
+
+
+
+
                     <ul class="nav navbar-nav" style="float:right">
-
                         <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
                     </ul>
                 }
@@ -125,6 +138,18 @@
     /* Additional styles to style some of your child elements */
     .navbar-brand {
         padding: 10px;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .nav-tabs .dropdown-menu, .nav-pills .dropdown-menu, .navbar-nav .dropdown-menu, .nav .navbar-nav .dropdown-toggle {
+        margin-top: 0;
+    }
+
+    .dropdown-menu > li > a:hover {
+        background-color: #FFA500;
     }
 
     .navbar .navbar-toggle {

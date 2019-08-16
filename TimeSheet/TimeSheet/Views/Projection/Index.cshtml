@@ -27,87 +27,68 @@
             </ul>
         </nav>
         <div class="tab-content" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
-
             <div id="MANAGEPROJECTION" class="tab-pane fade" role="tabpanel" @*style="text-align:left;padding-left:5px"*@>
                 <div class="container" style="width:1500px;padding-top:15px; margin-left: 1px;margin-right:1px">
 
                     @using (Html.BeginForm("Index", "Projection", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
                     {
-                    <div class="row-group col-md-6" style="padding:30px;">
-                        <div class="form-group">
-                            @Html.Label("Project", htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.ProjectID, Model.ProjectList, "Select a Project", new { @class = "form-control project" })
+                        <div class="row-group col-md-6" style="padding:30px;">
+                            <div class="form-group">
+                                @Html.Label("Project", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(model => model.ProjectID, Model.ProjectList, "Select a Project", new { @class = "form-control project" })
+                                </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            @Html.Label("Opportunity No", htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Opportunity Number", new { @class = "form-control OpportunityID" })
+                            <br>
+                            <div class="form-group">
+                                @Html.Label("Opportunity No", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Opportunity Number", new { @class = "form-control OpportunityID" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.Label("Activity", htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.ActivityId, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control" })
+                            <div class="form-group">
+                                @Html.Label("Activity", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(model => model.ActivityId, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.Label("Warehouse", htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseList, "Select a Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
+                            <div class="form-group">
+                                @Html.Label("Warehouse", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-6">
+                                    @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseList, "Select a Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.Label("Allocated Date", htmlAttributes: new { @class = "control -label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
-                                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-                                @*<div class="form-control form-control-sm"></div>*@
-                            </div>
-                        </div>
 
-                    </div>
-                    <div class="row-group col-md-6" style="padding:30px;height:252px;">
-                        @*<div class="form-group">
-            @Html.Label("Warehouse", htmlAttributes: new { @class = "control-label col-md-4" })
-            <div class="col-md-6">
-                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseList, "Select a Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
-            </div>
-        </div>*@
 
-                        <div class="form-group">
-                            @Html.Label("Timesheet Task", htmlAttributes: new { @class = "control -label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.ServiceActivityId, Model.ServiceActivityList, "Select Activity", new { @class = "form-control" })
-                            </div>
                         </div>
-                        <div class="form-group">
-                            @Html.Label("Project Manager", htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.ProjectManagerID, Model.ProjectmanagerList, "Select Project Manager", new { @class = "form-control", id = "ddlCandidateId" })
+                        <div class="row-group col-md-6" style="padding:30px;height:206px;">
+                            <div class="form-group">
+                                @Html.Label("Date Allocated", htmlAttributes: new { @class = "control -label col-md-4" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
+                                    @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
+                                    @*<div class="form-control form-control-sm"></div>*@
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.Label("Quantity", htmlAttributes: new { @class = "control -label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.Label("Quantity", htmlAttributes: new { @class = "control -label col-md-4" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.Label("Date Invoiced", htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.DateInvoiced, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
-                                @Html.ValidationMessageFor(model => model.DateInvoiced, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.Label("Estimated Invoice Date", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.DateInvoiced, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
+                                    @Html.ValidationMessageFor(model => model.DateInvoiced, "", new { @class = "text-danger" })
+                                </div>
                             </div>
+
                         </div>
-                    
-                    </div>
                         <div class="form-group">
                             <div class="pull-right" style=" padding-top:20px;margin-right:50px">
                                 <input type="submit" name="submitButton" value="Submit" class="btn btn-default btn-primary" />
@@ -140,11 +121,11 @@
                                 Activity
                             </th>
                             @*<th>
-            Site Address
-        </th>
-        <th>
-            Sales
-        </th>*@
+                            Site Address
+                        </th>
+                        <th>
+                            Sales
+                        </th>*@
                             <th>
                                 Branch
                             </th>
@@ -173,44 +154,39 @@
                     @foreach (TimeSheet.Models.ProjectionModel item in Model.ProjectionList)
 
                     {
-                    <tr>
-                        <td class="Id"><span>@item.Id</span> </td>
-                        <td>@item.ProjectName</td>
-                        <td>@item.OpportunityNumber</td>
-                        <td>@item.ProjectManager</td>
-                        <td>@item.Activity</td>
-                        @*<td>@item.SiteAddress</td>
-        <td>@item.SalesManager</td>*@
-                        <td>@item.WarehouseName</td>
-                        <td class="Quantity">
-                            <span>@item.Quantity</span>
-                            <input type="text" value="@item.Quantity" style="display:none" />
-                        </td>
-                        <td>@item.PriceperUnit</td>
-                        <td> @item.PriceperUnitTotal </td>
-                        @*<td class="Created"><span>@item.Created.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.Created.ToString("dd-MM-yyyy")" style="display:none" /></td>*@
-                        <td>@item.Created.ToString("dd-MM-yyyy")</td>
+                        <tr>
+                            <td class="Id"><span>@item.Id</span> </td>
+                            <td>@item.ProjectName</td>
+                            <td>@item.OpportunityNumber</td>
+                            <td>@item.ProjectManager</td>
+                            <td>@item.Activity</td>
+                            @*<td>@item.SiteAddress</td>
+                        <td>@item.SalesManager</td>*@
+                            <td>@item.WarehouseName</td>
+                            <td class="Quantity">
+                                <span>@item.Quantity</span>
+                                <input type="text" value="@item.Quantity" style="display:none" />
+                            </td>
+                            <td>@item.PriceperUnit</td>
+                            <td> @item.PriceperUnitTotal </td>
+                            @*<td class="Created"><span>@item.Created.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.Created.ToString("dd-MM-yyyy")" style="display:none" /></td>*@
+                            <td>@item.Created.ToString("dd-MM-yyyy")</td>
+                            <td class="DateInvoiced"><span>@item.DateInvoiced.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.DateInvoiced.ToString("dd-MM-yyyy")" style="display:none" /></td>
 
-                        <td class="DateInvoiced"><span>@item.DateInvoiced.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.DateInvoiced.ToString("dd-MM-yyyy")" style="display:none" /></td>
-
-                        
-
-                        <td class="Comments">
-                            <span>@item.Comments</span>
-                            <input type="text" value="@item.Comments" style="display:none" />
-                        </td>
-                        <td>
-                            <a class="Edit" href="javascript:;">Edit</a>
-                            <a class="Update" href="javascript:;" style="display:none">Update</a>
-                            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
-                            @*<a class="Delete" href="javascript:;">Delete</a>*@
-                        </td>
-                    </tr>
+                            <td class="Comments">
+                                <span>@item.Comments</span>
+                                <input type="text" value="@item.Comments" style="display:none" />
+                            </td>
+                            <td>
+                                <a class="Edit" href="javascript:;">Edit</a>
+                                <a class="Update" href="javascript:;" style="display:none">Update</a>
+                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                                @*<a class="Delete" href="javascript:;">Delete</a>*@
+                            </td>
+                        </tr>
                     }
                 </table>
-
             </div>
-
             <div id="MANAGEOPPORTUNITY" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="mainTable">
                     <thead style="background-color:lightgray">
@@ -244,9 +220,7 @@
                     }
                     <tr><td colspan="4"><input type="submit" class="btn btn-default btn-primary" value="Apply Changes" /></td> </tr>
                 </table>
-
             </div>
-
         </div>
     </div>
 </section>

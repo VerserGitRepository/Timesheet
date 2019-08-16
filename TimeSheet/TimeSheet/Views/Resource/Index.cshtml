@@ -15,210 +15,201 @@
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-<div class="container" style="margin-left:1032px">
-    @*<div class="row">*@
-    <div class="col-md-10">
-        <a href="https://app.powerbi.com/view?r=eyJrIjoiZGM2OGY3NTktMGFhMi00MzU0LThlZmEtMzIxNmM5MWI3ZGRhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9"
-           target="popup" style="color:white;font-size:14px;margin-right:1px" class="btn btn-warning btn-lg col-md-offset-1"
-           onclick="window.open('https://app.powerbi.com/view?r=eyJrIjoiZGM2OGY3NTktMGFhMi00MzU0LThlZmEtMzIxNmM5MWI3ZGRhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9','popup','width=1000,height=900,align=center'); return false;">
-            Schedule
-        </a>
+<div class="container" style="padding-top:2px;padding-bottom:0px;margin-right:5px;padding-left:0px;padding-right:0px;margin-bottom:0px">
+    <div class="body-content" style="vertical-align:baseline;padding-top:2PX;margin-left:0px;margin-right:1px;">
+        <div class="pull-left col-md-offset-5" style="padding-top:2px;padding-bottom:0px;margin-right:0px;padding-left:1px;padding-right:0px;margin-bottom:0px">
+
+            @using (Html.BeginForm("Index", "Resource", FormMethod.Post))
+
+            {
+                <div class="form-group col-md-3">
+
+                    @Html.EditorFor(model => model.AvailableResourceSearchModel.StartTime, new { htmlAttributes = new { @class = "form-control1", Id = "datetimepicker" } })
+                    @Html.ValidationMessageFor(model => model.AvailableResourceSearchModel.StartTime, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group col-md-3" style="width:25%">
+                    @Html.EditorFor(model => model.AvailableResourceSearchModel.EndTime, new { htmlAttributes = new { @class = "form-control1", Id = "datetimepicker1" }, })
+                    @Html.ValidationMessageFor(model => model.AvailableResourceSearchModel.EndTime, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-3" style="width:25%">
+                    @Html.DropDownListFor(model => model.AvailableResourceSearchModel.WarehouseId, Model.WarehouseNameList, "Warehouse", new { @class = "form-control1 ", id = "ddlregWarehouseNameId" })
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    @*<input type="submit" value="Search" class="btn btn-default btn-warning  btn-sm" style="color:white;font-size:12px;">*@
+                </div>
+
+            }
+
+        </div>
     </div>
 </div>
 
-    <div class="container" style="margin-left:20px">
-        @*<div class="row">*@
-        <div class="col-md-12">
-
-            <table class="table table-bordered  table-responsive table-hover" id="mainTable" style="font-size:12px;width:100%; text-align:center">
-                <thead style="background-color:#FFA500;text-align:center">
-                    <tr>
-
-                        <th style="text-align:center">Warehouse</th>
-                        <th style="text-align:center">Resource Name</th>
-                        <th style="text-align:center">Date</th>
-                        <th style="text-align:center">Hours</th>
-                        @*<th>Check Schedule</th>*@
-                        <th style="width:20px">Book Resource</th>
-
-                    </tr>
-                </thead>
-
-                @foreach (TimeSheet.Models.ResourceAvailable item in Model.ResourceAvailableList)
-
-                {
-                    <tr>
-                        <td>@item.Warehouse</td>
-                        <td>
-                            @item.ResourceName
-
-                        </td>
-                        <td>@item.availableDate.Value.ToShortDateString()</td>
-                        <td>@item.Hours</td>
 
 
-                        <td>
+<div class="container" style="margin-left:20px;width:90%;">
+    @*<div class="row">*@
+    <div class="col-md-11">
+
+        <table class="table table-bordered  table-responsive table-hover" id="mainTable" style="font-size:12px;width:120%; text-align:center">
+            <thead style="background-color:#FFA500;text-align:center; color:white">
+                <tr>
+
+                    <th style="text-align:center">Warehouse</th>
+                    <th style="text-align:center">ResourceName</th>
+                    <th style="text-align:center">Skills</th>
+                    <th style="text-align:center">TechnicianLevel</th>
+                    <th style="text-align:center">Date</th>
+                    <th style="text-align:center"> AvailableHours</th>
 
 
-                            <p href="javascript:void(0);" class="btn btn-warning btn-edit" style="font-size:10px">
+                </tr>
+            </thead>
 
-                                <span class="glyphicon glyphicon-plus"></span>
+            @foreach (TimeSheet.Models.ResourceAvailable item in Model.ResourceAvailableList)
 
-                            </p>
-                        </td>
-                    </tr>
-                }
-            </table>
+            {
+                <tr>
+                    <td>@item.Warehouse</td>
+                    <td>
+                        <a href="javascript:void(0);" class="CandidateDetail" data-id="@item.ResourceName">
+                            @Html.DisplayFor(modelItem => item.ResourceName)
+                        </a>
+
+                    </td>
+                    <td>@item.CandidateSkills</td>
+                    <td>@item.TechnicianLevel</td>
+                    <td>@item.availableDate.Value.ToShortDateString()</td>
+                    <td>@item.Hours</td>
+
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+@*</div>*@
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
         </div>
     </div>
-    @*</div>*@
-
-
-
-
-    <div id='myModal' class='modal'>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div id='myModalContent'></div>
-            </div>
+</div>
+<div id='EditModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='EditModalContent'></div>
         </div>
     </div>
-    <div id='EditModal' class='modal'>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div id='EditModalContent'></div>
-            </div>
-        </div>
-    </div>
+</div>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#mainTable').DataTable({
-                pagingType: "simple"
-            });
-
-            $('#edit').on('shown.bs.modal', function () {
-                $('#myInput').trigger('focus')
-            })
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#mainTable').DataTable({
+            pagingType: "simple"
         });
-
-
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-
-        $('#opportunity').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
 
         $('#edit').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
         })
-
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-
-        $('#opportunity').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-
-        //var CandidateDetailsURL = './_ResourceBooked';
-        //$(function () {
-        //    $("#mainTable").on("click", ".CandidateDetail", function () {
-        //        //debugger;
-        //        var $buttonClicked = $(this);
-        //        var ResourceName = $buttonClicked.attr('data-id');
-        //        var options = { "backdrop": "static", keyboard: true };
-        //        $.ajax({
-        //            type: "GET",
-        //            url: CandidateDetailsURL,
-        //            contentType: "application/json; charset=utf-8",
-        //            data: { "ResourceName": ResourceName },
-        //            datatype: "json",
-        //            success: function (data) {
-        //                //  debugger;
-        //                $('#myModalContent').html(data);
-        //                $('#myModal').modal(options);
-        //                $('#myModal').modal('show');
-        //            },
-        //            error: function () {
-        //                alert("Dynamic content load failed.");
-        //            }
-        //        });
-        //    });
-
-        var EditTimesheetRecordURL = './Register';
-        $(function () {
-            $("#mainTable").on("click", ".btn-edit", function () {
-                // debugger;
-                var $buttonClicked = $(this);
-                var id = $buttonClicked.attr('data-id');
-                var options = { "backdrop": "static", keyboard: true };
-                $.ajax({
-                    type: "GET",
-                    url: EditTimesheetRecordURL,
-                    contentType: "application/json; charset=utf-8",
-                    //data: { "id": id },
-                    datatype: "json",
-                    success: function (data) {
-                        //debugger;
-                        $('#EditModalContent').html(data);
-                        $('#EditModal').modal(options);
-                        $('#EditModal').modal('show');
-                    },
-                    error: function () {
-                        alert("Dynamic content load failed.");
-                    }
-                });
-            });
+    });
 
 
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
 
+    $('#opportunity').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
 
-            //$("#closebtn").on('click',function(){
-            //    $('#myModal').modal('hide');
+    $('#dtp1,#dtp2').datetimepicker({
+        format: 'DD/MM/YYYY HH:mm A'
+    });
 
-            $("#closbtn").click(function () {
-                $('#myModal').modal('hide');
+    var CandidateDetailsURL = './_ResourceBooked';
+    $(function () {
+        $("#mainTable").on("click", ".CandidateDetail", function () {
+            //debugger;
+            var $buttonClicked = $(this);
+            var ResourceName = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: CandidateDetailsURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "ResourceName": ResourceName },
+                datatype: "json",
+                success: function (data) {
+                    //  debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
             });
         });
 
 
-        function doSomething() {
-            alert("hello")
-        }
 
-    </script>
+    });
 
+    //$("#closebtn").on('click',function(){
+    //    $('#myModal').modal('hide');
 
-    <style>
-
-        .body-content {
-            padding-left: 0px;
-            padding-right: 0px;
-            max-width: 100%;
-        }
-
-        .container {
-            padding-left: 0px;
-            padding-right: 5px;
-            max-width: 100%;
-        }
+    $("#closbtn").click(function () {
+        $('#myModal').modal('hide');
+    });
 
 
-        .btn-warning {
-            background-color: #FFA500;
-            font-size: 11px;
-        }
 
-        .modal-header {
-            border-bottom: 0 none;
-        }
+</script>
 
-        .modal-footer {
-            border-top: 0 none;
-        }
+
+<style>
+
+    .body-content {
+        padding-left: 0px;
+        padding-right: 0px;
+        max-width: 100%;
+    }
+
+    .container {
+        padding-left: 0px;
+        padding-right: 10px;
+        max-width: 100%;
+    }
+
+
+    .glyphicon {
+        font-size: 14px;
+    }
+
+    .btn-warning {
+        background-color: #FFA500;
+        font-size: 11px;
+    }
+
+    .modal-header {
+        border-bottom: 0 none;
+    }
+
+    .modal-footer {
+        border-top: 0 none;
+    }
+
+    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #FFA500;
+        border-color: white;
+    }
 
         .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
             background-color: #FFA500;
@@ -226,18 +217,30 @@
         }
 
 
+    .form-control1 {
+        display: block;
+        width: 120%;
+        height: 34px;
+        padding: 6px 6px;
+        font-size: 12px;
+        line-height: 1.428571429;
+        color: #555555;
+        vertical-align: middle;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    }
 
-            .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-                background-color: #FFA500;
-                border-color: white;
-            }
+    .page-item.active .page-link {
+        color: white !important;
+        background-color: orange !important;
+        border-color: gray !important;
+    }
+</style>
 
-
-        .page-item.active .page-link {
-            color: white !important;
-            background-color: orange !important;
-            border-color: gray !important;
-        }
-    </style>
 
 

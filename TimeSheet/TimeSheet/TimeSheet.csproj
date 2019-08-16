@@ -172,6 +172,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActivityListItems.cs" />
+    <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
     <Compile Include="Models\ProjectionEntryModel.cs" />
@@ -219,6 +220,8 @@
     <Content Include="Images\download.png" />
     <Content Include="Images\Verser.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap-multiselect.css" />
+    <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -323,8 +326,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\listbox.css" />
-    <Content Include="Scripts\listbox.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\please-wait.js" />
     <Content Include="Scripts\please-wait.min.js" />

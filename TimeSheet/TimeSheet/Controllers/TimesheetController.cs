@@ -64,11 +64,11 @@ namespace TimeSheet.Controllers
                 return View(model);
             }
         }
+
+
         [HttpPost]
         public ActionResult Register(TimeSheetViewModel RegisterModel)
         {
-
-
             int? a = RegisterModel.TimeSheetRegisterModel.ProjectID;
             int? b = RegisterModel.TimeSheetRegisterModel.CandidateNameId;
 
@@ -78,12 +78,10 @@ namespace TimeSheet.Controllers
             }
             else
             {
-
                 if (RegisterModel.TimeSheetRegisterModel.ProjectID != null && RegisterModel.TimeSheetRegisterModel.WarehouseNameId != null && RegisterModel.TimeSheetRegisterModel.OpportunityNumberID != null 
                     && RegisterModel.TimeSheetRegisterModel.CandidateNameId != null 
                     && RegisterModel.TimeSheetRegisterModel.Day != null)
                 {
-                    
 
                 string dateString = String.Format("{0:dd/MM/yyyy}", RegisterModel.TimeSheetRegisterModel.Day.Value.Date);
                 string StartTimeString = String.Format("{0:HH:mm}", RegisterModel.TimeSheetRegisterModel.StartTime.Value);
