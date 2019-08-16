@@ -100,7 +100,23 @@
 
 <script>
 
-    $('.project').change(function () {
+             $('#ddlregWarehouseNameId').change(function () {
+
+                    var warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
+                 var WarehouseResource = $('#CandidateNameId');
+                 var id = $(this).val();
+                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
+                        $('#CandidateNameId').empty().multiselect('refresh')                        
+                            $.each(response, function (index, item) {
+                                $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));                           
+                             
+                            });
+
+                        $('#CandidateNameId').multiselect('rebuild');
+                       });
+            });
+
+            $('.project').change(function () {
                         var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
                     var loads = $('#OpportunityID');
                         var id = $(this).val();
