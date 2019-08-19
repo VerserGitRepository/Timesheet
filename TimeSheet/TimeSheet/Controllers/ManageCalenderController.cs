@@ -121,17 +121,31 @@ namespace TimeSheet.Controllers
         {
             for (int i = 0; i < theModel.ResourceIDs.Count; i++)
             {
+               
+
                 TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
+
+                 string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
+                string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
+                string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
+
+                string dtSt = dateString + " " + StartTimeString;
+                string dtEn = dateString + " " + EndTimeString;
+
+                var StartdateTime = Convert.ToDateTime(dtSt);
+                var EnddateTime = Convert.ToDateTime(dtEn);
+
+
                 regModel.CandidateNameId = theModel.ResourceIDs[i];
                 regModel.Colour = theModel.Colour;
                 regModel.Day = theModel.Day;
-                regModel.EndTime = theModel.EndTime;
+                regModel.EndTime = EnddateTime;
                 regModel.Id = theModel.Id;
                 regModel.OLATarget = theModel.OLATarget;
                 regModel.OpportunityNumberID = theModel.OpportunityID;
                 regModel.ProjectID = theModel.ProjectID;
                 regModel.ServiceActivityId = theModel.ServiceActivityID;
-                regModel.StartTime = theModel.StartTime;
+                regModel.StartTime= StartdateTime;
                 regModel.StatusID = theModel.StatusID;
                 regModel.WarehouseNameId = theModel.WarehouseID;
 
