@@ -48,11 +48,13 @@ namespace TimeSheet.Models
         public SelectList ProjectmanagerList { get; set; }
         public SelectList OpportunityNumberList { get; set; }
         public ProjectionViewModel ProjectionViewModel { get; set; }      
+        public List<ProjectionOppurtunityModel> projectionOpportunityModel { get; set; }
         public string SiteAddress { get; set; }
         public string Comments { get; set; }
         public string ProjectName { get; set; }
         public string PriceperUnit { get; set; }
         public double PriceperUnitTotal => Convert.ToDouble(Quantity) * Convert.ToDouble(PriceperUnit);
         public List<OpportunityListModel> OpportunityList { get; set; }
+      
     }
 }
