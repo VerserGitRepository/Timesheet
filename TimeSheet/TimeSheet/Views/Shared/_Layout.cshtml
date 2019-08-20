@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
+<body >
     <div class="navbar navbar-inverse navbar-fixed-top" style="margin-left:0px;">
         <div class="container">
             <div class="navbar-header">
@@ -26,37 +26,33 @@
                 </div>
             </div>
             <script src="~/Scripts/respond.js"></script>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" style="font-size:smaller">
                 @if (@Session["Username"] != null)
                 {
-                    <ul class="nav navbar-nav">
-                        @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                        <li>@Html.ActionLink("HOME", "Index", "Home")</li>
-                        <li>@Html.ActionLink("CALENDAR", "Index", "ManageCalender")</li>
-                        <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
-                        <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
-                        <li>@Html.ActionLink("AVAILABLE RESOURCE", "Index", "Resource")</li>
+                <ul class="nav navbar-nav">
+                    @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                    <li>@Html.ActionLink("HOME", "Index", "Home")</li>
+                    <li>@Html.ActionLink("CALENDAR", "Index", "ManageCalender")</li>
+                    <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                    <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
+                    <li>@Html.ActionLink("AVAILABLE RESOURCE", "Index", "Resource")</li>
+                    <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TimeSheet</a></li>
 
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiZGM2OGY3NTktMGFhMi00MzU0LThlZmEtMzIxNmM5MWI3ZGRhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">Schedule</a></li>
 
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TimeSheet</a></li>
+                        </ul>
+                    </li>
 
-                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiZGM2OGY3NTktMGFhMi00MzU0LThlZmEtMzIxNmM5MWI3ZGRhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">Schedule</a></li>
+                    <li>
 
-                            </ul>
-                        </li>
+                    </li>
+                </ul>
 
-                        <li>
-
-                        </li>
-                    </ul>
-
-
-
-
-                    <ul class="nav navbar-nav" style="float:right">
+                    <ul class="nav navbar-nav" @*style="float:right"*@>
                         <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
                     </ul>
                 }
@@ -71,7 +67,7 @@
     </div>
     @*container-fluid body-content*@
 
-    <div class="container body-content">
+    <div class="container body-content" >
         @if (HttpContext.Current.Session["ResultMessage"] != null)
         {
             <div class="alert alert-info text-center  alert-dismissible" role="alert" style="width:50%;align-content:center;margin-left:100px;">
