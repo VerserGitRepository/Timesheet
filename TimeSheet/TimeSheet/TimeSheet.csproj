@@ -176,9 +176,11 @@
     <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
+    <Compile Include="Models\CandidateTimeSheetsModel.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
     <Compile Include="Models\ProjectionEntryModel.cs" />
     <Compile Include="Models\ProjectionModel.cs" />
+    <Compile Include="Models\ProjectionOppurtunityModel.cs" />
     <Compile Include="Models\ProjectionUpdate.cs" />
     <Compile Include="Models\ResourceAvailable.cs" />
     <Compile Include="Models\ResourceListModel.cs" />
@@ -336,6 +338,8 @@
     <Content Include="Scripts\please-wait.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\SimpleTableCellEditor.es6.min.js" />
+    <Content Include="Scripts\SimpleTableCellEditor.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\TableTools.js" />
     <Content Include="Scripts\TableTools_orig.js" />
