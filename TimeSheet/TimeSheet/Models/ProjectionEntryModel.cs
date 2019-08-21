@@ -9,9 +9,7 @@ namespace TimeSheet.Models
     {
         public int Id { get; set; }
         public int ProjectID { get; set; }
-        public int ProjectManagerID { get; set; }
-        public int ResourceID { get; set; }
-        public int SalesmanagerID { get; set; }
+    
         public int OpportunityID { get; set; }
         public int ActivityId { get; set; }
         public int? ServiceActivityId { get; set; }

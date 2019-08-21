@@ -48,9 +48,7 @@ namespace TimeSheet.Controllers
                         Created= ProjectionEntryModel.Created,
                         DateInvoiced = ProjectionEntryModel.DateInvoiced,
                         ActivityId = ProjectionEntryModel.ActivityId,
-                        ServiceActivityId= ProjectionEntryModel.ServiceActivityId,
-                        ProjectManagerID = ProjectionEntryModel.ProjectManagerID,
-                       
+                        ServiceActivityId= ProjectionEntryModel.ServiceActivityId                    
 
                     };
 
@@ -93,6 +91,38 @@ namespace TimeSheet.Controllers
                 }
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProjectionModel(ProjectionModel data)
+        {
+            ProjectionModel model = new ProjectionModel();
+
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                if (data != null)
+                {
+                    var ProjectionEntryModelRecord = new ProjectionEntryModel()
+                    {
+                        ProjectID = data.ProjectID,
+                        OpportunityID = data.OpportunityID,
+                        WarehouseId = data.WarehouseID,
+                        Quantity = data.Quantity,
+                        Created = data.Created,
+                        DateInvoiced = data.DateInvoiced,
+                        ActivityId = data.ActivityId,
+                        ServiceActivityId = data.ServiceActivityId
+
+                    };
+
+                    var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
+                }
+            }
+            return View();
         }
     }
 

@@ -299,22 +299,20 @@
         row.find(".Cancel").hide();
         $(this).hide();
         debugger;
-        var projectionUpdate = {};
-        projectionUpdate.ProjectName = row.find("span#txtProjectName").text();
-        projectionUpdate.OpportunityID = row.find("input#txtOpportunityId").val();
-        projectionUpdate.Activity = row.find("input#txtActivityDesc").val();
-        projectionUpdate.Quantity = row.find("input#quantity").val();
-        projectionUpdate.Created = row.find("input#startTime").val();
-        projectionUpdate.DateInvoiced = row.find("input#endTime").val();
-        projectionUpdate.WarehouseID = row.find("select#WarehouseID").val();
-        projectionUpdate.ServiceActivityId = row.find("hidden#txtServiceActvty").val();
-        $.ajax({
-            type: "POST",
-            url: "./UpdateProjection",
-            data: '{projectionUpdate:' + JSON.stringify(projectionUpdate) + '}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-        });
+        var ProjectionModel = {};
+        var loadUrl = '@Url.Action("UpdateProjectionModel", "Projection")';
+    
+        var data = {
+                    'OpportunityID' :row.find("input#txtOpportunityId").val(),
+                    'Quantity' : row.find("input#quantity").val(),
+                    'Created' : row.find("input#startTime").val(),
+                    'DateInvoiced': row.find("input#endTime").val(),
+                    'WarehouseID': row.find("select#WarehouseID").val(),
+                    'ServiceActivityId': row.find("#txtServiceActvty").val()
+                    
+                };                      
+        $.post(loadUrl, data, function (response) {                            
+                });
     });
     //Cancel event handler.
     $("body").on("click", "#MANAGEPROJECTION .Cancel", function () {
