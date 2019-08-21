@@ -19,7 +19,11 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                return View(LoadDropDownsServices.ProjectionDropdowns());
+                ProjectionModel model = LoadDropDownsServices.ProjectionDropdowns();
+                //ProjectionModel model = new ProjectionModel();
+                model.projectionOpportunityModel = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
+               
+                return View(model);
             }
         }
         [HttpPost]
