@@ -159,6 +159,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\CostModelListItemsController.cs" />
@@ -172,6 +173,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActivityListItems.cs" />
+    <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
@@ -179,6 +181,7 @@
     <Compile Include="Models\ProjectionModel.cs" />
     <Compile Include="Models\ProjectionUpdate.cs" />
     <Compile Include="Models\ResourceAvailable.cs" />
+    <Compile Include="Models\ResourceListModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\TimesheetEditModel.cs" />
     <Compile Include="Models\TimeSheetViewModel.cs" />
@@ -195,9 +198,11 @@
     <Compile Include="Models\UpdateTimeSheetModel.cs" />
     <Compile Include="Models\WarehousesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceHelper\AdminHelperService.cs" />
     <Compile Include="ServiceHelper\ListItemService.cs" />
     <Compile Include="ServiceHelper\LoadDropDownsServices.cs" />
     <Compile Include="ServiceHelper\LoginService.cs" />
+    <Compile Include="ServiceHelper\ManageListServices.cs" />
     <Compile Include="ServiceHelper\ProjectionHelperService.cs" />
     <Compile Include="ServiceHelper\RegisterTimesheetService.cs" />
     <Compile Include="ServiceHelper\ResourceHelperService.cs" />
@@ -368,6 +373,7 @@
     <Content Include="Views\Resource\_ResourceBooked.cshtml" />
     <Content Include="Views\Resource\Register.cshtml" />
     <Content Include="Views\Projection\ManageOpportunity.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

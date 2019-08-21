@@ -23,7 +23,7 @@
             <ul class="nav nav-tabs" style="padding-top:15px" id="myTab" role="tablist">
                 <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">PROJECTION</a></li>
                 <li style="background-color:lightgray"><a href="#MANAGEPROJECTION" data-toggle="tab">ADD PROJECTION</a></li>
-                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEOPPORTUNITY">MANAGEOPPORTUNITY</a></li>
+                @*<li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEOPPORTUNITY">MANAGEOPPORTUNITY</a></li>*@
             </ul>
         </nav>
         <div class="tab-content" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
@@ -46,6 +46,7 @@
                                 @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Opportunity Number", new { @class = "form-control OpportunityID" })
                             </div>
                         </div>
+
                         </div>
                 }
 
@@ -230,7 +231,8 @@
                             <tr><td colspan="4"><input type="submit" class="btn btn-default btn-primary" value="Apply Changes" /></td> </tr>
                         </table>
                     </div>
-                </div>
+              </div>
+                   
     </div>
 </section>
 
