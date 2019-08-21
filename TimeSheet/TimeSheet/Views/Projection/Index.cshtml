@@ -29,7 +29,7 @@
 
                             <th>ProjectName</th>
 
-                            <th>OppurtunityId</th>
+                            <th>OppurtunityNumber</th>
                             <th>ServiceDescription</th>
                             <th>Facility</th>
                             <th>DateAllocated</th>
@@ -48,10 +48,10 @@
 
 
                                 <td class="ProjectName">
-                                    <input type="text" id="txtProjectName" value="@item.ProjectName"/>
-                                </td>
+                                    <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+</td>
                                 <td class="opportunity">
-                                    <input type="text" id="txtOpportunityId" value="@item.OpportinutyId" />
+                                    <input type="text" id="txtOpportunityId" value="@item.OpportunityNumber" />
                                 </td>
                                 <td class="Activity Desc">
                                     <input type="text" id="txtActivityDesc" value="@item.Activity" />
@@ -300,7 +300,7 @@
         $(this).hide();
         debugger;
         var projectionUpdate = {};
-        projectionUpdate.ProjectID = row.find("input#txtProjectName").val();
+        projectionUpdate.ProjectName = row.find("span#txtProjectName").text();
         projectionUpdate.OpportunityID = row.find("input#txtOpportunityId").val();
         projectionUpdate.Activity = row.find("input#txtActivityDesc").val();
         projectionUpdate.Quantity = row.find("input#quantity").val();
