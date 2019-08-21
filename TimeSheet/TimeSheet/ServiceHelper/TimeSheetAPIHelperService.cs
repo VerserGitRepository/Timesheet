@@ -89,6 +89,26 @@ namespace TimeSheet.ServiceHelper
             }
             return projectsList;
         }
+
+	  public static async Task<List<ListItemViewModel>> JobNo(int OpportunityID)
+        {
+            List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/{0}/JobListByOpportunity", OpportunityID)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ListItemViewModel>>();
+                    foreach (var a in projectactivities)
+                    {
+                        projectsList.Add(new ListItemViewModel() { Id = a.Id, Value = a.Value });
+                    }
+                }
+            }
+    
+            return projectsList;
+        }
         public static async Task<List<ListItemViewModel>> ProjectActivities(int OpportunityID)
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();

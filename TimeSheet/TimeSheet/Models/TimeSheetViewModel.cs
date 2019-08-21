@@ -21,6 +21,7 @@ namespace TimeSheet.Models
         [DisplayFormat(DataFormatString = "{0:HH:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? EndTime { get; set; }
         public string JobNo { get; set; }
+        public int? JobID { get; set; }
         public int OpportunityNumber { get; set; }
         public int? OLATarget { get; set; }
         public int? ActualQuantity { get; set; }

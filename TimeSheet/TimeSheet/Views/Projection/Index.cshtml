@@ -10,7 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-@*<script src="Scripts/jquery-1.10.2.min.js"></script>*@
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
 
 <section id="tabs" class="project-tab">
     <div class="container" style="width:170%; padding-top:15px; margin-left: 1px; border-color:lightgray">
@@ -21,21 +21,19 @@
              
             </ul>
         </nav>
-        <div class="tab-content" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
+        <div class="tab-content" style="width:100%" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
             <div id="MANAGEPROJECTION" class="tab-pane fade" role="tabpanel" @*style="text-align:left;padding-left:5px"*@>
-                <table class="table table-bordered table-responsive" id="MANAGEPROJECTION">
-                    <thead style="background-color:#FFA500 ">
+                <table class="table table-bordered table-responsive" id="MANAGEPROJECTION" >
+                    <thead style="background-color:#FFA500;color:white ">
                         <tr>
 
-                            <th>ProjectName</th>
-
-                            <th>OppurtunityNumber</th>
-                            <th>ServiceDescription</th>
+                            <th>ProjectName</th>                          
+                            <th>Oppurtunity</th>
+                            <th>Services</th>
                             <th>Facility</th>
-                            <th>DateAllocated</th>
-                            <th>ActualQuantity</th>
-                            <th>DateEstimatedInvoiced</th>
-
+                            <th>Allocate</th>
+                            <th>Quantity</th>
+                            <th>EstimatedInvoice</th>
                             <th style="width:10px"></th>
                             <th class="hidden"></th>
 
@@ -49,11 +47,11 @@
 
                                 <td class="ProjectName">
                                     <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
-</td>
+                                </td>
                                 <td class="opportunity">
                                     <input type="text" id="txtOpportunityId" value="@item.OpportunityNumber" />
                                 </td>
-                                <td class="Activity Desc">
+                                <td class="Activity Desc" style="width:70%">
                                     <input type="text" id="txtActivityDesc" value="@item.Activity" />
                                 </td>
                                 <td>
@@ -86,9 +84,7 @@
                     </tbody>
                 </table>
 
-
             </div>
-
 
             <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="tblCustomers">

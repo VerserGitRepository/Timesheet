@@ -116,13 +116,22 @@ namespace TimeSheet.Controllers
             }).ToList();
             return Json(load, JsonRequestBehavior.AllowGet);
         }
+		
+			 public JsonResult JobNo(int OpportunityId)
+        {
+            List<ListItemViewModel> Jobs = new List<ListItemViewModel>();
+            Jobs = TimeSheetAPIHelperService.JobNo(OpportunityId).Result.Select(x => new ListItemViewModel()
+            {
+                Id = x.Id,
+                Value = x.Value
+            }).ToList();
+            return Json(Jobs, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult PostResourceData(TimeSheetViewModel theModel)
         {
             for (int i = 0; i < theModel.ResourceIDs.Count; i++)
             {
-               
-
                 TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
 
                  string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
@@ -134,7 +143,6 @@ namespace TimeSheet.Controllers
 
                 var StartdateTime = Convert.ToDateTime(dtSt);
                 var EnddateTime = Convert.ToDateTime(dtEn);
-
 
                 regModel.CandidateNameId = theModel.ResourceIDs[i];
                 regModel.Colour = theModel.Colour;
@@ -148,11 +156,10 @@ namespace TimeSheet.Controllers
                 regModel.StartTime= StartdateTime;
                 regModel.StatusID = theModel.StatusID;
                 regModel.WarehouseNameId = theModel.WarehouseID;
-
+                regModel.JobID = theModel.JobID;
                 var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
             }
             return RedirectToAction("Index", "ManageCalender");
-
 
 
         }        
@@ -173,8 +180,6 @@ namespace TimeSheet.Controllers
             model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
             return PartialView("Register", model);
         }
-
-
 
     }
 }
