@@ -4,17 +4,12 @@
 @{
     ViewBag.Title = "Index";
 }
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/css/mdb.min.css" rel="stylesheet">
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 @*<script src="Scripts/jquery-1.10.2.min.js"></script>*@
 
 <section id="tabs" class="project-tab">
@@ -23,216 +18,167 @@
             <ul class="nav nav-tabs" style="padding-top:15px" id="myTab" role="tablist">
                 <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">PROJECTION</a></li>
                 <li style="background-color:lightgray"><a href="#MANAGEPROJECTION" data-toggle="tab">ADD PROJECTION</a></li>
-                @*<li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEOPPORTUNITY">MANAGEOPPORTUNITY</a></li>*@
+             
             </ul>
         </nav>
         <div class="tab-content" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
             <div id="MANAGEPROJECTION" class="tab-pane fade" role="tabpanel" @*style="text-align:left;padding-left:5px"*@>
+                <table class="table table-bordered table-responsive" id="MANAGEPROJECTION">
+                    <thead style="background-color:#FFA500 ">
+                        <tr>
 
-                @using (Html.BeginForm("Index", "Projection", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            <th>ProjectName</th>
 
-                {
-                    <div class="row-group col-md-6" style="padding:30px;">
-                        <div class="form-group">
-                            @Html.Label("Project", htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.ProjectID, Model.ProjectList, "Select a Project", new { @class = "form-control project" })
-                            </div>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            @Html.Label("Opportunity No", htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-6">
-                                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Opportunity Number", new { @class = "form-control OpportunityID" })
-                            </div>
-                        </div>
+                            <th>OppurtunityNumber</th>
+                            <th>ServiceDescription</th>
+                            <th>Facility</th>
+                            <th>DateAllocated</th>
+                            <th>ActualQuantity</th>
+                            <th>DateEstimatedInvoiced</th>
 
-                        </div>
-                }
+                            <th style="width:10px"></th>
+                            <th class="hidden"></th>
 
-                        <table id="tblCustomers" class="table-striped table-bordered text-center" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1000px">
-                            <thead style="background-color:#FFA500 ">
-                                <tr>
-
-                                    <th>ProjectName</th>
-                                 
-                                    <th>ActivityId</th>
-                                    <th>ServiceDescription</th>
-                                    <th>DateAllocated</th>
-                                    <th>ActualQuantity</th>
-                                    <th>DateInvoiced</th>
-                                    
-                                    <th style="width:10px"></th>
-                                    <th style="width:2px"></th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody class="table">
-                                @foreach (var item in Model.projectionOpportunityModel)
-                                {
-                                <tr>
+                        </tr>
+                    </thead>
+                    <tbody class="table">
+                        @foreach (var item in Model.projectionOpportunityModel)
+                        {
+                            <tr>
 
 
-                                    <td class="ProjectName">
-                                        @Html.DisplayFor(modelItem => item.ProjectName)
-                                    </td>
-                                    <td class="Activity">
-                                        @Html.DisplayFor(modelItem => item.ServiceActivityId)
-                                    </td>
-                                    <td class="Activity Desc">
-                                        @Html.DisplayFor(modelItem => item.ServiceActivityDescription)
-                                    </td>
-                                    <td>  
-                                        <span id ="startTime">@item.DateAllocated.Value.ToShortTimeString()</span>
-                                        <input type="time" id ="startTime" value="@item.DateAllocated.Value.ToString("HH:mm")" style="display:none" />
-                                        </td>
-                                    <td>
+                                <td class="ProjectName">
+                                    <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+</td>
+                                <td class="opportunity">
+                                    <input type="text" id="txtOpportunityId" value="@item.OpportunityNumber" />
+                                </td>
+                                <td class="Activity Desc">
+                                    <input type="text" id="txtActivityDesc" value="@item.Activity" />
+                                </td>
+                                <td>
 
-                                        <span>@Html.DisplayFor(modelItem => item.ActualQuantity)</span>
-                                        <input type="text" id="quantity" value="@item.ActualQuantity" style="display:none" />
-                                    </td>
-                                    <td>
-                                        <span id ="endTime">@item.DateInvoiced.Value.ToShortTimeString()</span>
-                                        <input type="time" id ="endTime" value="@item.DateInvoiced.Value.ToString("HH:mm")" style="display:none" />
-                                        </td>
+                                    @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseList, "Warehouse")
+                                </td>
+                                <td>
+                                    <span id="startTime">@item.DateAllocated</span>
+                                    <input type="date" id="startTime" value="@item.DateAllocated" style="display:none" />
+                                </td>
+                                <td>
 
-                                    <td>
-                                        <a class="Edit" href="javascript:;">Edit</a>
-                                        <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                                        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
-                                        @*<a class="Delete" href="javascript:;">Delete</a>*@
-                                    </td>
-                                </tr>
-                                }
-                            </tbody>
-                        </table>
+                                    <span>@Html.DisplayFor(modelItem => item.ActualQuantity)</span>
+                                    <input type="text" id="quantity" value="@item.ActualQuantity" style="display:none" />
+                                </td>
+                                <td>
+                                    <span id="endTime">@item.DateInvoiced</span>
+                                    <input type="date" id="endTime" value="@item.DateInvoiced" style="display:none" />
+                                </td>
+
+                                <td>
+                                    <a class="Edit" href="javascript:;">Edit</a>
+                                    <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                                    <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                                    @*<a class="Delete" href="javascript:;">Delete</a>*@
+                                </td>
+                                <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId"/></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
 
 
-                    </div>
+            </div>
 
 
-                    <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
-                        <table class="table table-bordered table-responsive" id="tblCustomers">
-                            <thead style="background-color:lightgray">
-                                <tr>
-                                    <th>
-                                        Id
-                                    </th>
-                                    <th>
-                                        Customer
-                                    </th>
-                                    <th>
-                                        Opportunity
-                                    </th>
-                                    <th>
-                                        PM
-                                    </th>
-                                    <th>
-                                        Activity
-                                    </th>
-                                    @*<th>
-                                Site Address
+            <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
+                <table class="table table-bordered table-responsive" id="tblCustomers">
+                    <thead style="background-color:lightgray">
+                        <tr>
+                            <th>
+                                Id
                             </th>
                             <th>
-                                Sales
-                            </th>*@
-                                    <th>
-                                        Branch
-                                    </th>
-                                    <th>
-                                        Quantity
-                                    </th>
-                                    <th>
-                                        PriceperUnit
-                                    </th>
-                                    <th>
-                                        Total
-                                    </th>
-                                    <th>
-                                        Allocated Date
-                                    </th>
-                                    <th>
-                                        Invoiced Date
-                                    </th>
-                                    <th>
-                                        Comments
-                                    </th>
-                                    <th>
-                                    </th>
-                                </tr>
-                            </thead>
-                            @foreach (TimeSheet.Models.ProjectionModel item in Model.ProjectionList)
+                                Customer
+                            </th>
+                            <th>
+                                Opportunity
+                            </th>
+                            <th>
+                                PM
+                            </th>
+                            <th>
+                                Activity
+                            </th>
+                            @*<th>
+                                    Site Address
+                                </th>
+                                <th>
+                                    Sales
+                                </th>*@
+                            <th>
+                                Branch
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                PriceperUnit
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>
+                                Allocated Date
+                            </th>
+                            <th>
+                                Invoiced Date
+                            </th>
+                            <th>
+                                Comments
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (TimeSheet.Models.ProjectionModel item in Model.ProjectionList)
 
-                            {
-                                <tr>
-                                    <td class="Id"><span>@item.Id</span> </td>
-                                    <td>@item.ProjectName</td>
-                                    <td>@item.OpportunityNumber</td>
-                                    <td>@item.ProjectManager</td>
-                                    <td>@item.Activity</td>
-                                    @*<td>@item.SiteAddress</td>
-                            <td>@item.SalesManager</td>*@
-                                    <td>@item.WarehouseName</td>
-                                    <td class="Quantity">
-                                        <span>@item.Quantity</span>
-                                        <input type="text" value="@item.Quantity" style="display:none" />
-                                    </td>
-                                    <td>@item.PriceperUnit</td>
-                                    <td> @item.PriceperUnitTotal </td>
-                                    @*<td class="Created"><span>@item.Created.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.Created.ToString("dd-MM-yyyy")" style="display:none" /></td>*@
-                                    <td>@item.Created.ToString("dd-MM-yyyy")</td>
-                                    <td class="DateInvoiced"><span>@item.DateInvoiced.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.DateInvoiced.ToString("dd-MM-yyyy")" style="display:none" /></td>
+                    {
+                        <tr>
+                            <td class="Id"><span>@item.Id</span> </td>
+                            <td>@item.ProjectName</td>
+                            <td>@item.OpportunityNumber</td>
+                            <td>@item.ProjectManager</td>
+                            <td>@item.Activity</td>
+                            @*<td>@item.SiteAddress</td>
+                                <td>@item.SalesManager</td>*@
+                            <td>@item.WarehouseName</td>
+                            <td class="Quantity">
+                                <span>@item.Quantity</span>
+                                <input type="text" value="@item.Quantity" style="display:none" />
+                            </td>
+                            <td>@item.PriceperUnit</td>
+                            <td> @item.PriceperUnitTotal </td>
+                            @*<td class="Created"><span>@item.Created.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.Created.ToString("dd-MM-yyyy")" style="display:none" /></td>*@
+                            <td>@item.Created.ToString("dd-MM-yyyy")</td>
+                            <td class="DateInvoiced"><span>@item.DateInvoiced.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.DateInvoiced.ToString("dd-MM-yyyy")" style="display:none" /></td>
 
-                                    <td class="Comments">
-                                        <span>@item.Comments</span>
-                                        <input type="text" value="@item.Comments" style="display:none" />
-                                    </td>
-                                    <td>
-                                        <a class="Edit" href="javascript:;">Edit</a>
-                                        <a class="Update" href="javascript:;" style="display:none">Update</a>
-                                        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
-                                        @*<a class="Delete" href="javascript:;">Delete</a>*@
-                                    </td>
-                                </tr>
-                            }
-                        </table>
-                    </div>
-                    <div id="MANAGEOPPORTUNITY" class="tab-pane fade" role="tabpanel">
-                        <table class="table table-bordered table-responsive" id="mainTable">
-                            <thead style="background-color:lightgray">
-                                <tr>
-                                    <th>
-                                        ID
-                                    </th>
-                                    <th>
-                                        Customer
-                                    </th>
-                                    <th>
-                                        Opportunity
-                                    </th>
-                                    <th>
-                                        Is Active
-                                    </th>
-                                </tr>
-                            </thead>
-                            @foreach (var item in Model.OpportunityList)
+                            <td class="Comments">
+                                <span>@item.Comments</span>
+                                <input type="text" value="@item.Comments" style="display:none" />
+                            </td>
+                            <td>
+                                <a class="Edit" href="javascript:;">Edit</a>
+                                <a class="Update" href="javascript:;" style="display:none">Update</a>
+                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                                @*<a class="Delete" href="javascript:;">Delete</a>*@
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
 
+        </div>
 
-                            {
-                                <tr>
-                                    <td class="Id"><span>@item.Id</span> </td>
-                                    <td>@item.ProjectName</td>
-                                    <td>@item.OpportunityNumber</td>
-                                    <td style="font-size:10px">
-                                        <input style="font-size:10px" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
-                                    </td>
-                                </tr>
-                            }
-                            <tr><td colspan="4"><input type="submit" class="btn btn-default btn-primary" value="Apply Changes" /></td> </tr>
-                        </table>
-                    </div>
-              </div>
-                   
     </div>
 </section>
 
@@ -246,6 +192,7 @@
 
     $(document).ready(function () {
         $('table#tblCustomers').DataTable();
+          $('table#MANAGEPROJECTION').DataTable();
         $(function () {
         $("#tabs").tabs();
     });
@@ -321,7 +268,7 @@
     };
 
     //Edit event handler.
-    $("body").on("click", "#tblCustomers .Edit", function () {
+    $("body").on("click", "#MANAGEPROJECTION .Edit", function () {
         var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
@@ -336,7 +283,7 @@
     });
 
     //Update event handler.
-    $("body").on("click", "#tblCustomers .Update", function () {
+    $("body").on("click", "#MANAGEPROJECTION .Update", function () {
         var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
@@ -351,22 +298,24 @@
 
         row.find(".Cancel").hide();
         $(this).hide();
-
-        var projectionUpdate = {};
-        projectionUpdate.Id = row.find(".Activity").text();
-        projectionUpdate.Quantity = row.find(".quantity").text();
-        //projectionUpdate.DateInvoiced = row.find("span#startTime").html();
-        //CandidateEdit.EndTime = row.find("span#endTime").html();
-        $.ajax({
-            type: "POST",
-            url: "./UpdateProjection",
-            data: '{projectionUpdate:' + JSON.stringify(projectionUpdate) + '}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-        });
+        debugger;
+        var ProjectionModel = {};
+        var loadUrl = '@Url.Action("UpdateProjectionModel", "Projection")';
+    
+        var data = {
+                    'OpportunityID' :row.find("input#txtOpportunityId").val(),
+                    'Quantity' : row.find("input#quantity").val(),
+                    'Created' : row.find("input#startTime").val(),
+                    'DateInvoiced': row.find("input#endTime").val(),
+                    'WarehouseID': row.find("select#WarehouseID").val(),
+                    'ServiceActivityId': row.find("#txtServiceActvty").val()
+                    
+                };                      
+        $.post(loadUrl, data, function (response) {                            
+                });
     });
     //Cancel event handler.
-    $("body").on("click", "#tblCustomers .Cancel", function () {
+    $("body").on("click", "#MANAGEPROJECTION .Cancel", function () {
         var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
@@ -384,11 +333,6 @@
     });
 
 
-    $(document).ready(function () {
-        $('#tblCustomers1').dataTable();
-
-    });
-
      $("body").on("click", "#tblCustomers .Edit", function () {
        // debugger;
         var row = $(this).closest("tr");
@@ -396,13 +340,13 @@
             if ($(this).find("input").length > 0) {
                 $(this).find("input").show();
                 $(this).find("span").hide();
-             
+
             }
         });
-      
+
         row.find(".Update").show();
         row.find(".Cancel").show();
-      
+
         $(this).hide();
     });
 
@@ -419,15 +363,15 @@
                 input.hide();
             }
         });
-        row.find(".Edit").show();       
+        row.find(".Edit").show();
         row.find(".Cancel").hide();
         $(this).hide();
 
         var CandidateEdit = {};
         debugger;
-        CandidateEdit.Id= row.find(".Activity").text();      
+        CandidateEdit.Id= row.find(".Activity").text();
         CandidateEdit.ActualQuantity = row.find(".quantity").text();
-       
+
         CandidateEdit.StartTime = row.find("span#startTime").html();
         CandidateEdit.EndTime = row.find("span#endTime").html();
         $.ajax({
