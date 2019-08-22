@@ -13,6 +13,8 @@ namespace TimeSheet.ServiceHelper
             AdminModel model = new AdminModel();
             model.OpportunityList = AdminHelperService.OpportunityListItems().Result;
             model.ResourceList = AdminHelperService.ResourceListItems().Result;
+            model.ProjectDetailsList = AdminHelperService.ProjectListItems().Result;
+            model.ActivityList = AdminHelperService.ActivityListItem().Result;
             return model;
         }
 

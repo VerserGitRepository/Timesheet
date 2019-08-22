@@ -23,113 +23,184 @@
                 <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">OPPORTUNITIES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">RESOURCES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEPROJECTS">PROJECTS</a></li>
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEACTIVITIES">ACTIVITIES</a></li>
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEUSER">USER ROLE</a></li>
             </ul>
         </nav>
         <div class="tab-content" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
 
-            <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
-                <table class="table table-bordered table-responsive" id="tblCustomers">
+                <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
+                    <table class="table table-bordered table-responsive" id="tblCustomers">
+                        <thead style="background-color:lightgray">
+                            <tr>
+
+                                <th>
+                                    Customer
+                                </th>
+                                <th>
+                                    Opportunity
+                                </th>
+                                <th>
+                                    Is Active
+                                </th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var item in Model.OpportunityList)
+
+
+                        {
+                            <tr>
+
+                                <td>@item.ProjectName</td>
+                                <td>@item.OpportunityNumber</td>
+                                <td>
+                                    <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                    <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
+                </div>
+
+           
+                <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
+                    <table class="table table-bordered table-responsive" id="MANAGERESOURCES">
+                        <thead style="background-color:lightgray">
+                            <tr>
+                                <th>
+                                    Resource Name
+                                </th>
+                                <th>
+                                    Warehouse
+                                </th>
+
+                                <th>
+                                    Is Active
+                                </th>
+                            </tr>
+                        </thead>
+
+                        @foreach (var item in Model.ResourceList)
+
+
+                        {
+                            <tr>
+
+                                <td>@item.ResourceName</td>
+                                <td>@item.Warehouse</td>
+                                <td>
+                                    <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                    <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
+                </div>
+
+                <div id="MANAGEPROJECTS" class="tab-pane fade" role="tabpanel">
+                <table class="table table-bordered table-responsive" id="MANAGEPROJECTS">
                     <thead style="background-color:lightgray">
                         <tr>
                             <th>
-                                ID
+                                PROJECT NAME
                             </th>
-                            <th>
-                                Customer
-                            </th>
-                            <th>
-                                Opportunity
-                            </th>
+
+
                             <th>
                                 Is Active
                             </th>
                         </tr>
                     </thead>
 
-                    @foreach (var item in Model.OpportunityList)
+                    @foreach (var item in Model.ProjectDetailsList)
 
 
                     {
                         <tr>
-                            <td class="Id"><span>@item.Id</span> </td>
-                            <td>@item.ProjectName</td>
-                            <td>@item.OpportunityNumber</td>
-                            <td style="font-size:6px;height:10px">
-                                <input style="font-size:6px" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
+
+                            <td>@item.projectName</td>
+                            <td>
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
                             </td>
                         </tr>
                     }
 
                 </table>
+                <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
             </div>
 
-
-            <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
-                <table class="table table-bordered table-responsive" id="MANAGERESOURCES">
+            <div id="MANAGEACTIVITIES" class="tab-pane fade" role="tabpanel">
+                <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
                     <thead style="background-color:lightgray">
                         <tr>
                             <th>
-                                Resource Name
+                                Activity Category
                             </th>
                             <th>
-                                Warehouse
+                                Activity
+                            </th>
+                            <th>
+                                OLA/15mins
+                            </th>
+                            <th>
+                                OLA/30mins
+                            </th>
+                            <th>
+                                OLA/Day
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Edit
                             </th>
 
-                            <th>
-                                Is Active
-                            </th>
                         </tr>
                     </thead>
 
-                    @foreach (var item in Model.ResourceList)
+                    @foreach (var item in Model.ActivityList)
 
 
                     {
-                        <tr>
+                    <tr>
+                        <td width="15%">@item.serviceCategory</td>
+                        <td width="30%">@item.serviceActivityDescription</td>
 
-                            <td>@item.ResourceName</td>
-                            <td>@item.Warehouse</td>
-                            <td style="font-size:6px;height:10px">
-                                <input style="font-size:6px" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
-                            </td>
-                        </tr>
+                        <td width="10%">
+
+                            <span>@Html.DisplayFor(modelItem => item.OLA_15mins)</span>
+                            <input type="text" id="quantity" value="@item.OLA_15mins" style="display:none" />
+                        </td>
+
+                        <td width="10%">
+
+                            <span>@Html.DisplayFor(modelItem => item.OLA_30mins)</span>
+                            <input type="text" id="quantity" value="@item.OLA_30mins" style="display:none" />
+                        </td>
+
+                        <td width="10%">
+
+                            <span>@Html.DisplayFor(modelItem => item.OLA_Day)</span>
+                            <input type="text" id="quantity" value="@item.OLA_Day" style="display:none" />
+                        </td>
+
+                        @*<td width="10%">@item.OLA_15mins</td>
+                        <td width="10%">@item.OLA_30mins</td>
+                        <td width="10%">@item.OLA_Day</td>*@
+                        <td width="15%">@item.olA_Filter</td>
+                        <td width="10%">
+                            <a class="Edit" href="javascript:;">Edit</a>
+                            <a class="Update" href="javascript:;" style="display:none">Update</a>
+                            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                        </td>
+                    </tr>
                     }
                 </table>
             </div>
-
-            <div id="MANAGEPROJECTS" class="tab-pane fade" role="tabpanel">
-                @*<table class="table table-bordered table-responsive" id="MANAGERESOURCES">
-                    <thead style="background-color:lightgray">
-                        <tr>
-                            <th>
-                                Resource Name
-                            </th>
-                            <th>
-                                Warehouse
-                            </th>
-
-                            <th>
-                                Is Active
-                            </th>
-                        </tr>
-                    </thead>
-
-                    @foreach (var item in Model.ResourceList)
-
-
-                    {
-                        <tr>
-
-                            <td>@item.ResourceName</td>
-                            <td>@item.Warehouse</td>
-                            <td style="font-size:6px;height:10px">
-                                <input style="font-size:6px" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
-                            </td>
-                        </tr>
-                    }
-                </table>*@
             </div>
-        </div>
     </div>
 </section>
 
@@ -144,6 +215,9 @@
     $(document).ready(function () {
         $('table#tblCustomers').DataTable();
         $('table#MANAGERESOURCES').DataTable();
+        $('table#MANAGEPROJECTS').DataTable();
+        $('table#MANAGEACTIVITIES').DataTable();
+
         $(function () {
             $("#tabs").tabs();
         });
@@ -157,7 +231,115 @@
             $('#OpportunityCheckBoxID').val($(this).is(':checked'));
         });
 
+        $(document).ready(function () {
+            $('#OpportunityCheckBoxID').on('click', function () {
+                var prices = [];
+                $('input:checked').each(function () {
 
+                    prices.push($(this).attr("value"));
+                });
+                $.ajax({
+                    url: "/Resource/Update",
+                    type: "POST",
+                    data: { coursePrices: prices },
+                    dataType: "json",
+                    traditional: true,
+                    success: function () {
+                        alert("ajax request to server succeed");
+                    }
+                });
+            });
+        });
+
+          function AppendRow(row, Id, Quantity, Comments, DateInvoiced) {
+        //Bind CustomerId.
+        $(".Id", row).find("span").html(Id);
+
+        //Bind Name.
+              $(".OLA_15mins", row).find("span").html(Quantity);
+              $(".OLA_15mins", row).find("input").val(Quantity);
+
+        //Bind Name.
+              $(".OLA_30mins", row).find("span").html(Quantity);
+              $(".OLA_30mins", row).find("input").val(Quantity);
+
+
+
+        //Bind Country.
+              $(".OLA_Day", row).find("span").html(Comments);
+              $(".OLA_Day", row).find("input").val(Comments);
+        row.find(".Edit").show();
+
+              $("#MANAGEACTIVITIES").append(row);
+    };
+
+    //Edit event handler.
+        $("body").on("click", "#MANAGEACTIVITIES .Edit", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                $(this).find("input").show();
+                $(this).find("span").hide();
+                $(this).toggleClass('selected');
+            }
+        });
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+
+        $(this).hide();
+    });
+
+    //Update event handler.
+        $("body").on("click", "#MANAGEACTIVITIES .Update", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                span.html(input.val());
+                span.show();
+                input.hide();
+                $(this).removeClass('selected');
+            }
+        });
+        row.find(".Edit").show();
+
+        row.find(".Cancel").hide();
+        $(this).hide();
+        debugger;
+        var ProjectionModel = {};
+        var loadUrl = '@Url.Action("UpdateProjectionModel", "Projection")';
+    
+        var data = {
+                    'OpportunityID' :row.find("input#txtOpportunityId").val(),
+                    'Quantity' : row.find("input#quantity").val(),
+                    'Created' : row.find("input#startTime").val(),
+                    'DateInvoiced': row.find("input#endTime").val(),
+                    'WarehouseID': row.find("select#WarehouseID").val(),
+                    'ServiceActivityId': row.find("#txtServiceActvty").val()
+                    
+                };                      
+        $.post(loadUrl, data, function (response) {                            
+                });
+    });
+    //Cancel event handler.
+        $("body").on("click", "#MANAGEACTIVITIES .Cancel", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                input.val(span.html());
+                span.show();
+                input.hide();
+                $(this).removeClass('selected');
+            }
+        });
+        row.find(".Edit").show();
+        //row.find(".Delete").show();
+        row.find(".Update").hide();
+        $(this).hide();
+    });
     });
 
 
@@ -173,6 +355,10 @@
         outline: 2px;
     }
 
+    .selected {
+        color: black;
+        background-color: lightgray;
+    }
     .nav-tabs > li.active > a,
     .nav-tabs > li.active > a:hover,
     .nav-tabs > li.active > a:focus {
@@ -181,6 +367,11 @@
         background-color: orange;
         border: 1px solid #dddddd;
         border-bottom-color: transparent;
+    }
+
+    .table-hover > tbody > tr:hover > td,
+    .table-hover > tbody > tr:hover > th {
+        background-color: lightgray;
     }
 
     .form-group {
@@ -266,11 +457,11 @@
         cursor: pointer;
         -webkit-appearance: none;
         -moz-appearance: none;
-        /*appearance: none;*/
+        appearance: none;
         outline: 0;
         background: lightgray;
-        height: 10px;
-        width: 10px;
+        height: 6px;
+        width: 6px;
         border: 1px solid white;
     }
 
@@ -303,5 +494,6 @@
 
         input[type="checkbox"]:checked:after {
             display: block;
-        }
 </style>
+
+

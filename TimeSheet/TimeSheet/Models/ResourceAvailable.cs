@@ -15,6 +15,8 @@ namespace TimeSheet.Models
             ResourceAvailableList = new List<ResourceAvailable>();
         }
         public string ResourceName { get; set; }
+        public string email { get; set; }
+        public string phone { get; set; }
         public string Warehouse { get; set; }
         public int? Hours { get; set; }
         public string CandidateSkills { get; set; }

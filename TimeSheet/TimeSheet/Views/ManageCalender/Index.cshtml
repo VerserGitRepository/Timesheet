@@ -6,24 +6,34 @@
 <div class="container" style="margin-left:0px;width:100%;">
     <div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:0px;">
         <div class="pull-right">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2" style="width:18%">
                 @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project" })
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3" style="width:22%">
                 @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID" })
             </div>
-            <div class="form-group col-md-2">
-                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })
+            <div class="form-group col-md-2"style="width:18%">
+                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2" style="width:19%">
                 @*Model.CandidateNameList*@
-                @Html.DropDownListFor(model => model.ResourceID, new SelectList(Enumerable.Empty<SelectListItem>()), "RESOURCES", new { @class = "form-control", id = "ResourceID" })
+                @Html.DropDownListFor(model => model.ResourceID, new SelectList(Enumerable.Empty<SelectListItem>()), "RESOURCE", new { @class = "form-control", id = "ResourceID" })
                 @Html.HiddenFor(model => model.ResourceID)
             </div>
 
+
             <div class="col-md-1">
-                <input type="button" value="Search" class="btn btn-default btn-warning" OnClick="SearchAndRenderCalendar();" />
+                <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray" OnClick="SearchAndRenderCalendar();">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+               
             </div>
+
+
+            @*<div class="col-md-1">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="button" value="Search" class="btn btn-default btn-warning" OnClick="SearchAndRenderCalendar();" />
+            </div>*@
         </div>
     </div>
 

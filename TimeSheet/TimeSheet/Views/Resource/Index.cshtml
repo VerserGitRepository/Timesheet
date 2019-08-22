@@ -17,7 +17,7 @@
 
 <div class="container" style="padding-top:2px;padding-bottom:0px;margin-right:5px;padding-left:0px;padding-right:0px;margin-bottom:0px">
     <div class="body-content" style="vertical-align:baseline;padding-top:2PX;margin-left:0px;margin-right:1px;">
-        <div class="pull-left col-md-offset-5" style="padding-top:2px;padding-bottom:0px;margin-right:0px;padding-left:1px;padding-right:0px;margin-bottom:0px">
+        <div class="pull-left col-md-offset-6" style="padding-top:2px;padding-bottom:0px;margin-right:0px;padding-left:1px;padding-right:0px;margin-bottom:0px">
 
             @using (Html.BeginForm("Index", "Resource", FormMethod.Post))
 
@@ -52,9 +52,9 @@
 
 
 
-<div class="container" style="margin-left:20px;width:90%;">
+<div class="container" style="margin-left:20px;width:92%;">
     @*<div class="row">*@
-    <div class="col-md-11">
+    <div class="col-md-12">
 
         <table class="table table-bordered  table-responsive table-hover" id="mainTable" style="font-size:12px;width:120%; text-align:center">
             <thead style="background-color:#FFA500;text-align:center; color:white">
@@ -64,6 +64,8 @@
                     <th style="text-align:center">ResourceName</th>
                     <th style="text-align:center">Skills</th>
                     <th style="text-align:center">TechnicianLevel</th>
+                    <th style="text-align:center">Email</th>
+                    <th style="text-align:center">Phones</th>
                     <th style="text-align:center">Date</th>
                     <th style="text-align:center"> AvailableHours</th>
 
@@ -74,20 +76,22 @@
             @foreach (TimeSheet.Models.ResourceAvailable item in Model.ResourceAvailableList)
 
             {
-                <tr>
-                    <td>@item.Warehouse</td>
-                    <td>
-                        <a href="javascript:void(0);" class="CandidateDetail" data-id="@item.ResourceName">
-                            @Html.DisplayFor(modelItem => item.ResourceName)
-                        </a>
+            <tr>
+                <td>@item.Warehouse</td>
+                <td>
+                    <a href="javascript:void(0);" class="CandidateDetail" data-id="@item.ResourceName">
+                        @Html.DisplayFor(modelItem => item.ResourceName)
+                    </a>
 
-                    </td>
-                    <td>@item.CandidateSkills</td>
-                    <td>@item.TechnicianLevel</td>
-                    <td>@item.availableDate.Value.ToShortDateString()</td>
-                    <td>@item.Hours</td>
+                </td>
+                <td>@item.CandidateSkills</td>
+                <td>@item.TechnicianLevel</td>
+                <td>@item.email</td>
+                <td>@item.phone</td>
+                <td>@item.availableDate.Value.ToShortDateString()</td>
+                <td>@item.Hours</td>
 
-                </tr>
+            </tr>
             }
         </table>
     </div>
