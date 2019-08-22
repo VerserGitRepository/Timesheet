@@ -27,12 +27,32 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Projection Entries";
+                    HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Opportunity Entries";
                 }
             }
             return ReturnResult;
-
         }
+
+        public static async Task<List<ProjectListModel>> ProjectListItems()
+        {
+            List<ProjectListModel> ReturnResult = new List<ProjectListModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Projects/CostModelProjects")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<List<ProjectListModel>>();
+
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Project Entries";
+                }
+            }
+            return ReturnResult;
+        }
+
 
         public static async Task<List<ResourceListModel>> ResourceListItems()
         {
@@ -48,13 +68,33 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Projection Entries";
+                    HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Resource Entries";
                 }
             }
             return ReturnResult;
         }
 
+        public static async Task<List<ActivityListModel>> ActivityListItem()
+        {
+            List<ActivityListModel> ReturnResult = new List<ActivityListModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/ActivityList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<List<ActivityListModel>>();
+
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Resource Entries";
+                }
+            }
+            return ReturnResult;
+        }
 
     }
 
-    }
+}
+

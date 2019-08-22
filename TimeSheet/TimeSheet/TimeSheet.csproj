@@ -160,6 +160,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminUpdateController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\CostModelListItemsController.cs" />
@@ -172,7 +173,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ActivityListItems.cs" />
+    <Compile Include="Models\ActivityListModel.cs" />
     <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Models\TimeSheetRegisterModel.cs" />
     <Compile Include="Models\ResourcesViewModel.cs" />
     <Compile Include="Models\ReturnModel.cs" />
+    <Compile Include="Models\UpdateOpportunityList.cs" />
     <Compile Include="Models\UpdateTimeSheetModel.cs" />
     <Compile Include="Models\WarehousesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -380,6 +382,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AdminUpdate\" />
     <Folder Include="Views\Partial\" />
   </ItemGroup>
   <ItemGroup>
