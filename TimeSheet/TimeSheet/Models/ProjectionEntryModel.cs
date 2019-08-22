@@ -11,6 +11,7 @@ namespace TimeSheet.Models
         public int ProjectID { get; set; }
     
         public int OpportunityID { get; set; }
+        public int OpportunityNumber { get; set; }
         public int ActivityId { get; set; }
         public int? ServiceActivityId { get; set; }
         public int WarehouseId { get; set; }
