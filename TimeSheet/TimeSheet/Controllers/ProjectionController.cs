@@ -19,10 +19,31 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                ProjectionModel model = LoadDropDownsServices.ProjectionDropdowns();
-                //ProjectionModel model = new ProjectionModel();
-                model.projectionOpportunityModel = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
-               
+                ProjectionModel model = new ProjectionModel();
+                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
+                
+                List<ProjectionModel> listB = ProjectionHelperService.ProjectionListItems().Result;
+                List<ProjectionOppurtunityModel> listA = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
+
+                
+                foreach (var x in listB)
+                {
+                    var itemToChange = listA.FirstOrDefault(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber));
+                    if (itemToChange != null)
+                    {
+                        itemToChange.Activity = x.Activity;
+                        itemToChange.ActivityId = x.ActivityId;
+                        itemToChange.Comments = x.Comments;
+                        itemToChange.OpportinutyId = x.OpportunityID;
+                        itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
+                        itemToChange.DateInvoiced = x.Created;
+                        itemToChange.DateInvoiced = x.DateInvoiced;
+                        itemToChange.ProjectManager = x.ProjectManager;
+                        itemToChange.wareHouseName = x.WarehouseName;
+                    }
+                        
+                }
+                model.projectionOpportunityModel = listA;
                 return View(model);
             }
         }
@@ -115,14 +136,26 @@ namespace TimeSheet.Controllers
                         Created = data.Created,
                         DateInvoiced = data.DateInvoiced,
                         ActivityId = data.ActivityId,
-                        ServiceActivityId = data.ServiceActivityId
+                        ServiceActivityId = data.ServiceActivityId,
+                        OpportunityNumber = int.Parse(data.OpportunityNumber)
 
                     };
 
                     var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
                 }
             }
-            return View();
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Projection", new { });
+
+            try
+            {
+                // perform some action
+            }
+            catch (Exception)
+            {
+                return Json(new { Url = redirectUrl, status = "Error" });
+            }
+
+            return Json(new { Url = redirectUrl, status = "OK" });
         }
     }
 

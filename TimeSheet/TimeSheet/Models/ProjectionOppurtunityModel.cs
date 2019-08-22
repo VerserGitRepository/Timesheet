@@ -17,6 +17,7 @@ namespace TimeSheet.Models
        
         public bool? IsActive { get; set; }
         public int ServiceActivityId { get; set; }
+        public int ActivityId { get; set; }
         public string ServiceActivityDescription { get; set; }
         public DateTime? DateAllocated { get; set; }
         public DateTime? DateInvoiced { get; set; }
@@ -25,6 +26,8 @@ namespace TimeSheet.Models
         public int ActualQuantity { get; set; }
         public int wareHouseId { get; set; }
         public string wareHouseName { get; set; }
+        public string Comments { get; set; }
+        public string ProjectManager { get; set; }
 
     }
 }

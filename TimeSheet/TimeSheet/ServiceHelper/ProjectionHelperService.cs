@@ -33,6 +33,26 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult; 
         }
+        public static async Task<ReturnModel> AddProjectionEnter(ProjectionModel ProjectionActivityEntryRecord)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("Projection/ProjectionActivityEntry"), ProjectionActivityEntryRecord).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
         public static async Task<List<ProjectionModel>> ProjectionListItems()
         {
             List<ProjectionModel> ReturnResult = new List<ProjectionModel>();

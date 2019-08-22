@@ -10,31 +10,27 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
 
-<section id="tabs" class="project-tab">
     <div class="container" style="width:170%; padding-top:15px; margin-left: 1px; border-color:lightgray">
-        <nav>
-            <ul class="nav nav-tabs" style="padding-top:15px" id="myTab" role="tablist">
-                <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">PROJECTION</a></li>
-                <li style="background-color:lightgray"><a href="#MANAGEPROJECTION" data-toggle="tab">ADD PROJECTION</a></li>
-             
-            </ul>
-        </nav>
-        <div class="tab-content" style="width:100%" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
-            <div id="MANAGEPROJECTION" class="tab-pane fade" role="tabpanel" @*style="text-align:left;padding-left:5px"*@>
+        
+            <div id="MANAGEPROJECTION" >
                 <table class="table table-bordered table-responsive" id="MANAGEPROJECTION" >
                     <thead style="background-color:#FFA500;color:white ">
                         <tr>
 
-                            <th>ProjectName</th>                          
+                            <th>ProjectName</th>
                             <th>Oppurtunity</th>
+                            <th>PM</th>
                             <th>Services</th>
                             <th>Facility</th>
                             <th>Allocate</th>
                             <th>Quantity</th>
                             <th>EstimatedInvoice</th>
+                            <th>Comments</th>
                             <th style="width:10px"></th>
+                            <th class="hidden"></th>
                             <th class="hidden"></th>
 
                         </tr>
@@ -42,142 +38,66 @@
                     <tbody class="table">
                         @foreach (var item in Model.projectionOpportunityModel)
                         {
-                            <tr>
+                        <tr>
+                            <td class="ProjectName">
+                                <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+                            </td>
+                            <td class="opportunity">
+                                <span id="txtOpportunityId">@Html.DisplayFor(modelItem => item.OpportunityNumber) </span>
+                            </td>
+                            <td class="opportunity">
+                                <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
+                            </td>
+                            <td data-balloon-length="xlarge" aria-label='@item.Activity' data-balloon-pos="up">
+                                <input type="text" id="txtActivityDesc" value="@item.Activity" disabled="disabled" />
 
 
-                                <td class="ProjectName">
-                                    <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
-                                </td>
-                                <td class="opportunity">
-                                    <input type="text" id="txtOpportunityId" value="@item.OpportunityNumber" />
-                                </td>
-                                <td class="Activity Desc" style="width:70%">
-                                    <input type="text" id="txtActivityDesc" value="@item.Activity" />
-                                </td>
-                                <td>
+                            </td>
+                            <td>
+                                @{var isEmptyFacility = string.IsNullOrEmpty(@item.wareHouseName);}
+                                @if (isEmptyFacility)
+                                {
+                                    @Html.DropDownList("Warehouse", Model.WarehouseList, "Facility")
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("Warehouse", Model.WarehouseList, @item.wareHouseName)
+                                }
+                            </td>
+                            <td>
+                                <span id="startTime">@item.DateInvoiced</span>
+                                <input type="date" id="startTime" value="@item.DateInvoiced" style="display:none" />
+                            </td>
+                            <td>
 
-                                    @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseList, "Warehouse")
-                                </td>
-                                <td>
-                                    <span id="startTime">@item.DateAllocated</span>
-                                    <input type="date" id="startTime" value="@item.DateAllocated" style="display:none" />
-                                </td>
-                                <td>
-
-                                    <span>@Html.DisplayFor(modelItem => item.ActualQuantity)</span>
-                                    <input type="text" id="quantity" value="@item.ActualQuantity" style="display:none" />
-                                </td>
-                                <td>
-                                    <span id="endTime">@item.DateInvoiced</span>
-                                    <input type="date" id="endTime" value="@item.DateInvoiced" style="display:none" />
-                                </td>
-
-                                <td>
-                                    <a class="Edit" href="javascript:;">Edit</a>
-                                    <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                                    <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
-                                    @*<a class="Delete" href="javascript:;">Delete</a>*@
-                                </td>
-                                <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId"/></td>
-                            </tr>
+                                <span>@Html.DisplayFor(modelItem => item.ActualQuantity)</span>
+                                <input type="text" id="quantity" value="@item.ActualQuantity" style="display:none" />
+                            </td>
+                            <td>
+                                <span id="endTime">@item.DateInvoiced</span>
+                                <input type="date" id="endTime" value="@item.DateInvoiced" style="display:none" />
+                            </td>
+                            <td class="commentsLine">
+                                <span id="comments">@item.Comments</span>
+                                <input type="text" id="comments" value="@item.Comments" style="display:none" />
+                            </td>
+                            <td>
+                                <a class="Edit" href="javascript:;">Edit</a>
+                                <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                                @*<a class="Delete" href="javascript:;">Delete</a>*@
+                            </td>
+                            <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
+                            <td class="hidden"><input type="text" id="txtActvty" value="@item.ActivityId" /></td>
+                        </tr>
                         }
                     </tbody>
                 </table>
 
             </div>
 
-            <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
-                <table class="table table-bordered table-responsive" id="tblCustomers">
-                    <thead style="background-color:lightgray">
-                        <tr>
-                            <th>
-                                Id
-                            </th>
-                            <th>
-                                Customer
-                            </th>
-                            <th>
-                                Opportunity
-                            </th>
-                            <th>
-                                PM
-                            </th>
-                            <th>
-                                Activity
-                            </th>
-                            @*<th>
-                                    Site Address
-                                </th>
-                                <th>
-                                    Sales
-                                </th>*@
-                            <th>
-                                Branch
-                            </th>
-                            <th>
-                                Quantity
-                            </th>
-                            <th>
-                                PriceperUnit
-                            </th>
-                            <th>
-                                Total
-                            </th>
-                            <th>
-                                Allocated Date
-                            </th>
-                            <th>
-                                Invoiced Date
-                            </th>
-                            <th>
-                                Comments
-                            </th>
-                            <th>
-                            </th>
-                        </tr>
-                    </thead>
-                    @foreach (TimeSheet.Models.ProjectionModel item in Model.ProjectionList)
-
-                    {
-                        <tr>
-                            <td class="Id"><span>@item.Id</span> </td>
-                            <td>@item.ProjectName</td>
-                            <td>@item.OpportunityNumber</td>
-
-                            <td>@item.ProjectManager</td>
-                            <td>@item.Activity</td>
-                            @*<td>@item.SiteAddress</td>
-                                <td>@item.SalesManager</td>*@
-                            <td>@item.WarehouseName</td>
-                            <td class="Quantity">
-                                <span>@item.Quantity</span>
-                                <input type="text" value="@item.Quantity" style="display:none" />
-                            </td>
-                            <td>@item.PriceperUnit</td>
-                            <td> @item.PriceperUnitTotal </td>
-                            @*<td class="Created"><span>@item.Created.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.Created.ToString("dd-MM-yyyy")" style="display:none" /></td>*@
-                            <td>@item.Created.ToString("dd-MM-yyyy")</td>
-                            <td class="DateInvoiced"><span>@item.DateInvoiced.ToString("dd-MM-yyyy")</span> <input type="date" value="@item.DateInvoiced.ToString("dd-MM-yyyy")" style="display:none" /></td>
-
-                            <td class="Comments">
-                                <span>@item.Comments</span>
-                                <input type="text" value="@item.Comments" style="display:none" />
-                            </td>
-                            <td>
-                                <a class="Edit" href="javascript:;">Edit</a>
-                                <a class="Update" href="javascript:;" style="display:none">Update</a>
-                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
-                                @*<a class="Delete" href="javascript:;">Delete</a>*@
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </div>
-
-        </div>
 
     </div>
-</section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -188,81 +108,13 @@
 <script language="javascript" type="text/javascript">
 
     $(document).ready(function () {
-        $('table#tblCustomers').DataTable();
           $('table#MANAGEPROJECTION').DataTable();
-        $(function () {
-        $("#tabs").tabs();
+       
     });
 
 
 
-           $('#ProjectID').change(function () {
-                        var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
-                        var loads = $('#OpportunityID');
-                        var id = $(this).val();
-                        $.getJSON(loadUrl, { projectid: id }, function (response) {
-                            loads.empty(); // remove any existing options
-                            loads.append($('<option></option>').text("Select Opportunity").val(0));
-                            $.each(response, function (index, item) {
-                                loads.append($('<option></option>').text(item.Value).val(item.Id));
-                            });
-                        });
-           });
-
-           $('#OpportunityID').change(function () {
-                    var ActivityUrl = '@Url.Action("ProjectActivities", "ManageCalender")';
-               var Activities = $('#ActivityId');
-                    var id = $(this).val();
-                    $.getJSON(ActivityUrl, { OpportunityId: id }, function (response) {
-                    Activities.empty();
-                        Activities.append($('<option></option>').text("Select a Service").val(0));
-                    $.each(response, function (index, item) {
-                    Activities.append($('<option></option>').text(item.Value).val(item.Id));
-                    });
-                    });
-           });
-
-
-                 $('#OpportunityCheckBoxID').change(function () {
-               if ($(this).is(":checked")) {
-                   var returnVal = confirm("Are you sure?");
-                   alert('hi')
-                   $(this).attr("checked", returnVal);
-               }
-                     $('#OpportunityCheckBoxID').val($(this).is(':checked'));
-                     $.ajax({
-            type: "POST",
-            url: "./UpdateProjection",
-            data: '{projectionUpdate:' + JSON.stringify("{\"test\":\"test\",\"test1\":\"test1\}") + '}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-        });
-           });
-
-
-    });
-
-    function AppendRow(row, Id, Quantity, Comments, DateInvoiced) {
-        //Bind CustomerId.
-        $(".Id", row).find("span").html(Id);
-
-        //Bind Name.
-        $(".Quantity", row).find("span").html(Quantity);
-        $(".Quantity", row).find("input").val(Quantity);
-
-        //Bind Name.
-        $(".DateInvoiced", row).find("span").html(Quantity);
-        $(".DateInvoiced", row).find("input").val(Quantity);
-
-
-
-        //Bind Country.
-        $(".Comments", row).find("span").html(Comments);
-        $(".Comments", row).find("input").val(Comments);
-        row.find(".Edit").show();
-
-        $("#tblCustomers").append(row);
-    };
+          
 
     //Edit event handler.
     $("body").on("click", "#MANAGEPROJECTION .Edit", function () {
@@ -289,27 +141,42 @@
                 span.html(input.val());
                 span.show();
                 input.hide();
+               
             }
         });
         row.find(".Edit").show();
+     
 
         row.find(".Cancel").hide();
         $(this).hide();
-        debugger;
+        
         var ProjectionModel = {};
         var loadUrl = '@Url.Action("UpdateProjectionModel", "Projection")';
     
-        var data = {
-                    'OpportunityID' :row.find("input#txtOpportunityId").val(),
+        var model = {
+                    'OpportunityNumber' :row.find("span#txtOpportunityId").text(),
                     'Quantity' : row.find("input#quantity").val(),
                     'Created' : row.find("input#startTime").val(),
                     'DateInvoiced': row.find("input#endTime").val(),
                     'WarehouseID': row.find("select#WarehouseID").val(),
-                    'ServiceActivityId': row.find("#txtServiceActvty").val()
+                    'ServiceActivityId': row.find("#txtServiceActvty").val(),
+                    'ActivityId': row.find("#txtActvty").val(),
+                    'Comments': row.find("#comments").val()
                     
                 };                      
-        $.post(loadUrl, data, function (response) {                            
-                });
+        $.ajax({
+            data: model,
+            url: '@Url.Action("UpdateProjectionModel", "Projection")',
+            type: "POST",
+            success:function(data) {
+                if (data.status === 'OK') {
+                    window.location.href = data.Url
+                }
+                else {
+                    alert("The status cannot be updated at this time");
+                }
+            }
+        });
     });
     //Cancel event handler.
     $("body").on("click", "#MANAGEPROJECTION .Cancel", function () {
@@ -318,7 +185,7 @@
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
                 var input = $(this).find("input");
-                input.val(span.html());
+                //input.val(span.html());
                 span.show();
                 input.hide();
             }
@@ -326,58 +193,9 @@
         row.find(".Edit").show();
         //row.find(".Delete").show();
         row.find(".Update").hide();
+        row.find("input#txtActivityDesc").show();
         $(this).hide();
-    });
-
-
-     $("body").on("click", "#tblCustomers .Edit", function () {
-       // debugger;
-        var row = $(this).closest("tr");
-        $("td", row).each(function () {
-            if ($(this).find("input").length > 0) {
-                $(this).find("input").show();
-                $(this).find("span").hide();
-
-            }
-        });
-
-        row.find(".Update").show();
-        row.find(".Cancel").show();
-
-        $(this).hide();
-    });
-
-    //Update event handler.
-    $("body").on("click", "#tblCustomers .Update", function () {
-        debugger;
-        var row = $(this).closest("tr");
-        $("td", row).each(function () {
-            if ($(this).find("input").length > 0) {
-                var span = $(this).find("span");
-                var input = $(this).find("input");
-                span.html(input.val());
-                span.show();
-                input.hide();
-            }
-        });
-        row.find(".Edit").show();
-        row.find(".Cancel").hide();
-        $(this).hide();
-
-        var CandidateEdit = {};
-        debugger;
-        CandidateEdit.Id= row.find(".Activity").text();
-        CandidateEdit.ActualQuantity = row.find(".quantity").text();
-
-        CandidateEdit.StartTime = row.find("span#startTime").html();
-        CandidateEdit.EndTime = row.find("span#endTime").html();
-        $.ajax({
-            type: "POST",
-            url: "./UpdateCandidate",
-            data: '{CandidateEdit:' + JSON.stringify(CandidateEdit) + '}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-        });
+       
     });
 </script>
 
@@ -391,9 +209,7 @@
         outline: 2px;
     }
 
-    .nav-tabs > li.active > a,
-    .nav-tabs > li.active > a:hover,
-    .nav-tabs > li.active > a:focus {
+    
         color: #555555;
         cursor: default;
         background-color: orange;
@@ -423,10 +239,7 @@
         border-color: gray !important;
     }
 
-    /* Default State */
-    .x-nav-tabs > li > a {
-        background: #fff;
-    }
+
 
     /* Active State */
     .x-tab-pane > .active > a, .x-tab-pane > .active > a:hover {
@@ -522,4 +335,13 @@
         input[type="checkbox"]:checked:after {
             display: block;
         }
+        .commentsLine{
+    max-width:50px;
+    word-wrap:break-word;
+}
+input[type=text] {
+  color: #000;
+  background-color: #fff;
+}
+/*
 </style>
