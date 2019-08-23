@@ -71,7 +71,7 @@
                                 }
                                 else
                                 {
-                                    <span id="startTime">@DateTime.MinValue.ToShortDateString()</span>
+                                    <span id="startTime">@DateTime.Now.ToShortDateString()</span>
                                 }
                                 <input type="date" id="startTime" value="@item.DateInvoiced" style="display:none" />
                             </td>
@@ -87,7 +87,7 @@
                                 }
                                 else
                                 {
-                                    <span id="startTime">@DateTime.MinValue.ToShortDateString()</span>
+                                    <span id="startTime">@DateTime.Now.ToShortDateString()</span>
                                 }
                                 <input type="date" id="endTime" value="@item.DateModified" style="display:none" />
                             </td>
