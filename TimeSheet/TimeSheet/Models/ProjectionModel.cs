@@ -33,15 +33,15 @@ namespace TimeSheet.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime DateInvoiced { get; set; }
+        public DateTime? DateInvoiced { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime DateModified { get; set; }
+        public DateTime? DateModified { get; set; }
 
         public SelectList WarehouseList { get; set; }
         public SelectList SalesManagerList { get; set; }

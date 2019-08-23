@@ -6,6 +6,12 @@ using System.Web.Mvc;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
 
+using System.Configuration;
+
+using System.Net.Http;
+using System.Threading.Tasks;
+
+
 namespace TimeSheet.Controllers
 {
     public class ProjectionController : Controller
@@ -28,7 +34,7 @@ namespace TimeSheet.Controllers
                 
                 foreach (var x in listB)
                 {
-                    var itemToChange = listA.Find(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber) && d.OpportinutyId == x.OpportunityID);
+                    var itemToChange = listA.Find(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber) && d.OpportinutyId == x.OpportunityID && d.ServiceActivityId == x.ServiceActivityId);
                     if (itemToChange != null)
                     {
                         itemToChange.Activity = x.Activity;
@@ -130,35 +136,33 @@ namespace TimeSheet.Controllers
             {
                 if (data != null)
                 {
-                    var ProjectionEntryModelRecord = new ProjectionEntryModel()
+                    if (data.WarehouseID != 0)
                     {
-                        ProjectID = data.ProjectID,
-                        OpportunityID = data.OpportunityID,
-                        WarehouseId = data.WarehouseID,
-                        Quantity = data.Quantity,
-                        DateModified = data.DateModified,
-                        DateInvoiced = data.DateInvoiced,
-                        ActivityId = data.ActivityId,
-                        ServiceActivityId = data.ServiceActivityId,
-                        Comments = data.Comments,
-                        Created = System.DateTime.Now
+                        var ProjectionEntryModelRecord = new ProjectionEntryModel()
+                        {
+                            ProjectID = data.ProjectID,
+                            OpportunityID = data.OpportunityID,
+                            WarehouseId = data.WarehouseID,
+                            Quantity = data.Quantity,
+                            DateModified = data.DateModified,
+                            DateInvoiced = data.DateInvoiced,
+                            ActivityId = data.ActivityId,
+                            ServiceActivityId = data.ServiceActivityId,
+                            Comments = data.Comments,
+                            Created = System.DateTime.Now
+                        };
+                        var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
 
-                    };
+                    }
+                    else
+                    {
+                        Session["ErrorMessage"] = "Please Select Faciity to proceed.";
+                    }
 
-                    var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
+                   
                 }
             }
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Projection", new { });
-
-            try
-            {
-                // perform some action
-            }
-            catch (Exception)
-            {
-                return Json(new { Url = redirectUrl, status = "Error" });
-            }
-
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Projection", new { });            
             return Json(new { Url = redirectUrl, status = "OK" });
         }
     }
