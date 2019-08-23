@@ -16,7 +16,7 @@
     <div class="container" style="width:170%; padding-top:15px; margin-left: 1px; border-color:lightgray">
         
             <div id="MANAGEPROJECTION" >
-                <table class="table table-bordered table-responsive" id="MANAGEPROJECTION" >
+                <table class="table-bordered table-responsive-md text-center table-hover table-scroll" id="MANAGEPROJECTION" >
                     <thead style="background-color:#FFA500;color:white ">
                         <tr>
 
@@ -25,9 +25,9 @@
                             <th>PM</th>
                             <th>Services</th>
                             <th>Facility</th>
-                            <th>Allocate</th>
+                            <th>AllocatedDate</th>
                             <th>Quantity</th>
-                            <th>EstimatedInvoice</th>
+                            <th>EstimatedInvoiceDate</th>
                             <th>Comments</th>
                             <th style="width:10px"></th>
                             <th class="hidden"></th>
@@ -45,11 +45,11 @@
                             <td class="opportunity">
                                 <span id="txtOpportunityId">@Html.DisplayFor(modelItem => item.OpportunityNumber) </span>
                             </td>
-                            <td class="opportunity">
+                            <td class="PM">
                                 <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
                             </td>
-                            <td data-balloon-length="xlarge" aria-label='@item.Activity' data-balloon-pos="up">
-                                <input type="text" id="txtActivityDesc" value="@item.Activity" disabled="disabled" />
+                            <td data-balloon-length="xlarge" aria-label='@item.Activity' data-balloon-pos="up" >
+                                <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
 
 
                             </td>
@@ -57,15 +57,22 @@
                                 @{var isEmptyFacility = string.IsNullOrEmpty(@item.wareHouseName);}
                                 @if (isEmptyFacility)
                                 {
-                                    @Html.DropDownList("Warehouse", Model.WarehouseList, "Facility")
+                                    @Html.DropDownList("Warehouse", Model.WarehouseList, "Facility",new { id = "WarehouseID" })
                                 }
                                 else
                                 {
-                                    @Html.DropDownList("Warehouse", Model.WarehouseList, @item.wareHouseName)
+                                    @Html.DropDownList("Warehouse", Model.WarehouseList, @item.wareHouseName,new { id = "WarehouseID" })
                                 }
                             </td>
                             <td>
-                                <span id="startTime">@item.DateInvoiced</span>
+                                @if (item.DateInvoiced.HasValue)
+                                {
+                                    <span id="startTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                                }
+                                else
+                                {
+                                    <span id="startTime">@DateTime.MinValue.ToShortDateString()</span>
+                                }
                                 <input type="date" id="startTime" value="@item.DateInvoiced" style="display:none" />
                             </td>
                             <td>
@@ -74,8 +81,15 @@
                                 <input type="text" id="quantity" value="@item.ActualQuantity" style="display:none" />
                             </td>
                             <td>
-                                <span id="endTime">@item.DateInvoiced</span>
-                                <input type="date" id="endTime" value="@item.DateInvoiced" style="display:none" />
+                                @if (item.DateModified.HasValue)
+                                {
+                                    <span id="endTime">@item.DateModified.Value.ToShortDateString()</span>
+                                }
+                                else
+                                {
+                                    <span id="startTime">@DateTime.MinValue.ToShortDateString()</span>
+                                }
+                                <input type="date" id="endTime" value="@item.DateModified" style="display:none" />
                             </td>
                             <td class="commentsLine">
                                 <span id="comments">@item.Comments</span>
@@ -123,6 +137,7 @@
             if ($(this).find("input").length > 0) {
                 $(this).find("input").show();
                 $(this).find("span").hide();
+                 $(this).toggleClass('selected');
             }
         });
         row.find(".Update").show();
@@ -141,7 +156,7 @@
                 span.html(input.val());
                 span.show();
                 input.hide();
-               
+               $(this).removeClass('selected');
             }
         });
         row.find(".Edit").show();
@@ -154,14 +169,14 @@
         var loadUrl = '@Url.Action("UpdateProjectionModel", "Projection")';
     
         var model = {
-                    'OpportunityNumber' :row.find("span#txtOpportunityId").text(),
+                    'OpportunityId' :row.find("span#txtOpportunityId").text(),
                     'Quantity' : row.find("input#quantity").val(),
-                    'Created' : row.find("input#startTime").val(),
-                    'DateInvoiced': row.find("input#endTime").val(),
+                    'DateInvoiced' : row.find("input#startTime").val(),
+                    'DateModified': row.find("input#endTime").val(),
                     'WarehouseID': row.find("select#WarehouseID").val(),
                     'ServiceActivityId': row.find("#txtServiceActvty").val(),
                     'ActivityId': row.find("#txtActvty").val(),
-                    'Comments': row.find("#comments").val()
+                    'Comments': row.find("input#comments").val()
                     
                 };                      
         $.ajax({
@@ -187,6 +202,7 @@
                 var input = $(this).find("input");
                 //input.val(span.html());
                 span.show();
+                 $(this).removeClass('selected');
                 input.hide();
             }
         });
@@ -210,13 +226,7 @@
     }
 
     
-        color: #555555;
-        cursor: default;
-        background-color: orange;
-        border: 1px solid #dddddd;
-        border-bottom-color: transparent;
-    }
-
+       
     .form-group {
         margin-bottom: 2px;
         padding-right: 0;
@@ -291,50 +301,6 @@
         -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
         box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
     }
-
-
-    input[type="checkbox"] {
-        cursor: pointer;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        outline: 0;
-        background: lightgray;
-        height: 16px;
-        width: 16px;
-        border: 1px solid white;
-    }
-
-        input[type="checkbox"]:checked {
-            background: #2aa1c0;
-        }
-
-        input[type="checkbox"]:hover {
-            filter: brightness(90%);
-        }
-
-        input[type="checkbox"]:disabled {
-            background: #e6e6e6;
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        input[type="checkbox"]:after {
-            content: '';
-            position: relative;
-            left: 40%;
-            top: 20%;
-            width: 15%;
-            height: 40%;
-            border: solid #fff;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-            display: none;
-        }
-
-        input[type="checkbox"]:checked:after {
-            display: block;
-        }
         .commentsLine{
     max-width:50px;
     word-wrap:break-word;
@@ -343,5 +309,13 @@ input[type=text] {
   color: #000;
   background-color: #fff;
 }
+ .selected {
+        color: black;
+        background-color: lightgray;
+    }
+    .table-hover > tbody > tr:hover > td,
+    .table-hover > tbody > tr:hover > th {
+        background-color: lightgray;
+    }
 /*
 </style>

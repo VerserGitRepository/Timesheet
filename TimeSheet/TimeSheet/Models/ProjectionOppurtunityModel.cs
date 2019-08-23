@@ -19,8 +19,17 @@ namespace TimeSheet.Models
         public int ServiceActivityId { get; set; }
         public int ActivityId { get; set; }
         public string ServiceActivityDescription { get; set; }
-        public DateTime? DateAllocated { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? Created { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateInvoiced { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DateModified { get; set; }
+
+
         public string VerserBranch { get; set; }
         public string Activity { get; set; }
         public int ActualQuantity { get; set; }

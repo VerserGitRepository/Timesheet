@@ -17,7 +17,9 @@ namespace TimeSheet.Models
         public int WarehouseId { get; set; }
         public bool IsActive { get; set; }
         public int Quantity { get; set; }
+        public DateTime DateModified { get; set; }
         public DateTime Created { get; set; }
         public DateTime DateInvoiced { get; set; }
+        public string Comments { get; set; }
     }
 }

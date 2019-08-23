@@ -28,7 +28,7 @@ namespace TimeSheet.Controllers
                 
                 foreach (var x in listB)
                 {
-                    var itemToChange = listA.FirstOrDefault(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber));
+                    var itemToChange = listA.Find(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber) && d.OpportinutyId == x.OpportunityID);
                     if (itemToChange != null)
                     {
                         itemToChange.Activity = x.Activity;
@@ -36,10 +36,13 @@ namespace TimeSheet.Controllers
                         itemToChange.Comments = x.Comments;
                         itemToChange.OpportinutyId = x.OpportunityID;
                         itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
-                        itemToChange.DateInvoiced = x.Created;
                         itemToChange.DateInvoiced = x.DateInvoiced;
+                        itemToChange.DateModified = x.DateModified;
+                        itemToChange.Created = x.Created;
                         itemToChange.ProjectManager = x.ProjectManager;
                         itemToChange.wareHouseName = x.WarehouseName;
+                        itemToChange.ActualQuantity = x.Quantity;
+                       // itemToChange = null;
                     }
                         
                 }
@@ -133,11 +136,12 @@ namespace TimeSheet.Controllers
                         OpportunityID = data.OpportunityID,
                         WarehouseId = data.WarehouseID,
                         Quantity = data.Quantity,
-                        Created = data.Created,
+                        DateModified = data.DateModified,
                         DateInvoiced = data.DateInvoiced,
                         ActivityId = data.ActivityId,
                         ServiceActivityId = data.ServiceActivityId,
-                        OpportunityNumber = int.Parse(data.OpportunityNumber)
+                        Comments = data.Comments,
+                        Created = System.DateTime.Now
 
                     };
 
