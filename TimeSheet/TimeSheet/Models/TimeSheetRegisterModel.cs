@@ -40,6 +40,7 @@ namespace TimeSheet.Models
         [Required]
         public int? ProjectID { get; set; }       
  		public string JobNo { get; set; }
+        [Required]
         public int? JobID { get; set; }
     }
 }

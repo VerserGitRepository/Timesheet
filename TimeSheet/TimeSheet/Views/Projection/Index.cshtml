@@ -16,7 +16,7 @@
     <div class="container" style="width:170%; padding-top:15px; margin-left: 1px; border-color:lightgray">
         
             <div id="MANAGEPROJECTION" >
-                <table class="table-bordered table-responsive-md text-center table-hover table-scroll" id="MANAGEPROJECTION" >
+                <table class="table-bordered table-responsive-md text-center table-hover table-scroll" id="MANAGEPROJECTION" style="width:170%;">
                     <thead style="background-color:#FFA500;color:white ">
                         <tr>
 
@@ -75,7 +75,7 @@
                                 }
                                 <input type="date" id="startTime" value="@item.DateInvoiced" style="display:none" />
                             </td>
-                            <td>
+                            <td style="width:5%">
 
                                 <span>@Html.DisplayFor(modelItem => item.ActualQuantity)</span>
                                 <input type="text" id="quantity" value="@item.ActualQuantity" style="display:none" />
@@ -91,7 +91,7 @@
                                 }
                                 <input type="date" id="endTime" value="@item.DateModified" style="display:none" />
                             </td>
-                            <td class="commentsLine">
+                            <td class="commentsLine" style="width:40%">
                                 <span id="comments">@item.Comments</span>
                                 <input type="text" id="comments" value="@item.Comments" style="display:none" />
                             </td>

@@ -94,6 +94,27 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
+        public static async Task UpdateOpportunityModel(OpportunityListModel UpdateModel)
+        {
+            var ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("Administration/{0}/{1}/ManageOpportunities", UpdateModel.Id,UpdateModel.IsActive), UpdateModel).Result;
+                //HttpResponseMessage response1 = client.GetAsync(string.Format("ListItems/{0}/OpportunityActivities", OpportunityId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+
+            }
+
+        }
     }
 
 }
