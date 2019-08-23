@@ -76,7 +76,7 @@
                             @Html.Label("JobNo", htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="form-group col-md-8">
 
-                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.JobID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Job", new { @class = "form-control", id = "JobNumberID" })
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.JobID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Job", new { @class = "form-control", id = "JobID" })
 
                             </div>
                         </div>
@@ -227,7 +227,7 @@
 $('#ddlRegOpportunityNumberID').change(function () {
 
                     var ActivityUrl = '@Url.Action("JobNo", "ManageCalender")';
-                    var jobno = $('#JobNumberID');
+                     var jobno = $('#JobID');
                     var id = $(this).val();
                             $.getJSON(ActivityUrl, { OpportunityId: id }, function (response) {
                         jobno.empty();

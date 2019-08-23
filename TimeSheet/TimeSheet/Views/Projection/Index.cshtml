@@ -154,7 +154,7 @@
         var loadUrl = '@Url.Action("UpdateProjectionModel", "Projection")';
     
         var model = {
-                    'OpportunityNumber' :row.find("span#txtOpportunityId").text(),
+                    'OpportunityId' :row.find("span#txtOpportunityId").text(),
                     'Quantity' : row.find("input#quantity").val(),
                     'Created' : row.find("input#startTime").val(),
                     'DateInvoiced': row.find("input#endTime").val(),
