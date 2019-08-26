@@ -13,122 +13,141 @@
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
 
-    <div class="container" style="width:170%; padding-top:15px; margin-left: 1px; border-color:lightgray">
-        
-            <div id="MANAGEPROJECTION" >
-                <table class="table-bordered table-responsive-md text-center table-hover table-scroll" id="MANAGEPROJECTION" style="width:170%;">
-                    <thead style="background-color:#FFA500;color:white ">
-                        <tr>
+<div class="container" style="margin-left:0px">
+    <div class="row" id="MANAGEPROJECTION">
+        <div class="col-md-12">
+            <table class="table-bordered table-responsive-md text-center table-hover table-scroll" id="MANAGEPROJECTION">
+                <thead style="background-color:#FFA500;color:white ">
+                    <tr>
 
-                            <th>ProjectName</th>
-                            <th>Oppurtunity</th>
-                            <th>PM</th>
-                            <th>Services</th>
-                            <th>Facility</th>
-                            <th>AllocatedDate</th>
-                            <th>Quantity</th>
-                            <th>EstimatedInvoiceDate</th>
-                            <th>Comments</th>
-                            <th style="width:10px"></th>
-                            <th class="hidden"></th>
-                            <th class="hidden"></th>
+                        <th>ProjectName</th>
+                        <th>Oppurtunity</th>
+                        <th>PM</th>
+                        <th>Services</th>
+                        <th>Facility</th>
+                        <th>AllocatedDate</th>
+                        <th>Quantity</th>
+                        <th>EstimatedInvoiceDate</th>
+                        <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th style="width:10px"></th>
+                        <th class="hidden"></th>
+                        <th class="hidden"></th>
 
-                        </tr>
-                    </thead>
-                    <tbody class="table">
-                        @foreach (var item in Model.projectionOpportunityModel)
-                        {
-                        <tr>
-                            <td class="ProjectName">
-                                <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
-                            </td>
-                            <td class="opportunity">
-                                <span id="txtOpportunityId">@Html.DisplayFor(modelItem => item.OpportunityNumber) </span>
-                            </td>
-                            <td class="PM">
-                                <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
-                            </td>
-                            <td data-balloon-length="xlarge" aria-label='@item.Activity' data-balloon-pos="up" >
-                                <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
+                    </tr>
+                </thead>
+                <tbody class="table">
+                    @foreach (var item in Model.projectionOpportunityModel)
+                    {
+                    <tr>
+                        <td class="ProjectName">
+                            <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+                        </td>
+                        <td class="opportunity">
+                            <span id="txtOpportunityId">@Html.DisplayFor(modelItem => item.OpportunityNumber) </span>
+                        </td>
+                        <td class="PM">
+                            <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
+                        </td>
+                        <td data-balloon-length="xlarge" aria-label='@item.Activity' data-balloon-pos="up">
+                            <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
 
 
-                            </td>
-                            <td>
-                                @{var isEmptyFacility = string.IsNullOrEmpty(@item.wareHouseName);}
-                                @if (isEmptyFacility)
-                                {
-                                    @Html.DropDownList("Warehouse", Model.WarehouseList, "Facility",new { id = "WarehouseID" })
-                                }
-                                else
-                                {
-                                    @Html.DropDownList("Warehouse", Model.WarehouseList, @item.wareHouseName,new { id = "WarehouseID" })
-                                }
-                            </td>
-                            <td>
-                                @if (item.DateInvoiced.HasValue)
-                                {
-                                    <span id="startTime">@item.DateInvoiced.Value.ToShortDateString()</span>
-                                }
-                                else
-                                {
-                                    <span id="startTime">@DateTime.Now.ToShortDateString()</span>
-                                }
-                                <input type="date" id="startTime" value="@item.DateInvoiced" style="display:none" />
-                            </td>
-                            <td style="width:5%">
+                        </td>
+                        <td class="dropdownListTD">
 
-                                <span>@Html.DisplayFor(modelItem => item.ActualQuantity)</span>
-                                <input type="text" id="quantity" value="@item.ActualQuantity" style="display:none" />
-                            </td>
-                            <td>
-                                @if (item.DateModified.HasValue)
-                                {
-                                    <span id="endTime">@item.DateModified.Value.ToShortDateString()</span>
-                                }
-                                else
-                                {
-                                    <span id="startTime">@DateTime.Now.ToShortDateString()</span>
-                                }
-                                <input type="date" id="endTime" value="@item.DateModified" style="display:none" />
-                            </td>
-                            <td class="commentsLine" style="width:40%">
-                                <span id="comments">@item.Comments</span>
-                                <input type="text" id="comments" value="@item.Comments" style="display:none" />
-                            </td>
-                            <td>
-                                <a class="Edit" href="javascript:;">Edit</a>
-                                <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
-                                @*<a class="Delete" href="javascript:;">Delete</a>*@
-                            </td>
-                            <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
-                            <td class="hidden"><input type="text" id="txtActvty" value="@item.ActivityId" /></td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
+                            @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
+                            
+                            <input class ="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
+                            
+                        </td>
+                        <td>
+                            @if (item.DateInvoiced.HasValue)
+                            {
+                                <span id="startTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                            }
+                            else
+                            {
+                                <span id="startTime">@DateTime.Now.ToShortDateString()</span>
+                            }
+                            <input type="date" id="startTime" value="@item.DateInvoiced" style="display:none" />
+                        </td>
+                        <td>
 
-            </div>
+                            <span>@Html.DisplayFor(modelItem => item.ActualQuantity)</span>
+                            <input type="text" id="quantity" class="txtQuantity" value="@item.ActualQuantity" style="display:none" />
+                        </td>
+                        <td>
+                            @if (item.DateModified.HasValue)
+                            {
+                                <span id="endTime">@item.DateModified.Value.ToShortDateString()</span>
+                            }
+                            else
+                            {
+                                <span id="startTime">@DateTime.Now.ToShortDateString()</span>
+                            }
+                            <input type="date" id="endTime" value="@item.DateModified" style="display:none" />
+                        </td>
+                        <td class="commentsLine">
+                            <span id="comments">@item.Comments</span>
+                            <input type="text" id="comments" value="@item.Comments" style="display:none" />
+                        </td>
+                        <td>
+                            <a class="Edit" href="javascript:;">Edit</a>
+                            <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                        <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
+                        <td class="hidden"><input type="text" id="txtActvty" value="@item.ActivityId" /></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
 
 
     </div>
+    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
-    <script type="text/javascript">
-    </script>
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+        <script type="text/javascript">
+        </script>
+    }
 <script language="javascript" type="text/javascript">
-
+        function InsertSpaces(value) {
+            var emptySpaceString = "";
+            for (i = 0; i < value; i++)
+            {
+                emptySpaceString +="&nbsp;"
+            }
+            return emptySpaceString;
+        }
     $(document).ready(function () {
-          $('table#MANAGEPROJECTION').DataTable();
-       
+        $('table#MANAGEPROJECTION').DataTable();
+        SetDDLValue();
+
     });
 
+      
+    function SetDDLValue() {
+       
+        $("tbody tr td.dropdownListTD").each(function LoopTR() {
+            var ratingTdText = $(this);            
+            if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                 $(ratingTdText).find("#ddlWarehouseID option").each(function(i){
+                     //alert($(ratingTdText).find("#hdnddlLidt").val());
+                     if (($(this).text() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                         $(this).attr('selected','selected')
+                     }
+                });
+            }
 
-
-          
+        });
+    }
+       
 
     //Edit event handler.
     $("body").on("click", "#MANAGEPROJECTION .Edit", function () {
@@ -160,25 +179,28 @@
             }
         });
         row.find(".Edit").show();
-     
+
 
         row.find(".Cancel").hide();
         $(this).hide();
-        
+
         var ProjectionModel = {};
         var loadUrl = '@Url.Action("UpdateProjectionModel", "Projection")';
-    
+        if (row.find("select#ddlWarehouseID").val() == "") {
+            alert("Please select Facility to Proceed.")
+            return;
+        }
         var model = {
                     'OpportunityId' :row.find("span#txtOpportunityId").text(),
                     'Quantity' : row.find("input#quantity").val(),
                     'DateInvoiced' : row.find("input#startTime").val(),
                     'DateModified': row.find("input#endTime").val(),
-                    'WarehouseID': row.find("select#WarehouseID").val(),
+                    'WarehouseID': row.find("select#ddlWarehouseID").val(),
                     'ServiceActivityId': row.find("#txtServiceActvty").val(),
                     'ActivityId': row.find("#txtActvty").val(),
                     'Comments': row.find("input#comments").val()
-                    
-                };                      
+
+                };
         $.ajax({
             data: model,
             url: '@Url.Action("UpdateProjectionModel", "Projection")',
@@ -211,30 +233,119 @@
         row.find(".Update").hide();
         row.find("input#txtActivityDesc").show();
         $(this).hide();
-       
+
     });
 </script>
 
 
-<style>
+    <style>
 
-    .textarea {
-        max-width: 280px;
-        font-size: 10px;
-        border: 2px;
-        outline: 2px;
+        .textarea {
+            max-width: 280px;
+            font-size: 10px;
+            border: 2px;
+            outline: 2px;
+        }
+
+        .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+            background-color: #FFA500;
+            border-color: white;
+        }
+
+
+        .page-item.active .page-link {
+            color: white !important;
+            background-color: orange !important;
+            border-color: gray !important;
+        }
+
+
+
+        /* Active State */
+        .x-tab-pane > .active > a, .x-tab-pane > .active > a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .form-group {
+            margin-bottom: 2px;
+            padding-right: 0;
+            padding-left: 0;
+            font-size: 10px;
+            border-radius: 9px;
+            padding-bottom: 2px;
+            margin-top: 0px;
+        }
+
+
+        .row-group {
+            width: 47%;
+            min-height: 100px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-bottom: 20px;
+            background-color: whitesmoke;
+            border: 1px solid #e3e3e3;
+            border-radius: 2px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        }
+
+        .commentsLine {
+            max-width: 50px;
+            word-wrap: break-word;
+        }
+        .txtQuantity {
+            width: 30px;
+            
+        }
+
+        input[type=text] {
+            color: #000;
+            background-color: #fff;
+        }
+
+        .selected {
+            color: black;
+            background-color: lightgray;
+        }
+
+        .table-hover > tbody > tr:hover > td,
+        .table-hover > tbody > tr:hover > th {
+            background-color: lightgray;
+        }
+        .row {
+        width: 112%;
     }
 
-    
-       
-    .form-group {
-        margin-bottom: 2px;
-        padding-right: 0;
-        padding-left: 0;
-        font-size: 10px;
-        border-radius: 9px;
-        padding-bottom: 2px;
-        margin-top: 0px;
+    .body-content {
+        padding-left: 0px;
+        padding-right: 0px;
+        max-width: 100%;
+    }
+
+    .container {
+        padding-left: 0px;
+        padding-right: 5px;
+        max-width: 100%;
+    }
+
+    .dataTables_filter {
+        float: right;
+    }
+
+    .modal-header {
+        border-bottom: 0 none;
+    }
+
+    .modal-footer {
+        border-top: 0 none;
+    }
+
+    .glyphicon {
+        font-size: 14px;
+        color: lightgray;
     }
 
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
@@ -249,73 +360,8 @@
         border-color: gray !important;
     }
 
-
-
-    /* Active State */
-    .x-tab-pane > .active > a, .x-tab-pane > .active > a:hover {
-        background-color: #f0f0f0;
-    }
-
-    .tab-pane {
-        border-left: 1px solid #ddd;
-        border-right: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
-        border-top: 1px solid #ddd;
-        border-radius: 0px 0px 5px 5px;
-        padding: 10px;
-    }
-
-    .form-control {
-        margin-bottom: 2px;
-        padding-right: 0;
-        padding-left: 0;
-        font-size: 12px;
-        font-family: Arial;
-        border-radius: 9px;
-        padding-bottom: 2px;
-        margin-top: 0px;
-    }
-
-    .form-group {
-        margin-bottom: 2px;
-        padding-right: 0;
-        padding-left: 0;
-        font-size: 10px;
-        border-radius: 9px;
-        padding-bottom: 2px;
-        margin-top: 0px;
-    }
-
-
-    .row-group {
-        width: 47%;
-        min-height: 100px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 5px;
-        padding-right: 5px;
-        margin-bottom: 20px;
-        background-color: whitesmoke;
-        border: 1px solid #e3e3e3;
-        border-radius: 2px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
-    }
-        .commentsLine{
-    max-width:50px;
-    word-wrap:break-word;
-}
-input[type=text] {
-  color: #000;
-  background-color: #fff;
-}
- .selected {
+    .black {
         color: black;
-        background-color: lightgray;
     }
-    .table-hover > tbody > tr:hover > td,
-    .table-hover > tbody > tr:hover > th {
-        background-color: lightgray;
-    }
-/*
-</style>
+        /*
+    </style>

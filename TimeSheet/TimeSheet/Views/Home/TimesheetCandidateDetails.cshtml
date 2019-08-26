@@ -156,8 +156,7 @@
 
     //Update event handler.
     $("body").on("click", "#tblCustomers .Update", function () {
-        debugger;
-        var row = $(this).closest("tr");
+                var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
@@ -173,7 +172,7 @@
         $(this).hide();
 
         var CandidateEdit = {};
-        debugger;
+        
         CandidateEdit.Id = row.find(".Id").find("span").html();
         CandidateEdit.ActualQuantity = row.find(".ActualQuantity").find("span").html();
         CandidateEdit.TimeSheetComments = row.find(".TimeSheetComments").find("span").html();
