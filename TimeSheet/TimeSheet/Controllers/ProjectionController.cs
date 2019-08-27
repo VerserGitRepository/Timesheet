@@ -43,7 +43,7 @@ namespace TimeSheet.Controllers
                         itemToChange.OpportinutyId = x.OpportunityID;
                         itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
                         itemToChange.DateInvoiced = x.DateInvoiced;
-                        itemToChange.DateModified = x.DateModified;
+                        itemToChange.DateAllocated = x.DateAllocated;
                         itemToChange.Created = x.Created;
                         itemToChange.ProjectManager = x.ProjectManager;
                         itemToChange.wareHouseName = x.WarehouseName;
@@ -144,12 +144,12 @@ namespace TimeSheet.Controllers
                             OpportunityID = data.OpportunityID,
                             WarehouseId = data.WarehouseID,
                             Quantity = data.Quantity,
-                            DateModified = data.DateModified,
+                            DateAllocated = data.DateAllocated,
                             DateInvoiced = data.DateInvoiced,
                             ActivityId = data.ActivityId,
                             ServiceActivityId = data.ServiceActivityId,
-                            Comments = data.Comments,
-                            Created = System.DateTime.Now
+                            Comments = data.Comments
+                           
                         };
                         var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
 

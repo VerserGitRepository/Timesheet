@@ -42,6 +42,9 @@ namespace TimeSheet.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateModified { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DateAllocated { get; set; }
 
         public SelectList WarehouseList { get; set; }
         public SelectList SalesManagerList { get; set; }

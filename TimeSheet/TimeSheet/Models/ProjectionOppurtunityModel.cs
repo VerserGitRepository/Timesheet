@@ -28,7 +28,9 @@ namespace TimeSheet.Models
         public DateTime? DateInvoiced { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateModified { get; set; }
-
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DateAllocated { get; set; }
 
         public string VerserBranch { get; set; }
         public string Activity { get; set; }
