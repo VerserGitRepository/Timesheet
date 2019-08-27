@@ -24,6 +24,8 @@ namespace TimeSheet.Models
         public DateTime? Created { get; set; }
         [Required]
         public DateTime? DateInvoiced { get; set; }
+        [Required]
+        public DateTime? DateAllocated { get; set; }
         public string Comments { get; set; }
     }
 }

@@ -61,15 +61,15 @@
                             
                         </td>
                         <td>
-                            @if (item.DateInvoiced.HasValue)
+                            @if (item.DateAllocated.HasValue)
                             {
-                                <span id="startTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                                <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
                             }
                             else
                             {
                                 <span id="startTime">@DateTime.Now.ToShortDateString()</span>
                             }
-                            <input type="date" id="startTime" value="@item.DateInvoiced" style="display:none" />
+                            <input type="date" id="startTime" value="@item.DateAllocated" style="display:none" />
                         </td>
                         <td>
 
@@ -77,15 +77,15 @@
                             <input type="text" id="quantity" class="txtQuantity" value="@item.ActualQuantity" style="display:none" />
                         </td>
                         <td>
-                            @if (item.DateModified.HasValue)
+                            @if (item.DateInvoiced.HasValue)
                             {
-                                <span id="endTime">@item.DateModified.Value.ToShortDateString()</span>
+                                <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
                             }
                             else
                             {
                                 <span id="startTime">@DateTime.Now.ToShortDateString()</span>
                             }
-                            <input type="date" id="endTime" value="@item.DateModified" style="display:none" />
+                            <input type="date" id="endTime" value="@item.DateInvoiced" style="display:none" />
                         </td>
                         <td class="commentsLine">
                             <span id="comments">@item.Comments</span>
@@ -193,8 +193,8 @@
         var model = {
                     'OpportunityId' :row.find("span#txtOpportunityId").text(),
                     'Quantity' : row.find("input#quantity").val(),
-                    'DateInvoiced' : row.find("input#startTime").val(),
-                    'DateModified': row.find("input#endTime").val(),
+                    'DateAllocated' : row.find("input#startTime").val(),
+                    'DateInvoiced': row.find("input#endTime").val(),
                     'WarehouseID': row.find("select#ddlWarehouseID").val(),
                     'ServiceActivityId': row.find("#txtServiceActvty").val(),
                     'ActivityId': row.find("#txtActvty").val(),
