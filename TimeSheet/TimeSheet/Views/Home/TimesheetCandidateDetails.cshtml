@@ -3,7 +3,7 @@
 
 
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1229px">
+    <div class="modal-header" style="background-color:lightgray;width:1228px">
         <h5 class="modal-title text-center">Resource Details</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
@@ -14,8 +14,9 @@
                     <th>Id</th>
                     <th>CandidateName</th>
                     <th>Activity</th>
-                    <th style="width:50px">BookDate </th>
+                    <th style="width:50px">StartDate </th>
                     <th>StartTime</th>
+                    <th style="width:50px">EndDate </th>
                     <th>EndTime</th>
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
@@ -27,51 +28,58 @@
             <tbody class="table">
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
-                    <tr>
-                        <td class="Id"> <span>@item.Id</span> </td>
+                <tr>
+                    <td class="Id"> <span>@item.Id</span> </td>
 
-                        <td class="CandidateName">
-                            @Html.DisplayFor(modelItem => item.CandidateName)
-                        </td>
-                        <td class="Activity">
-                            @Html.DisplayFor(modelItem => item.Activity)
-                        </td>
-                        <td width="7%">
-                            @Html.DisplayFor(modelItem => item.Day)
-                        </td>
+                    <td class="CandidateName">
+                        @Html.DisplayFor(modelItem => item.CandidateName)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Activity)
+                    </td>
 
-                        <td class="StartTime">
-                            <span>@item.StartTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                        </td>
+                    <td class="Day" width="7%">
+                        <span>@item.Day.Value.ToShortDateString()</span>
+                        <input type="date" id="Day" value="@item.Day.Value.ToString("dd/MM/yyyy")" style="display:none" />
 
-                        <td class="EndTime">
-                            <span>@item.EndTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                        </td>
+                    </td>
 
-                        <td class="OLATarget">
-                            @Html.DisplayFor(modelItem => item.OLATarget)
-                        </td>
-                        <td class="ActualQuantity">
-                            <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" value="@item.ActualQuantity" style="display:none;width:30px" />
-                        </td>
-                        <td class="Status">
-                            <span text="Status" span />
-                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status")
-                        </td>
-                        <td class="TimeSheetComments">
-                            <span>@item.TimeSheetComments</span>
-                            <input type="text" value="@item.TimeSheetComments" style="display:none" />
-                        </td>
-                        <td width="5%">
-                            <a class="Edit" href="javascript:;">Edit</a>
-                            <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
-                            @*<a class="Delete" href="javascript:;">Delete</a>*@
-                        </td>
-                    </tr>
+                    <td class="StartTime">
+                        <span>@item.StartTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                    </td>
+                    <td class="EndDate" width="8%">
+                        @Html.DisplayFor(modelItem => item.EndDate)
+
+                    </td>
+               
+                    <td class="EndTime" width="8%">
+                        <span>@item.EndTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                    </td>
+
+                    <td class="OLATarget">
+                        @Html.DisplayFor(modelItem => item.OLATarget)
+                    </td>
+                    <td class="ActualQuantity">
+                        <span style="width:2px">@item.ActualQuantity</span>
+                        <input type="text" value="@item.ActualQuantity" style="display:none;width:30px" />
+                    </td>
+                    <td class="Status">
+                        <span text="Status" span />
+                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status")
+                    </td>
+                    <td class="TimeSheetComments">
+                        <span>@item.TimeSheetComments</span>
+                        <input type="text" value="@item.TimeSheetComments" style="display:none" />
+                    </td>
+                    <td width="5%">
+                        <a class="Edit" href="javascript:;">Edit</a>
+                        <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                        @*<a class="Delete" href="javascript:;">Delete</a>*@
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -104,7 +112,7 @@
     //    });
     //});
 
-    function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime) {
+    function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
 
@@ -120,6 +128,13 @@
         $(".TimeSheetComments", row).find("span").html(TimeSheetComments);
         $(".TimeSheetComments", row).find("input").val(TimeSheetComments);
 
+        //Bind Name.
+        $(".Day", row).find("span").html(Day);
+        $(".Day", row).find("input").val(Day);
+
+        ////Bind Name.
+        $(".EndDate", row).find("span").html(EndDate);
+        $(".EndDate", row).find("input").val(EndDate);
         //Bind Country.
         $(".StartTime", row).find("span").html(StartTime);
         $(".StartTime", row).find("input").val(StartTime);
@@ -127,8 +142,6 @@
         //Bind Name.
         $(".EndTime", row).find("span").html(EndTime);
         $(".EndTime", row).find("input").val(EndTime);
-
-
 
         row.find(".Edit").show();
         row.find(".Delete").show();
@@ -178,6 +191,9 @@
         CandidateEdit.TimeSheetComments = row.find(".TimeSheetComments").find("span").html();
         CandidateEdit.StartTime = row.find(".StartTime").find("span").html();
         CandidateEdit.EndTime = row.find(".EndTime").find("span").html();
+        CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
+        CandidateEdit.Day = row.find(".Day").find("span").html();
+       
         $.ajax({
             type: "POST",
             url: "./UpdateCandidate",
@@ -189,6 +205,9 @@
 
 
 
+    $("#myModal").draggable({
+        handle: ".modal-header"
+    });
 
 
     //Cancel event handler.

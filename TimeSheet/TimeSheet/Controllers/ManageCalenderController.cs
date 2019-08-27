@@ -134,12 +134,15 @@ namespace TimeSheet.Controllers
             {
                 TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
 
-                 string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
+                string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
+
+                string EnddateString = String.Format("{0:dd/MM/yyyy}", theModel.EndDate);
+
                 string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
                 string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
 
                 string dtSt = dateString + " " + StartTimeString;
-                string dtEn = dateString + " " + EndTimeString;
+                string dtEn = EnddateString + " " + EndTimeString;
 
                 var StartdateTime = Convert.ToDateTime(dtSt);
                 var EnddateTime = Convert.ToDateTime(dtEn);
@@ -147,6 +150,7 @@ namespace TimeSheet.Controllers
                 regModel.CandidateNameId = theModel.ResourceIDs[i];
                 regModel.Colour = theModel.Colour;
                 regModel.Day = theModel.Day;
+                regModel.EndDate = theModel.EndDate;
                 regModel.EndTime = EnddateTime;
                 regModel.Id = theModel.Id;
                 regModel.OLATarget = theModel.OLATarget;

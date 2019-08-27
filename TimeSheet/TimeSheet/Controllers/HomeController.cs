@@ -147,14 +147,19 @@ namespace TimeSheet.Controllers
                 if ( EditModel.Day != null && EditModel.StartTime != null && EditModel.EndTime != null)
                 {
                     string dateString = String.Format("{0:dd/MM/yyyy}", EditModel.Day.Value.Date);
+                    string EnddateString = String.Format("{0:dd/MM/yyyy}", EditModel.EndDate.Value.Date);
                     string StartTimeString = String.Format("{0:HH:mm}", EditModel.StartTime.Value);
                     string EndTimeString = String.Format("{0:HH:mm}", EditModel.EndTime.Value);
+
                     string dtSt = dateString + " " + StartTimeString;
-                    string dtEn = dateString + " " + EndTimeString;
+                    string dtEn = EnddateString + " " + EndTimeString;
                     var StartdateTime = Convert.ToDateTime(dtSt);
                     var EnddateTime = Convert.ToDateTime(dtEn);
+
                     EditModel.StartTime = StartdateTime;
-                    EditModel.EndTime = EnddateTime;                    
+                    EditModel.EndTime = EnddateTime;
+                    EditModel.Day = StartdateTime;
+                    EditModel.EndDate = EnddateTime;
                 }  
                 var ReturnValue = RegisterTimesheetService.EditTimesheetModel(EditModel);
             }
