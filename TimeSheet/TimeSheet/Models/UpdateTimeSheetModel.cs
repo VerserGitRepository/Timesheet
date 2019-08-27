@@ -29,7 +29,7 @@ namespace TimeSheet.Models
         //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 
         public DateTime? Day { get; set; }
-
-        public DateTime? EndDate { get; set; }
+        
+   
     }
 }
