@@ -163,7 +163,7 @@
                 $.ajax({
                     type: "POST",
                     url: "./SearchEvents",
-                    data: { 'candidateId': $('#ddlCandidateId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#ddlOpportunityId').val() },
+                    data: { 'candidateId': $('#ResourceID').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#OpportunityNumberID').val() },                 
                     success: function (data) {
                         $.each(data, function (i, v) {
                             events.push({
