@@ -33,6 +33,10 @@ namespace TimeSheet.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? EndDate { get; set; }
         public int? OpportunityID { get; set; }
         public SelectList OpportunityNumberList { get; set; }
         public int? WarehouseID { get; set; }

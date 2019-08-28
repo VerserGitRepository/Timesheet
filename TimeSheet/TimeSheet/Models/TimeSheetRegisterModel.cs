@@ -22,7 +22,10 @@ namespace TimeSheet.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day { get; set; }
-
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? EndDate { get; set; }
         public int? OLATarget { get; set; }
         public int? ActualQuantity { get; set; }
         public string TimeSheetComments { get; set; }        
