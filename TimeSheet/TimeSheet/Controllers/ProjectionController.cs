@@ -152,7 +152,7 @@ namespace TimeSheet.Controllers
                             IsAdd = data.IsAdd
                            
                         };
-                        //var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
+                        var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
 
                     }
                     else
