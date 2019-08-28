@@ -93,7 +93,8 @@
                         </td>
                         <td>
                             <a class="Edit" href="javascript:;">Edit</a>
-                            <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                            <a class="Add" onclick="Register(this,true);" href="javascript:;" style="display:none">Add</a>
+                            <a class="Update" onclick="Register(this,false);" href="javascript:;" style="display:none" id="Update">Update</a>
                             <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
                             @*<a class="Delete" href="javascript:;">Delete</a>*@
                         </td>
@@ -161,13 +162,22 @@
         });
         row.find(".Update").show();
         row.find(".Cancel").show();
+        row.find(".Add").show();
 
         $(this).hide();
     });
 
     //Update event handler.
-    $("body").on("click", "#MANAGEPROJECTION .Update", function () {
-        var row = $(this).closest("tr");
+    //$("body").on("click", "#MANAGEPROJECTION .Update", Register());
+    //$("body").on("click", "#MANAGEPROJECTION .Add", Register());
+    //Cancel event handler.
+
+    function Register(theRow,isAdd) 
+    {
+        //if(isAdd)
+        //alert('test');
+        //return;
+        var row = $(theRow).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
@@ -180,12 +190,12 @@
         });
         row.find(".Edit").show();
 
-
+        row.find(".Add").hide();
         row.find(".Cancel").hide();
         $(this).hide();
 
         var ProjectionModel = {};
-        var loadUrl = '@Url.Action("UpdateProjectionModel", "Projection")';
+        var loadUrl = '@Url.Action("AddOrUpdateProjectionModel", "Projection")';
         if (row.find("select#ddlWarehouseID").val() == "") {
             alert("Please select Facility to Proceed.")
             return;
@@ -198,12 +208,13 @@
                     'WarehouseID': row.find("select#ddlWarehouseID").val(),
                     'ServiceActivityId': row.find("#txtServiceActvty").val(),
                     'ActivityId': row.find("#txtActvty").val(),
-                    'Comments': row.find("input#comments").val()
+                    'Comments': row.find("input#comments").val(),
+                    'IsAdd' : isAdd
 
                 };
         $.ajax({
             data: model,
-            url: '@Url.Action("UpdateProjectionModel", "Projection")',
+            url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
             type: "POST",
             success:function(data) {
                 if (data.status === 'OK') {
@@ -214,8 +225,7 @@
                 }
             }
         });
-    });
-    //Cancel event handler.
+    }
     $("body").on("click", "#MANAGEPROJECTION .Cancel", function () {
         var row = $(this).closest("tr");
         $("td", row).each(function () {
@@ -229,7 +239,7 @@
             }
         });
         row.find(".Edit").show();
-        //row.find(".Delete").show();
+        row.find(".Add").hide();
         row.find(".Update").hide();
         row.find("input#txtActivityDesc").show();
         $(this).hide();
