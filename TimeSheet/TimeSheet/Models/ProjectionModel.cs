@@ -62,6 +62,7 @@ namespace TimeSheet.Models
         public string PriceperUnit { get; set; }
         public double PriceperUnitTotal => Convert.ToDouble(Quantity) * Convert.ToDouble(PriceperUnit);
         public List<OpportunityListModel> OpportunityList { get; set; }
-      
+        public bool IsAdd { get; set; }
+
     }
 }

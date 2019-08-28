@@ -124,7 +124,7 @@ namespace TimeSheet.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProjectionModel(ProjectionModel data)
+        public ActionResult AddOrUpdateProjectionModel(ProjectionModel data)
         {
             ProjectionModel model = new ProjectionModel();
 
@@ -148,7 +148,8 @@ namespace TimeSheet.Controllers
                             DateInvoiced = data.DateInvoiced,
                             ActivityId = data.ActivityId,
                             ServiceActivityId = data.ServiceActivityId,
-                            Comments = data.Comments
+                            Comments = data.Comments,
+                            IsAdd = data.IsAdd
                            
                         };
                         var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
