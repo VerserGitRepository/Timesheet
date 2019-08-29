@@ -207,6 +207,7 @@
                 $.ajax({
                     type: "POST",
                     url: "./SearchEvents",
+
                     data: { 'ProjectId': $('#ddlProjectId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#OpportunityID').val(),'ResourceIds': $('#CandidateNameId').val() },
                     success: function (data) {
                         $.each(data, function (i, v) {
