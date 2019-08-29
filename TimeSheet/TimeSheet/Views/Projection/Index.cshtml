@@ -25,11 +25,11 @@
                         <th>PM</th>
                         <th>Services</th>
                         <th>Facility</th>
-                        <th>AllocatedDate</th>
+                        <th>ActivityDate</th>
                         <th>Quantity</th>
                         <th>EstimatedInvoiceDate</th>
                         <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        <th style="width:10px"></th>
+                        <th style="width:20px"></th>
                         <th class="hidden"></th>
                         <th class="hidden"></th>
 
@@ -61,15 +61,27 @@
                             
                         </td>
                         <td>
-                            @if (item.DateAllocated.HasValue)
+                            @if (item.ActualQuantity > 0)
                             {
-                                <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
+                                if (item.DateAllocated.HasValue)
+                                {
+                                    <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
+                                    @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+
+
+                                }
+                                else
+                                {
+                                    <span id="startTime"></span>
+                                    @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                                }
                             }
                             else
                             {
-                                <span id="startTime">@DateTime.Now.ToShortDateString()</span>
+                                <span id="startTime"></span>
+                                @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
                             }
-                            <input type="date" id="startTime" value="@item.DateAllocated" style="display:none" />
+
                         </td>
                         <td>
 
@@ -77,25 +89,50 @@
                             <input type="text" id="quantity" class="txtQuantity" value="@item.ActualQuantity" style="display:none" />
                         </td>
                         <td>
-                            @if (item.DateInvoiced.HasValue)
+
+                            @if (item.ActualQuantity > 0)
                             {
-                                <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                                if (item.DateInvoiced.HasValue)
+                                {
+                                    <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                                    @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+
+
+                                }
+                                else
+                                {
+                                    <span id="endTime"></span>
+                                    @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                                }
                             }
                             else
                             {
-                                <span id="startTime">@DateTime.Now.ToShortDateString()</span>
+                                <span id="endTime"></span>
+                                @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
                             }
-                            <input type="date" id="endTime" value="@item.DateInvoiced" style="display:none" />
+
                         </td>
                         <td class="commentsLine">
                             <span id="comments">@item.Comments</span>
                             <input type="text" id="comments" value="@item.Comments" style="display:none" />
                         </td>
                         <td>
-                            <a class="Edit" href="javascript:;">Edit</a>
-                            <a class="Add" onclick="Register(this,true);" href="javascript:;" style="display:none">Add</a>
-                            <a class="Update" onclick="Register(this,false);" href="javascript:;" style="display:none" id="Update">Update</a>
-                            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                            <a href="#"  class="Change btn btn-primary a-btn-slide-text">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Change</strong></span>
+                            </a>
+                            <a href="#" onclick="Register(this,true);" class="Add btn btn-primary a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span><strong>Add</strong></span>
+                            </a>
+                            <a href="#" onclick="Register(this,false);" class="Update btn btn-primary a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
+                            <a href="#" class="Cancel btn btn-primary a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
                             @*<a class="Delete" href="javascript:;">Delete</a>*@
                         </td>
                         <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
@@ -130,6 +167,7 @@
         $('table#MANAGEPROJECTION').DataTable();
         SetDDLValue();
 
+
     });
 
       
@@ -151,8 +189,9 @@
        
 
     //Edit event handler.
-    $("body").on("click", "#MANAGEPROJECTION .Edit", function () {
+    $("body").on("click", "#MANAGEPROJECTION .Change", function () {
         var row = $(this).closest("tr");
+     
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
                 $(this).find("input").show();
@@ -178,26 +217,48 @@
         //alert('test');
         //return;
         var row = $(theRow).closest("tr");
-        $("td", row).each(function () {
-            if ($(this).find("input").length > 0) {
-                var span = $(this).find("span");
-                var input = $(this).find("input");
-                span.html(input.val());
-                span.show();
-                input.hide();
-               $(this).removeClass('selected');
-            }
-        });
-        row.find(".Edit").show();
+        //$("td", row).each(function () {
+        //    if ($(this).find("input").length > 0) {
+        //        var span = $(this).find("span");
+        //        var input = $(this).find("input");
+        //        span.html(input.val());
+        //        span.show();
+        //        input.hide();
+        //       $(this).removeClass('selected');
+        //    }
+        //});
+        row.find(".Change").show();
 
         row.find(".Add").hide();
+        row.find(".Update").hide();
         row.find(".Cancel").hide();
         $(this).hide();
 
         var ProjectionModel = {};
+        var validationFailed = false;
         var loadUrl = '@Url.Action("AddOrUpdateProjectionModel", "Projection")';
         if (row.find("select#ddlWarehouseID").val() == "") {
-            alert("Please select Facility to Proceed.")
+            alert("Please select Facility to Proceed.");
+          $(row).addClass('highlight_row')
+            validationFailed = true;
+           span.show();
+           input.hide();
+            return;
+        }
+        if ( row.find("input#endTime").val()== "") {
+            alert("Please select InvoicedDate to Proceed.");
+           $(row).addClass('highlight_row')
+            validationFailed = true;
+             span.show();
+            input.hide();
+            return;
+        }
+        if ( row.find("input#startTime").val()== "") {
+            alert("Please select AllocatedDate to Proceed.");
+            $(row).addClass('highlight_row')
+            validationFailed = true;
+            span.show();
+           input.hide();
             return;
         }
         var model = {
@@ -211,20 +272,22 @@
                     'Comments': row.find("input#comments").val(),
                     'IsAdd' : isAdd
 
-                };
-        $.ajax({
-            data: model,
-            url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
-            type: "POST",
-            success:function(data) {
-                if (data.status === 'OK') {
-                    window.location.href = data.Url
+        };
+        if (!validationFailed) {
+            $.ajax({
+                data: model,
+                url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
+                type: "POST",
+                success: function (data) {
+                    if (data.status === 'OK') {
+                        window.location.href = data.Url
+                    }
+                    else {
+                        alert("The status cannot be updated at this time");
+                    }
                 }
-                else {
-                    alert("The status cannot be updated at this time");
-                }
-            }
-        });
+            });
+        }
     }
     $("body").on("click", "#MANAGEPROJECTION .Cancel", function () {
         var row = $(this).closest("tr");
@@ -238,13 +301,18 @@
                 input.hide();
             }
         });
-        row.find(".Edit").show();
+        row.find(".Change").show();
         row.find(".Add").hide();
         row.find(".Update").hide();
         row.find("input#txtActivityDesc").show();
         $(this).hide();
 
     });
+    function SpanShow() {
+        span.show();
+                 $(this).removeClass('selected');
+                input.hide();
+    }
 </script>
 
 
@@ -373,5 +441,22 @@
     .black {
         color: black;
     }
-        /*
+      .highlight_row {
+            background-color:#CCC; 
+            color:black;
+        }
+
+ a.btn:hover {
+     -webkit-transform: scale(0.8);
+     -moz-transform: scale(0.8);
+     -o-transform: scale(0.8);
+ }
+ a.btn {
+     -webkit-transform: scale(0.6);
+     -moz-transform: scale(0.6);
+     -o-transform: scale(0.6);
+     -webkit-transition-duration: 0.5s;
+     -moz-transition-duration: 0.5s;
+     -o-transition-duration: 0.5s;
+ }
     </style>
