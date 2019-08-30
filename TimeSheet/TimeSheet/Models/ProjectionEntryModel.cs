@@ -27,5 +27,6 @@ namespace TimeSheet.Models
         [Required]
         public DateTime? DateAllocated { get; set; }
         public string Comments { get; set; }
+        public bool IsAdd { get; set; }
     }
 }

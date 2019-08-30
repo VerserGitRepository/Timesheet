@@ -1,33 +1,41 @@
 ﻿@model TimeSheet.Models.TimeSheetViewModel
 @{ViewBag.Title = "ManageTimeSheet";}
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+<link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
+
 <div class="container" style="margin-left:0px;width:100%;">
-    <div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:0px;">
-        <div class="pull-right">
+    <div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:250px;">
+        <div class="pull-left">
             <div class="form-group col-md-2" style="width:18%">
-                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project" })
+                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId" })
             </div>
             <div class="form-group col-md-3" style="width:22%">
                 @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID" })
             </div>
-            <div class="form-group col-md-2"style="width:18%">
+            <div class="form-group col-md-2" style="width:18%">
                 @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
             </div>
-            <div class="form-group col-md-2" style="width:19%">
-                @*Model.CandidateNameList*@
-                @Html.DropDownListFor(model => model.ResourceID, new SelectList(Enumerable.Empty<SelectListItem>()), "RESOURCE", new { @class = "form-control", id = "ResourceID" })
+            <div class="form-group col-md-2">
+
+                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
+
                 @Html.HiddenFor(model => model.ResourceID)
             </div>
 
 
-            <div class="col-md-1">
-                <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray" OnClick="SearchAndRenderCalendar();">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-               
-            </div>
+
 
 
             @*<div class="col-md-1">
@@ -35,38 +43,44 @@
                 <input type="button" value="Search" class="btn btn-default btn-warning" OnClick="SearchAndRenderCalendar();" />
             </div>*@
         </div>
+        <div class="form-group col-md-2">
+            <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray" OnClick="SearchAndRenderCalendar();">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+
+        </div>
     </div>
 
 
     <div class="row" style="display:flex; margin-left:0px">
-        <div class="demo-container">
-            <div class="row">
-                <div class="col-md-10" style="width:240px;">
-                    <input type="search" id="myInput" class="form-control form-control-sm" placeholder="search resources..." title="search resources" aria-controls="TimeSheetTable">
+        @*<div class="demo-container">
+                <div class="row">
+                    <div class="col-md-10" style="width:240px;">
+                        <input type="search" id="myInput" class="form-control form-control-sm" placeholder="search resources..." title="search resources" aria-controls="TimeSheetTable">
+                    </div>
                 </div>
-            </div>
-            <div class="table" id="table">
+                <div class="table" id="table">
 
-                <div id="myTable">
+                    <div id="myTable">
 
-                    @foreach (var item in Model.CandidateNameList)
-                    {
-                        <div id="tabletr">
+                        @foreach (var item in Model.CandidateNameList)
+                        {
+                            <div id="tabletr">
 
-                            <a href="#" onclick="SearchCandidateCalendar(@item.Value.ToString())" style="text-decoration: none;">
-                                <div class="list-group-item">
-                                    @item.Text
-                                </div>
-                            </a>
+                                <a href="#" onclick="SearchCandidateCalendar(@item.Value.ToString())" style="text-decoration: none;">
+                                    <div class="list-group-item">
+                                        @item.Text
+                                    </div>
+                                </a>
 
 
-                        </div>
-                    }
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div>*@
 
-        <div id="calender" class="col-md-10" style="width:100%; display: inline-block;"></div>
+        <div id="calender" class="col-md-12" style="width:100%; display: inline-block;"></div>
 
         <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -111,9 +125,7 @@
 
 </div>
 
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
 @*<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />*@
 
 @section Scripts
@@ -130,8 +142,31 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                      //FetchEventAndRenderCalendar();
                 });
-     
+
               });
+        });
+        $('#ddlWarehouseId').change(function () {
+
+                 var warehouseUrl = '';
+
+                 var WarehouseResource = $('#CandidateNameId');
+                 var id = $(this).val();
+                 if (id != "") {
+                     warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
+
+                 }
+                 else {
+                         warehouseUrl = '@Url.Action("Register", "Resource")';
+                 }
+                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
+                        $('#CandidateNameId').empty().multiselect('refresh')
+                            $.each(response, function (index, item) {
+                                $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));
+
+                            });
+
+                        $('#CandidateNameId').multiselect('rebuild');
+                       });
             });
             function FetchEventAndRenderCalendar() {
                 events = [];
@@ -160,10 +195,20 @@
             }
             function SearchAndRenderCalendar() {
                 events = [];
+                var data = {
+                    
+                    'WarehouseID' : $('#ddlWarehouseId').val(),
+                    'OpportunityID': $('#ddlOpportunityId').val(),
+                    'ProjectId': $('#ddlProjectId').val(),
+                    'ResourceIds': $('#CandidateNameId').val()
+                    
+                };     
+                
                 $.ajax({
                     type: "POST",
                     url: "./SearchEvents",
-                    data: { 'candidateId': $('#ddlCandidateId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#ddlOpportunityId').val() },
+
+                    data: { 'ProjectId': $('#ddlProjectId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#OpportunityID').val(),'ResourceIds': $('#CandidateNameId').val() },
                     success: function (data) {
                         $.each(data, function (i, v) {
                             events.push({
@@ -187,7 +232,7 @@
                 events = [];
                 $.ajax({
                     type: "POST",
-                    url: "./SearchEvents",
+                    url: "./SearchResources",
                     data: { 'candidateId': CandidateId },
                     success: function (data) {
                         $.each(data, function (i, v) {
@@ -368,6 +413,14 @@
                         });
                 });
             });
+
+    $('#CandidateNameId').multiselect({
+        includeSelectAllOption: true,
+        maxHeight: 250,
+        buttonWidth: '250px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
     </script>
 }
 
@@ -424,10 +477,15 @@
         cursor: pointer;
         color: #fff;
     }
-    .table{
+
+    .table {
         display: block;
         max-height: 680px;
         overflow-y: scroll;
+    }
+
+    .multiselect.dropdown-toggle {
+        text-align: left;
     }
 </style>
 

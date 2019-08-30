@@ -33,6 +33,7 @@ namespace TimeSheet.Controllers
                 model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
+                Session["CalenderModel"] = model;
                 return View(model);
             }
         }
@@ -93,7 +94,38 @@ namespace TimeSheet.Controllers
             model = model.ToList();
             return new JsonResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+        public JsonResult SearchResources(string ProjectID, string warehouseId, string opportunityId, List<int> ResourceIDs)
+        {
+            List<TimeSheetViewModel> modelView = new List<TimeSheetViewModel>();
+            TimeSheetViewModel newModel = new TimeSheetViewModel();
+            //SearchViewModel searchModel = new SearchViewModel()
+            //{
+            //    CandidateNameId = ResourceIDs[0],
+            //    WarehouseNameId = String.IsNullOrEmpty(warehouseId) ? (int?)null : Convert.ToInt32(warehouseId),
+            //    OpportunityNumberID = String.IsNullOrEmpty(opportunityId) ? (int?)null : Convert.ToInt32(opportunityId),
+            //    ProjectID = String.IsNullOrEmpty(ProjectID) ? (int?)null : Convert.ToInt32(ProjectID)
 
+            //};
+            //modelView = SearchFilterService.SearchTimeSheetRecord(searchModel).Result;
+            TimeSheetViewModel model = (TimeSheetViewModel) Session["CalenderModel"];
+            if (model != null)
+            {
+                newModel.CandidateTimeSheetList = model.CandidateTimeSheetList.Where(p => p.ProjectID == Convert.ToInt32(ProjectID) && p.WarehouseID == int.Parse(warehouseId) && p.OpportunityID == int.Parse(opportunityId)).ToList<TimeSheetViewModel>();
+                foreach (int item in ResourceIDs)
+                {
+                    //newModel.CandidateTimeSheetList = model.CandidateTimeSheetList.Where(r => r.ResourceID == item));
+                }
+            }
+            //modelView[0].CandidateTimeSheetList = model.CandidateTimeSheetList;
+            // if(ModelState.
+            newModel.Projectlist = model.Projectlist;
+            newModel.OpportunityNumberList = model.OpportunityNumberList;
+
+            newModel.ActivityList = model.ActivityList;
+            newModel.WarehouseNameList = model.WarehouseNameList;
+            
+            return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
         [HttpGet]
         public JsonResult ProjectOpportunities(int projectId)
         {
@@ -102,7 +134,8 @@ namespace TimeSheet.Controllers
                 {
                     Id = x.Id,
                     Value = x.Value
-                }).ToList();           
+                }).ToList();
+            
             return Json(load, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
@@ -114,6 +147,7 @@ namespace TimeSheet.Controllers
                 Id = x.Id,
                 Value = x.Value
             }).ToList();
+            TempData["opportunity"] = OpportunityId;
             return Json(load, JsonRequestBehavior.AllowGet);
         }
 		
@@ -134,15 +168,12 @@ namespace TimeSheet.Controllers
             {
                 TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
 
-                string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
-
-                string EnddateString = String.Format("{0:dd/MM/yyyy}", theModel.EndDate);
-
+                 string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
                 string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
                 string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
 
                 string dtSt = dateString + " " + StartTimeString;
-                string dtEn = EnddateString + " " + EndTimeString;
+                string dtEn = dateString + " " + EndTimeString;
 
                 var StartdateTime = Convert.ToDateTime(dtSt);
                 var EnddateTime = Convert.ToDateTime(dtEn);
@@ -150,7 +181,6 @@ namespace TimeSheet.Controllers
                 regModel.CandidateNameId = theModel.ResourceIDs[i];
                 regModel.Colour = theModel.Colour;
                 regModel.Day = theModel.Day;
-                regModel.EndDate = theModel.EndDate;
                 regModel.EndTime = EnddateTime;
                 regModel.Id = theModel.Id;
                 regModel.OLATarget = theModel.OLATarget;

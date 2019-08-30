@@ -18,6 +18,7 @@ namespace TimeSheet.Models
         public string email { get; set; }
         public string phone { get; set; }
         public string Warehouse { get; set; }
+        public int WarehouseId { get; set; }
         public int? Hours { get; set; }
         public string CandidateSkills { get; set; }
         public string TechnicianLevel { get; set; }
