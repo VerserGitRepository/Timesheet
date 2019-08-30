@@ -162,17 +162,19 @@
                 emptySpaceString +="&nbsp;"
             }
             return emptySpaceString;
-        }
+    }
+ SetDDLValue();
     $(document).ready(function () {
+       // alert('document ready');
         $('table#MANAGEPROJECTION').DataTable();
-        SetDDLValue();
+       // SetDDLValue();
 
 
     });
 
       
     function SetDDLValue() {
-       
+        //alert('before document ready');
         $("tbody tr td.dropdownListTD").each(function LoopTR() {
             var ratingTdText = $(this);            
             if ($(ratingTdText).find("#hdnddlLidt").val() != "") {

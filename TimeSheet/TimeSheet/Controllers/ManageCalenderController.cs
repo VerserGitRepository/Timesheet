@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -96,35 +97,85 @@ namespace TimeSheet.Controllers
         }
         public JsonResult SearchResources(string ProjectID, string warehouseId, string opportunityId, List<int> ResourceIDs)
         {
-            List<TimeSheetViewModel> modelView = new List<TimeSheetViewModel>();
-            TimeSheetViewModel newModel = new TimeSheetViewModel();
-            //SearchViewModel searchModel = new SearchViewModel()
-            //{
-            //    CandidateNameId = ResourceIDs[0],
-            //    WarehouseNameId = String.IsNullOrEmpty(warehouseId) ? (int?)null : Convert.ToInt32(warehouseId),
-            //    OpportunityNumberID = String.IsNullOrEmpty(opportunityId) ? (int?)null : Convert.ToInt32(opportunityId),
-            //    ProjectID = String.IsNullOrEmpty(ProjectID) ? (int?)null : Convert.ToInt32(ProjectID)
+             List<List<TimeSheetViewModel>> modelView = new List<List<TimeSheetViewModel>>();
+            #region TO Be Refactored
+            // TimeSheetViewModel newModel = new TimeSheetViewModel();
+            // //SearchViewModel searchModel = new SearchViewModel()
+            // //{
+            // //    CandidateNameId = ResourceIDs[0],
+            // //    WarehouseNameId = String.IsNullOrEmpty(warehouseId) ? (int?)null : Convert.ToInt32(warehouseId),
+            // //    OpportunityNumberID = String.IsNullOrEmpty(opportunityId) ? (int?)null : Convert.ToInt32(opportunityId),
+            // //    ProjectID = String.IsNullOrEmpty(ProjectID) ? (int?)null : Convert.ToInt32(ProjectID)
 
-            //};
-            //modelView = SearchFilterService.SearchTimeSheetRecord(searchModel).Result;
-            TimeSheetViewModel model = (TimeSheetViewModel) Session["CalenderModel"];
-            if (model != null)
+            // //};
+            // //modelView = SearchFilterService.SearchTimeSheetRecord(searchModel).Result;
+            // TimeSheetViewModel model = (TimeSheetViewModel) Session["CalenderModel"];
+            // if (model != null)
+            // {
+            //     newModel.CandidateTimeSheetList = model.CandidateTimeSheetList.Where(p => p.ProjectID == Convert.ToInt32(ProjectID) && p.WarehouseID == int.Parse(warehouseId) && p.OpportunityID == int.Parse(opportunityId)).ToList<TimeSheetViewModel>();
+            //     //model.CandidateTimeSheetList = (from r in model.CandidateTimeSheetList
+            //     //                      from bu in ResourceIDs
+            //     //                      where bu == r.ResourceID
+            //     //                      select r
+            //     // ).ToList();
+
+            // }
+
+            // //modelView[0].CandidateTimeSheetList = model.CandidateTimeSheetList;
+            // // if(ModelState.
+            // newModel.Projectlist = model.Projectlist;
+            // newModel.OpportunityNumberList = model.OpportunityNumberList;
+
+            // newModel.ActivityList = model.ActivityList;
+            //newModel.WarehouseNameList = model.WarehouseNameList;
+            #endregion
+
+            List<TimeSheetViewModel> mergerModel = new List<TimeSheetViewModel>();
+            if (ResourceIDs == null)
             {
-                newModel.CandidateTimeSheetList = model.CandidateTimeSheetList.Where(p => p.ProjectID == Convert.ToInt32(ProjectID) && p.WarehouseID == int.Parse(warehouseId) && p.OpportunityID == int.Parse(opportunityId)).ToList<TimeSheetViewModel>();
-                foreach (int item in ResourceIDs)
+                SearchViewModel searchModel = new SearchViewModel()
                 {
-                    //newModel.CandidateTimeSheetList = model.CandidateTimeSheetList.Where(r => r.ResourceID == item));
+                    
+                    WarehouseNameId = String.IsNullOrEmpty(warehouseId) ? (int?)null : Convert.ToInt32(warehouseId),
+                    OpportunityNumberID = String.IsNullOrEmpty(opportunityId) ? (int?)null : Convert.ToInt32(opportunityId),
+                    ProjectID = String.IsNullOrEmpty(ProjectID) ? (int?)null : Convert.ToInt32(ProjectID)
+
+                };
+                List<TimeSheetViewModel> model = SearchFilterService.SearchTimeSheetRecord(searchModel).Result;
+                if (model.Count > 0)
+                {
+                    modelView.Add(model);
                 }
             }
-            //modelView[0].CandidateTimeSheetList = model.CandidateTimeSheetList;
-            // if(ModelState.
-            newModel.Projectlist = model.Projectlist;
-            newModel.OpportunityNumberList = model.OpportunityNumberList;
+            else
+            {
+                foreach (int itm in ResourceIDs)
+                {
+                    SearchViewModel searchModel = new SearchViewModel()
+                    {
+                        CandidateNameId = Convert.ToInt32(itm),
+                        WarehouseNameId = String.IsNullOrEmpty(warehouseId) ? (int?)null : Convert.ToInt32(warehouseId),
+                        OpportunityNumberID = String.IsNullOrEmpty(opportunityId) ? (int?)null : Convert.ToInt32(opportunityId),
+                        ProjectID = String.IsNullOrEmpty(ProjectID) ? (int?)null : Convert.ToInt32(ProjectID)
 
-            newModel.ActivityList = model.ActivityList;
-            newModel.WarehouseNameList = model.WarehouseNameList;
-            
-            return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                    };
+                    List<TimeSheetViewModel> model = SearchFilterService.SearchTimeSheetRecord(searchModel).Result;
+                    if (model.Count > 0)
+                    {
+                        modelView.Add(model);
+                    }
+
+
+                }
+            }
+            foreach (List<TimeSheetViewModel> listModel in modelView)
+            {
+                foreach (TimeSheetViewModel childModel in listModel)
+                {
+                    mergerModel.Add(childModel);
+                }
+            }
+            return new JsonResult { Data = mergerModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         [HttpGet]
         public JsonResult ProjectOpportunities(int projectId)
@@ -150,8 +201,8 @@ namespace TimeSheet.Controllers
             TempData["opportunity"] = OpportunityId;
             return Json(load, JsonRequestBehavior.AllowGet);
         }
-		
-			 public JsonResult JobNo(int OpportunityId)
+
+        public JsonResult JobNo(int OpportunityId)
         {
             List<ListItemViewModel> Jobs = new List<ListItemViewModel>();
             Jobs = TimeSheetAPIHelperService.JobNo(OpportunityId).Result.Select(x => new ListItemViewModel()
@@ -161,42 +212,7 @@ namespace TimeSheet.Controllers
             }).ToList();
             return Json(Jobs, JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public ActionResult PostResourceData(TimeSheetViewModel theModel)
-        {
-            for (int i = 0; i < theModel.ResourceIDs.Count; i++)
-            {
-                TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
-
-                 string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
-                string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
-                string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
-
-                string dtSt = dateString + " " + StartTimeString;
-                string dtEn = dateString + " " + EndTimeString;
-
-                var StartdateTime = Convert.ToDateTime(dtSt);
-                var EnddateTime = Convert.ToDateTime(dtEn);
-
-                regModel.CandidateNameId = theModel.ResourceIDs[i];
-                regModel.Colour = theModel.Colour;
-                regModel.Day = theModel.Day;
-                regModel.EndTime = EnddateTime;
-                regModel.Id = theModel.Id;
-                regModel.OLATarget = theModel.OLATarget;
-                regModel.OpportunityNumberID = theModel.OpportunityID;
-                regModel.ProjectID = theModel.ProjectID;
-                regModel.ServiceActivityId = theModel.ServiceActivityID;
-                regModel.StartTime= StartdateTime;
-                regModel.StatusID = theModel.StatusID;
-                regModel.WarehouseNameId = theModel.WarehouseID;
-                regModel.JobID = theModel.JobID;
-                var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
-            }
-            return RedirectToAction("Index", "ManageCalender");
-
-
-        }        
+        
         public ActionResult Register()
         {
             TimeSheetViewModel model = new TimeSheetViewModel();

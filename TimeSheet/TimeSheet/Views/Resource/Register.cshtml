@@ -24,6 +24,10 @@
 
             @using (Html.BeginForm("Register", "TimeSheet", FormMethod.Post))
             {
+                if (TempData["BookedResourceMessage"] != null)
+                {
+                    <script>alert(TempData["BookedResourceMessage"].ToString());</script>
+                }
             <div class="row" style="padding-top:10px">
 
                 <div class="form-group required col-md-6">
@@ -84,16 +88,6 @@
                     @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
 
                 </div>
-
-                <div class="form-group  required col-md-6">
-                    <label class="control-label">End Date</label>
-
-                    @Html.EditorFor(model => model.TimeSheetRegisterModel.EndDate, new { htmlAttributes = new { @class = "form-control date-picker", Id = "EndDateId" } })
-                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.EndDate, "", new { @class = "text-danger" })
-
-                </div>
-
-
 
                 <div class="form-group col-md-6">
                     <label>OLA Target</label>
@@ -240,7 +234,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                     {
 
                     }
-                var loadUrl = '@Url.Action("PostResourceData", "ManageCalender")';
+                var loadUrl = '@Url.Action("PostResourceData", "Resource")';
                 var loads = $('#ddlRegOpportunityNumberID');
                 var test = $('#CandidateNameId').val();
                 var data = {
@@ -253,7 +247,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                     'ServiceActivityID': $('#ServiceActivityID').val(),
                     'StartTime' :  $('#txtStartTime').val(),
                     'EndTime': $('#txtEndTime').val(),
-                    'EndDate': $('#EndDateId').val(),
+                    //'EndDate': $('#EndDateId').val(),
                     'Colour' :  $('#ddlColour').val(),
                     'OLATarget' : $('#txtOLA').val()
                 };                      
