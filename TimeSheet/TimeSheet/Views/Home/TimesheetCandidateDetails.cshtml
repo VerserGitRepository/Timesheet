@@ -17,7 +17,7 @@
                     <th style="width:50px">StartDate </th>
                     <th>StartTime</th>
                     <th style="width:50px">EndDate </th>
-                    <th>EndTime</th>
+                    @*<th>EndTime</th>*@
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Status</th>
@@ -48,10 +48,10 @@
                         <span>@item.StartTime.Value.ToShortTimeString()</span>
                         <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
                     </td>
-                    <td class="EndDate" width="8%">
+                    @*<td class="EndDate" width="8%">
                         @Html.DisplayFor(modelItem => item.EndDate)
 
-                    </td>
+                    </td>*@
                
                     <td class="EndTime" width="8%">
                         <span>@item.EndTime.Value.ToShortTimeString()</span>

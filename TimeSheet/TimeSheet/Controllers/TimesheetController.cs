@@ -79,26 +79,28 @@ namespace TimeSheet.Controllers
             else
             {
                 if (RegisterModel.TimeSheetRegisterModel.ProjectID != null && RegisterModel.TimeSheetRegisterModel.WarehouseNameId != null && RegisterModel.TimeSheetRegisterModel.OpportunityNumberID != null 
-                    && RegisterModel.TimeSheetRegisterModel.CandidateNameId != null 
+                    && RegisterModel.TimeSheetRegisterModel.CandidateNameId != null && RegisterModel.TimeSheetRegisterModel.StartTime != null && RegisterModel.TimeSheetRegisterModel.EndTime != null
                     && RegisterModel.TimeSheetRegisterModel.Day != null)
                 {
 
-                string dateString = String.Format("{0:dd/MM/yyyy}", RegisterModel.TimeSheetRegisterModel.Day.Value.Date);
-                string StartTimeString = String.Format("{0:HH:mm}", RegisterModel.TimeSheetRegisterModel.StartTime.Value);
-                string EndTimeString = String.Format("{0:HH:mm}", RegisterModel.TimeSheetRegisterModel.EndTime.Value);
+                    string dateString = String.Format("{0:dd/MM/yyyy}", RegisterModel.TimeSheetRegisterModel.Day.Value.Date);
+                    string StartTimeString = String.Format("{0:HH:mm}", RegisterModel.TimeSheetRegisterModel.StartTime.Value);
+                    string EndTimeString = String.Format("{0:HH:mm}", RegisterModel.TimeSheetRegisterModel.EndTime.Value);
 
-                string dtSt = dateString + " " + StartTimeString;
-                string dtEn = dateString + " " + EndTimeString;
+                    string dtSt = dateString + " " + StartTimeString;
+                    string dtEn = dateString + " " + EndTimeString;
 
-                var StartdateTime = Convert.ToDateTime(dtSt);
-                var EnddateTime = Convert.ToDateTime(dtEn);
-                RegisterModel.TimeSheetRegisterModel.StartTime = StartdateTime;
-                RegisterModel.TimeSheetRegisterModel.EndTime = EnddateTime;
+                    var StartdateTime = Convert.ToDateTime(dtSt);
+                    var EnddateTime = Convert.ToDateTime(dtEn);
+                    RegisterModel.TimeSheetRegisterModel.StartTime = StartdateTime;
+                    RegisterModel.TimeSheetRegisterModel.EndTime = EnddateTime;
 
                     var MapRegisterData = MapTimesheetRegisterModel(RegisterModel);
                     var test = RegisterTimesheetService.RegisterTimesheetModel(MapRegisterData);
                 }
                 return RedirectToAction("Index", "ManageCalender");
+
+
             }            
         }
         [HttpPost]
