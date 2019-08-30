@@ -15,7 +15,7 @@
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-<div class="container" style="padding-top:2px;padding-bottom:0px;margin-right:5px;padding-left:0px;padding-right:0px;margin-bottom:0px">
+@*div class="container" style="padding-top:2px;padding-bottom:0px;margin-right:5px;padding-left:0px;padding-right:0px;margin-bottom:0px">
     <div class="body-content" style="vertical-align:baseline;padding-top:2PX;margin-left:0px;margin-right:1px;">
         <div class="pull-left col-md-offset-6" style="padding-top:2px;padding-bottom:0px;margin-right:0px;padding-left:1px;padding-right:0px;margin-bottom:0px">
 
@@ -41,14 +41,14 @@
                     <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
-                    @*<input type="submit" value="Search" class="btn btn-default btn-warning  btn-sm" style="color:white;font-size:12px;">*@
+                 
                 </div>
 
             }
 
         </div>
     </div>
-</div>
+</div>*@
 
 
 
@@ -67,7 +67,7 @@
                     <th style="text-align:center">Email</th>
                     <th style="text-align:center">Phones</th>
                     <th style="text-align:center">Date</th>
-                    <th style="text-align:center"> AvailableHours</th>
+                    <th style="text-align:center">Details</th>
 
 
                 </tr>
@@ -78,18 +78,22 @@
             {
             <tr>
                 <td>@item.Warehouse</td>
-                <td>
-                    <a href="javascript:void(0);" class="CandidateDetail" data-id="@item.ResourceName">
-                        @Html.DisplayFor(modelItem => item.ResourceName)
-                    </a>
+               
+                <td>@item.ResourceName</td>
+                @*<a href="javascript:void(0);" class="CandidateDetail" data-id="@item.ResourceName">
+            @Html.DisplayFor(modelItem => item.ResourceName)
+        </a>*@
 
-                </td>
                 <td>@item.CandidateSkills</td>
                 <td>@item.TechnicianLevel</td>
                 <td>@item.email</td>
                 <td>@item.phone</td>
                 <td>@item.availableDate.Value.ToShortDateString()</td>
-                <td>@item.Hours</td>
+                <td>
+                    <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.ResourceName">
+                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    </a>
+                </td>
 
             </tr>
             }
@@ -118,28 +122,11 @@
         $('#mainTable').DataTable({
             pagingType: "simple"
         });
-
-        $('#edit').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-    });
-
-
-    $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus')
-    })
-
-    $('#opportunity').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus')
-    })
-
-    $('#dtp1,#dtp2').datetimepicker({
-        format: 'DD/MM/YYYY HH:mm A'
-    });
+   
 
     var CandidateDetailsURL = './_ResourceBooked';
     $(function () {
-        $("#mainTable").on("click", ".CandidateDetail", function () {
+        $("#mainTable").on("click", ".btn-edit", function () {
             //debugger;
             var $buttonClicked = $(this);
             var ResourceName = $buttonClicked.attr('data-id');
@@ -161,8 +148,17 @@
                 }
             });
         });
+    
+ 
+        //$('#edit').on('shown.bs.modal', function () {
+        //    $('#myInput').trigger('focus')
+        //})
+ 
 
 
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
 
     });
 
@@ -173,33 +169,33 @@
         $('#myModal').modal('hide');
     });
 
-
+    });
 
 </script>
 
 
 <style>
+    .glyphicon {
+        font-size: 10px;
+        color: white;
+        background-color:orange;
+    }
 
     .body-content {
         padding-left: 0px;
         padding-right: 0px;
-        max-width: 100%;
+        max-width: 100%
     }
 
     .container {
         padding-left: 0px;
         padding-right: 10px;
-        max-width: 100%;
-    }
-
-
-    .glyphicon {
-        font-size: 14px;
+        max-width: 100%
     }
 
     .btn-warning {
         background-color: #FFA500;
-        font-size: 11px;
+        font-size: 11px
     }
 
     .modal-header {
@@ -210,34 +206,17 @@
         border-top: 0 none;
     }
 
-    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    /*.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
-    }
+    }*/
 
-        .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        /*.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
             background-color: #FFA500;
             border-color: white;
-        }
+        }*/
 
 
-    .form-control1 {
-        display: block;
-        width: 120%;
-        height: 34px;
-        padding: 6px 6px;
-        font-size: 12px;
-        line-height: 1.428571429;
-        color: #555555;
-        vertical-align: middle;
-        background-color: #ffffff;
-        border: 1px solid #cccccc;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-    }
 
     .page-item.active .page-link {
         color: white !important;
