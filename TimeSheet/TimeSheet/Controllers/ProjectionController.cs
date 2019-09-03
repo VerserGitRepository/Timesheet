@@ -26,8 +26,9 @@ namespace TimeSheet.Controllers
             else
             {
                 ProjectionModel model = new ProjectionModel();
-                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                
+                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
+                 
+
                 List<ProjectionModel> listB = ProjectionHelperService.ProjectionListItems().Result;
                 List<ProjectionOppurtunityModel> listA = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
 
@@ -40,7 +41,8 @@ namespace TimeSheet.Controllers
                         itemToChange = new ProjectionOppurtunityModel();
                         itemToChange.Activity = x.Activity;
                         itemToChange.ActivityId = x.ActivityId;
-                        
+                        itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
+
                         itemToChange.Comments = x.Comments;
                         itemToChange.OpportinutyId = x.OpportunityID;
                         itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
@@ -49,6 +51,7 @@ namespace TimeSheet.Controllers
                         itemToChange.Created = x.Created;
                         itemToChange.ProjectManager = x.ProjectManager;
                         itemToChange.wareHouseName = x.WarehouseName;
+                        itemToChange.wareHouseId = x.WarehouseID;
                         itemToChange.ActualQuantity = x.Quantity;
                         itemToChange.ProjectName = x.ProjectName;
                         itemToChange.Id = x.Id;
@@ -58,10 +61,14 @@ namespace TimeSheet.Controllers
                     else
                     {
                         itemToChange.Activity = x.Activity;
-                        if (x.ActivityId != 0)
+                        if (x.ActivityId == 0)
                         {
-                            itemToChange.ActivityId = x.ActivityId;
+                            if (itemToChange.ActivityId == 0)
+                            {
+                                itemToChange.ActivityId = x.ActivityId;
+                            }
                         }
+                        itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
                         itemToChange.Comments = x.Comments;
                         itemToChange.OpportinutyId = x.OpportunityID;
                         itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
@@ -71,7 +78,7 @@ namespace TimeSheet.Controllers
                         itemToChange.ProjectManager = x.ProjectManager;
                         itemToChange.wareHouseName = x.WarehouseName;
                         itemToChange.ActualQuantity = x.Quantity;
-                        // itemToChange = null;
+                        itemToChange.wareHouseId = x.WarehouseID;
                         itemToChange.Id = x.Id;
                         itemToChange.IsUpdated = true;
                         //listA.Add(itemToChange);
