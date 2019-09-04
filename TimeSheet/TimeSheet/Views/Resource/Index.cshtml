@@ -66,7 +66,7 @@
                     <th style="text-align:center">TechnicianLevel</th>
                     <th style="text-align:center">Email</th>
                     <th style="text-align:center">Phones</th>
-                    <th style="text-align:center">Date</th>
+                    @*<th style="text-align:center">Date</th>*@
                     <th style="text-align:center">Details</th>
 
 
@@ -88,7 +88,7 @@
                 <td>@item.TechnicianLevel</td>
                 <td>@item.email</td>
                 <td>@item.phone</td>
-                <td>@item.availableDate.Value.ToShortDateString()</td>
+                @*<td>@item.availableDate.Value.ToShortDateString()</td>*@
                 <td>
                     <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.ResourceName">
                         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
