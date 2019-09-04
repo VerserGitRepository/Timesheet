@@ -29,6 +29,7 @@ namespace TimeSheet.Controllers
              //   model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");            
                 model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
                 return View(model);
             }                 
@@ -53,13 +54,15 @@ namespace TimeSheet.Controllers
                 int opportunityId = listitem.FirstOrDefault().Id;
                 model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
                 model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
+                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                 var Search= new SearchViewModel
                 {
                     ProjectID= SearchModel.ProjectID,
                     WarehouseNameId = SearchModel.WarehouseID,
                     CandidateNameId = SearchModel.ResourceID,
-                    OpportunityNumberID  = SearchModel.OpportunityID
+                    OpportunityNumberID  = SearchModel.OpportunityID,
+                    EmploymentTypeID = SearchModel.EmploymentTypeID
                 };
                 model.CandidateTimeSheetList = SearchFilterService.SearchTimeSheetRecord(Search).Result;               
                 return View(model);
@@ -180,6 +183,50 @@ namespace TimeSheet.Controllers
                 }                
             }
             return RedirectToAction("Index", "Home");
+        }
+        [HttpPost]
+        public ActionResult SearchIndex(string ProjectID, string warehouseId, string opportunityId, List<int> ResourceIDs)
+        {
+            TimeSheetViewModel newModel = new TimeSheetViewModel();
+            if (Session["HomeIndex"] != null)
+            {
+                TimeSheetViewModel model = (TimeSheetViewModel)Session["HomeIndex"];
+
+                newModel.Projectlist = model.Projectlist;
+               
+                
+                newModel.WarehouseNameList = model.WarehouseNameList;
+
+                
+                newModel.CandidateNameList = model.CandidateNameList;
+
+                // newModel.CandidateNameList = model.CandidateNameList;
+                newModel.CandidateTimeSheetList = model.CandidateTimeSheetList.Where(item => ResourceIDs.Contains(Convert.ToInt32(item.ResourceID)) && item.ProjectID == Convert.ToInt32(ProjectID) && item.WarehouseID == Convert.ToInt32(warehouseId) && item.OpportunityID == Convert.ToInt32(opportunityId)).ToList();
+                Session["HomeSearchIndex"] = newModel;
+            }
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("ViewIndex", "Home", new { });
+
+            try
+            {
+                // perform some action
+            }
+            catch (Exception)
+            {
+                return Json(new { Url = redirectUrl, status = "Error" });
+            }
+
+            return Json(new { Url = redirectUrl, status = "OK" });
+            //ModelState.Clear();
+
+
+        }
+        public ActionResult ViewIndex()
+        {
+            if (Session["HomeSearchIndex"] != null)
+            {
+                return View("Index",(TimeSheetViewModel)Session["HomeSearchIndex"]);
+            }
+            return View();
         }
     }
 }

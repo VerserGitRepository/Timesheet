@@ -51,6 +51,8 @@ namespace TimeSheet.ServiceHelper
             }
             return WarehousesList;
         }
+
+        
         public static async Task<List<ListItemViewModel>> Resources()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -70,6 +72,26 @@ namespace TimeSheet.ServiceHelper
             }
             return projectsList;
         }
+        public static async Task<List<ListItemViewModel>> EmploymentTypeList()
+        {
+            List<ListItemViewModel> EmploymentList = new List<ListItemViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Resource/ResourceEmploymentType")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ListItemViewModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        EmploymentList.Add(new ListItemViewModel() { Id = a.Id, Value = a.Value });
+                    }
+                }
+            }
+            return EmploymentList;
+        }
+
         public static async Task<List<ListItemViewModel>> SalesManagerList()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -90,6 +112,7 @@ namespace TimeSheet.ServiceHelper
             return projectsList;
         }
 
+        
         public static async Task<List<ListItemViewModel>> StatusList()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();

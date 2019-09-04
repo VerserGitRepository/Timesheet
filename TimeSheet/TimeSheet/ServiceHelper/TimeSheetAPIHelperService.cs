@@ -71,6 +71,7 @@ namespace TimeSheet.ServiceHelper
             }
             return projectsList;
         }
+
         public static async Task<List<ListItemViewModel>> ProjectOpportunities(int projectID)
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -147,6 +148,29 @@ namespace TimeSheet.ServiceHelper
             }
             return ResourceList;
         }
+
+
+        public static async Task<List<ListItemViewModel>> ResourceFilter(int WarehouseID, int employmentType)
+        {
+            List<ListItemViewModel> ResourceList = new List<ListItemViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/{0}/ResourcesByWarehouse", WarehouseID, employmentType)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ListItemViewModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        ResourceList.Add(new ListItemViewModel() { Id = a.Id, Value = a.Value });
+                    }
+                }
+            }
+            return ResourceList;
+        }
+
+
         public static async Task<List<ListItemViewModel>> Activities()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -185,6 +209,27 @@ namespace TimeSheet.ServiceHelper
             }
             return WarehousesList;
         }
+
+        public static async Task<List<ListItemViewModel>> EmploymentType()
+        {
+            List<ListItemViewModel> EmploymentList = new List<ListItemViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Resource/ResourceEmploymentType")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var Warehouses = await response.Content.ReadAsAsync<List<EmploymentTypeViewModel>>();
+
+                    foreach (var w in Warehouses)
+                    {
+                        EmploymentList.Add(new ListItemViewModel() { Id = w.Id, Value = w.Value });
+                    }
+                }
+            }
+            return EmploymentList;
+        }
+
         public static async Task<List<ListItemViewModel>> Resources()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();

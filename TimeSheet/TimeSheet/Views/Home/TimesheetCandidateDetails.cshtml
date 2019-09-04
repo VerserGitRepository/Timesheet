@@ -30,8 +30,7 @@
                 {
                 <tr>
                     <td class="Id"> <span>@item.Id</span> </td>
-
-                    <td class="CandidateName">
+                     <td class="CandidateName">
                         @Html.DisplayFor(modelItem => item.CandidateName)
                     </td>
                     <td class="Activity">
@@ -43,8 +42,7 @@
                         <input type="date" id="Day" value="@item.Day.Value.ToString("dd/MM/yyyy")" style="display:none" />
 
                     </td>
-
-                    <td class="StartTime">
+                        <td class="StartTime">
                         <span>@item.StartTime.Value.ToShortTimeString()</span>
                         <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
                     </td>
@@ -74,9 +72,23 @@
                         <input type="text" value="@item.TimeSheetComments" style="display:none" />
                     </td>
                     <td width="5%">
-                        <a class="Edit" href="javascript:;">Edit</a>
-                        <a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
+
+                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;"style="display:none">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span><strong>Cancel</strong></span>
+                        </a>
+
+                        @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
                         @*<a class="Delete" href="javascript:;">Delete</a>*@
                     </td>
                 </tr>
@@ -160,7 +172,6 @@
 
             }
         });
-
         row.find(".Update").show();
         row.find(".Cancel").show();
 
@@ -202,13 +213,20 @@
             dataType: "json"
         });
     });
-
-
-
+                 
     $("#myModal").draggable({
         handle: ".modal-header"
     });
 
+
+    $(".Edit").on("click", function () {
+        $(".popup-overlay, .popup-content").addClass("active");
+    });
+
+    //removes the "active" class to .popup and .popup-content when the "Close" button is clicked 
+    $(".Update, .popup-overlay").on("click", function () {
+        $(".popup-overlay, .popup-content").removeClass("active");
+    });
 
     //Cancel event handler.
     $("body").on("click", "#tblCustomers .Cancel", function () {
@@ -252,5 +270,14 @@
 
     table tr.active {
         background: red;
+    }
+
+    a.btn {
+        -webkit-transform: scale(0.9);
+        -moz-transform: scale(0.6);
+        -o-transform: scale(0.6);
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        -o-transition-duration: 0.5s;
     }
 </style>

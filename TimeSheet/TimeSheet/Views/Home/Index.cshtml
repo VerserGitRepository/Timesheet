@@ -53,8 +53,7 @@
         background-color: #FFA500;
         border-color: white;
     }
-
-
+    
     .page-item.active .page-link {
         color: white !important;
         background-color: orange !important;
@@ -105,6 +104,7 @@
     </div>
 </div>
 
+
 <div class="container" style="margin-left:0px">
     <div class="row">
         <div class="col-md-12">
@@ -145,11 +145,9 @@
                                 @Html.DisplayFor(modelItem => item.StartTime)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.EndDate)
+                                @Html.DisplayFor(modelItem => item.EndTime)
                             </td>
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => item.EndTime)
-                                </td>*@
+                           
                             <td>
                                 @Html.DisplayFor(modelItem => item.ProjectName)
                             </td>
@@ -269,12 +267,10 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
 $('#edit').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
           })
-
-         $('#ddlWarehouseId').change(function () {
-
+          $('#ddlWarehouseId','#ddlEmploymentId').change(function () {
                     var warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
                     var WarehouseResource = $('#ResourceID');
-                        var id = $(this).val();
+                    var id = $(this).val();
                     $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
                         WarehouseResource.empty();
                         WarehouseResource.append($('<option></option>').text("Select Resource").val(0));
