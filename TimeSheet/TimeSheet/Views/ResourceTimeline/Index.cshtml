@@ -1,0 +1,239 @@
+﻿@model TimeSheet.Models.TimeSheetViewModel
+@{ViewBag.Title = "ManageTimeSheet";}
+
+<link href="~/Styles/FullCalender/Codepen/demo-to-code-pen.css" rel="stylesheet" />
+<style>
+
+
+    #calendar {
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+
+
+    .multiselect.dropdown-toggle {
+        text-align: left;
+    }
+</style>
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+<link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link href="~/Scripts/FullCalender/core/main.css" rel="stylesheet" />
+<link href="~/Styles/FullCalender/timeline/main.min.css" rel="stylesheet" />
+<link href="~/Styles/FullCalender/resource-timeline/main.min.css" rel="stylesheet" />
+<script src="~/Scripts/FullCalender/demo-to-code-pen/demo-to-code-pen.js"></script>
+<script src="~/Scripts/FullCalender/core/main.js"></script>
+<script src="~/Scripts/FullCalender/timeline/src/main.min.js"></script>
+<script src="~/Scripts/FullCalender/resource-common/src/main.min.js"></script>
+<script src="~/Scripts/FullCalender/resource-timeline/main.min.js"></script>
+
+
+<div class="container">
+    <div class="pull-left">
+        <div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:70px;">
+            <div class="form-group col-md-1" style="width:20%">
+                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId" })
+            </div>
+            <div class="form-group col-md-1" style="width:22%">
+                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID", @id = "OpportunityID" })
+            </div>
+            <div class="form-group col-md-2" style="width:20%">
+                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
+            </div>
+            <div class="form-group col-md-3">
+
+                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
+
+                @Html.HiddenFor(model => model.ResourceID)
+                <input class="hidden" type="text" id="hdnJsonString" value="@Model.jsonResources" />
+                <input class="hidden" type="text" id="hdnJsonEvents" value="@Model.jsonEvents" />
+            </div>
+            
+                <div class="form-group col-md-1">
+                    <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray" OnClick="SearchAndRenderCalendar();">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+</div>
+<div id='calendar' style="width:100%"></div>
+
+<script>
+
+    
+    $('#CandidateNameId').multiselect({
+        includeSelectAllOption: true,
+        maxHeight: 250,
+        buttonWidth: '180px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
+    RenderCalendarStart();
+    var calendar;
+    function RenderCalendarStart() {
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var res = $("#hdnJsonString").val();
+            var events = $("#hdnJsonEvents").val();
+     
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                schedulerLicenseKey: '0286417881-fcs-1567383525',
+                plugins: ['interaction', 'resourceTimeline'],
+                timeZone: 'UTC',
+                defaultView: 'resourceTimelineDay',
+                aspectRatio: 10.0,
+                header: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
+                },
+                editable: true,
+                resourceLabelText: 'Facility',
+                resources: JSON.parse(res),
+                events: JSON.parse(events)
+            });
+
+            calendar.render();
+            calendar.setOption('height', 700);
+           calendar.setOption('aspectRatio', 10.0);
+        });
+    }
+
+    function RenderCalendar(resources,events) {
+        //document.addEventListener('DOMContentLoaded', function () {
+        //$('#calender').destroy();
+
+       // FullCalendar.Calendar('destroy');
+            var calendarEl = document.getElementById('calendar');
+            //var res = $("#hdnJsonString").val();
+            //var events = $("#hdnJsonEvents").val();
+            //alert(res);
+        calendar.destroy();
+        calendar = new FullCalendar.Calendar(calendarEl, {
+                schedulerLicenseKey: '0286417881-fcs-1567383525',
+                plugins: ['interaction', 'resourceTimeline'],
+                timeZone: 'UTC',
+                defaultView: 'resourceTimelineDay',
+                aspectRatio: 10.0,
+                header: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
+                },
+                editable: true,
+                resourceLabelText: 'Facility',
+                resources: resources,
+                events: events
+            });
+
+        calendar.render();
+        calendar.setOption('height', 700);
+       calendar.setOption('aspectRatio', 10.0);
+        //});
+    }
+
+    $('#ddlWarehouseId').change(function () {
+
+                 var warehouseUrl = '';
+
+                 var WarehouseResource = $('#CandidateNameId');
+                 var id = $(this).val();
+                 if (id != "") {
+                     warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
+
+                 }
+                 else {
+                         warehouseUrl = '@Url.Action("Register", "Resource")';
+                 }
+                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
+                        $('#CandidateNameId').empty().multiselect('refresh')
+                            $.each(response, function (index, item) {
+                                $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));
+
+                            });
+
+                        $('#CandidateNameId').multiselect('rebuild');
+                       });
+         });
+
+    $('#ddlProjectId').change(function () {
+    var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
+            var loads = $('#OpportunityID');
+            var id = $(this).val();
+
+            $.getJSON(loadUrl, { projectid: id }, function (response) {
+
+    loads.empty(); // remove any existing options
+                loads.append($('<option></option>').text("OPPORTUNITY").val(0));
+
+                $.each(response, function (index, item) {
+
+    loads.append($('<option></option>').text(item.Value).val(item.Id));
+                });
+
+            });
+
+        });
+
+    $('#ddlRegOpportunityNumberID').change(function () {
+
+var ActivityUrl = '@Url.Action("ProjectActivities", "ManageCalender")';
+var Activities = $('#ActivityId');
+var id = $(this).val();
+
+$.getJSON(ActivityUrl, { OpportunityId: id }, function (response) {
+Activities.empty();
+Activities.append($('<option></option>').text("Select Activity").val(0));
+$.each(response, function (index, item) {
+Activities.append($('<option></option>').text(item.Value).val(item.Id));
+        });
+    });
+});
+
+    function SearchAndRenderCalendar() {
+        resources = [];
+        events = [];
+       var loadUrl =  '@Url.Action("SearchResources", "ManageCalender")';
+
+                $.ajax({
+                    type: "POST",
+                    url: loadUrl,
+
+                    data: { 'ProjectId': $('#ddlProjectId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#OpportunityID').val(),'ResourceIds': $('#CandidateNameId').val() },
+                    success: function (data) {
+                        $.each(data, function (i, v) {
+                          //  alert(v.StartTime);
+                             //   alert(v.CandidateName);
+                            events.push({
+                                resourceId: v.ResourceID,
+                                title: v.Activity,                              
+                                start:v.StartTimeString,
+                                end: v.EndTimeString != null ? v.EndTimeString : null,
+                                
+                            });
+                            resources.push({
+                                id: v.ResourceID,
+                                title: v.CandidateName,
+                                eventColor: v.Colour
+                            });
+                        })
+                        RenderCalendar(resources,events);
+                    },
+                    error: function (error) {
+                        alert('search failed');
+                    }
+                })
+            }
+
+</script>
+
+
