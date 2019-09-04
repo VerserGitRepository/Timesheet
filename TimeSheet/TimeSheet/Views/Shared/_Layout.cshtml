@@ -8,8 +8,8 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body >
-    <div class="navbar navbar-inverse navbar-fixed-top" style="margin-left:0px;">
+<body>
+    <div class="navbar navbar-inverse fixed-top" style="margin-left:0px;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -21,8 +21,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div id="LogoImage" style="text-align:left">
-                    <img src="~/Images/Verser.png" style="height:43px; width:220px ;vertical-align:top; background-color:#D3D3D3" />
-
+                    <img src="~/Images/Verser.png" style="height:43px; width:220px ;vertical-align:top;margin-right:2px; background-color:#D3D3D3" />
                 </div>
             </div>
             <script src="~/Scripts/respond.js"></script>
@@ -45,12 +44,7 @@
                             <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">Projections</a></li>
                         </ul>
                     </li>
-
-                    <li>
-
-                    </li>
                 </ul>
-
                     <ul class="nav navbar-nav" @*style="float:right"*@>
                         <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
                     </ul>
@@ -104,23 +98,37 @@
 </body>
 </html>
 <style>
+    
+#navbar {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 90px 10px;
+  transition: 0.4s;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 99;
+}
 
-    .navbar-inverse {
+   .body {padding-top:0px;
+    }
+
+   .navbar-inverse {
         background-color: #e2e2e2 !important;
         border-color: #D3D3D3 !important;
     }
 
-        .navbar-inverse .navbar-nav > li > a {
+   .navbar-inverse .navbar-nav > li > a {
             color: #959ca1;
             font-family: sans-serif;
             font-weight: 600;
         }
 
-            .navbar-inverse .navbar-nav > li > a:hover {
+   .navbar-inverse .navbar-nav > li > a:hover {
                 color: #f79636;
             }
 
-    a {
+   a {
         color: #959ca1;
     }
 
@@ -130,6 +138,13 @@
         height: 50px;
         margin-left: 60px;
     }
+        .fixed-top {
+            min-height: 40px;
+            max-height: 60px;
+            height: 50px;
+            margin-left: 60px;
+            margin-top:0px;
+        }
     /* Additional styles to style some of your child elements */
     .navbar-brand {
         padding: 10px;
@@ -147,7 +162,12 @@
         background-color: #FFA500;
     }
 
+    .nav {
+
+    }
     .navbar .navbar-toggle {
         padding: 4px 10px;
     }
+
 </style>
+
