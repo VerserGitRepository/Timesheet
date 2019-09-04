@@ -24,16 +24,14 @@ namespace TimeSheet.Controllers
             }
             else
             {
-              
-                 TimeSheetViewModel model = new TimeSheetViewModel();
-                    model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
-                    //   model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");            
-                    model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                    model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
-                    model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
-                    Session["HomeIndex"] = model;
-                    return View(model);
-               
+                TimeSheetViewModel model = new TimeSheetViewModel();                            
+                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");                
+             //   model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");            
+                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
+                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
+                model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
+                return View(model);
             }                 
         }
         [HttpPost]
@@ -56,13 +54,15 @@ namespace TimeSheet.Controllers
                 int opportunityId = listitem.FirstOrDefault().Id;
                 model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
                 model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
+                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                 var Search= new SearchViewModel
                 {
                     ProjectID= SearchModel.ProjectID,
                     WarehouseNameId = SearchModel.WarehouseID,
                     CandidateNameId = SearchModel.ResourceID,
-                    OpportunityNumberID  = SearchModel.OpportunityID
+                    OpportunityNumberID  = SearchModel.OpportunityID,
+                    EmploymentTypeID = SearchModel.EmploymentTypeID
                 };
                 model.CandidateTimeSheetList = SearchFilterService.SearchTimeSheetRecord(Search).Result;               
                 return View(model);

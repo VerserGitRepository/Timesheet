@@ -21,7 +21,9 @@ namespace TimeSheet.Models
         [DataType(DataType.Time)]
         [DisplayFormat(DataFormatString = "{0:HH:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? EndTime { get; set; }
+        [Required]
         public string JobNo { get; set; }
+        [Required]
         public int? JobID { get; set; }
         public int OpportunityNumber { get; set; }
         public int? OLATarget { get; set; }
@@ -57,6 +59,8 @@ namespace TimeSheet.Models
         public SelectList Projectlist { get; set; }
         public int? ProjectID { get; set; }
         public string ProjectName { get; set; }
+        public int? EmploymentTypeID { get; set; }
+        public SelectList EmploymentList { get; set; }
         public virtual TimeSheetRegisterModel TimeSheetRegisterModel { get;set;}
         public string jsonResources { get; set; }
         public string jsonEvents { get; set; }

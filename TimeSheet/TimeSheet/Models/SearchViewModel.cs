@@ -11,5 +11,6 @@ namespace TimeSheet.Models
         public int? OpportunityNumberID { get; set; }
         public int? WarehouseNameId { get; set; }
         public int? CandidateNameId { get; set; }
+        public int? EmploymentTypeID { get; set; }
     }
 }

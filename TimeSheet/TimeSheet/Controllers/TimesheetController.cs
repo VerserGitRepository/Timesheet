@@ -35,7 +35,8 @@ namespace TimeSheet.Controllers
                 Id =x.Id,Value=x.Value
             });
             int opportunityId = listitem.FirstOrDefault().Id;
-          model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID","Value");
+            
+            model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID","Value");
             return View(model);
         }
         [HttpGet]
@@ -59,6 +60,7 @@ namespace TimeSheet.Controllers
                 int opportunityId = listitem.FirstOrDefault().Id;
                 model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
                 model.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");
+                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(TimeSheetAPIHelperService.Resources().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
                 return View(model);

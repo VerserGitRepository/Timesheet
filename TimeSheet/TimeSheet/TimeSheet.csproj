@@ -181,6 +181,7 @@
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
     <Compile Include="Models\CandidateTimeSheetsModel.cs" />
+    <Compile Include="Models\EmploymentTypeViewModel.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
     <Compile Include="Models\ProjectionEntryModel.cs" />
     <Compile Include="Models\ProjectionModel.cs" />
