@@ -3,14 +3,10 @@
 
 <link href="~/Styles/FullCalender/Codepen/demo-to-code-pen.css" rel="stylesheet" />
 <style>
-
-
     #calendar {
       max-width: 1200px;
       margin: 20px auto;
     }
-
-
     .multiselect.dropdown-toggle {
         text-align: left;
     }
@@ -31,7 +27,6 @@
 <script src="~/Scripts/FullCalender/timeline/src/main.min.js"></script>
 <script src="~/Scripts/FullCalender/resource-common/src/main.min.js"></script>
 <script src="~/Scripts/FullCalender/resource-timeline/main.min.js"></script>
-
 
 <div class="container">
     <div class="pull-left">
@@ -66,10 +61,7 @@
 
 </div>
 <div id='calendar' style="width:100%"></div>
-
 <script>
-
-    
     $('#CandidateNameId').multiselect({
         includeSelectAllOption: true,
         maxHeight: 250,
@@ -97,7 +89,7 @@
                     right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
                 },
                 editable: true,
-                resourceLabelText: 'Facility',
+                resourceLabelText: 'RESOURCES',
                 resources: JSON.parse(res),
                 events: JSON.parse(events)
             });
@@ -130,7 +122,7 @@
                     right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
                 },
                 editable: true,
-                resourceLabelText: 'Facility',
+                resourceLabelText: 'RESOURCES',
                 resources: resources,
                 events: events
             });

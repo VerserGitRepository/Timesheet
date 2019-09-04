@@ -169,6 +169,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageCalenderController.cs" />
     <Compile Include="Controllers\ProjectionController.cs" />
+    <Compile Include="Controllers\ResourceTimelineController.cs" />
     <Compile Include="Controllers\TimesheetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -186,7 +187,9 @@
     <Compile Include="Models\ProjectionUpdate.cs" />
     <Compile Include="Models\ProjectListModel.cs" />
     <Compile Include="Models\ResourceAvailable.cs" />
+    <Compile Include="Models\ResourceEventsModel.cs" />
     <Compile Include="Models\ResourceListModel.cs" />
+    <Compile Include="Models\ResourceTimelineModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\TimesheetEditModel.cs" />
     <Compile Include="Models\TimeSheetViewModel.cs" />
@@ -322,6 +325,12 @@
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <Content Include="Scripts\Datepair.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\FullCalender\core\main.css" />
+    <Content Include="Scripts\FullCalender\core\main.js" />
+    <Content Include="Scripts\FullCalender\demo-to-code-pen\demo-to-code-pen.js" />
+    <Content Include="Scripts\FullCalender\resource-common\src\main.min.js" />
+    <Content Include="Scripts\FullCalender\resource-timeline\main.min.js" />
+    <Content Include="Scripts\FullCalender\timeline\src\main.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -347,6 +356,9 @@
     <Content Include="Scripts\TableTools_orig.js" />
     <Content Include="Scripts\ZeroClipboard.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Styles\FullCalender\Codepen\demo-to-code-pen.css" />
+    <Content Include="Styles\FullCalender\resource-timeline\main.min.css" />
+    <Content Include="Styles\FullCalender\timeline\main.min.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -380,9 +392,27 @@
     <Content Include="Views\Resource\Register.cshtml" />
     <Content Include="Views\Projection\ManageOpportunity.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\ResourceTimeline\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\FullCalender\bootstrap\" />
+    <Folder Include="Scripts\FullCalender\core\locales\" />
+    <Folder Include="Scripts\FullCalender\daygrid\" />
+    <Folder Include="Scripts\FullCalender\google-calendar\" />
+    <Folder Include="Scripts\FullCalender\interaction\" />
+    <Folder Include="Scripts\FullCalender\list\" />
+    <Folder Include="Scripts\FullCalender\moment-timezone\" />
+    <Folder Include="Scripts\FullCalender\moment\" />
+    <Folder Include="Scripts\FullCalender\resource-common\src\api\" />
+    <Folder Include="Scripts\FullCalender\resource-common\src\common\" />
+    <Folder Include="Scripts\FullCalender\resource-common\src\reducers\" />
+    <Folder Include="Scripts\FullCalender\resource-common\src\resource-sources\" />
+    <Folder Include="Scripts\FullCalender\resource-common\src\structs\" />
+    <Folder Include="Scripts\FullCalender\resource-timegrid\" />
+    <Folder Include="Scripts\FullCalender\rrule\" />
+    <Folder Include="Scripts\FullCalender\timegrid\" />
+    <Folder Include="Scripts\FullCalender\timeline\src\util\" />
     <Folder Include="Views\AdminUpdate\" />
     <Folder Include="Views\Partial\" />
   </ItemGroup>
