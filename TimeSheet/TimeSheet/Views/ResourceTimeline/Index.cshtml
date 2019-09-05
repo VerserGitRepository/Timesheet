@@ -1,66 +1,144 @@
 ﻿@model TimeSheet.Models.TimeSheetViewModel
 @{ViewBag.Title = "ManageTimeSheet";}
+    <head>
+        <link href="~/Styles/FullCalender/Codepen/demo-to-code-pen.css" rel="stylesheet" />
+        <style>
+            #calendar {
+                max-width: 1500px;
+                margin: 20px auto;
+            }
 
-<link href="~/Styles/FullCalender/Codepen/demo-to-code-pen.css" rel="stylesheet" />
-<style>
-    #calendar {
-      max-width: 1200px;
-      margin: 20px auto;
-    }
-    .multiselect.dropdown-toggle {
-        text-align: left;
-    }
-</style>
+            .multiselect.dropdown-toggle {
+                text-align: left;
+            }
 
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="~/Scripts/bootstrap-multiselect.js"></script>
-<link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<link href="~/Scripts/FullCalender/core/main.css" rel="stylesheet" />
-<link href="~/Styles/FullCalender/timeline/main.min.css" rel="stylesheet" />
-<link href="~/Styles/FullCalender/resource-timeline/main.min.css" rel="stylesheet" />
-<script src="~/Scripts/FullCalender/demo-to-code-pen/demo-to-code-pen.js"></script>
-<script src="~/Scripts/FullCalender/core/main.js"></script>
-<script src="~/Scripts/FullCalender/timeline/src/main.min.js"></script>
-<script src="~/Scripts/FullCalender/resource-common/src/main.min.js"></script>
-<script src="~/Scripts/FullCalender/resource-timeline/main.min.js"></script>
+            #calendar-room {
+                position: fixed;
+                left: 0;
+                right: 0;
+            }
 
-<div class="container">
-    <div class="pull-left">
-        <div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:70px;">
-            <div class="form-group col-md-1" style="width:20%">
-                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId" })
-            </div>
-            <div class="form-group col-md-1" style="width:22%">
-                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID", @id = "OpportunityID" })
-            </div>
-            <div class="form-group col-md-2" style="width:20%">
-                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
-            </div>
-            <div class="form-group col-md-3">
+            .fc-widget-content {
+                width: 50px;
+            }
 
-                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
+           .tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
 
-                @Html.HiddenFor(model => model.ResourceID)
-                <input class="hidden" type="text" id="hdnJsonString" value="@Model.jsonResources" />
-                <input class="hidden" type="text" id="hdnJsonEvents" value="@Model.jsonEvents" />
-            </div>
-            
-                <div class="form-group col-md-1">
-                    <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray" OnClick="SearchAndRenderCalendar();">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
 
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+        </style>
+
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="~/Scripts/bootstrap-multiselect.js"></script>
+        <link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
+        <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <link href="~/Scripts/FullCalender/core/main.css" rel="stylesheet" />
+        <link href="~/Styles/FullCalender/timeline/main.min.css" rel="stylesheet" />
+        <link href="~/Styles/FullCalender/resource-timeline/main.min.css" rel="stylesheet" />
+        <script src="~/Scripts/FullCalender/demo-to-code-pen/demo-to-code-pen.js"></script>
+        <script src="~/Scripts/FullCalender/core/main.js"></script>
+        <script src="~/Scripts/FullCalender/timeline/src/main.min.js"></script>
+        <script src="~/Scripts/FullCalender/resource-common/src/main.min.js"></script>
+        <script src="~/Scripts/FullCalender/resource-timeline/main.min.js"></script>
+        <script src="~/Scripts/FullCalender/interaction/main.js"></script>
+        <link href="~/Styles/FullCalender/qtip/qtip.css" rel="stylesheet" />
+        <script src="~/Scripts/FullCalender/qtip/qtip.js"></script>
+        <script src="~/Scripts/FullCalender/popper.min.js"></script>
+        <script src="~/Scripts/FullCalender/tooltip.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    </head>
+<body>
+    <div class="container" style="margin-left:0px;width:150%; margin-bottom:700px">
+        <div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:250px;">
+            <div class="pull-left">
+                <div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:70px;">
+                    <div class="form-group col-md-1" style="width:20%">
+                        @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId" })
+                    </div>
+                    <div class="form-group col-md-1" style="width:22%">
+                        @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID", @id = "OpportunityID" })
+                    </div>
+                    <div class="form-group col-md-2" style="width:20%">
+                        @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
+                    </div>
+                    <div class="form-group col-md-3">
+
+                        @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
+
+                        @Html.HiddenFor(model => model.ResourceID)
+                        <input class="hidden" type="text" id="hdnJsonString" value="@Model.jsonResources" />
+                        <input class="hidden" type="text" id="hdnJsonEvents" value="@Model.jsonEvents" />
+                    </div>
+
+                    <div class="form-group col-md-1">
+                        <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray" OnClick="SearchAndRenderCalendar();">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+
+                    </div>
+                </div>
+
+                <div id='calendar-room'>
+                    <div id='calendar'></div>
                 </div>
             </div>
-
         </div>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:lightgray">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><span id="eventTitle"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="pDetails"></p>
+                </div>
+                <div class="modal-footer" style="background-color:lightgray;height:20%; padding:2px 2px;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 
-</div>
-<div id='calendar' style="width:100%"></div>
 <script>
     $('#CandidateNameId').multiselect({
         includeSelectAllOption: true,
@@ -76,29 +154,57 @@
             var calendarEl = document.getElementById('calendar');
             var res = $("#hdnJsonString").val();
             var events = $("#hdnJsonEvents").val();
-     
+
             calendar = new FullCalendar.Calendar(calendarEl, {
                 schedulerLicenseKey: '0286417881-fcs-1567383525',
                 plugins: ['interaction', 'resourceTimeline'],
                 timeZone: 'UTC',
                 defaultView: 'resourceTimelineDay',
-                aspectRatio: 10.0,
+                aspectRatio: 2.0,
                 header: {
                     left: 'prev,next',
                     center: 'title',
                     right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
                 },
-                editable: true,
+               eventRender: function (info,event, element) {
+                        var tooltip = new Tooltip(info.el, {
+                      title: 'test',
+                      placement: 'top',
+                      trigger: 'hover',
+          
+                    });
+                },
+              selectable: true,
+                    eventClick: function  (calEvent, jsEvent, view) {
+                       
+                      $('#myModal #eventTitle').text(calEvent.event.title);
+                        var $description = $('<div/>');
+                        $description.append($('<p/>').html('<b>Start:</b>' + calEvent.event.start.toISOString()));
+                       
+                            $description.append($('<p/>').html('<b>End:</b>' + calEvent.event.end.toISOString()));
+                        
+                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.description));
+                        $('#myModal #pDetails').empty().html($description);
+
+                        $('#myModal').modal();
+                        
+                    },
+               
                 resourceLabelText: 'RESOURCES',
                 resources: JSON.parse(res),
-                events: JSON.parse(events)
+                events: JSON.parse(events),
+
             });
 
             calendar.render();
             calendar.setOption('height', 700);
-           calendar.setOption('aspectRatio', 10.0);
+           calendar.setOption('aspectRatio', 2.0);
         });
     }
+    function openAddEditForm() {
+
+        alert('test');
+            }
 
     function RenderCalendar(resources,events) {
         //document.addEventListener('DOMContentLoaded', function () {
@@ -115,13 +221,37 @@
                 plugins: ['interaction', 'resourceTimeline'],
                 timeZone: 'UTC',
                 defaultView: 'resourceTimelineDay',
-                aspectRatio: 10.0,
+                aspectRatio: 2.0,
                 header: {
                     left: 'prev,next',
                     center: 'title',
                     right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
-                },
-                editable: true,
+            },
+                   eventRender: function (info,event, element) {
+                                var tooltip = new Tooltip(info.el, {
+                  title: 'test',
+                  placement: 'bottom',
+                  trigger: 'hover',
+          
+                });
+                    },
+
+           eventClick: function  (calEvent, jsEvent, view) {
+                       
+                       
+                        $('#myModal #eventTitle').text(calEvent.event.title);
+                        var $description = $('<div/>');
+                        $description.append($('<p/>').html('<b>Start:</b>' + calEvent.event.start.toISOString()));
+                      
+                            $description.append($('<p/>').html('<b>End:</b>' + calEvent.event.end.toISOString()));
+                        
+                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.description));
+                        $('#myModal #pDetails').empty().html($description);
+
+                        $('#myModal').modal();
+                        
+                    },
+               
                 resourceLabelText: 'RESOURCES',
                 resources: resources,
                 events: events
@@ -129,7 +259,7 @@
 
         calendar.render();
         calendar.setOption('height', 700);
-       calendar.setOption('aspectRatio', 10.0);
+       calendar.setOption('aspectRatio', 2.0);
         //});
     }
 
@@ -207,10 +337,10 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
                              //   alert(v.CandidateName);
                             events.push({
                                 resourceId: v.ResourceID,
-                                title: v.Activity,                              
+                                title: v.Activity,
                                 start:v.StartTimeString,
-                                end: v.EndTimeString != null ? v.EndTimeString : null,
-                                
+                                end: v.EndTimeString
+
                             });
                             resources.push({
                                 id: v.ResourceID,

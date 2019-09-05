@@ -328,9 +328,13 @@
     <Content Include="Scripts\FullCalender\core\main.css" />
     <Content Include="Scripts\FullCalender\core\main.js" />
     <Content Include="Scripts\FullCalender\demo-to-code-pen\demo-to-code-pen.js" />
+    <Content Include="Scripts\FullCalender\interaction\main.js" />
+    <Content Include="Scripts\FullCalender\popper.min.js" />
+    <Content Include="Scripts\FullCalender\qtip\qtip.js" />
     <Content Include="Scripts\FullCalender\resource-common\src\main.min.js" />
     <Content Include="Scripts\FullCalender\resource-timeline\main.min.js" />
     <Content Include="Scripts\FullCalender\timeline\src\main.min.js" />
+    <Content Include="Scripts\FullCalender\tooltip.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -357,6 +361,7 @@
     <Content Include="Scripts\ZeroClipboard.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Styles\FullCalender\Codepen\demo-to-code-pen.css" />
+    <Content Include="Styles\FullCalender\qtip\qtip.css" />
     <Content Include="Styles\FullCalender\resource-timeline\main.min.css" />
     <Content Include="Styles\FullCalender\timeline\main.min.css" />
     <Content Include="Web.config">
@@ -400,7 +405,6 @@
     <Folder Include="Scripts\FullCalender\core\locales\" />
     <Folder Include="Scripts\FullCalender\daygrid\" />
     <Folder Include="Scripts\FullCalender\google-calendar\" />
-    <Folder Include="Scripts\FullCalender\interaction\" />
     <Folder Include="Scripts\FullCalender\list\" />
     <Folder Include="Scripts\FullCalender\moment-timezone\" />
     <Folder Include="Scripts\FullCalender\moment\" />
