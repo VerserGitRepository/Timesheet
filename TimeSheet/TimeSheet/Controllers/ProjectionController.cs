@@ -5,13 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
-
 using System.Configuration;
-
 using System.Net.Http;
 using System.Threading.Tasks;
-
-
 namespace TimeSheet.Controllers
 {
     public class ProjectionController : Controller
@@ -19,20 +15,15 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
+
+
+            if (Session["Username"] != null && Session["ProjectManager"] != null)
             {
                 ProjectionModel model = new ProjectionModel();
-                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
-                 
+                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");               
 
                 List<ProjectionModel> listB = ProjectionHelperService.ProjectionListItems().Result;
-                List<ProjectionOppurtunityModel> listA = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
-
-                
+                List<ProjectionOppurtunityModel> listA = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;                
                 foreach (var x in listB)
                 {
                     var itemToChange = listA.Find(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber) && d.OpportinutyId == x.OpportunityID && d.ServiceActivityId == x.ServiceActivityId && d.IsUpdated != true);
@@ -42,7 +33,6 @@ namespace TimeSheet.Controllers
                         itemToChange.Activity = x.Activity;
                         itemToChange.ActivityId = x.ActivityId;
                         itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
-
                         itemToChange.Comments = x.Comments;
                         itemToChange.OpportinutyId = x.OpportunityID;
                         itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
@@ -80,13 +70,15 @@ namespace TimeSheet.Controllers
                         itemToChange.ActualQuantity = x.Quantity;
                         itemToChange.wareHouseId = x.WarehouseID;
                         itemToChange.Id = x.Id;
-                        itemToChange.IsUpdated = true;
-                        //listA.Add(itemToChange);
-                    }
-                        
+                        itemToChange.IsUpdated = true;                      
+                    }                        
                 }
                 model.projectionOpportunityModel = listA;
                 return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
             }
         }
         [HttpPost]
@@ -94,48 +86,41 @@ namespace TimeSheet.Controllers
         {
             ProjectionModel model = new ProjectionModel();
 
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
+            if (Session["Username"] != null && Session["ProjectManager"] !=null)
             {
                 if (ProjectionEntryModel != null)
                 {
                     var ProjectionEntryModelRecord = new ProjectionEntryModel()
-                    { 
+                    {
                         ProjectID = ProjectionEntryModel.ProjectID,
-                        OpportunityID= ProjectionEntryModel.OpportunityID,                       
+                        OpportunityID = ProjectionEntryModel.OpportunityID,
                         WarehouseId = ProjectionEntryModel.WarehouseID,
-                        Quantity= ProjectionEntryModel.Quantity,
-                        Created= ProjectionEntryModel.Created,
+                        Quantity = ProjectionEntryModel.Quantity,
+                        Created = ProjectionEntryModel.Created,
                         DateInvoiced = ProjectionEntryModel.DateInvoiced,
                         ActivityId = ProjectionEntryModel.ActivityId,
-                        ServiceActivityId= ProjectionEntryModel.ServiceActivityId                    
-
+                        ServiceActivityId = ProjectionEntryModel.ServiceActivityId
                     };
 
-                 var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
+                    var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
                 }
+               
+            else
+            {
+                    return RedirectToAction("Login", "Login");
+             }
             }
             return View(LoadDropDownsServices.ProjectionDropdowns());
         }
-
-
         public ActionResult InlineEditing()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult UpdateProjection(ProjectionModel projectionUpdate)
         {
 
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
+            if (Session["Username"] != null && Session["ProjectManager"] != null)
             {
                 if (projectionUpdate == null)
                 {
@@ -143,29 +128,27 @@ namespace TimeSheet.Controllers
                 }
                 if (projectionUpdate != null)
                 {
-                     var projectionupdate = new ProjectionUpdate()
+                    var projectionupdate = new ProjectionUpdate()
                     {
-                         Id= projectionUpdate.Id,
-                         Quantity = projectionUpdate.Quantity,
-                         DateInvoiced = projectionUpdate.DateInvoiced.ToString(),
-                         Comments = projectionUpdate.Comments
-                     };
+                        Id = projectionUpdate.Id,
+                        Quantity = projectionUpdate.Quantity,
+                        DateInvoiced = projectionUpdate.DateInvoiced.ToString(),
+                        Comments = projectionUpdate.Comments
+                    };
                     var IsReturnValid = ProjectionHelperService.EditProjectionModel(projectionupdate);
                 }
             }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }               
             return RedirectToAction("Index", "Home");
         }
-
         [HttpPost]
         public ActionResult AddOrUpdateProjectionModel(ProjectionModel data)
         {
             ProjectionModel model = new ProjectionModel();
-
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
+            if (Session["Username"] != null && Session["ProjectManager"] != null)
             {
                 if (data != null)
                 {
@@ -183,18 +166,18 @@ namespace TimeSheet.Controllers
                             ServiceActivityId = data.ServiceActivityId,
                             Comments = data.Comments,
                             IsAdd = data.IsAdd
-                           
                         };
                         var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
-
                     }
                     else
                     {
                         Session["ErrorMessage"] = "Please Select Faciity to proceed.";
                     }
-
-                   
-                }
+                }              
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
             }
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Projection", new { });            
             return Json(new { Url = redirectUrl, status = "OK" });

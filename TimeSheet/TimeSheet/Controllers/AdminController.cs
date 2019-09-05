@@ -10,21 +10,17 @@ namespace TimeSheet.Controllers
 {
     public class AdminController : Controller
     {
-
-
-        // GET: Admin
         public ActionResult Index()
         {
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
+            if (Session["Username"] != null && Session["Administrator"] != null)
+            {               
+                return View(ManageListServices.ManageLists());
             }
             else
             {
-                return View(ManageListServices.ManageLists());
+                return RedirectToAction("Login", "Login");
             }
         }
-
         [HttpPost]
         public ActionResult Update(AdminModel ModelLists)
         {
