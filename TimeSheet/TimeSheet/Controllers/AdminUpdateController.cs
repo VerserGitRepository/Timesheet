@@ -18,22 +18,17 @@ namespace TimeSheet.Controllers
 
         [HttpPost]
         public ActionResult UpdateOpportunityModel(OpportunityListModel data)
-        {
-            
-
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
+        {          
+                if (Session["Username"] != null && Session["Administrator"].ToString() == "true")
+                {
+                    if (data != null)
+                    {                      
+                        var returnstatus = AdminHelperService.UpdateOpportunityModel(data);                       
+                    }
+                }
             else
             {
-                if (data != null)
-                {
-                    //foreach (OpportunityListModel model in data)
-                    //{
-                        var returnstatus = AdminHelperService.UpdateOpportunityModel(data);
-                    //}
-                }                                  
+                return RedirectToAction("Login", "Login");
             }
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin", new { });
             return Json(new { Url = redirectUrl, status = "OK" });
