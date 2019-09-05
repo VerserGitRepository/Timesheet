@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    @*<span class="icon-bar"></span>*@
                 </button>
                 <div id="LogoImage" style="text-align:left">
                     <img src="~/Images/Verser.png" style="height:43px; width:220px ;vertical-align:top;margin-right:2px; background-color:#D3D3D3" />
@@ -30,19 +30,19 @@
                 {
                 <ul class="nav navbar-nav">
                     @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">BOOKINGS</a>
-                        <ul class="dropdown-menu">
+                    @*<li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
+                        <ul class="dropdown-menu">*@
                             <li>@Html.ActionLink("BOOKINGS", "Index", "Home")</li>
-                            <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                            @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
                         </ul>
-                    </li>
+                    </li>*@
 
 
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">CALENDAR AND TIMELINE</a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("CALENDAR", "Index", "ManageCalender")</li>
+                            <li>@Html.ActionLink("RESOURCE CALENDAR", "Index", "ManageCalender")</li>
                             <li>@Html.ActionLink("RESOURCE TIMELINE", "Index", "ResourceTimeline")</li>
                             <li>@Html.ActionLink("RESOURCE SPECIFICS", "Index", "Resource")</li>
                         </ul>
@@ -50,7 +50,26 @@
                     <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
                     @if (Session["ProjectManager"] != null || Session["Administrator"] != null)
                     {
-                        <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")">PROJECTION</a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
+                                <li>@Html.ActionLink("PROFIT AND LOSS", "Index", "ProfitLoss")</li>
+                            </ul>
+                        </li>
+                    }
+                    @if (Session["Accounts"] != null || Session["Administrator"] != null)
+                    {
+                       
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("TIMESHEET APPROVAL", "Index", "Finanace")</li>
+                                <li>@Html.ActionLink("WEEKLY REPORT", "WeeklyReport", "Finanace")</li>
+                                <li>@Html.ActionLink("MONTHLY REPORT", "monthlyReport", "Finanace")</li>
+                                <li>@Html.ActionLink("OVERTIME REPORT", "OvertimeReport", "Finanace")</li>
+                            </ul>
+                        </li>
                     }
                     @if (Session["Administrator"] != null)
                     {
@@ -65,17 +84,17 @@
                         </ul>
                     </li>
                 </ul>
-                    <ul class="nav navbar-nav" @*style="float:right"*@>
-                        <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
-                    </ul>
-                }
-                @if (@Session["Username"] == null)
-                {
-                    <ul>
-                        <li class="nav navbar-nav" style="float:right">@Html.ActionLink("Login", "Login", "Login")</li>
-                    </ul>
-                }
-            </div>
+                            <ul class="nav navbar-nav" @*style="float:right"*@>
+                                <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
+                            </ul>
+                            }
+                            @if (@Session["Username"] == null)
+                            {
+                                <ul>
+                                    <li class="nav navbar-nav" style="float:right">@Html.ActionLink("Login", "Login", "Login")</li>
+                                </ul>
+                            }
+</div>
         </div>
     </div>
     @*container-fluid body-content*@

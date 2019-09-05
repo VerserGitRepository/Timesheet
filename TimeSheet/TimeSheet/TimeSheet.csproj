@@ -162,6 +162,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUpdateController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
+    <Compile Include="Controllers\FinanaceController.cs" />
+    <Compile Include="Controllers\ProfitLossController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\CostModelListItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -399,6 +401,11 @@
     <Content Include="Views\Projection\ManageOpportunity.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\ResourceTimeline\Index.cshtml" />
+    <Content Include="Views\Finanace\Index.cshtml" />
+    <Content Include="Views\Finanace\OverTimeReport.cshtml" />
+    <Content Include="Views\Finanace\MonthlyReport.cshtml" />
+    <Content Include="Views\Finanace\WeeklyReport.cshtml" />
+    <Content Include="Views\ProfitLoss\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

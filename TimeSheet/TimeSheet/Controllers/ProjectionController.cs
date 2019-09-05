@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
-using System.Configuration;
-using System.Net.Http;
-using System.Threading.Tasks;
 namespace TimeSheet.Controllers
 {
     public class ProjectionController : Controller
@@ -15,12 +10,10 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-
-
             if (Session["Username"] != null && Session["ProjectManager"] != null)
             {
                 ProjectionModel model = new ProjectionModel();
-                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");               
+                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");              
 
                 List<ProjectionModel> listB = ProjectionHelperService.ProjectionListItems().Result;
                 List<ProjectionOppurtunityModel> listA = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;                
