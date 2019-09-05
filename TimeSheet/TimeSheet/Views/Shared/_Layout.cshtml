@@ -30,7 +30,14 @@
                 {
                 <ul class="nav navbar-nav">
                     @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                    <li>@Html.ActionLink("BOOKINGS", "Index", "Home")</li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">BOOKINGS</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("BOOKINGS", "Index", "Home")</li>
+                            <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                        </ul>
+                    </li>
+
 
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">CALENDAR AND TIMELINE</a>
@@ -41,23 +48,23 @@
                         </ul>
                     </li>
                     <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
-                        @if (Session["ProjectManager"] != null || Session["Administrator"] != null)
-                        {
-                            <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
-                        }
-                        @if (Session["Administrator"] != null)
-                            {
-                                <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
-                            }
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TimeSheet</a></li>
-                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">Resource Available</a></li>
-                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">Projections</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    @if (Session["ProjectManager"] != null || Session["Administrator"] != null)
+                    {
+                        <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
+                    }
+                    @if (Session["Administrator"] != null)
+                    {
+                        <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
+                    }
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TimeSheet</a></li>
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">Resource Available</a></li>
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">Projections</a></li>
+                        </ul>
+                    </li>
+                </ul>
                     <ul class="nav navbar-nav" @*style="float:right"*@>
                         <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
                     </ul>
