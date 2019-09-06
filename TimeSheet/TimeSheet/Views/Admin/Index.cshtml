@@ -336,6 +336,7 @@
     function OpportunityIdChange(theRow) {
         var tr = $(theRow).closest("tr");       
         var td = tr.find("td:nth-child(2)");
+        alert(tr.find("#OpportunityCheckBoxID").is(':checked'));
         alert(td.text());
         
         }
