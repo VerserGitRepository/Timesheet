@@ -14,6 +14,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/css/mdb.min.css" rel="stylesheet">
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 @*<script src="Scripts/jquery-1.10.2.min.js"></script>*@
 
 <section id="tabs" class="project-tab">
@@ -79,15 +80,15 @@
 
                     @foreach (var item in Model.ResourceList)
                     {
-                <tr>
-                    <td>@item.ResourceName</td>
+                        <tr>
+                            <td>@item.ResourceName</td>
 
-                    <td>@item.Warehouse</td>
-                    <td>
-                        <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this);" />
-                    </td>
-                    <td class="hidden"><input type="hidden" id="hdnResource" value=@item.id></td>
-                </tr>
+                            <td>@item.Warehouse</td>
+                            <td>
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this);" />
+                            </td>
+                            <td class="hidden"><input type="hidden" id="hdnResource" value=@item.id></td>
+                        </tr>
                     }
 
                 </table>
@@ -203,7 +204,7 @@
         $(function () {
             $("#tabs").tabs();
         });
-
+          
 
 
         $(document).ready(function () {
