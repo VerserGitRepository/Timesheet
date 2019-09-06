@@ -14,5 +14,11 @@ namespace TimeSheet.Models
         public string title { get; set; }
         public string eventColor { get; set; }
 
+        public string ActivityDescription { get; set; }
+
+        public string ProjectName { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime{ get; set; }
+
     }
 }

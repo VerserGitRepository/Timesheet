@@ -3,12 +3,14 @@
 @{
     ViewBag.Title = "Index";
 }
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-<script src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/css/mdb.min.css" rel="stylesheet">
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -56,7 +58,7 @@
                             </td>
                         </tr>
                     }
-                </table>              
+                </table>
             </div>
             <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="MANAGERESOURCES">
@@ -77,16 +79,18 @@
 
                     @foreach (var item in Model.ResourceList)
                     {
-                        <tr>
-                            <td>@item.ResourceName</td>
-                            <td>@item.Warehouse</td>
-                            <td>
-                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
-                            </td>
-                        </tr>
+                <tr>
+                    <td>@item.ResourceName</td>
+
+                    <td>@item.Warehouse</td>
+                    <td>
+                        <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this);" />
+                    </td>
+                    <td class="hidden"><input type="hidden" id="hdnResource" value=@item.id></td>
+                </tr>
                     }
 
-                </table>               
+                </table>
             </div>
             <div id="MANAGEPROJECTS" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="MANAGEPROJECTS">
@@ -109,7 +113,7 @@
                             </td>
                         </tr>
                     }
-                </table>                
+                </table>
             </div>
             <div id="MANAGEACTIVITIES" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
@@ -201,10 +205,10 @@
             $("#tabs").tabs();
         });
 
-        
+
 
         $(document).ready(function () {
-            
+
         });
         //$('#OpportunityCheckBoxID').on('change', function () {
         //        alert('changed');
@@ -315,10 +319,10 @@
     });
     });
     function OpportunityIdChange(theRow) {
-        var tr = $(theRow).closest("tr");       
-        var td = tr.find("td:nth-child(2)");      
+        var tr = $(theRow).closest("tr");
+        var td = tr.find("td:nth-child(2)");
         var opportunityid = td.text();
-        var ischecked = tr.find("#OpportunityCheckBoxID").is(':checked');     
+        var ischecked = tr.find("#OpportunityCheckBoxID").is(':checked');
         $.ajax({
             url: "./UpdateOpportunities",
                     type: "POST",
@@ -332,13 +336,13 @@
     }
     function ResourceIdChange(theRow) {
         var tr = $(theRow).closest("tr");
-        var td = tr.find("td:nth-child(2)");
-        var opportunityid = td.text();
-        var ischecked = tr.find("#OpportunityCheckBoxID").is(':checked');
+       // var td = tr.find("td:nth-child(4)");
+        var resourceId = tr.find("#hdnResource").val();
+        var ischecked = tr.find("#ResourceCheckBoxID").is(':checked');
         $.ajax({
-            url: "./UpdateOpportunities",
+            url: "./UpdateResourceState",
             type: "POST",
-            data: { resourceID: opportunityid, isActive: ischecked },
+            data: { resourceID: resourceId, isActive: ischecked },
             dataType: "json",
             traditional: true,
             success: function () {

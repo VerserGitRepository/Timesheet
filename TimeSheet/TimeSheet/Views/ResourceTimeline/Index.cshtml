@@ -22,44 +22,44 @@
                 width: 50px;
             }
 
-           .tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
+            .tooltip {
+                position: relative;
+                display: inline-block;
+                border-bottom: 1px dotted black;
+            }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+                .tooltip .tooltiptext {
+                    visibility: hidden;
+                    width: 120px;
+                    background-color: #555;
+                    color: #fff;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px 0;
+                    position: absolute;
+                    z-index: 1;
+                    bottom: 125%;
+                    left: 50%;
+                    margin-left: -60px;
+                    opacity: 0;
+                    transition: opacity 0.3s;
+                }
 
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
+                    .tooltip .tooltiptext::after {
+                        content: "";
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        margin-left: -5px;
+                        border-width: 5px;
+                        border-style: solid;
+                        border-color: #555 transparent transparent transparent;
+                    }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
+                .tooltip:hover .tooltiptext {
+                    visibility: visible;
+                    opacity: 1;
+                }
         </style>
 
         <link href="~/Content/bootstrap.css" rel="stylesheet" />
@@ -83,6 +83,7 @@
         <script src="~/Scripts/FullCalender/popper.min.js"></script>
         <script src="~/Scripts/FullCalender/tooltip.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     </head>
 <body>
     <div class="container" style="margin-left:0px;width:150%; margin-bottom:700px">
@@ -177,13 +178,13 @@
               selectable: true,
                     eventClick: function  (calEvent, jsEvent, view) {
                        
-                      $('#myModal #eventTitle').text(calEvent.event.title);
+                      $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
                         var $description = $('<div/>');
-                        $description.append($('<p/>').html('<b>Start:</b>' + calEvent.event.start.toISOString()));
+                        $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.getResources()[0].extendedProps.StartTime).format('llll')));
                        
-                            $description.append($('<p/>').html('<b>End:</b>' + calEvent.event.end.toISOString()));
+                            $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.getResources()[0].extendedProps.EndTime).format('llll')));
                         
-                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.description));
+                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();
@@ -193,6 +194,7 @@
                 resourceLabelText: 'RESOURCES',
                 resources: JSON.parse(res),
                 events: JSON.parse(events),
+                //event.setExtendedProp( 'test', 'tester')
 
             });
 
@@ -239,13 +241,13 @@
            eventClick: function  (calEvent, jsEvent, view) {
                        
                        
-                        $('#myModal #eventTitle').text(calEvent.event.title);
+                        $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
                         var $description = $('<div/>');
-                        $description.append($('<p/>').html('<b>Start:</b>' + calEvent.event.start.toISOString()));
-                      
-                            $description.append($('<p/>').html('<b>End:</b>' + calEvent.event.end.toISOString()));
+                        $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.getResources()[0].extendedProps.StartTime).format('llll')));
+                       
+                            $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.getResources()[0].extendedProps.EndTime).format('llll')));
                         
-                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.description));
+                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();
