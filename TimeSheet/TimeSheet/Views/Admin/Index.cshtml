@@ -49,6 +49,7 @@
 
                     @foreach (var item in Model.OpportunityList)
 
+
                     {
                         <tr>
 
@@ -59,8 +60,12 @@
                             </td>
                         </tr>
                     }
+
                 </table>
+                <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
             </div>
+
+
             <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="MANAGERESOURCES">
                     <thead style="background-color:lightgray">
@@ -79,20 +84,22 @@
                     </thead>
 
                     @foreach (var item in Model.ResourceList)
+
+
                     {
                         <tr>
                             <td>@item.ResourceName</td>
-
                             <td>@item.Warehouse</td>
                             <td>
-                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this);" />
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this,'@item.ResourceName');" />
                             </td>
-                            <td class="hidden"><input type="hidden" id="hdnResource" value=@item.id></td>
-                        </tr>
+                                                    </tr>
                     }
 
                 </table>
+                <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
             </div>
+
             <div id="MANAGEPROJECTS" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="MANAGEPROJECTS">
                     <thead style="background-color:lightgray">
@@ -100,22 +107,31 @@
                             <th>
                                 PROJECT NAME
                             </th>
+
+
                             <th>
                                 Is Active
                             </th>
                         </tr>
                     </thead>
+
                     @foreach (var item in Model.ProjectDetailsList)
+
+
                     {
                         <tr>
+
                             <td>@item.projectName</td>
                             <td>
-                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" id="ProjectCheckBoxID" onchange="ProjectIdChange(this,@item.projectName);"/>
                             </td>
                         </tr>
                     }
+
                 </table>
+                <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
             </div>
+
             <div id="MANAGEACTIVITIES" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
                     <thead style="background-color:lightgray">
@@ -146,6 +162,7 @@
                     </thead>
 
                     @foreach (var item in Model.ActivityList)
+
 
                     {
                         <tr>
@@ -189,7 +206,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.12.1.min.js")"></script>
     <script type="text/javascript">
     </script>
 }
@@ -204,30 +221,30 @@
         $(function () {
             $("#tabs").tabs();
         });
-          
+        
+
 
 
         $(document).ready(function () {
+            <!-- $('#OpportunityCheckBoxID').on('click', function () {
+                var prices = [];
+                $('input:checked').each(function () {
 
+                    prices.push($(this).attr("value"));
+                });
+                $.ajax({
+                    url: "/Resource/Update",
+                    type: "POST",
+                    data: { coursePrices: prices },
+                    dataType: "json",
+                    traditional: true,
+                    success: function () {
+                        alert("ajax request to server succeed");
+                    }
+                });
+            }); -->
         });
-        //$('#OpportunityCheckBoxID').on('change', function () {
-        //        alert('changed');
-        //        var prices = [];
-        //        $('input:checked').each(function () {
 
-        //            prices.push($(this).attr("value"));
-        //        });
-        //        $.ajax({
-        //            url: "/Resource/Update",
-        //            type: "POST",
-        //            data: { coursePrices: prices },
-        //            dataType: "json",
-        //            traditional: true,
-        //            success: function () {
-        //                alert("ajax request to server succeed");
-        //            }
-        //        });
-        //    });
           function AppendRow(row, Id, Quantity, Comments, DateInvoiced) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
@@ -334,15 +351,16 @@
                     }
         });
     }
-    function ResourceIdChange(theRow) {
+    function ResourceIdChange(theRow, resourceName) {
+      //  alert('changed')
         var tr = $(theRow).closest("tr");
        // var td = tr.find("td:nth-child(4)");
-        var resourceId = tr.find("#hdnResource").val();
+        //var resourceId = tr.find("#hdnResource").val();
         var ischecked = tr.find("#ResourceCheckBoxID").is(':checked');
         $.ajax({
             url: "./UpdateResourceState",
             type: "POST",
-            data: { resourceID: resourceId, isActive: ischecked },
+            data: { resourceID: resourceName, isActive: ischecked },
             dataType: "json",
             traditional: true,
             success: function () {
@@ -350,15 +368,14 @@
             }
         });
     }
-    function ProjectIdChange(theRow) {
+    function ProjectIdChange(theRow,projectId) {
         var tr = $(theRow).closest("tr");
-        var td = tr.find("td:nth-child(2)");
-        var opportunityid = td.text();
-        var ischecked = tr.find("#OpportunityCheckBoxID").is(':checked');
+        // var projectId = tr.find("#hdnProject").val();
+        var ischecked = tr.find("#ProjectCheckBoxID").is(':checked');
         $.ajax({
-            url: "./UpdateOpportunities",
+            url: "./UpdateProjectState",
             type: "POST",
-            data: { ProjectID: opportunityid, isActive: ischecked },
+            data: { ProjectID: projectId, isActive: ischecked },
             dataType: "json",
             traditional: true,
             success: function () {
@@ -366,7 +383,10 @@
             }
         });
     }
+
 </script>
+
+
 <style>
 
     .textarea {
