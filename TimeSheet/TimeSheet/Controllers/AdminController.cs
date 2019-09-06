@@ -27,6 +27,47 @@ namespace TimeSheet.Controllers
             //Use a break point here to watch values
             //Code... (save for example)
             return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateOpportunities(int opportunityID, bool isActive)
+        {
+            if (Session["Username"] != null && Session["Administrator"] != null)
+            {
+                var _r= AdminHelperService.UpdateOpportunity(opportunityID, isActive); 
+                return View(ManageListServices.ManageLists());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }          
+
+        }
+        [HttpPost]
+        public ActionResult UpdateResourceState(int resourceID, bool isActive)
+        {
+            if (Session["Username"] != null && Session["Administrator"] != null)
+            {
+                var _r = AdminHelperService.UpdateResourceState(resourceID, isActive);
+                return View(ManageListServices.ManageLists());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+        }
+        [HttpPost]
+        public ActionResult UpdateProjectState(int ProjectID, bool isActive)
+        {
+            if (Session["Username"] != null && Session["Administrator"] != null)
+            {
+                var _r = AdminHelperService.UpdateProjectState(ProjectID, isActive);
+                return View(ManageListServices.ManageLists());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
 
         }
 

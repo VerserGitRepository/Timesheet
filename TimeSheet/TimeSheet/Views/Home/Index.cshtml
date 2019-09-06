@@ -62,6 +62,7 @@
         border-color: white;
     }
 
+
     .page-item.active .page-link {
         color: white !important;
         background-color: orange !important;
@@ -76,40 +77,45 @@
         text-align: left;
     }
 </style>
-<div class="row" style="vertical-align:baseline;padding-top:2px;margin-left:490px;">
-    <table >
-        <tr class="pull-right">
-            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-            {
-                <td>
-                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project" })
-                </td>
-                <td>
-                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID" })
-                </td>
-                <td> @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })</td>
-                <td>
-                    @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
-                    @Html.HiddenFor(model => model.ResourceID)
-                </td>
-                <td>
-                    <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray">
-                        <span class="glyphicon glyphicon-search" style=""></span>
-                    </button>
-                </td>
-            }
-            <td>
-                @using (Html.BeginForm("ExportTimesSheetToExcel", "Home", FormMethod.Post))
-                {
-                    <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray">
-                        <span class="glyphicon glyphicon-export black"></span>
-                    </button>
-                }
-            </td>
-        </tr>
-    </table>
-</div>
 
+<div class="container" style="padding-top:2px;padding-bottom:0px;margin-right:10px;padding-left:0px;padding-right:10px;margin-bottom:0px">
+    <div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:0px;">
+        <div class="pull-left">
+
+
+            <div class="form-group col-md-2" style="width:18%">
+                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId" })
+            </div>
+            <div class="form-group col-md-3" style="width:22%">
+                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITYNO", new { @class = "form-control OpportunityNumberID" })
+
+            </div>
+
+            <div class="form-group col-md-2" style="width:18%">
+                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })
+            </div>
+            <div class="form-group col-md-2">
+                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
+                @Html.HiddenFor(model => model.ResourceID)
+            </div>
+
+
+
+        </div>
+        <div class="col-md-1">
+            <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray" OnClick="SearchAndFetchResourceDetails();">
+                <span class="glyphicon glyphicon-search " style=""></span>
+            </button>
+        </div>
+        <div class="col-md-1">
+
+            <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray">
+                <span class="glyphicon glyphicon-export black"></span>
+            </button>
+
+        </div>
+    </div>
+</div>
 
 <div class="container" style="margin-left:0px">
     <div class="row">
@@ -150,9 +156,11 @@
                                 @Html.DisplayFor(modelItem => item.StartTime)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.EndTime)
+                                @Html.DisplayFor(modelItem => item.EndDate)
                             </td>
-
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.EndTime)
+                                </td>*@
                             <td>
                                 <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
                                 @*@Html.DisplayFor(modelItem => item.ProjectName)*@
@@ -184,6 +192,8 @@
         </div>
     </div>
 </div>
+
+
 <div id='myModal' class='modal'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -199,12 +209,34 @@
     </div>
 </div>
 
-
 <script>
-      $(document).ready(function () {
+    $(document).ready(function () {
         $('#TimeSheetTable').dataTable();
         $('.dataTables_filter').addClass('pull-right');
+    });
+     $('#ddlWarehouseId').change(function () {
 
+                 var warehouseUrl = '';
+
+                 var WarehouseResource = $('#CandidateNameId');
+                 var id = $(this).val();
+                 if (id != "") {
+                     warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
+
+                 }
+                 else {
+                         warehouseUrl = '@Url.Action("Register", "Resource")';
+                 }
+                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
+                        $('#CandidateNameId').empty().multiselect('refresh')
+                            $.each(response, function (index, item) {
+                                $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));
+
+                            });
+
+                        $('#CandidateNameId').multiselect('rebuild');
+                       });
+            });
     $('#btnAdd').click(function () {
     var URL = "@Url.Content("~/TimeSheet/Register")";
     $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
@@ -265,38 +297,18 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
         });
     });
 });
-$('#ddlWarehouseId').change(function () {
 
-                 var warehouseUrl = '';
-
-                 var WarehouseResource = $('#CandidateNameId');
-                 var id = $(this).val();
-                 if (id != "") {
-                     warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
-
-                 }
-                 else {
-                         warehouseUrl = '@Url.Action("Register", "Resource")';
-                 }
-                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
-                        $('#CandidateNameId').empty().multiselect('refresh')
-                            $.each(response, function (index, item) {
-                                $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));
-
-                            });
-
-                        $('#CandidateNameId').multiselect('rebuild');
-                       });
-            });
 
 
 $('#edit').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
           })
-          $('#ddlWarehouseId','#ddlEmploymentId').change(function () {
+
+         $('#ddlWarehouseId').change(function () {
+
                     var warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
-                    var WarehouseResource = $('#ResourceID');
-                    var id = $(this).val();
+                    var WarehouseResource = $('#CandidateNameId');
+                        var id = $(this).val();
                     $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
                         WarehouseResource.empty();
                         WarehouseResource.append($('<option></option>').text("Select Resource").val(0));
@@ -306,20 +318,17 @@ $('#edit').on('shown.bs.modal', function () {
                        });
 });
 
-});
 
-$('#myModal').on('shown.bs.modal', function () {
-       $('#myInput').trigger('focus')
-})
 
-$('#opportunity').on('shown.bs.modal', function () {
-$('#myInput').trigger('focus')
-    })
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    });
 
-@*$('#btnEdit').click(function () {
-var URL = "@Url.Content("~/TimeSheet/Register")";
-$("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
-}) *@
+    $('#opportunity').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    });
+
+
 
     var BookedDetailsURL = './ProjectDetails';
     $(function () {
@@ -418,12 +427,37 @@ $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") 
             $('#myModal').modal('hide');
         });
     });
-        $('#CandidateNameId').multiselect({
+
+    $('#CandidateNameId').multiselect({
         includeSelectAllOption: true,
         maxHeight: 250,
-        buttonWidth: '250px',
+        buttonWidth: '280px',
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true
     });
+
+    function SearchAndFetchResourceDetails() {
+                events = [];
+        var loadUrl = '@Url.Action("SearchIndex", "Home")';
+
+        var thedata = { 'ProjectId': $('#ddlProjectId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#OpportunityID').val(), 'ResourceIds': $('#CandidateNameId').val() };
+       $.ajax({
+                data: thedata,
+                url:'@Url.Action("SearchIndex", "Home")',
+                type: "POST",
+                success: function (data) {
+                    if (data.status === 'OK') {
+                        window.location.href = data.Url
+                       // location.reload(true);
+                    }
+                    else {
+                        alert("The status cannot be updated at this time");
+                    }
+                }
+            });
+
+
+            }
+
 </script>
 
