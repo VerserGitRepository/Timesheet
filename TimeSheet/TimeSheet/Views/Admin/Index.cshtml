@@ -330,6 +330,38 @@
                     }
         });
     }
+    function ResourceIdChange(theRow) {
+        var tr = $(theRow).closest("tr");
+        var td = tr.find("td:nth-child(2)");
+        var opportunityid = td.text();
+        var ischecked = tr.find("#OpportunityCheckBoxID").is(':checked');
+        $.ajax({
+            url: "./UpdateOpportunities",
+            type: "POST",
+            data: { resourceID: opportunityid, isActive: ischecked },
+            dataType: "json",
+            traditional: true,
+            success: function () {
+                alert("ajax request to server succeed");
+            }
+        });
+    }
+    function ProjectIdChange(theRow) {
+        var tr = $(theRow).closest("tr");
+        var td = tr.find("td:nth-child(2)");
+        var opportunityid = td.text();
+        var ischecked = tr.find("#OpportunityCheckBoxID").is(':checked');
+        $.ajax({
+            url: "./UpdateOpportunities",
+            type: "POST",
+            data: { ProjectID: opportunityid, isActive: ischecked },
+            dataType: "json",
+            traditional: true,
+            success: function () {
+                alert("ajax request to server succeed");
+            }
+        });
+    }
 </script>
 <style>
 

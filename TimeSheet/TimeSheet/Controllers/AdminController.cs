@@ -61,7 +61,7 @@ namespace TimeSheet.Controllers
         {
             if (Session["Username"] != null && Session["Administrator"] != null)
             {
-                var _r = AdminHelperService.UpdateOpportunity(ProjectID, isActive);
+                var _r = AdminHelperService.UpdateProjectState(ProjectID, isActive);
                 return View(ManageListServices.ManageLists());
             }
             else
