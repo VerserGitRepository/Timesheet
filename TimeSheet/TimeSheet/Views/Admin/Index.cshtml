@@ -14,7 +14,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/css/mdb.min.css" rel="stylesheet">
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
 @*<script src="Scripts/jquery-1.10.2.min.js"></script>*@
 
 <section id="tabs" class="project-tab">
@@ -88,12 +87,13 @@
 
                     {
                         <tr>
+
                             <td>@item.ResourceName</td>
                             <td>@item.Warehouse</td>
                             <td>
-                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this,'@item.ResourceName');" />
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this);" />
                             </td>
-                                                    </tr>
+                        </tr>
                     }
 
                 </table>
@@ -107,7 +107,7 @@
                             <th>
                                 PROJECT NAME
                             </th>
-
+                                
 
                             <th>
                                 Is Active
@@ -123,7 +123,7 @@
 
                             <td>@item.projectName</td>
                             <td>
-                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" id="ProjectCheckBoxID" onchange="ProjectIdChange(this,@item.projectName);"/>
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" id="ProjectCheckBoxID" onchange="ProjectIdChange(this);" />
                             </td>
                         </tr>
                     }
@@ -221,12 +221,18 @@
         $(function () {
             $("#tabs").tabs();
         });
-        
 
-
+        $('#OpportunityCheckBoxID').change(function () {
+            if ($(this).is(":checked")) {
+                var returnVal = confirm("Are you sure?");
+                alert('hi')
+                $(this).attr("checked", returnVal);
+            }
+            $('#OpportunityCheckBoxID').val($(this).is(':checked'));
+        });
 
         $(document).ready(function () {
-            <!-- $('#OpportunityCheckBoxID').on('click', function () {
+            $('#OpportunityCheckBoxID').on('click', function () {
                 var prices = [];
                 $('input:checked').each(function () {
 
@@ -242,7 +248,7 @@
                         alert("ajax request to server succeed");
                     }
                 });
-            }); -->
+            });
         });
 
           function AppendRow(row, Id, Quantity, Comments, DateInvoiced) {
@@ -351,16 +357,16 @@
                     }
         });
     }
-    function ResourceIdChange(theRow, resourceName) {
+    function ResourceIdChange(theRow) {
       //  alert('changed')
         var tr = $(theRow).closest("tr");
-       // var td = tr.find("td:nth-child(4)");
-        //var resourceId = tr.find("#hdnResource").val();
+        var td = tr.find("td:nth-child(1)");
+        var resourceName = td.text();
         var ischecked = tr.find("#ResourceCheckBoxID").is(':checked');
         $.ajax({
             url: "./UpdateResourceState",
             type: "POST",
-            data: { resourceID: resourceName, isActive: ischecked },
+            data: { resourceName: resourceName, isActive: ischecked },
             dataType: "json",
             traditional: true,
             success: function () {
@@ -368,14 +374,15 @@
             }
         });
     }
-    function ProjectIdChange(theRow,projectId) {
+    function ProjectIdChange(theRow) {
         var tr = $(theRow).closest("tr");
-        // var projectId = tr.find("#hdnProject").val();
+        var td = tr.find("td:nth-child(1)");
+        var projectId = td.text();
         var ischecked = tr.find("#ProjectCheckBoxID").is(':checked');
         $.ajax({
             url: "./UpdateProjectState",
             type: "POST",
-            data: { ProjectID: projectId, isActive: ischecked },
+            data: { Project: projectId, isActive: ischecked },
             dataType: "json",
             traditional: true,
             success: function () {

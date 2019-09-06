@@ -39,36 +39,34 @@ namespace TimeSheet.Controllers
             else
             {
                 return RedirectToAction("Login", "Login");
-            }          
+            }        
 
         }
         [HttpPost]
-        public ActionResult UpdateResourceState(int resourceID, bool isActive)
+        public ActionResult UpdateResourceState(string resourceName, bool isActive)
         {
             if (Session["Username"] != null && Session["Administrator"] != null)
             {
-                var _r = AdminHelperService.UpdateResourceState(resourceID, isActive);
+                var _r = AdminHelperService.UpdateResourceState(resourceName, isActive);
                 return View(ManageListServices.ManageLists());
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-
         }
         [HttpPost]
-        public ActionResult UpdateProjectState(int ProjectID, bool isActive)
+        public ActionResult UpdateProjectState(string Project, bool isActive)
         {
             if (Session["Username"] != null && Session["Administrator"] != null)
             {
-                var _r = AdminHelperService.UpdateProjectState(ProjectID, isActive);
+                var _r = AdminHelperService.UpdateProjectState(Project, isActive);
                 return View(ManageListServices.ManageLists());
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-
         }
 
     }

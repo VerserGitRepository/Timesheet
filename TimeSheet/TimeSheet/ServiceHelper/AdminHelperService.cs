@@ -112,12 +112,12 @@ namespace TimeSheet.ServiceHelper
 
             }
         }
-        public static async Task UpdateResourceState(int resourceID, bool isActive)
+        public static async Task UpdateResourceState(string resourceName, bool isActive)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageResources", resourceID, isActive)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageResources", resourceName, isActive)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var ReturnResult = await response.Content.ReadAsAsync<bool>();
@@ -130,12 +130,12 @@ namespace TimeSheet.ServiceHelper
 
             }
         }
-        public static async Task UpdateProjectState(int ProjectID, bool isActive)
+        public static async Task UpdateProjectState(string Project, bool isActive)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageProjects", ProjectID, isActive)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageProjects", Project, isActive)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var ReturnResult = await response.Content.ReadAsAsync<bool>();
