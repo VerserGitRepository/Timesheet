@@ -30,16 +30,17 @@
                 {
                 <ul class="nav navbar-nav">
                     @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                    @*<li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
-                        <ul class="dropdown-menu">*@
-                            <li>@Html.ActionLink("BOOKINGS", "Index", "Home")</li>
-                            @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
-                        </ul>
-                    </li>*@
-
-
                     <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
+                            <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                            <li>@Html.ActionLink("COMPLETED BOOKINGS", "Index", "CompletedBooking")</li>
+                            
+                        </ul>
+                    </li>
+
+                       <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">CALENDAR AND TIMELINE</a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("RESOURCE CALENDAR", "Index", "ManageCalender")</li>
@@ -47,7 +48,7 @@
                             <li>@Html.ActionLink("RESOURCE SPECIFICS", "Index", "Resource")</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                    @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>*@
                     @if (Session["ProjectManager"] != null || Session["Administrator"] != null)
                     {
                         <li class="dropdown">

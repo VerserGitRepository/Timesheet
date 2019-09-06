@@ -35,6 +35,7 @@ namespace TimeSheet.Controllers
                 return View(model);
             }                 
         }
+
         [HttpPost]
         public ActionResult Index(TimeSheetViewModel SearchModel)
         {
@@ -117,6 +118,17 @@ namespace TimeSheet.Controllers
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("TimeSheetCandidateDetails", model);
         }
+
+        [HttpGet]
+        public ActionResult ProjectDetails(string ProjectName)
+        {
+            TimeSheetViewModel model = new TimeSheetViewModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
+            model.CandidateTimeSheetList= AlltimesheetRecords.Where(c => c.ProjectName == ProjectName).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("ProjectDetails", model);
+        }
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -164,6 +176,7 @@ namespace TimeSheet.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
         [HttpPost]
         public ActionResult UpdateCandidate(UpdateTimeSheetModel CandidateEdit)
         {
