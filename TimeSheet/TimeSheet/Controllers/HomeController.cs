@@ -192,17 +192,20 @@ namespace TimeSheet.Controllers
             if (Session["HomeIndex"] != null)
             {
                 TimeSheetViewModel model = (TimeSheetViewModel)Session["HomeIndex"];
-
                 newModel.Projectlist = model.Projectlist;
-               
-                
                 newModel.WarehouseNameList = model.WarehouseNameList;
-
-                
                 newModel.CandidateNameList = model.CandidateNameList;
-
-                // newModel.CandidateNameList = model.CandidateNameList;
-                newModel.CandidateTimeSheetList = model.CandidateTimeSheetList.Where(item => ResourceIDs.Contains(Convert.ToInt32(item.ResourceID)) && item.ProjectID == Convert.ToInt32(ProjectID) && item.WarehouseID == Convert.ToInt32(warehouseId) && item.OpportunityID == Convert.ToInt32(opportunityId)).ToList();
+                List<TimeSheetViewModel> whereList = model.CandidateTimeSheetList;
+                
+                if (ResourceIDs!= null && ResourceIDs.Count > 0)
+                    whereList = model.CandidateTimeSheetList.Where(item => ResourceIDs.Contains(Convert.ToInt32(item.ResourceID))).ToList();
+                if(!string.IsNullOrEmpty(ProjectID))
+                    whereList = whereList.Where(item => item.ProjectID == Convert.ToInt32(ProjectID)).ToList();
+                if (!string.IsNullOrEmpty(warehouseId))
+                    whereList = whereList.Where(item => item.WarehouseID == Convert.ToInt32(warehouseId)).ToList();
+                if (!string.IsNullOrEmpty(opportunityId) && opportunityId !="0")
+                    whereList = whereList.Where(item => item.OpportunityID == Convert.ToInt32(opportunityId)).ToList();
+                newModel.CandidateTimeSheetList = whereList;
                 Session["HomeSearchIndex"] = newModel;
             }
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("ViewIndex", "Home", new { });
