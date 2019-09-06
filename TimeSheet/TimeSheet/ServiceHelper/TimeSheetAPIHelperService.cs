@@ -288,6 +288,28 @@ namespace TimeSheet.ServiceHelper
             return CostModelLists;
         }
 
+
+        public static async Task<List<CompletedTimesheetModel>> TimeSheetCompletedList()
+        {
+            List<CompletedTimesheetModel> CostModelLists = new List<CompletedTimesheetModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/TimeSheetCompletedList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<CompletedTimesheetModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
+
+
         public static async Task<TimeSheetViewModel> TimeSheetSearchById(int id)
         {
            var CostModelLists = new TimeSheetViewModel();

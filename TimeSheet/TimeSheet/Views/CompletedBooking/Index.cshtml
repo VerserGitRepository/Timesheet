@@ -1,5 +1,4 @@
-﻿
-@model  TimeSheet.Models.TimeSheetViewModel
+﻿@model  TimeSheet.Models.CompletedTimesheetModel
 @{ ViewBag.Title = "TimeSheet";
 }
 @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
@@ -76,40 +75,6 @@
         text-align: left;
     }
 </style>
-<div class="row" style="vertical-align:baseline;padding-top:2px;margin-left:490px;">
-    <table >
-        <tr class="pull-right">
-            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-            {
-                <td>
-                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project" })
-                </td>
-                <td>
-                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID" })
-                </td>
-                <td> @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })</td>
-                <td>
-                    @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
-                    @Html.HiddenFor(model => model.ResourceID)
-                </td>
-                <td>
-                    <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray">
-                        <span class="glyphicon glyphicon-search" style=""></span>
-                    </button>
-                </td>
-            }
-            <td>
-                @using (Html.BeginForm("ExportTimesSheetToExcel", "Home", FormMethod.Post))
-                {
-                    <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray">
-                        <span class="glyphicon glyphicon-export black"></span>
-                    </button>
-                }
-            </td>
-        </tr>
-    </table>
-</div>
-
 
 <div class="container" style="margin-left:0px">
     <div class="row">
@@ -133,11 +98,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (TimeSheet.Models.TimeSheetViewModel item in Model.CandidateTimeSheetList)
+                    @foreach (TimeSheet.Models.CompletedTimesheetModel item in Model.CompletedTimeSheetList)
                     {
                         <tr>
                             <td>
-                                <a href="javascript:void(0);" class="CandidateDetail" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
+                                @Html.DisplayFor(modelItem => item.CandidateName)
+                                @*<a href="javascript:void(0);" class="CandidateDetail" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>*@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.OpportunityNumber)
@@ -154,8 +120,7 @@
                             </td>
 
                             <td>
-                                <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
-                                @*@Html.DisplayFor(modelItem => item.ProjectName)*@
+                                @Html.DisplayFor(modelItem => item.ProjectName)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.JobNo)
@@ -321,41 +286,10 @@ var URL = "@Url.Content("~/TimeSheet/Register")";
 $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
 }) *@
 
-    var BookedDetailsURL = './ProjectDetails';
-    $(function () {
-        $("#TimeSheetTable").on("click", ".ProjectName", function () {
-           // debugger;
-            var $buttonClicked = $(this);
-            var ProjectName = $buttonClicked.attr('data-id');
-            var options = { "backdrop": "static", keyboard: true };
-            $.ajax({
-                type: "GET",
-                url: BookedDetailsURL,
-                contentType: "application/json; charset=utf-8",
-                data: { "ProjectName": ProjectName },
-                datatype: "json",
-                success: function (data) {
-                   // debugger;
-                    $('#myModalContent').html(data);
-                    $('#myModal').modal(options);
-                    $('#myModal').modal('show');
-                },
-                error: function () {
-                    alert("Dynamic content load failed.");
-                }
-            });
-        });
-
-        $("#closbtn").click(function () {
-            $('#myModal').modal('hide');
-        });
-    });
-
-
-    var CandidateDetailsURL = './TimesheetCandidateDetails';
+    var CandidateDetailsURL = './TimeSheetCandidateDetails';
     $(function () {
         $("#TimeSheetTable").on("click", ".CandidateDetail", function () {
-            // debugger;
+           // debugger;
             var $buttonClicked = $(this);
             var CandidateName = $buttonClicked.attr('data-id');
             var options = { "backdrop": "static", keyboard: true };
@@ -366,7 +300,7 @@ $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") 
                 data: { "CandidateName": CandidateName },
                 datatype: "json",
                 success: function (data) {
-                    // debugger;
+                   // debugger;
                     $('#myModalContent').html(data);
                     $('#myModal').modal(options);
                     $('#myModal').modal('show');
@@ -426,4 +360,3 @@ $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") 
         enableCaseInsensitiveFiltering: true
     });
 </script>
-

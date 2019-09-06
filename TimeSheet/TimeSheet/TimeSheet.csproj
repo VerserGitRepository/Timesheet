@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUpdateController.cs" />
+    <Compile Include="Controllers\CompletedBookingController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
     <Compile Include="Controllers\FinanaceController.cs" />
     <Compile Include="Controllers\ProfitLossController.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
     <Compile Include="Models\CandidateTimeSheetsModel.cs" />
+    <Compile Include="Models\CompletedTimesheetModel.cs" />
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
     <Compile Include="Models\ListItems.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
@@ -406,6 +408,8 @@
     <Content Include="Views\Finanace\MonthlyReport.cshtml" />
     <Content Include="Views\Finanace\WeeklyReport.cshtml" />
     <Content Include="Views\ProfitLoss\Index.cshtml" />
+    <Content Include="Views\CompletedBooking\Index.cshtml" />
+    <Content Include="Views\Home\ProjectDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
