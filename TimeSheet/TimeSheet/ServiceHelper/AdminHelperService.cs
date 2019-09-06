@@ -94,28 +94,60 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
-        public static async Task UpdateOpportunityModel(OpportunityListModel UpdateModel)
-        {
-            var ReturnResult = new ReturnModel();
+        public static async Task UpdateOpportunity(int opportunityID, bool isActive)
+        {           
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("Administration/{0}/{1}/ManageOpportunities", UpdateModel.Id,UpdateModel.IsActive), UpdateModel).Result;
-                //HttpResponseMessage response1 = client.GetAsync(string.Format("ListItems/{0}/OpportunityActivities", OpportunityId)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageOpportunities", opportunityID, isActive)).Result;                
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                  var  ReturnResult = await response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Opportunity Updated Successfully";
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
                 }
 
             }
+        }
+        public static async Task UpdateResourceState(int resourceID, bool isActive)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageResources", resourceID, isActive)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var ReturnResult = await response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Opportunity Updated Successfully";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                }
 
+            }
+        }
+        public static async Task UpdateProjectState(int ProjectID, bool isActive)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageProjects", ProjectID, isActive)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var ReturnResult = await response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Opportunity Updated Successfully";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                }
+
+            }
         }
     }
-
 }
 

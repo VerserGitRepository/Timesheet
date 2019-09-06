@@ -46,7 +46,6 @@
 
                     @foreach (var item in Model.OpportunityList)
 
-
                     {
                         <tr>
 
@@ -57,12 +56,8 @@
                             </td>
                         </tr>
                     }
-
-                </table>
-                <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
+                </table>              
             </div>
-
-
             <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="MANAGERESOURCES">
                     <thead style="background-color:lightgray">
@@ -81,11 +76,8 @@
                     </thead>
 
                     @foreach (var item in Model.ResourceList)
-
-
                     {
                         <tr>
-
                             <td>@item.ResourceName</td>
                             <td>@item.Warehouse</td>
                             <td>
@@ -94,10 +86,8 @@
                         </tr>
                     }
 
-                </table>
-                <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
+                </table>               
             </div>
-
             <div id="MANAGEPROJECTS" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="MANAGEPROJECTS">
                     <thead style="background-color:lightgray">
@@ -105,31 +95,22 @@
                             <th>
                                 PROJECT NAME
                             </th>
-
-
                             <th>
                                 Is Active
                             </th>
                         </tr>
                     </thead>
-
                     @foreach (var item in Model.ProjectDetailsList)
-
-
                     {
                         <tr>
-
                             <td>@item.projectName</td>
                             <td>
                                 <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" />
                             </td>
                         </tr>
                     }
-
-                </table>
-                <input type="submit" class="btn btn-default btn-primary" value="Apply Changes" />
+                </table>                
             </div>
-
             <div id="MANAGEACTIVITIES" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
                     <thead style="background-color:lightgray">
@@ -335,16 +316,21 @@
     });
     function OpportunityIdChange(theRow) {
         var tr = $(theRow).closest("tr");       
-        var td = tr.find("td:nth-child(2)");
-        alert(tr.find("#OpportunityCheckBoxID").is(':checked'));
-        alert(td.text());
-        
-        }
-
-
+        var td = tr.find("td:nth-child(2)");      
+        var opportunityid = td.text();
+        var ischecked = tr.find("#OpportunityCheckBoxID").is(':checked');     
+        $.ajax({
+            url: "./UpdateOpportunities",
+                    type: "POST",
+            data: { opportunityID: opportunityid, isActive: ischecked },
+                    dataType: "json",
+                    traditional: true,
+                    success: function () {
+                        alert("ajax request to server succeed");
+                    }
+        });
+    }
 </script>
-
-
 <style>
 
     .textarea {
