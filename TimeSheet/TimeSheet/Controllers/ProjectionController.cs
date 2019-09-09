@@ -175,7 +175,18 @@ namespace TimeSheet.Controllers
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Projection", new { });            
             return Json(new { Url = redirectUrl, status = "OK" });
         }
-    }
 
-  
+        public ActionResult ApproveProjectTimesheet()
+        {
+            if (Session["Username"] != null && Session["ProjectManager"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+
+    }  
 }

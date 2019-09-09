@@ -410,6 +410,7 @@
     <Content Include="Views\ProfitLoss\Index.cshtml" />
     <Content Include="Views\CompletedBooking\Index.cshtml" />
     <Content Include="Views\Home\ProjectDetails.cshtml" />
+    <Content Include="Views\Projection\ApproveProjectTimesheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

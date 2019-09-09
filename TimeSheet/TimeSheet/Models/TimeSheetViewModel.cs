@@ -59,6 +59,7 @@ namespace TimeSheet.Models
         public SelectList Projectlist { get; set; }
         public int? ProjectID { get; set; }
         public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }
         public SelectList EmploymentList { get; set; }
         public virtual TimeSheetRegisterModel TimeSheetRegisterModel { get;set;}
