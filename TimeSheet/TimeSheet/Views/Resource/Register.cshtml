@@ -155,15 +155,16 @@
 </style>
 
 <script>
-    $('#ddlEmploymentId').change(function () {
+    $('#ddlregWarehouseNameId, #ddlEmploymentId').change(function () {
+       
                  var warehouseUrl = '';
-        var WarehouseResource = $('#CandidateNameId');
+        var WarehouseResource = $('#ddlregWarehouseNameId');
         var employmentType = $('#ddlEmploymentId');
                  var id = $(this).val();
                  
                      warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
 
-                    $.getJSON(warehouseUrl, { WarehouseID: id, EmploymentType: $('#ddlEmploymentId').val() }, function (response) {
+                    $.getJSON(warehouseUrl, { WarehouseID: $('#ddlregWarehouseNameId').val(), EmploymentType: $('#ddlEmploymentId').val() }, function (response) {
                         $('#CandidateNameId').empty().multiselect('refresh')                        
                             $.each(response, function (index, item) {
                                 $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));                           
