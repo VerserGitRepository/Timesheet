@@ -46,6 +46,8 @@ namespace TimeSheet.Models
         [Required(ErrorMessage = "Job Is Mandatory")]
         public int? JobID { get; set; }
         public int? EmploymentTypeID { get; set; }
-        
+        [Required(ErrorMessage = "Resource selection is Mandatory")]
+        public List<int?> ResourceIDs { get; set; }
+
     }
 }

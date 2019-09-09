@@ -11,10 +11,10 @@ namespace TimeSheet.Controllers
     public class DropDownLoaderController : Controller
     {
         [HttpGet]
-        public JsonResult WarehouseResource(int WarehouseID)
+        public JsonResult WarehouseResource(int WarehouseID, int employmentType=0)
         {
             List<ListItemViewModel> load = new List<ListItemViewModel>();
-            load = TimeSheetAPIHelperService.WarehouseResources(WarehouseID).Result.Select(x => new ListItemViewModel()
+            load = TimeSheetAPIHelperService.ResourceFilter(WarehouseID,employmentType).Result.Select(x => new ListItemViewModel()
             {
                 Id = x.Id,
                 Value = x.Value

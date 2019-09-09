@@ -82,6 +82,8 @@ namespace TimeSheet.Controllers
             bool stopExecuting = false;
             StringBuilder message = new StringBuilder();
             List<TimeSheetViewModel> model = TimeSheetAPIHelperService.TimeSheetList().Result;
+            if (theModel.ResourceIDs == null)
+                return null;
             foreach (TimeSheetViewModel item in model)
             {
                 foreach (int resource in theModel.ResourceIDs)

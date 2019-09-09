@@ -49,7 +49,7 @@ namespace TimeSheet.Models
         public string Colour { get; set; }
         public SelectList ActivityList { get; set; }
         public int? ResourceID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Resource selection is Mandatory")]
         public List<int?> ResourceIDs { get; set; }
         public string CandidateName { get; set; }
         public SelectList CandidateNameList { get; set; }
