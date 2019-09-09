@@ -97,85 +97,32 @@ namespace TimeSheet.Controllers
         }
         public JsonResult SearchResources(string ProjectID, string warehouseId, string opportunityId, List<int> ResourceIDs)
         {
-             List<List<TimeSheetViewModel>> modelView = new List<List<TimeSheetViewModel>>();
-            #region TO Be Refactored
-            // TimeSheetViewModel newModel = new TimeSheetViewModel();
-            // //SearchViewModel searchModel = new SearchViewModel()
-            // //{
-            // //    CandidateNameId = ResourceIDs[0],
-            // //    WarehouseNameId = String.IsNullOrEmpty(warehouseId) ? (int?)null : Convert.ToInt32(warehouseId),
-            // //    OpportunityNumberID = String.IsNullOrEmpty(opportunityId) ? (int?)null : Convert.ToInt32(opportunityId),
-            // //    ProjectID = String.IsNullOrEmpty(ProjectID) ? (int?)null : Convert.ToInt32(ProjectID)
+            TimeSheetViewModel newModel = new TimeSheetViewModel();
+           
+                TimeSheetViewModel model = (TimeSheetViewModel)Session["CalenderModel"] ;
+                newModel.Projectlist = model.Projectlist;
+                newModel.WarehouseNameList = model.WarehouseNameList;
+                newModel.CandidateNameList = model.CandidateNameList;
+                List<TimeSheetViewModel> whereList = model.CandidateTimeSheetList;
 
-            // //};
-            // //modelView = SearchFilterService.SearchTimeSheetRecord(searchModel).Result;
-            // TimeSheetViewModel model = (TimeSheetViewModel) Session["CalenderModel"];
-            // if (model != null)
-            // {
-            //     newModel.CandidateTimeSheetList = model.CandidateTimeSheetList.Where(p => p.ProjectID == Convert.ToInt32(ProjectID) && p.WarehouseID == int.Parse(warehouseId) && p.OpportunityID == int.Parse(opportunityId)).ToList<TimeSheetViewModel>();
-            //     //model.CandidateTimeSheetList = (from r in model.CandidateTimeSheetList
-            //     //                      from bu in ResourceIDs
-            //     //                      where bu == r.ResourceID
-            //     //                      select r
-            //     // ).ToList();
+                if (ResourceIDs != null && ResourceIDs.Count > 0)
+                    whereList = model.CandidateTimeSheetList.Where(item => ResourceIDs.Contains(Convert.ToInt32(item.ResourceID))).ToList();
+                if (!string.IsNullOrEmpty(ProjectID))
+                    whereList = whereList.Where(item => item.ProjectID == Convert.ToInt32(ProjectID)).ToList();
+                if (!string.IsNullOrEmpty(warehouseId))
+                    whereList = whereList.Where(item => item.WarehouseID == Convert.ToInt32(warehouseId)).ToList();
+                if (!string.IsNullOrEmpty(opportunityId) && opportunityId != "0")
+                    whereList = whereList.Where(item => item.OpportunityID == Convert.ToInt32(opportunityId)).ToList();
+                newModel.CandidateTimeSheetList = whereList;
+               
+            List<ResourceListModel> reslt = (from k in newModel.CandidateTimeSheetList select new ResourceListModel { ProjectManager = k.ProjectManager, id = Convert.ToInt32(k.ResourceID), title = Convert.ToString(k.CandidateName), eventColor = k.Colour, ResourceName = k.CandidateName, ActivityDescription = k.Activity, ProjectName = k.ProjectName, StartTime = Convert.ToDateTime(k.StartTime), EndTime = Convert.ToDateTime(k.EndTime) }).Distinct().ToList();
 
-            // }
-
-            // //modelView[0].CandidateTimeSheetList = model.CandidateTimeSheetList;
-            // // if(ModelState.
-            // newModel.Projectlist = model.Projectlist;
-            // newModel.OpportunityNumberList = model.OpportunityNumberList;
-
-            // newModel.ActivityList = model.ActivityList;
-            //newModel.WarehouseNameList = model.WarehouseNameList;
-            #endregion
-
-            List<TimeSheetViewModel> mergerModel = new List<TimeSheetViewModel>();
-            if (ResourceIDs == null)
-            {
-                SearchViewModel searchModel = new SearchViewModel()
-                {
-                    
-                    WarehouseNameId = String.IsNullOrEmpty(warehouseId) ? (int?)null : Convert.ToInt32(warehouseId),
-                    OpportunityNumberID = String.IsNullOrEmpty(opportunityId) ? (int?)null : Convert.ToInt32(opportunityId),
-                    ProjectID = String.IsNullOrEmpty(ProjectID) ? (int?)null : Convert.ToInt32(ProjectID)
-
-                };
-                List<TimeSheetViewModel> model = SearchFilterService.SearchTimeSheetRecord(searchModel).Result;
-                if (model.Count > 0)
-                {
-                    modelView.Add(model);
-                }
-            }
-            else
-            {
-                foreach (int itm in ResourceIDs)
-                {
-                    SearchViewModel searchModel = new SearchViewModel()
-                    {
-                        CandidateNameId = Convert.ToInt32(itm),
-                        WarehouseNameId = String.IsNullOrEmpty(warehouseId) ? (int?)null : Convert.ToInt32(warehouseId),
-                        OpportunityNumberID = String.IsNullOrEmpty(opportunityId) ? (int?)null : Convert.ToInt32(opportunityId),
-                        ProjectID = String.IsNullOrEmpty(ProjectID) ? (int?)null : Convert.ToInt32(ProjectID)
-
-                    };
-                    List<TimeSheetViewModel> model = SearchFilterService.SearchTimeSheetRecord(searchModel).Result;
-                    if (model.Count > 0)
-                    {
-                        modelView.Add(model);
-                    }
+            newModel.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
+            List<ResourceEventsModel> resourceEvents = (from k in newModel.CandidateTimeSheetList select new ResourceEventsModel { resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName, start = Convert.ToDateTime(k.StartTime).ToString("yyyy-MM-ddTHH:mm"), end = Convert.ToDateTime(k.EndTime).ToString("yyyy-MM-ddTHH:mm") }).Distinct().ToList();
+            newModel.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
 
 
-                }
-            }
-            foreach (List<TimeSheetViewModel> listModel in modelView)
-            {
-                foreach (TimeSheetViewModel childModel in listModel)
-                {
-                    mergerModel.Add(childModel);
-                }
-            }
-            return new JsonResult { Data = mergerModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         [HttpGet]
         public JsonResult ProjectOpportunities(int projectId)

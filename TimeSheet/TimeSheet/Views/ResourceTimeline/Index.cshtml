@@ -159,7 +159,7 @@
             calendar = new FullCalendar.Calendar(calendarEl, {
                 schedulerLicenseKey: '0286417881-fcs-1567383525',
                 plugins: ['interaction', 'resourceTimeline'],
-                timeZone: 'UTC',
+                //timeZone: 'Australia/Sydney',
                 defaultView: 'resourceTimelineDay',
                 aspectRatio: 2.0,
                 header: {
@@ -180,9 +180,10 @@
                        
                       $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
                         var $description = $('<div/>');
-                        $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.getResources()[0].extendedProps.StartTime).format('llll')));
+                        $description.append($('<p/>').html('<b>Project Manager:</b>' + calEvent.event.extendedProps.projectmanager));
+                        $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.start).format('lll')));
                        
-                            $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.getResources()[0].extendedProps.EndTime).format('llll')));
+                            $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
                         
                         $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
                         $('#myModal #pDetails').empty().html($description);
@@ -190,7 +191,7 @@
                         $('#myModal').modal();
                         
                     },
-               
+                resourceAreaWidth: '200px',
                 resourceLabelText: 'RESOURCES',
                 resources: JSON.parse(res),
                 events: JSON.parse(events),
@@ -221,7 +222,7 @@
         calendar = new FullCalendar.Calendar(calendarEl, {
                 schedulerLicenseKey: '0286417881-fcs-1567383525',
                 plugins: ['interaction', 'resourceTimeline'],
-                timeZone: 'UTC',
+                //timeZone: 'Australia/Sydney',
                 defaultView: 'resourceTimelineDay',
                 aspectRatio: 2.0,
                 header: {
@@ -242,10 +243,11 @@
                        
                        
                         $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
-                        var $description = $('<div/>');
-                        $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.getResources()[0].extendedProps.StartTime).format('llll')));
+                       var $description = $('<div/>');
+                        $description.append($('<p/>').html('<b>Project Manager:</b>' + calEvent.event.extendedProps.projectmanager));
+                        $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.start).format('lll')));
                        
-                            $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.getResources()[0].extendedProps.EndTime).format('llll')));
+                            $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
                         
                         $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
                         $('#myModal #pDetails').empty().html($description);
@@ -255,8 +257,8 @@
                     },
                
                 resourceLabelText: 'RESOURCES',
-                resources: resources,
-                events: events
+                resources:  JSON.parse(resources),
+                events:  JSON.parse(events)
             });
 
         calendar.render();
@@ -334,23 +336,23 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
 
                     data: { 'ProjectId': $('#ddlProjectId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#OpportunityID').val(),'ResourceIds': $('#CandidateNameId').val() },
                     success: function (data) {
-                        $.each(data, function (i, v) {
-                          //  alert(v.StartTime);
-                             //   alert(v.CandidateName);
-                            events.push({
-                                resourceId: v.ResourceID,
-                                title: v.Activity,
-                                start:v.StartTimeString,
-                                end: v.EndTimeString
+                        //$.each(data.CandidateTimeSheetList, function (i, v) {
+                        //  //  alert(v.StartTime);
+                        //     //   alert(v.CandidateName);
+                        //    events.push({
+                        //        resourceId: v.ResourceID,
+                        //        title: v.Activity,
+                        //        start:v.StartTime,
+                        //        end: v.EndTime
 
-                            });
-                            resources.push({
-                                id: v.ResourceID,
-                                title: v.CandidateName,
-                                eventColor: v.Colour
-                            });
-                        })
-                        RenderCalendar(resources,events);
+                        //    });
+                        //    resources.push({
+                        //        id: v.ResourceID,
+                        //        title: v.CandidateName,
+                        //        eventColor: v.Colour
+                        //    });
+                        //})
+                        RenderCalendar(data.jsonResources,data.jsonEvents);
                     },
                     error: function (error) {
                         alert('search failed');

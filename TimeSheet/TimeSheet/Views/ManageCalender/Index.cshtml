@@ -164,7 +164,7 @@
                     url: "./SearchResources",
                     data: { 'ProjectId': $('#ddlProjectId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#OpportunityID').val(),'ResourceIds': $('#CandidateNameId').val() },
                     success: function (data) {
-                        $.each(data, function (i, v) {
+                        $.each(data.CandidateTimeSheetList, function (i, v) {
                             events.push({
                                 eventID: v.Id,
                                 title: v.CandidateName,
