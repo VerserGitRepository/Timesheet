@@ -77,6 +77,15 @@
 </style>
 
 <div class="container" style="margin-left:0px">
+
+    @using (Html.BeginForm("ExportCompletedSchedule", "CompletedBooking", FormMethod.Post))
+    {
+        <div class="row" style="padding-left:20px">
+            <button type="submit" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-export"></span> Export
+            </button>
+        </div>
+    }
     <div class="row">
         <div class="col-md-12">
             <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
@@ -102,8 +111,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.CandidateName)
-                                @*<a href="javascript:void(0);" class="CandidateDetail" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>*@
+                                <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.OpportunityNumber)
@@ -118,9 +126,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.EndTime)
                             </td>
-
                             <td>
-                                @Html.DisplayFor(modelItem => item.ProjectName)
+                                <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
+                                @*@Html.DisplayFor(modelItem => item.ProjectName)*@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.JobNo)
@@ -170,108 +178,11 @@
         $('#TimeSheetTable').dataTable();
         $('.dataTables_filter').addClass('pull-right');
 
-    $('#btnAdd').click(function () {
-    var URL = "@Url.Content("~/TimeSheet/Register")";
-    $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
-    });
-
-    $('#btnDelete').click(function () {
-    var URL = "@Url.Content("~/TimeSheet/Register")";
-    $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
-    });
-
-        $('.project').change(function () {
-    var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
-            var loads = $('#OpportunityID');
-            var id = $(this).val();
-
-            $.getJSON(loadUrl, { projectid: id }, function (response) {
-
-    loads.empty(); // remove any existing options
-                loads.append($('<option></option>').text("OPPORTUNITY").val(0));
-
-                $.each(response, function (index, item) {
-
-    loads.append($('<option></option>').text(item.Value).val(item.Id));
-                });
-
-            });
-
-        });
-
-$('.ddlregCustomerID').change(function () {
-var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
-var loads = $('#ddlRegOpportunityNumberID');
-    var id = $(this).val();
-
-$.getJSON(loadUrl, { projectid: id }, function (response) {
-loads.empty(); // remove any existing options
-loads.append($('<option></option>').text("Select Opportunity").val(0));
-$.each(response, function (index, item) {
-loads.append($('<option></option>').text(item.Value).val(item.Id));
-        });
-    });
-});
-
-
-
-
-$('#ddlRegOpportunityNumberID').change(function () {
-
-var ActivityUrl = '@Url.Action("ProjectActivities", "ManageCalender")';
-var Activities = $('#ActivityId');
-var id = $(this).val();
-
-$.getJSON(ActivityUrl, { OpportunityId: id }, function (response) {
-Activities.empty();
-Activities.append($('<option></option>').text("Select Activity").val(0));
-$.each(response, function (index, item) {
-Activities.append($('<option></option>').text(item.Value).val(item.Id));
-        });
-    });
-});
-$('#ddlWarehouseId').change(function () {
-
-                 var warehouseUrl = '';
-
-                 var WarehouseResource = $('#CandidateNameId');
-                 var id = $(this).val();
-                 if (id != "") {
-                     warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
-
-                 }
-                 else {
-                         warehouseUrl = '@Url.Action("Register", "Resource")';
-                 }
-                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
-                        $('#CandidateNameId').empty().multiselect('refresh')
-                            $.each(response, function (index, item) {
-                                $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));
-
-                            });
-
-                        $('#CandidateNameId').multiselect('rebuild');
-                       });
-            });
-
 
 $('#edit').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
           })
-          $('#ddlWarehouseId','#ddlEmploymentId').change(function () {
-                    var warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
-                    var WarehouseResource = $('#ResourceID');
-                    var id = $(this).val();
-                    $.getJSON(warehouseUrl, { WarehouseID: id }, function (response) {
-                        WarehouseResource.empty();
-                        WarehouseResource.append($('<option></option>').text("Select Resource").val(0));
-                            $.each(response, function (index, item) {
-                                WarehouseResource.append($('<option></option>').text(item.Value).val(item.Id));
-                            });
-                       });
-});
-
-});
+ 
 
 $('#myModal').on('shown.bs.modal', function () {
        $('#myInput').trigger('focus')
@@ -281,26 +192,46 @@ $('#opportunity').on('shown.bs.modal', function () {
 $('#myInput').trigger('focus')
     })
 
-@*$('#btnEdit').click(function () {
-var URL = "@Url.Content("~/TimeSheet/Register")";
-$("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
-}) *@
+          var CandidateDetailsURL = './CandidateDetails';
+          $(function () {
+              $("#TimeSheetTable").on("click", ".CandidateName", function () {
+                 // debugger;
+                  var $buttonClicked = $(this);
+                  var CandidateName = $buttonClicked.attr('data-id');
+                  var options = { "backdrop": "static", keyboard: true };
+                  $.ajax({
+                      type: "GET",
+                      url: CandidateDetailsURL,
+                      contentType: "application/json; charset=utf-8",
+                      data: { "CandidateName": CandidateName },
+                      datatype: "json",
+                      success: function (data) {
+                         // debugger;
+                          $('#myModalContent').html(data);
+                          $('#myModal').modal(options);
+                          $('#myModal').modal('show');
+                      },
+                      error: function () {
+                          alert("Dynamic content load failed.");
+                      }
+                  });
+              });
 
-    var CandidateDetailsURL = './TimeSheetCandidateDetails';
+    var BookedDetailsURL = './ProjectDetail';
     $(function () {
-        $("#TimeSheetTable").on("click", ".CandidateDetail", function () {
-           // debugger;
+        $("#TimeSheetTable").on("click", ".ProjectName", function () {
+            // debugger;
             var $buttonClicked = $(this);
-            var CandidateName = $buttonClicked.attr('data-id');
+            var ProjectName = $buttonClicked.attr('data-id');
             var options = { "backdrop": "static", keyboard: true };
             $.ajax({
                 type: "GET",
-                url: CandidateDetailsURL,
+                url: BookedDetailsURL,
                 contentType: "application/json; charset=utf-8",
-                data: { "CandidateName": CandidateName },
+                data: { "ProjectName": ProjectName },
                 datatype: "json",
                 success: function (data) {
-                   // debugger;
+                    // debugger;
                     $('#myModalContent').html(data);
                     $('#myModal').modal(options);
                     $('#myModal').modal('show');
@@ -311,6 +242,13 @@ $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") 
             });
         });
 
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+
+   
 
         //$("#closebtn").on('click',function(){
         //    $('#myModal').modal('hide');
@@ -319,44 +257,6 @@ $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") 
             $('#myModal').modal('hide');
         });
     });
+      });
 
-    var EditTimesheetRecordURL = './Edit';
-    $(function () {
-        $("#TimeSheetTable").on("click", ".btn-edit", function () {
-            //debugger;
-            var $buttonClicked = $(this);
-            var id = $buttonClicked.attr('data-id');
-            var options = { "backdrop": "static", keyboard: true };
-            $.ajax({
-                type: "GET",
-                url: EditTimesheetRecordURL,
-                contentType: "application/json; charset=utf-8",
-                data: { "id": id },
-                datatype: "json",
-                success: function (data) {
-                    //debugger;
-                    $('#EditModalContent').html(data);
-                    $('#EditModal').modal(options);
-                    $('#EditModal').modal('show');
-                },
-                error: function () {
-                    alert("Dynamic content load failed.");
-                }
-            });
-        });
-
-        //$("#closebtn").on('click',function(){
-        //    $('#myModal').modal('hide');
-
-        $("#closbtn").click(function () {
-            $('#myModal').modal('hide');
-        });
-    });
-        $('#CandidateNameId').multiselect({
-        includeSelectAllOption: true,
-        maxHeight: 250,
-        buttonWidth: '250px',
-        enableFiltering: true,
-        enableCaseInsensitiveFiltering: true
-    });
 </script>
