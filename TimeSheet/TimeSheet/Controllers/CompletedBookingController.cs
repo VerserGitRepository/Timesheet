@@ -24,5 +24,47 @@ namespace TimeSheet.Controllers
                 return View(model);
             }
         }
+
+        [HttpGet]
+        public ActionResult CandidateDetails(string CandidateName)
+        {
+            CompletedTimesheetModel model = new CompletedTimesheetModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("CandidateDetails", model);
+        }
+
+        [HttpGet]
+        public ActionResult ProjectDetail(string ProjectName)
+        {
+            CompletedTimesheetModel model = new CompletedTimesheetModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.ProjectName == ProjectName).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("ProjectDetail", model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCandidate(UpdateTimeSheetModel CandidateEdit)
+        {
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                //   int EditId = Convert.ToInt32( TempData["EditID"].ToString());
+                if (CandidateEdit == null)
+                {
+                    Session["ErrorMessage"] = "Please Update With Valid Details!";
+                }
+                if (CandidateEdit != null)
+                {
+                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

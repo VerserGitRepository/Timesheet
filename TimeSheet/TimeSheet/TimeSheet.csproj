@@ -411,6 +411,8 @@
     <Content Include="Views\CompletedBooking\Index.cshtml" />
     <Content Include="Views\Home\ProjectDetails.cshtml" />
     <Content Include="Views\Projection\ApproveProjectTimesheet.cshtml" />
+    <Content Include="Views\CompletedBooking\ProjectDetail.cshtml" />
+    <Content Include="Views\CompletedBooking\CandidateDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
