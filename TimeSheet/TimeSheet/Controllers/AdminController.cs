@@ -33,8 +33,9 @@ namespace TimeSheet.Controllers
         {
             if (Session["Username"] != null && Session["Administrator"] != null)
             {
-                var _r= AdminHelperService.UpdateOpportunity(opportunityID, isActive); 
-                return View(ManageListServices.ManageLists());
+                var _r= AdminHelperService.UpdateOpportunity(opportunityID, isActive);
+                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
+                return Json(new { Url = redirectUrl });
             }
             else
             {
@@ -48,7 +49,8 @@ namespace TimeSheet.Controllers
             if (Session["Username"] != null && Session["Administrator"] != null)
             {
                 var _r = AdminHelperService.UpdateResourceState(resourceName, isActive);
-                return View(ManageListServices.ManageLists());
+                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
+                return Json(new { Url = redirectUrl });
             }
             else
             {
@@ -61,7 +63,8 @@ namespace TimeSheet.Controllers
             if (Session["Username"] != null && Session["Administrator"] != null)
             {
                 var _r = AdminHelperService.UpdateProjectState(Project, isActive);
-                return View(ManageListServices.ManageLists());
+                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
+                return Json(new { Url = redirectUrl });
             }
             else
             {

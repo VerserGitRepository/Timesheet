@@ -352,9 +352,14 @@
             data: { opportunityID: opportunityid, isActive: ischecked },
                     dataType: "json",
                     traditional: true,
-                    success: function () {
-                        alert("ajax request to server succeed");
-                    }
+            success: function (data) {
+                if (data.Url === "/Admin/Index") {
+                    window.location.href = data.Url
+                }
+                else {
+                    alert("The status cannot be updated at this time");
+                }
+            }
         });
     }
     function ResourceIdChange(theRow) {
@@ -369,8 +374,13 @@
             data: { resourceName: resourceName, isActive: ischecked },
             dataType: "json",
             traditional: true,
-            success: function () {
-                alert("ajax request to server succeed");
+            success: function (data) {
+                if (data.Url === "/Admin/Index") {
+                    window.location.href = data.Url
+                }
+                else {
+                    alert("The status cannot be updated at this time");
+                }
             }
         });
     }
@@ -385,8 +395,13 @@
             data: { Project: projectId, isActive: ischecked },
             dataType: "json",
             traditional: true,
-            success: function () {
-                alert("ajax request to server succeed");
+            success: function (data) {
+                if (data.Url === "/Admin/Index") {
+                    window.location.href = data.Url
+                }
+                else {
+                    alert("The status cannot be updated at this time");
+                }
             }
         });
     }

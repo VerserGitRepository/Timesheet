@@ -156,7 +156,7 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/{0}/ResourcesByWarehouse", WarehouseID, employmentType)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("resource/ResourceFilter/{0}/{1}", WarehouseID, employmentType)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var projectactivities = await response.Content.ReadAsAsync<List<ListItemViewModel>>();
