@@ -4,8 +4,8 @@ using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TimeSheet.Models;
-using TimeSheet.ServiceHelper;
 using System.Linq;
+using TimeSheet.ServiceHelper;
 
 namespace TimeSheet.Controllers
 {
@@ -48,7 +48,7 @@ namespace TimeSheet.Controllers
                         Activity = item.Activity,
                         WarehouseName = item.WarehouseName,
                         StartTime =  item.StartTime,
-                        EndTime = item.EndDate,
+                        EndTime = item.EndTime,
                         JobNo = item.JobNo,
                         OLATarget = item.OLATarget,
                         ActualQuantity = item.ActualQuantity,
@@ -62,7 +62,7 @@ namespace TimeSheet.Controllers
                 gv.DataBind();
                 Response.ClearContent();
                 Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment; filename=CompletedTimeScheduls.xls");
+                Response.AddHeader("content-disposition", "attachment; filename=CompletedTimeSchedule.xls");
                 Response.ContentType = "application/ms-excel";
                 Response.Charset = "";
                 StringWriter sw = new StringWriter();
