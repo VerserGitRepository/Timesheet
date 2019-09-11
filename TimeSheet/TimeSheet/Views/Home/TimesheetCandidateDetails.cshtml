@@ -36,7 +36,7 @@
 
                     <td class="Day" width="7%">
                         <span>@item.Day.Value.ToShortDateString()</span>
-                        <input type="date" id="Day" value="@item.Day.Value.ToString("dd/MM/yyyy")" style="display:none" />
+                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
 
                     </td>
                         <td class="StartTime">
