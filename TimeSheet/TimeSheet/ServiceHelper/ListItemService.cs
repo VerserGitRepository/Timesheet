@@ -59,14 +59,14 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/ResourcesList")).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("Resource/ResourceList")).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var projectactivities = await response.Content.ReadAsAsync<List<ResourcesViewModel>>();
 
                     foreach (var a in projectactivities)
                     {
-                        projectsList.Add(new ListItemViewModel() { Id = a.Id, Value = a.ResourceName });
+                        projectsList.Add(new ListItemViewModel() { Id = a.Id, Value = a.value });
                     }
                 }
             }
