@@ -78,7 +78,10 @@
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 <span><strong>Edit</strong></span>
                             </a>
-
+                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span><strong>Rate</strong></span>
+                            </a>
                             <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 <span><strong>Update</strong></span>
@@ -90,13 +93,20 @@
                             </a>
 
                             @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
+        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
                             @*<a class="Delete" href="javascript:;">Delete</a>*@
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+    </div>
+</div>
+<div id="myRatingModal" class="modal fade bs-modal-sm" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myRatingModalContent"></div>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -154,6 +164,7 @@
         });
         row.find(".Update").show();
         row.find(".Cancel").show();
+        row.find("#Rate").show();
 
         $(this).hide();
     });
@@ -173,6 +184,7 @@
         });
         row.find(".Edit").show();
         row.find(".Cancel").hide();
+        row.find("#Rate").hide();
         $(this).hide();
 
         var CandidateEdit = {};
@@ -223,9 +235,104 @@
         });
         row.find(".Edit").show();
         row.find(".Update").hide();
+        row.find("#Rate").hide();
         $(this).hide();
     });
+    var CandidateRatingDetailsURL = './Rating';
+    function Rate(rowid) {
 
+      //  alert('rating');
+       // debugger;
+        var $buttonClicked = $(this);
+        var tr = $(rowid).closest("tr");
+        var td = tr.find("td:nth-child(1)");
+        var options = { "backdrop": "static", keyboard: true };
+        $('#myModal').modal('hide');
+        var data = ""
+      //  alert(td.val());
+       // $('#myRatingModal').modal('show');
+        $.ajax({
+            type: "GET",
+            url: CandidateRatingDetailsURL,
+            contentType: "application/json; charset=utf-8",
+            data: {},
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+
+                $.confirm({
+                         title: 'Resource Rating!',
+                         content: data,
+                         buttons: {
+                             Rate: function () {
+                                 var model = {
+                                     'CandidateTimeSheetID': td.text(),
+                                     'Punctuality': $('#rating-input').val(),
+                                     'ProfessionalService': $('#rating-input1').val(),
+                                     'PoliteAndCourteous': $('#rating-input2').val(),
+                                     'WorkQuality': $('#rating-input3').val(),
+                                     //'Comments': row.find("#txtActvty").val()
+                                     
+
+                                 };
+                               //  alert($('#rating-input').val());
+                                     $.ajax({
+                                         data: model,
+                                         url: '@Url.Action("RateResource", "Resource")',
+                                         type: "POST",
+                                         success: function (data) {
+                                             
+                                                 $('#myModal').modal('show');
+                                                 var row = $(rowid).closest("tr");
+                                                 $("td", row).each(function () {
+                                                     if ($(this).find("input").length > 0) {
+                                                         $(this).find("input").hide();
+                                                         $(this).find("span").show();
+                                                         $(this).toggleClass('selected');
+
+                                                     }
+                                                 });
+                                                 row.find(".Update").hide();
+                                                 row.find(".Cancel").hide();
+                                                 row.find("#Rate").hide();
+
+                                                 $(".Edit").show();
+                                                 return;
+                                             
+                                         }
+                                     });
+                                 return;
+                             },
+                             cancel: function () {
+                                 $('#myModal').modal('show');
+                                 var row = $(rowid).closest("tr");
+                                 $("td", row).each(function () {
+                                     if ($(this).find("input").length > 0) {
+                                         $(this).find("input").hide();
+                                         $(this).find("span").show();
+                                         $(this).toggleClass('selected');
+
+                                     }
+                                 });
+                                 row.find(".Update").hide();
+                                 row.find(".Cancel").hide();
+                                 row.find("#Rate").hide();
+
+                                 $(".Edit").show();
+                                 return;
+                             }
+                         }
+
+                     });
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+
+        
+
+    }
 </script>
 <style>
     .modal-dialog {
