@@ -52,10 +52,14 @@ namespace TimeSheet.Controllers
                         {
                             Session["Accounts"] = true;
                         }
-                        if (r.Value == "Project Manager")
+                        if (r.Value == "ProjectManagerAdmin")
                         {
                             Session["ProjectManager"] = true;
-                        }                       
+                        }
+                        if (r.Value == "WarehouseManager")
+                        {
+                            Session["WarehouseManager"] = true;
+                        }
                     }                  
                 }
                 return RedirectToAction("Index", "Home");
