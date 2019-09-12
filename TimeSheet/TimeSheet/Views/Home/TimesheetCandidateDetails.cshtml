@@ -277,7 +277,7 @@
                                          type: "POST",
                                          success: function (data) {
                                              
-                                                 $('#myModal').modal('show');
+                                               
                                                  var row = $(rowid).closest("tr");
                                                  $("td", row).each(function () {
                                                      if ($(this).find("input").length > 0) {
@@ -292,9 +292,11 @@
                                                  row.find("#Rate").hide();
 
                                                  $(".Edit").show();
-                                                 return;                                             
+                                                // return;                                             
                                          }
-                                     });
+                                 });
+                                 $('#myModal').modal('show');
+                                 $(".Cancel").hide();
                                  return;
                              },
                              cancel: function () {
