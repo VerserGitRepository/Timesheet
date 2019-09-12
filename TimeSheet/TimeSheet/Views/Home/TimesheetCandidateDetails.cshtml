@@ -218,6 +218,7 @@
     //Cancel event handler.
     $("body").on("click", "#tblCustomers .Cancel", function () {
         var row = $(this).closest("tr");
+      //  debugger;
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
@@ -240,17 +241,18 @@
       //  alert('rating');
         debugger;
         var $buttonClicked = $(this);
-        var CandidateName = $buttonClicked.attr('data-id');
+        var tr = $(rowid).closest("tr");
+        var td = tr.find("td:nth-child(1)");
         var options = { "backdrop": "static", keyboard: true };
         $('#myModal').modal('hide');
         var data = ""
-
+        alert(td.val());
        // $('#myRatingModal').modal('show');
         $.ajax({
             type: "GET",
             url: CandidateRatingDetailsURL,
             contentType: "application/json; charset=utf-8",
-            data: { "CandidateName": CandidateName },
+            data: {},
             datatype: "json",
             success: function (data) {
                 // debugger;
@@ -261,31 +263,41 @@
                          buttons: {
                              Rate: function () {
                                  var model = {
-                                     'OpportunityId': row.find("span#txtOpportunityId").text(),
-                                     'Quantity': row.find("input#quantity").val(),
-                                     'DateAllocated': row.find("input#startTime").val(),
-                                     'DateInvoiced': row.find("input#endTime").val(),
-                                     'WarehouseID': row.find("select#ddlWarehouseID").val(),
-                                     'ServiceActivityId': row.find("#txtServiceActvty").val(),
-                                     'ActivityId': row.find("#txtActvty").val(),
-                                     'Comments': row.find("input#comments").val(),
-                                     'IsAdd': isAdd
+                                     'Id': td.text(),
+                                     'Punctuality': $('#rating-input').val(),
+                                     'ProfessionalService': $('#rating-input1').val(),
+                                     'PoliteAndCourteous': $('#rating-input2').val(),
+                                     'WorkQuality': $('#rating-input3').val(),
+                                     //'Comments': row.find("#txtActvty").val()
+                                     
 
                                  };
-                                 
-                                     @*$.ajax({
+                                 alert($('#rating-input').val());
+                                     $.ajax({
                                          data: model,
-                                         url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
+                                         url: '@Url.Action("RateResource", "Resource")',
                                          type: "POST",
                                          success: function (data) {
-                                             if (data.status === 'OK') {
-                                                 window.location.href = data.Url
-                                             }
-                                             else {
-                                                 alert("The status cannot be updated at this time");
-                                             }
+                                             
+                                                 $('#myModal').modal('show');
+                                                 var row = $(rowid).closest("tr");
+                                                 $("td", row).each(function () {
+                                                     if ($(this).find("input").length > 0) {
+                                                         $(this).find("input").hide();
+                                                         $(this).find("span").show();
+                                                         $(this).toggleClass('selected');
+
+                                                     }
+                                                 });
+                                                 row.find(".Update").hide();
+                                                 row.find(".Cancel").hide();
+                                                 row.find("#Rate").hide();
+
+                                                 $(".Edit").show();
+                                                 return;
+                                             
                                          }
-                                     });*@
+                                     });
                                  return;
                              },
                              cancel: function () {
@@ -293,17 +305,17 @@
                                  var row = $(rowid).closest("tr");
                                  $("td", row).each(function () {
                                      if ($(this).find("input").length > 0) {
-                                         $(this).find("input").show();
-                                         $(this).find("span").hide();
+                                         $(this).find("input").hide();
+                                         $(this).find("span").show();
                                          $(this).toggleClass('selected');
 
                                      }
                                  });
-                                 row.find(".Update").show();
-                                 row.find(".Cancel").show();
-                                 row.find("#Rate").show();
+                                 row.find(".Update").hide();
+                                 row.find(".Cancel").hide();
+                                 row.find("#Rate").hide();
 
-                                 $(".Edit").hide();
+                                 $(".Edit").show();
                                  return;
                              }
                          }

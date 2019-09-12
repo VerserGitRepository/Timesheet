@@ -105,5 +105,14 @@ namespace TimeSheet.Controllers
            
             return View("~ManageCalender/Index");
         }
+        [HttpPost]
+        public ActionResult RateResource(ResourceRatingModel theModel)
+        {
+            var result = ResourceHelperService.RateResource(theModel);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        
     }
 }
