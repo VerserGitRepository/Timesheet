@@ -10,8 +10,7 @@ using TimeSheet.ServiceHelper;
 namespace TimeSheet.Controllers
 {
     public class ResourceController : Controller
-    {    
-            // GET: Resource
+    {               
     public ActionResult Index()
         {
             if (Session["Username"] == null)
@@ -24,17 +23,10 @@ namespace TimeSheet.Controllers
 
                 model.ResourceAvailableList = ResourceHelperService.ResourceListItems().Result;
                  model.ResourceAvailableList = model.ResourceAvailableList.OrderBy(w => w.Warehouse).OrderBy(x=>x.ResourceName).ToList();
-                model.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");
-                //model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
-
-
-
+                model.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");               
                 return View(model);
             }
         }
-        //var ResourceAvailable=  ResourceHelperService.ResourceListItems();
-        ////  //ResourceAvailable List<ResourceAvailable>
-
         public ActionResult _ResourceBooked(string ResourceName)
         {
             if (Session["Username"] == null)
@@ -49,7 +41,6 @@ namespace TimeSheet.Controllers
                 return PartialView("_ResourceBooked", model);
             }
         }
-
         public ActionResult Register()
         {
             if (Session["Username"] == null)
@@ -78,22 +69,24 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult PostResourceData(TimeSheetViewModel theModel)
         {
-            
-
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            if (theModel == null)
+            {
+                return RedirectToAction("Register", "Timesheet");
+            }
             for (int i = 0; i < theModel.ResourceIDs.Count; i++)
             {
                 TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
-
                 string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
                 string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
                 string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
-
                 string dtSt = dateString + " " + StartTimeString;
                 string dtEn = dateString + " " + EndTimeString;
-
                 var StartdateTime = Convert.ToDateTime(dtSt);
                 var EnddateTime = Convert.ToDateTime(dtEn);
-
                 regModel.CandidateNameId = theModel.ResourceIDs[i];
                 regModel.Colour = theModel.Colour;
                 regModel.Day = theModel.Day;
@@ -109,10 +102,8 @@ namespace TimeSheet.Controllers
                 regModel.JobID = theModel.JobID;
                 var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
             }
-            //TempData["BookedResourceMessage"]
+           
             return View("~ManageCalender/Index");
-
-
         }
         [HttpPost]
         public ActionResult RateResource(ResourceRatingModel theModel)
