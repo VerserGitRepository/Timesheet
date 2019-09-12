@@ -14,5 +14,6 @@ namespace TimeSheet.Models
         public int PoliteAndCourteous { get; set; }
         public int WorkQuality { get; set; }
         public string Comments { get; set; }
+        public string User { get; set; }
     }
 }
