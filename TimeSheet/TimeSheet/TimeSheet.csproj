@@ -195,6 +195,7 @@
     <Compile Include="Models\ResourceAvailable.cs" />
     <Compile Include="Models\ResourceEventsModel.cs" />
     <Compile Include="Models\ResourceListModel.cs" />
+    <Compile Include="Models\ResourceRatingModel.cs" />
     <Compile Include="Models\ResourceTimelineModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\TimesheetEditModel.cs" />

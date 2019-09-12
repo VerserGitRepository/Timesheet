@@ -114,6 +114,14 @@ namespace TimeSheet.Controllers
 
 
         }
+        [HttpPost]
+        public ActionResult RateResource(ResourceRatingModel theModel)
+        {
+            var result = ResourceHelperService.RateResource(theModel);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
+
+        
     }
 }
