@@ -101,8 +101,9 @@ namespace TimeSheet.Controllers
                 regModel.WarehouseNameId = theModel.WarehouseID;
                 regModel.JobID = theModel.JobID;
                 var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
-            }           
-            return RedirectToAction("Index", "ManageCalender");         
-           }
+            }
+           
+            return View("~ManageCalender/Index");
+        }
     }
 }

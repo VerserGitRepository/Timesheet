@@ -19,7 +19,7 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.js"></script>
 
 
-<div class="container" style="margin-right:0px;width:150%;margin-bottom:700px;margin-right:2px">
+<div class="container" style="margin-right:0px;width:150%;margin-bottom:700px;margin-right:2px;margin-top:2px">
     <div class="row" style="vertical-align:baseline;padding-top:2px;margin-left:250px;">
         <div class="pull-left col-md-offset-0" style="padding-right:2px;margin-right:2px">
             <div class="form-group col-md-2" style="width:18%">
@@ -37,7 +37,7 @@
             </div>
         </div>
             <div class="form-group col-md-1">
-                <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray" OnClick="SearchAndRenderCalendar();">
+                <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;height:26px" OnClick="SearchAndRenderCalendar();">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
@@ -491,8 +491,28 @@
         text-align: center;
     }
 
- 
-
+    .form-control {
+        display: block;
+        width: 100%;
+        height: 26px;
+        padding: 2px 2px;
+        font-size: 12px;
+        line-height: 1.428571429;
+        color: #555;
+        vertical-align: middle;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+    }
+    .multiselect.dropdown-toggle {
+        text-align: left;
+        height: 26px;
+        width: 80%;
+    }
     .style5 .tooltip {
         background: #1E252B;
         color: #FFFFFF;
