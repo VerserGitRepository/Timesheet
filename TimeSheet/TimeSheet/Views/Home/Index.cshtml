@@ -17,7 +17,11 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-multiselect.js"></script>
 <link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
-
+<link href="~/Styles/Rating/star-rating.css" rel="stylesheet" />
+<script src="~/Scripts/Rating/star-rating.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <style>
     .row {
         width: 112%;
@@ -233,6 +237,10 @@
         $('#TimeSheetTable').dataTable();
         $('.dataTables_filter').addClass('pull-right');
     });
+    function Destroy() {
+      //  $('#ratingcontainer').data('modal', null);
+        $("#myRatingModalContent").html('');
+    }
      $('#ddlWarehouseId').change(function () {
 
                  var warehouseUrl = '';
