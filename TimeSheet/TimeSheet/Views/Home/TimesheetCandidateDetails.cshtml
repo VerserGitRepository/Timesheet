@@ -1,4 +1,5 @@
 ﻿@model  TimeSheet.Models.TimeSheetViewModel
+
 <div>
     <div class="modal-header" style="background-color:lightgray;width:1228px">
         <h5 class="modal-title text-center">Resource Details</h5>
@@ -25,76 +26,87 @@
             <tbody class="table">
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
-                <tr>
-                    <td class="Id"> <span>@item.Id</span> </td>
-                     <td class="CandidateName">
-                        @Html.DisplayFor(modelItem => item.CandidateName)
-                    </td>
-                    <td class="Activity">
-                        @Html.DisplayFor(modelItem => item.Activity)
-                    </td>
+                    <tr>
+                        <td class="Id"> <span>@item.Id</span> </td>
+                        <td class="CandidateName">
+                            @Html.DisplayFor(modelItem => item.CandidateName)
+                        </td>
+                        <td class="Activity">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
 
-                    <td class="Day" width="7%">
-                        <span>@item.Day.Value.ToShortDateString()</span>
-                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                        <td class="Day" width="7%">
+                            <span>@item.Day.Value.ToShortDateString()</span>
+                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
 
-                    </td>
+                        </td>
                         <td class="StartTime">
-                        <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
-                    @*<td class="EndDate" width="8%">
-                        @Html.DisplayFor(modelItem => item.EndDate)
+                            <span>@item.StartTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
+                        @*<td class="EndDate" width="8%">
+                                @Html.DisplayFor(modelItem => item.EndDate)
 
-                    </td>*@
-               
-                    <td class="EndTime" width="8%">
-                        <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
+                            </td>*@
 
-                    <td class="OLATarget">
-                        @Html.DisplayFor(modelItem => item.OLATarget)
-                    </td>
-                    <td class="ActualQuantity">
-                        <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" value="@item.ActualQuantity" style="display:none;width:30px" />
-                    </td>
-                    <td class="Status">
-                        <span text="Status" span />
-                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status")
-                    </td>
-                    <td class="TimeSheetComments">
-                        <span>@item.TimeSheetComments</span>
-                        <input type="text" value="@item.TimeSheetComments" style="display:none" />
-                    </td>
-                    <td width="5%">
-                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Edit</strong></span>
-                        </a>
+                        <td class="EndTime" width="8%">
+                            <span>@item.EndTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
-                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Update</strong></span>
-                        </a>
+                        <td class="OLATarget">
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td class="ActualQuantity">
+                            <span style="width:2px">@item.ActualQuantity</span>
+                            <input type="text" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        </td>
+                        <td class="Status">
+                            <span text="Status" span />
+                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status")
+                        </td>
+                        <td class="TimeSheetComments">
+                            <span>@item.TimeSheetComments</span>
+                            <input type="text" value="@item.TimeSheetComments" style="display:none" />
+                        </td>
+                        <td width="5%">
+                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Edit</strong></span>
+                            </a>
+                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span><strong>Rate</strong></span>
+                            </a>
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
 
-                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;"style="display:none">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            <span><strong>Cancel</strong></span>
-                        </a>
+                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
 
-                        @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
-                        @*<a class="Delete" href="javascript:;">Delete</a>*@
-                    </td>
-                </tr>
+                            @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
+
+    </div>
+
+</div>
+<div id="myRatingModal" class="modal fade bs-modal-sm"  role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myRatingModalContent"></div>
+        </div>
     </div>
 </div>
-
 <script type="text/javascript">
 
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
@@ -147,6 +159,7 @@
         });
         row.find(".Update").show();
         row.find(".Cancel").show();
+        row.find("#Rate").show();
 
         $(this).hide();
     });
@@ -166,10 +179,11 @@
         });
         row.find(".Edit").show();
         row.find(".Cancel").hide();
+        row.find("#Rate").hide();
         $(this).hide();
 
         var CandidateEdit = {};
-        
+
         CandidateEdit.Id = row.find(".Id").find("span").html();
         CandidateEdit.ActualQuantity = row.find(".ActualQuantity").find("span").html();
         CandidateEdit.TimeSheetComments = row.find(".TimeSheetComments").find("span").html();
@@ -177,7 +191,7 @@
         CandidateEdit.EndTime = row.find(".EndTime").find("span").html();
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
         CandidateEdit.Day = row.find(".Day").find("span").html();
-       
+
         $.ajax({
             type: "POST",
             url: "./UpdateCandidate",
@@ -186,7 +200,7 @@
             dataType: "json"
         });
     });
-                 
+
     $("#myModal").draggable({
         handle: ".modal-header"
     });
@@ -196,7 +210,7 @@
         $(".popup-overlay, .popup-content").addClass("active");
     });
 
-    //removes the "active" class to .popup and .popup-content when the "Close" button is clicked 
+    //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
     $(".Update, .popup-overlay").on("click", function () {
         $(".popup-overlay, .popup-content").removeClass("active");
     });
@@ -216,15 +230,102 @@
         });
         row.find(".Edit").show();
         row.find(".Update").hide();
+        row.find("#Rate").hide();
         $(this).hide();
     });
+
+    var CandidateRatingDetailsURL = './Rating';
+    function Rate(rowid) {
+
+      //  alert('rating');
+        debugger;
+        var $buttonClicked = $(this);
+        var CandidateName = $buttonClicked.attr('data-id');
+        var options = { "backdrop": "static", keyboard: true };
+        $('#myModal').modal('hide');
+        var data = ""
+
+       // $('#myRatingModal').modal('show');
+        $.ajax({
+            type: "GET",
+            url: CandidateRatingDetailsURL,
+            contentType: "application/json; charset=utf-8",
+            data: { "CandidateName": CandidateName },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+
+                $.confirm({
+                         title: 'Resource Rating!',
+                         content: data,
+                         buttons: {
+                             Rate: function () {
+                                 var model = {
+                                     'OpportunityId': row.find("span#txtOpportunityId").text(),
+                                     'Quantity': row.find("input#quantity").val(),
+                                     'DateAllocated': row.find("input#startTime").val(),
+                                     'DateInvoiced': row.find("input#endTime").val(),
+                                     'WarehouseID': row.find("select#ddlWarehouseID").val(),
+                                     'ServiceActivityId': row.find("#txtServiceActvty").val(),
+                                     'ActivityId': row.find("#txtActvty").val(),
+                                     'Comments': row.find("input#comments").val(),
+                                     'IsAdd': isAdd
+
+                                 };
+                                 
+                                     @*$.ajax({
+                                         data: model,
+                                         url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
+                                         type: "POST",
+                                         success: function (data) {
+                                             if (data.status === 'OK') {
+                                                 window.location.href = data.Url
+                                             }
+                                             else {
+                                                 alert("The status cannot be updated at this time");
+                                             }
+                                         }
+                                     });*@
+                                 return;
+                             },
+                             cancel: function () {
+                                 $('#myModal').modal('show');
+                                 var row = $(rowid).closest("tr");
+                                 $("td", row).each(function () {
+                                     if ($(this).find("input").length > 0) {
+                                         $(this).find("input").show();
+                                         $(this).find("span").hide();
+                                         $(this).toggleClass('selected');
+
+                                     }
+                                 });
+                                 row.find(".Update").show();
+                                 row.find(".Cancel").show();
+                                 row.find("#Rate").show();
+
+                                 $(".Edit").hide();
+                                 return;
+                             }
+                         }
+
+                     });
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+
+        
+
+    }
+
 
 </script>
 <style>
     .modal-dialog {
         width: 1250px;
         margin: 30px auto;
-        margin-bottom:10px;
+        margin-bottom: 10px;
     }
 
     .table-hover > tbody > tr:hover > td,
@@ -252,5 +353,12 @@
         -webkit-transition-duration: 0.5s;
         -moz-transition-duration: 0.5s;
         -o-transition-duration: 0.5s;
+    }
+
+    #myRatingModal {
+        top: 5%;
+        right: 50%;
+        outline: none;
+        overflow: hidden;
     }
 </style>

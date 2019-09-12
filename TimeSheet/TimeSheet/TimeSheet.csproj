@@ -359,6 +359,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\please-wait.js" />
     <Content Include="Scripts\please-wait.min.js" />
+    <Content Include="Scripts\Rating\star-rating.js" />
+    <Content Include="Scripts\Rating\star-rating.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\spin.js" />
@@ -370,6 +372,8 @@
     <Content Include="Styles\FullCalender\qtip\qtip.css" />
     <Content Include="Styles\FullCalender\resource-timeline\main.min.css" />
     <Content Include="Styles\FullCalender\timeline\main.min.css" />
+    <Content Include="Styles\Rating\star-rating.css" />
+    <Content Include="Styles\Rating\star-rating.min.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -414,6 +418,7 @@
     <Content Include="Views\Projection\ApproveProjectTimesheet.cshtml" />
     <Content Include="Views\CompletedBooking\ProjectDetail.cshtml" />
     <Content Include="Views\CompletedBooking\CandidateDetails.cshtml" />
+    <Content Include="Views\Home\RatingDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

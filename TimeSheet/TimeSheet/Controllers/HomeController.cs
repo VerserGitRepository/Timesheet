@@ -245,5 +245,10 @@ namespace TimeSheet.Controllers
             }
             return View();
         }
+        public ActionResult Rating()
+        {
+           
+            return PartialView("RatingDetails");
+        }
     }
 }

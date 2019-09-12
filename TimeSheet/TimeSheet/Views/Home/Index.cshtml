@@ -17,7 +17,11 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-multiselect.js"></script>
 <link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
-
+<link href="~/Styles/Rating/star-rating.css" rel="stylesheet" />
+<script src="~/Scripts/Rating/star-rating.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <style>
     .row {
         width: 112%;
@@ -28,7 +32,8 @@
         padding-right: 0px;
         max-width: 100%;
     }
-        .container {
+
+    .container {
         padding-left: 0px;
         padding-right: 5px;
         max-width: 100%;
@@ -78,13 +83,14 @@
         -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
     }
-     .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6{
+
+    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6 {
         position: relative;
         min-height: 1px;
         padding-right: 2px;
         padding-left: 2px
     }
-  
+
     .page-item.active .page-link {
         color: white !important;
         background-color: orange !important;
@@ -109,35 +115,35 @@
 
 <div class="container" style="padding-top:2px;padding-bottom:0px;margin-left:0px;padding-left:0px;padding-right:10px;margin-bottom:0px">
     <div class="pull-left" style=" padding-right:10px; margin-right:0px;width:50%">
-            <div class="col-md-3">
-                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId" })
-            </div>
-            <div class="col-md-3">
-                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID" })
-            </div>
-            <div class="col-md-3">
-                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })
-            </div>
-            <div class="col-md-1">
-                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:7px; width:7px;", @multiple = "multiple" })
-                @Html.HiddenFor(model => model.ResourceID)
-            </div>
+        <div class="col-md-3">
+            @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId" })
         </div>
-    @*<div class="form-horizontal">*@
+        <div class="col-md-3">
+            @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID" })
+        </div>
+        <div class="col-md-3">
+            @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })
+        </div>
         <div class="col-md-1">
-            <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;padding-left:15px;margin-left:50px" OnClick="SearchAndFetchResourceDetails();">
-                <span class="glyphicon glyphicon-search " style=""></span>
-            </button>
-        </div>
-        <div class="col-md-1" style="padding-left:5px">
-            <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray">
-                <span class="glyphicon glyphicon-export black"></span>
-            </button>
-
+            @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:7px; width:7px;", @multiple = "multiple" })
+            @Html.HiddenFor(model => model.ResourceID)
         </div>
     </div>
-   @*</div>*@
-  
+    @*<div class="form-horizontal">*@
+    <div class="col-md-1">
+        <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;padding-left:15px;margin-left:50px" OnClick="SearchAndFetchResourceDetails();">
+            <span class="glyphicon glyphicon-search " style=""></span>
+        </button>
+    </div>
+    <div class="col-md-1" style="padding-left:5px">
+        <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray">
+            <span class="glyphicon glyphicon-export black"></span>
+        </button>
+
+    </div>
+</div>
+@*</div>*@
+
 
 
 <div class="container" style="margin-left:0px">
@@ -183,7 +189,7 @@
                             </td>
                             <td>
                                 <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
-                               
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.JobNo)
@@ -234,6 +240,10 @@
         $('#TimeSheetTable').dataTable();
         $('.dataTables_filter').addClass('pull-right');
     });
+    function Destroy() {
+      //  $('#ratingcontainer').data('modal', null);
+        $("#myRatingModalContent").html('');
+    }
      $('#ddlWarehouseId').change(function () {
 
                  var warehouseUrl = '';
