@@ -57,6 +57,7 @@
     }
 
     .glyphicon {
+        height: 12px;
         font-size: 14px;
         color: lightgray;
     }
@@ -69,7 +70,7 @@
     .form-control {
         display: block;
         width: 100%;
-        height: 30px;
+        height: 26px;
         padding: 2px 2px;
         font-size: 12px;
         line-height: 1.428571429;
@@ -90,6 +91,10 @@
         padding-right: 2px;
         padding-left: 2px
     }
+    .table thead > tr > th {
+        vertical-align: bottom;
+        border-bottom: 2px white;
+    }
 
     .page-item.active .page-link {
         color: white !important;
@@ -101,50 +106,42 @@
         color: black;
     }
 
-    .multiselect dropdown-toggle btn btn-default {
-        width: 80%;
-    }
-
-
     .multiselect.dropdown-toggle {
         text-align: left;
-        height: 30px;
+        height: 26px;
         width: 80%;
     }
 </style>
-
-<div class="container" style="padding-top:2px;padding-bottom:0px;margin-left:0px;padding-left:0px;padding-right:10px;margin-bottom:0px">
-    <div class="pull-left" style=" padding-right:10px; margin-right:0px;width:50%">
-        <div class="col-md-3">
-            @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId" })
-        </div>
-        <div class="col-md-3">
-            @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID" })
-        </div>
-        <div class="col-md-3">
-            @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })
-        </div>
-        <div class="col-md-1">
-            @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:7px; width:7px;", @multiple = "multiple" })
-            @Html.HiddenFor(model => model.ResourceID)
-        </div>
-    </div>
-    @*<div class="form-horizontal">*@
-    <div class="col-md-1">
-        <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;padding-left:15px;margin-left:50px" OnClick="SearchAndFetchResourceDetails();">
-            <span class="glyphicon glyphicon-search " style=""></span>
-        </button>
-    </div>
-    <div class="col-md-1" style="padding-left:5px">
-        <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray">
-            <span class="glyphicon glyphicon-export black"></span>
-        </button>
-
-    </div>
-</div>
-@*</div>*@
-
-
+<table class="table pull-right" style="width:50%;margin-right:170px">
+    <thead>
+        <tr>
+            <th class="col-md-2">
+                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId" })
+            </th>
+            <th class="col-md-2">
+                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID" })
+            </th>
+            <th class="col-md-2">
+                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })
+            </th>
+            <th class="col-md-2">
+                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:7px; width:7px;", @multiple = "multiple" })
+                @Html.HiddenFor(model => model.ResourceID)
+            </th>
+            <th class="col-md-1">
+                <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;padding-left:15px;margin-left:2px;height: 26px;" OnClick="SearchAndFetchResourceDetails();">
+                    <span class="glyphicon glyphicon-search " style=""></span>
+                </button>
+            </th>
+            <th class="col-md-1">
+                <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray;height: 26px;">
+                    <span class="glyphicon glyphicon-export black"></span>
+                </button>
+            </th>
+        </tr>
+    </thead>
+    
+</table>
 
 <div class="container" style="margin-left:0px">
     <div class="row">
