@@ -10,7 +10,7 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (Session["Username"] != null && Session["ProjectManager"] != null)
+            if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
             {
                 ProjectionModel model = new ProjectionModel();
                 model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");              
@@ -79,7 +79,7 @@ namespace TimeSheet.Controllers
         {
             ProjectionModel model = new ProjectionModel();
 
-            if (Session["Username"] != null && Session["ProjectManager"] !=null)
+            if (Session["Username"] != null && Session["ProjectManager"] !=null || Session["Administrator"] != null)
             {
                 if (ProjectionEntryModel != null)
                 {
@@ -113,7 +113,7 @@ namespace TimeSheet.Controllers
         public ActionResult UpdateProjection(ProjectionModel projectionUpdate)
         {
 
-            if (Session["Username"] != null && Session["ProjectManager"] != null)
+            if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
             {
                 if (projectionUpdate == null)
                 {
@@ -141,7 +141,7 @@ namespace TimeSheet.Controllers
         public ActionResult AddOrUpdateProjectionModel(ProjectionModel data)
         {
             ProjectionModel model = new ProjectionModel();
-            if (Session["Username"] != null && Session["ProjectManager"] != null)
+            if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
             {
                 if (data != null)
                 {
@@ -178,7 +178,7 @@ namespace TimeSheet.Controllers
 
         public ActionResult ApproveProjectTimesheet()
         {
-            if (Session["Username"] != null && Session["ProjectManager"] != null)
+            if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
             {
                 return View();
             }

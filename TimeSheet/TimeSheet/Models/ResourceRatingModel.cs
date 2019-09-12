@@ -8,6 +8,7 @@ namespace TimeSheet.Models
     public class ResourceRatingModel
     {
         public int Id { get; set; }
+        public int CandidateTimeSheetID { get; set; }         
         public int Punctuality { get; set; }
         public int ProfessionalService { get; set; }
         public int PoliteAndCourteous { get; set; }

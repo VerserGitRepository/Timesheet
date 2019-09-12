@@ -239,14 +239,14 @@
     function Rate(rowid) {
 
       //  alert('rating');
-        debugger;
+      //  debugger;
         var $buttonClicked = $(this);
         var tr = $(rowid).closest("tr");
         var td = tr.find("td:nth-child(1)");
         var options = { "backdrop": "static", keyboard: true };
         $('#myModal').modal('hide');
         var data = ""
-        alert(td.val());
+       // alert(td.val());
        // $('#myRatingModal').modal('show');
         $.ajax({
             type: "GET",
@@ -263,16 +263,14 @@
                          buttons: {
                              Rate: function () {
                                  var model = {
-                                     'Id': td.text(),
+                                     'CandidateTimeSheetID': td.text(),
                                      'Punctuality': $('#rating-input').val(),
                                      'ProfessionalService': $('#rating-input1').val(),
                                      'PoliteAndCourteous': $('#rating-input2').val(),
                                      'WorkQuality': $('#rating-input3').val(),
-                                     //'Comments': row.find("#txtActvty").val()
-                                     
+                                     //'Comments': row.find("#txtActvty").val()                                    
 
-                                 };
-                                 alert($('#rating-input').val());
+                                 };                                 
                                      $.ajax({
                                          data: model,
                                          url: '@Url.Action("RateResource", "Resource")',
@@ -294,8 +292,7 @@
                                                  row.find("#Rate").hide();
 
                                                  $(".Edit").show();
-                                                 return;
-                                             
+                                                 return;                                             
                                          }
                                      });
                                  return;
