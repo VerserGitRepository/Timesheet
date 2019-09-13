@@ -118,7 +118,7 @@ namespace TimeSheet.Controllers
             List<ResourceListModel> reslt = (from k in newModel.CandidateTimeSheetList select new ResourceListModel { ProjectManager = k.ProjectManager, id = Convert.ToInt32(k.ResourceID), title = Convert.ToString(k.CandidateName), eventColor = k.Colour, ResourceName = k.CandidateName, ActivityDescription = k.Activity, ProjectName = k.ProjectName, StartTime = Convert.ToDateTime(k.StartTime), EndTime = Convert.ToDateTime(k.EndTime) }).Distinct().ToList();
 
             newModel.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
-            List<ResourceEventsModel> resourceEvents = (from k in newModel.CandidateTimeSheetList select new ResourceEventsModel { projectmanager = k.ProjectManager, resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName, start = Convert.ToDateTime(k.StartTime).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s") }).Distinct().ToList();
+            List<ResourceEventsModel> resourceEvents = (from k in newModel.CandidateTimeSheetList select new ResourceEventsModel { projectmanager = k.ProjectManager, resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName+"-"+k.ProjectManager+"-"+k.Activity, start = Convert.ToDateTime(k.StartTime).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s") }).Distinct().ToList();
             newModel.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
 
 
