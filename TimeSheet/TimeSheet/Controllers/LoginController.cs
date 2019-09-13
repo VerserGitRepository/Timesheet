@@ -38,6 +38,7 @@ namespace TimeSheet.Controllers
             if (userReturn.Result.IsLoggedIn == true)
             {
                 Session["Username"] = login.UserName;
+                Session["FullName"] = login.FullName;
                 Session["ErrorMessage"] = null;
                var _roles = LoginService.UserRoleList(login.UserName).Result;
                 if (_roles.Count() > 0 )
