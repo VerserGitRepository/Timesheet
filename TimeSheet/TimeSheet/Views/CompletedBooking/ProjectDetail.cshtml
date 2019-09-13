@@ -41,7 +41,7 @@
 
                         <td class="Day" width="7%">
                             <span>@item.Day.Value.ToShortDateString()</span>
-                            <input type="date" id="Day" value="@item.Day.Value.ToString("dd/MM/yyyy")" style="display:none" />
+                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
 
                         </td>
                         <td class="StartTime">
@@ -162,7 +162,7 @@
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
                 var input = $(this).find("input");
-                span.html(input.val());
+                //span.html(input.val());
                 span.show();
                 input.hide();
                 $(this).removeClass('selected');
@@ -213,7 +213,7 @@
                 var span = $(this).find("span");
                 var input = $(this).find("input");
                 $(this).removeClass('selected');
-                input.val(span.html());
+                //input.val(span.html());
                 span.show();
                 input.hide();
             }
