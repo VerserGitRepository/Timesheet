@@ -32,8 +32,8 @@
                 <th>Hours</th>
                 <th>RESOURCE TYPE</th>
                 <th>Details</th>
-                <th></th>
-                <th></th>
+                <th>Approve</th>
+                <th>Reject</th>
             </tr>
         </thead>
         <tbody>
@@ -50,8 +50,21 @@
                         </button>
                     </p>
                 </td>
-                <td><input type="submit" value="APPROVE" name="APPROVE" class=" btn-sm btn-success" /></td>
-                <td><input type="submit" value="REJECT" name="REJECT" class=" btn-sm btn-danger" /></td>
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Approve">
+                        <button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </p>
+                </td>
+
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Reject">
+                        <button class="btn btn-danger btn-xs" data-title="Reject" data-toggle="modal" data-target="#reject">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </p>
+                </td>
             </tr>
             <tr>
                 <td>MEF Mobile</td>
@@ -66,8 +79,11 @@
                         </button>
                     </p>
                 </td>
-                <td><input type="submit" value="APPROVE" name="APPROVE" class=" btn-sm btn-success" /></td>
-                <td><input type="submit" value="REJECT" name="REJECT" class=" btn-sm btn-danger" /></td>
+                <td><p data-placement="top" data-toggle="tooltip" title="Approve"><button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
+                    <span class="glyphicon glyphicon-ok"></span></button></p></td>
+
+                <td><p data-placement="top" data-toggle="tooltip" title="Reject"><button class="btn btn-danger btn-xs" data-title="Reject" data-toggle="modal" data-target="#reject">
+                    <span class="glyphicon glyphicon-remove"></span></button></p></td>
             </tr>
             <tr>
                 <td>MEF Mobile</td>
@@ -82,8 +98,21 @@
                         </button>
                     </p>
                 </td>
-                <td><input type="submit" value="APPROVE" name="APPROVE" class=" btn-sm btn-success" /></td>
-                <td><input type="submit" value="REJECT" name="REJECT" class=" btn-sm btn-danger" /></td>
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Approve">
+                        <button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </p>
+                </td>
+
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Reject">
+                        <button class="btn btn-danger btn-xs" data-title="Reject" data-toggle="modal" data-target="#reject">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </p>
+                </td>
             </tr>
             <tr>
                 <td>MEF Mobile</td>
@@ -98,9 +127,21 @@
                         </button>
                     </p>
                 </td>
-                @*<td><input type="submit" value="Details" name="Details" class=" btn-sm btn-warning" /></td>*@
-                <td><input type="submit" value="APPROVE" name="APPROVE" class=" btn-sm btn-success" /></td>
-                <td><input type="submit" value="REJECT" name="REJECT" class=" btn-sm btn-danger" /></td>
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Approve">
+                        <button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </p>
+                </td>
+
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Reject">
+                        <button class="btn btn-danger btn-xs" data-title="Reject" data-toggle="modal" data-target="#reject">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </p>
+                </td>
             </tr>
             <tr>
                 <td>Verser</td>
@@ -115,8 +156,21 @@
                         </button>
                     </p>
                 </td>
-                <td><input type="submit" value="APPROVE" name="APPROVE" class=" btn-sm btn-success" /></td>
-                <td><input type="submit" value="REJECT" name="REJECT" class=" btn-sm btn-danger" /></td>
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Approve">
+                        <button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                    </p>
+                </td>
+
+                <td>
+                    <p data-placement="top" data-toggle="tooltip" title="Reject">
+                        <button class="btn btn-danger btn-xs" data-title="Reject" data-toggle="modal" data-target="#reject">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </p>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -132,22 +186,78 @@
                 <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1400px">
                     <thead style="background-color:#FFA500;color:white">
                         <tr>
-                            <th>Id</th>
+                            
                             <th>ProjectName</th>
                             <th>CandidateName</th>
                             <th>Activity</th>
                             <th style="width:50px">StartDate </th>
                             <th>StartTime</th>
-                            <th style="width:50px">EndDate </th>
+                            <th style="width:50px">EndTime </th>
                             @*<th>EndTime</th>*@
                             <th style="width:10px">OLA</th>
                             <th style="width:10px">Actual</th>
                             <th>Status</th>
                             <th style="width:10px">Comments</th>
-                            <th style="width:10px"></th>
+                            
                         </tr>
                     </thead>
-                    <tbody class="table"></tbody>
+                    <tbody class="table">
+
+                        <tr>
+                            <td>MEF Mobile</td>
+                            <td>Dom</td>
+                            <td>Mobile Processing</td>
+                            <td>12-09-2018</td>
+                            <td>8:00AM</td>
+                            <td>4:00PM</td>
+                            <td>80</td>
+                            <td>80</td>
+                            <td>Completed</td>
+                            <td>Testing</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>MEF Mobile</td>
+                            <td>Eric</td>
+                            <td>Mobile Processing</td>
+                            <td>12-09-2018</td>
+                            <td>8:00AM</td>
+                            <td>4:00PM</td>
+                            <td>80</td>
+                            <td>76</td>
+                            <td>Completed</td>
+                            <td>Testing</td>
+
+                        </tr>
+                        <tr>
+                            <td>MEF Mobile</td>
+                            <td>Ben</td>
+                            <td>Mobile Processing</td>
+                            <td>12-09-2018</td>
+                            <td>8:00AM</td>
+                            <td>4:00PM</td>
+                            <td>80</td>
+                            <td>82</td>
+                            <td>Completed</td>
+                            <td>Erasure</td>
+
+                        </tr>
+                        <tr>
+                            <td>MEF Mobile</td>
+                            <td>Rajani</td>
+                            <td>Mobile Processing</td>
+                            <td>12-09-2018</td>
+                            <td>8:00AM</td>
+                            <td>4:00PM</td>
+                            <td>80</td>
+                            <td>75</td>
+                            <td>Completed</td>
+                            <td>Testing</td>
+
+                        </tr>
+
+                    </tbody>
                 </table>
 
             </div>
@@ -158,6 +268,50 @@
     <!-- /.modal-dialog -->
 </div>
 
+
+<div class="modal fade" id="approve" tabindex="-1" role="dialog" aria-labelledby="approve" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title custom_align" id="Heading">Approve this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to Approve this Record?</div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="reject" tabindex="-1" role="dialog" aria-labelledby="reject" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title custom_align" id="Heading">Reject this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to Reject this Record?</div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <script>
     $(document).ready(function () {
         $('#TimeSheetTable1').dataTable();
