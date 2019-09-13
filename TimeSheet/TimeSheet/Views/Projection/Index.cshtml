@@ -328,6 +328,32 @@
 
                      });
                  }
+                 else {
+                     var model = {
+                         'OpportunityId': row.find("span#txtOpportunityId").text(),
+                         'Quantity': row.find("input#quantity").val(),
+                         'DateAllocated': row.find("input#startTime").val(),
+                         'DateInvoiced': row.find("input#endTime").val(),
+                         'WarehouseID': row.find("select#ddlWarehouseID").val(),
+                         'ServiceActivityId': row.find("#txtServiceActvty").val(),
+                         'ActivityId': row.find("#txtActvty").val(),
+                         'Comments': row.find("input#comments").val(),
+                         'IsAdd': isAdd
+                     }
+                     $.ajax({
+                                         data: model,
+                                         url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
+                                         type: "POST",
+                                         success: function (data) {
+                                             if (data.status === 'OK') {
+                                                 window.location.href = data.Url
+                                             }
+                                             else {
+                                                 alert("The status cannot be updated at this time");
+                                             }
+                                         }
+                                     });
+                 }
 
              }
              else {
