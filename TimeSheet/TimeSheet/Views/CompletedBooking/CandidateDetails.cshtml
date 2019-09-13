@@ -56,9 +56,10 @@
                             <span style="width:2px">@item.ActualQuantity</span>
                             <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
                         </td>
-                        <td class="Status">
+                        <td class="ActivityStatus">
                             <span text="Status" span />
-                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id="ddlStatus"})
+                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
                         </td>
                         <td class="TimeSheetComments">
                             <span>@item.TimeSheetComments</span>
@@ -89,7 +90,7 @@
 </div>
 
 <script type="text/javascript">
-
+    SetDDLValue();
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
@@ -125,6 +126,24 @@
         row.find(".Delete").show();
         $("#tblCustomers").append(row);
     };
+
+    function SetDDLValue() {
+        //alert('before document ready');
+        debugger;
+        $("tbody tr td.ActivityStatus").each(function LoopTR() {
+            var ratingTdText = $(this);
+            if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                $(ratingTdText).find("#ddlStatus option").each(function (i) {
+                    //alert($(ratingTdText).find("#hdnddlLidt").val());
+                    if (($(this).val() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                        $(this).attr('selected', 'selected')
+                    }
+                });
+            }
+       
+
+        });
+    }
 
     //Edit event handler.
     $("body").on("click", "#tblCustomers .Edit", function () {
