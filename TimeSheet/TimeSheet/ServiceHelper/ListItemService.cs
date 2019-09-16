@@ -72,6 +72,25 @@ namespace TimeSheet.ServiceHelper
             }
             return projectsList;
         }
+        public static async Task<List<ListItemViewModel>> ProjectManagers()
+        {
+            List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/ProjectManagerList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ResourcesViewModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        projectsList.Add(new ListItemViewModel() { Id = a.Id, Value = a.value });
+                    }
+                }
+            }
+            return projectsList;
+        }
         public static async Task<List<ListItemViewModel>> EmploymentTypeList()
         {
             List<ListItemViewModel> EmploymentList = new List<ListItemViewModel>();
