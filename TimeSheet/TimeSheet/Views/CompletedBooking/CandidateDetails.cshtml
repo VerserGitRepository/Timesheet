@@ -129,7 +129,7 @@
 
     function SetDDLValue() {
         //alert('before document ready');
-        debugger;
+       
         $("tbody tr td.ActivityStatus").each(function LoopTR() {
             var ratingTdText = $(this);
             if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
@@ -167,9 +167,8 @@
     $("body").on("click", "#tblCustomers .Update", function () {
                 var row = $(this).closest("tr");
       
-        debugger;
+       
         var CandidateEdit = {};
-
         CandidateEdit.Id = row.find(".Id").find("span").html();
         CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
         CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
@@ -241,17 +240,14 @@
         margin: 30px auto;
         margin-bottom: 10px;
     }
-
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
     }
-
     .selected {
         color: black;
         background-color: lightgray;
     }
-
     .btn {
         font-size: 10px;
     }
@@ -259,7 +255,6 @@
     table tr.active {
         background: red;
     }
-
     a.btn {
         -webkit-transform: scale(0.9);
         -moz-transform: scale(0.6);

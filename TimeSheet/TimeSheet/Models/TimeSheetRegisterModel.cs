@@ -48,6 +48,6 @@ namespace TimeSheet.Models
         public int? EmploymentTypeID { get; set; }
         [Required(ErrorMessage = "Resource selection is Mandatory")]
         public List<int?> ResourceIDs { get; set; }
-
+        public string FullName { get; set; }
     }
 }
