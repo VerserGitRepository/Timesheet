@@ -53,6 +53,7 @@ namespace TimeSheet.Models
         public List<int?> ResourceIDs { get; set; }
         public string CandidateName { get; set; }
         public SelectList CandidateNameList { get; set; }
+        public SelectList ProjectManagerNameList { get; set; }
         public SelectList StatusList { get; set; }
         public int? StatusID { get; set; }
         public string Status { get; set; }

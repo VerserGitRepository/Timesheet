@@ -59,7 +59,7 @@
                         </td>
                         <td class="ActualQuantity">
                             <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" value="@item.ActualQuantity" style="display:none;width:30px" />
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
                         </td>
                         <td class="Status">
                             <span text="Status" span />
@@ -67,7 +67,7 @@
                         </td>
                         <td class="TimeSheetComments">
                             <span>@item.TimeSheetComments</span>
-                            <input type="text" value="@item.TimeSheetComments" style="display:none" />
+                            <input type="text" id="txtComments"  value="@item.TimeSheetComments" style="display:none" />
                         </td>
                         <td width="5%">
                             <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
@@ -181,12 +181,12 @@
         row.find(".Cancel").hide();
         row.find("#Rate").hide();
         $(this).hide();
-
+        debugger;
         var CandidateEdit = {};
 
         CandidateEdit.Id = row.find(".Id").find("span").html();
-        CandidateEdit.ActualQuantity = row.find(".ActualQuantity").find("span").html();
-        CandidateEdit.TimeSheetComments = row.find(".TimeSheetComments").find("span").html();
+        CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
+        CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
         CandidateEdit.StartTime = row.find(".StartTime").find("span").html();
         CandidateEdit.EndTime = row.find(".EndTime").find("span").html();
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();

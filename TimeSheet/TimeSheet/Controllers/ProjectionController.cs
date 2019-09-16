@@ -24,7 +24,7 @@ namespace TimeSheet.Controllers
                     {
                         itemToChange = new ProjectionOppurtunityModel();
                         itemToChange.Activity = x.Activity;
-                        itemToChange.ActivityId = x.ActivityId;
+                        itemToChange.ActivityId = x.ActivityId == 0?x.ServiceRevenueId:x.ActivityId;
                         itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
                         itemToChange.Comments = x.Comments;
                         itemToChange.OpportinutyId = x.OpportunityID;

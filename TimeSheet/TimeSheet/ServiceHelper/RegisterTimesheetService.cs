@@ -15,7 +15,6 @@ namespace TimeSheet.ServiceHelper
         public static async Task<ReturnModel> RegisterTimesheetModel(TimeSheetRegisterModel RegisterModel)
         {
             ReturnModel ReturnResult = new ReturnModel();
-
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
@@ -27,6 +26,7 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
+                    ReturnResult.Message = "There is an issue with the booking. The detail are "+response.ReasonPhrase;
                     HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
                 }
             }
