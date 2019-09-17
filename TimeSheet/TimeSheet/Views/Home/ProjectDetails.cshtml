@@ -30,7 +30,7 @@
                     <tr>
                         <td class="Id"> <span>@item.Id</span> </td>
                         <td class="CandidateName">
-                            @Html.DisplayFor(modelItem => item.ProjectName)
+                             <span id="ProjectName">@item.ProjectName</span>
                         </td>
                         <td class="CandidateName">
                             @Html.DisplayFor(modelItem => item.CandidateName)
@@ -63,15 +63,16 @@
                         </td>
                         <td class="ActualQuantity">
                             <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" value="@item.ActualQuantity" style="display:none;width:30px" />
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
                         </td>
                         <td class="Status">
                             <span text="Status" span />
-                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status")
+                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
                         </td>
                         <td class="TimeSheetComments">
                             <span>@item.TimeSheetComments</span>
-                            <input type="text" value="@item.TimeSheetComments" style="display:none" />
+                            <input type="text" id="txtComments"  value="@item.TimeSheetComments" style="display:none" />
                         </td>
                         <td width="5%">
                             <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
@@ -113,7 +114,7 @@
     $('#tblCustomers').dataTable({
         responsive: true
     });
-
+    SetDDLValue();
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
@@ -149,7 +150,23 @@
         row.find(".Delete").show();
         $("#tblCustomers").append(row);
     };
+    function SetDDLValue() {
+        //alert('before document ready');
+        //debugger;
+        $("tbody tr td.Status").each(function LoopTR() {
+            var ratingTdText = $(this);
+            if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                $(ratingTdText).find("#ddlStatus option").each(function (i) {
+                    //alert($(ratingTdText).find("#hdnddlLidt").val());
+                    if (($(this).val() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                        $(this).attr('selected', 'selected')
+                    }
+                });
+            }
 
+
+        });
+    }
     //Edit event handler.
     $("body").on("click", "#tblCustomers .Edit", function () {
         // debugger;
@@ -186,16 +203,18 @@
         row.find(".Cancel").hide();
         row.find("#Rate").hide();
         $(this).hide();
-
+        //debugger;
+        var options = { "backdrop": "static", keyboard: true };
         var CandidateEdit = {};
 
         CandidateEdit.Id = row.find(".Id").find("span").html();
-        CandidateEdit.ActualQuantity = row.find(".ActualQuantity").find("span").html();
-        CandidateEdit.TimeSheetComments = row.find(".TimeSheetComments").find("span").html();
+        CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
+        CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
         CandidateEdit.StartTime = row.find("#startTime").val();
         CandidateEdit.EndTime = row.find("#endTime").val();
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
         CandidateEdit.Day = row.find(".Day").find("span").html();
+        CandidateEdit.StatusID = row.find("#ddlStatus").val();
 
         $.ajax({
             type: "POST",
@@ -204,6 +223,27 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         });
+       
+        $.ajax({
+            
+            type: "GET",
+            url: './ProjectDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "ProjectName": row.find("#ProjectName").text() },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
     });
 
     $("#myModal").draggable({

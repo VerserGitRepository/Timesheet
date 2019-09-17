@@ -27,7 +27,7 @@
                     <tr>
                         <td class="Id"> <span>@item.Id</span> </td>
                         <td class="CandidateName">
-                            @Html.DisplayFor(modelItem => item.CandidateName)
+                            <span id="txtCandidateName">@item.CandidateName</span>
                         </td>
                         <td class="Activity">
                             @Html.DisplayFor(modelItem => item.Activity)
@@ -166,26 +166,6 @@
     //Update event handler.
     $("body").on("click", "#tblCustomers .Update", function () {
                 var row = $(this).closest("tr");
-      
-       
-        var CandidateEdit = {};
-        CandidateEdit.Id = row.find(".Id").find("span").html();
-        CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
-        CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
-        CandidateEdit.StartTime = row.find(".StartTime").find("span").html();
-        CandidateEdit.EndTime = row.find(".EndTime").find("span").html();
-        CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
-        CandidateEdit.Day = row.find(".Day").find("span").html();
-        CandidateEdit.StatusID = row.find("#ddlStatus").val();
-
-        $.ajax({
-            type: "POST",
-            url: "./UpdateCandidate",
-            data: '{CandidateEdit:' + JSON.stringify(CandidateEdit) + '}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-        });
-
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
@@ -199,6 +179,46 @@
         row.find(".Edit").show();
         row.find(".Cancel").hide();
         $(this).hide();
+       
+        var CandidateEdit = {};
+        CandidateEdit.Id = row.find(".Id").find("span").html();
+        CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
+        CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
+        CandidateEdit.StartTime = row.find("#startTime").val();
+        CandidateEdit.EndTime = row.find("#endTime").val();
+        CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
+        CandidateEdit.Day = row.find(".Day").find("span").html();
+        CandidateEdit.StatusID = row.find("#ddlStatus").val();
+
+        $.ajax({
+            type: "POST",
+            url: "./UpdateCandidate",
+            data: '{CandidateEdit:' + JSON.stringify(CandidateEdit) + '}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+
+        
+
+        $.ajax({
+            type: "GET",
+            url: './CandidateDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "CandidateName": row.find("#txtCandidateName").text() },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
     });
 
     $("#myModal").draggable({

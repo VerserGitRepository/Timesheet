@@ -29,7 +29,7 @@
                     <tr>
                         <td class="Id"> <span>@item.Id</span> </td>
                         <td class="CandidateName">
-                            @Html.DisplayFor(modelItem => item.CandidateName)
+                            <span id="txtCandidateName">@item.CandidateName</span>
                         </td>
                         <td class="Activity">
                             @Html.DisplayFor(modelItem => item.Activity)
@@ -198,9 +198,9 @@
         row.find(".Cancel").hide();
         row.find("#Rate").hide();
         $(this).hide();
-      //  debugger;
+       // debugger;
         var CandidateEdit = {};
-
+        var options = { "backdrop": "static", keyboard: true };
         CandidateEdit.Id = row.find(".Id").find("span").html();
         CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
         CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
@@ -215,10 +215,30 @@
             url: "./UpdateCandidate",
             data: '{CandidateEdit:' + JSON.stringify(CandidateEdit) + '}',
             contentType: "application/json; charset=utf-8",
-            dataType: "json",
+            dataType: "json"
+            
             
         });
-        modal.location.reload(true);
+        $.ajax({
+            type: "GET",
+            url: './TimesheetCandidateDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "CandidateName": row.find("#txtCandidateName").text() },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+        
     });
 
     $("#myModal").draggable({
