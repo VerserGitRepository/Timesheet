@@ -25,8 +25,7 @@ namespace TimeSheet.Controllers
         public ActionResult Login(LoginModel login)
         {
             if (string.IsNullOrEmpty(login.UserName) || string.IsNullOrEmpty(login.Password))
-            {
-               
+            {               
                 Session.Clear();
                 Session.RemoveAll();
                 Session.Abandon();
@@ -39,7 +38,7 @@ namespace TimeSheet.Controllers
             if (userReturn.Result.IsLoggedIn == true)
             {
                 Session["Username"] = login.UserName;
-                Session["FullName"] = login.FullName;
+                Session["FullName"] = userReturn.Result.FullName;
                 Session["ErrorMessage"] = null;
 
                var _roles = LoginService.UserRoleList(login.UserName).Result;
@@ -55,7 +54,7 @@ namespace TimeSheet.Controllers
                         {
                             Session["Accounts"] = true;
                         }
-                        if (r.Value == "ProjectManagerAdmin")
+                        if (r.Value == "ProjectmanagerAdmin")
                         {
                             Session["ProjectManager"] = true;
                         }

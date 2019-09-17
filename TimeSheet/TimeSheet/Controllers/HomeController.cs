@@ -16,20 +16,17 @@ namespace TimeSheet.Controllers
     
     public class HomeController : Controller
     {
-        [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]
-       
+        [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]       
         public ActionResult Index()
         {
             if (Session["Username"] == null)
             {
-
                 return RedirectToAction("Login", "Login");
             }
             else
             {
                 TimeSheetViewModel model = new TimeSheetViewModel();                            
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");                
-             //   model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");            
+                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");  
                 model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                 model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
@@ -39,11 +36,9 @@ namespace TimeSheet.Controllers
                 return View(model);
             }                 
         }
-
         [HttpPost]
         public ActionResult Index(TimeSheetViewModel SearchModel)
-        {
-           
+        {           
             if (UserRoles.UserCanEditTimesheet() != true)
             {
                     return RedirectToAction("Index", "Home");
@@ -137,7 +132,6 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-
             if (UserRoles.UserCanEditTimesheet()!=true)
             {
 
@@ -156,7 +150,6 @@ namespace TimeSheet.Controllers
         {
             if (UserRoles.UserCanEditTimesheet() != true)
             {
-
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -176,6 +169,7 @@ namespace TimeSheet.Controllers
                     var EnddateTime = Convert.ToDateTime(dtEn);
                     EditModel.StartTime = StartdateTime;
                     EditModel.EndTime = EnddateTime;
+                    EditModel.FullName = Session["FullName"].ToString();
                 }  
                 var ReturnValue = RegisterTimesheetService.EditTimesheetModel(EditModel);
             }
@@ -197,6 +191,7 @@ namespace TimeSheet.Controllers
                 }
                 if (CandidateEdit != null)
                 {
+                    CandidateEdit.FullName= Session["FullName"].ToString();
                     var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
                 }                
             }
@@ -226,7 +221,6 @@ namespace TimeSheet.Controllers
                 Session["HomeSearchIndex"] = newModel;
             }
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("ViewIndex", "Home", new { });
-
             try
             {
                 // perform some action
@@ -238,8 +232,6 @@ namespace TimeSheet.Controllers
 
             return Json(new { Url = redirectUrl, status = "OK" });
             //ModelState.Clear();
-
-
         }
         public ActionResult ViewIndex()
         {
@@ -256,8 +248,7 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Login", "Login");
             }
             else
-            {
-                
+            {                
                 return PartialView("RatingDetails");
             }
         }
