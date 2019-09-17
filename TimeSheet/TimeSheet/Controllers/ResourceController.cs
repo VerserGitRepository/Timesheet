@@ -17,15 +17,20 @@ namespace TimeSheet.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-            else
+            else 
             {
-              ResourceAvailable model = new ResourceAvailable();
-
-                model.ResourceAvailableList = ResourceHelperService.ResourceListItems().Result;
-                 model.ResourceAvailableList = model.ResourceAvailableList.OrderBy(w => w.Warehouse).OrderBy(x=>x.ResourceName).ToList();
-                model.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");               
-                return View(model);
+                if (UserRoles.UserCanRegisterTimesheet() == true)
+                {
+                    ResourceAvailable model = new ResourceAvailable();
+                    model.ResourceAvailableList = ResourceHelperService.ResourceListItems().Result;
+                    model.ResourceAvailableList = model.ResourceAvailableList.OrderBy(w => w.Warehouse).OrderBy(x => x.ResourceName).ToList();
+                    model.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");
+                    return View(model);
+                }
+                Session["ErrorMessage"] = "Register Time Pemission Is Restricted";
+                return RedirectToAction("Index", "Home");
             }
+
         }
         public ActionResult _ResourceBooked(string ResourceName)
         {
@@ -49,7 +54,9 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                TimeSheetViewModel model = new TimeSheetViewModel();
+                if (UserRoles.UserCanRegisterTimesheet() == true)
+                {
+                    TimeSheetViewModel model = new TimeSheetViewModel();
                 model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
                 model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
                 var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
@@ -65,6 +72,9 @@ namespace TimeSheet.Controllers
                 model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
                 return View(model);
+                }
+                Session["ErrorMessage"] = "Register Time Pemission Is Restricted";
+                return RedirectToAction("Index", "Home");
             }
         }
         [HttpPost]

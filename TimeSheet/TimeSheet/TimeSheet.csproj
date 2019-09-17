@@ -224,6 +224,7 @@
     <Compile Include="ServiceHelper\ResourceHelperService.cs" />
     <Compile Include="ServiceHelper\SearchFilterService.cs" />
     <Compile Include="ServiceHelper\TimeSheetAPIHelperService.cs" />
+    <Compile Include="ServiceHelper\UserRoles.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.min.css" />

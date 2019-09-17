@@ -45,7 +45,6 @@ namespace TimeSheet.ServiceHelper
                     {
                         returnmessage.Add(new ListItems() { Id = p.Id, Value = p.Value });
                     }
-
                 }
             }
             return returnmessage;
