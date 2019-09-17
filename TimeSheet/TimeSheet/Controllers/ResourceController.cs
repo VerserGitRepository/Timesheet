@@ -116,9 +116,9 @@ namespace TimeSheet.Controllers
                 regModel.StatusID = theModel.StatusID;
                 regModel.WarehouseNameId = theModel.WarehouseID;
                 regModel.JobID = theModel.JobID;
-                var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
-            }
-           
+                regModel.FullName = Session["FullName"].ToString();
+               var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
+            }           
             return View("~ManageCalender/Index");
         }
         [HttpPost]
@@ -126,9 +126,6 @@ namespace TimeSheet.Controllers
         {
             var result = ResourceHelperService.RateResource(theModel);
             return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-
-        
+        }        
     }
 }
