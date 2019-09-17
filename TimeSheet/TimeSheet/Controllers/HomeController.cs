@@ -13,13 +13,16 @@ using TimeSheet.ServiceHelper;
 
 namespace TimeSheet.Controllers
 {
+    
     public class HomeController : Controller
     {
         [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]
+       
         public ActionResult Index()
         {
             if (Session["Username"] == null)
             {
+
                 return RedirectToAction("Login", "Login");
             }
             else
@@ -39,9 +42,10 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult Index(TimeSheetViewModel SearchModel)
         {
-            if (Session["Username"] == null)
+           
+            if (UserRoles.UserCanEditTimesheet() != true)
             {
-                return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -132,14 +136,14 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-           // TempData["EditID"] = id;
-            if (Session["Username"] == null)
+
+            if (UserRoles.UserCanEditTimesheet()!=true)
             {
-                return RedirectToAction("Login", "Login");
+
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-               // TimeSheetViewModel model = new TimeSheetViewModel();
                 var ModelReturnData = TimeSheetAPIHelperService.TimeSheetSearchById(id).Result;
                 ModelReturnData.Id = id;
                 ModelReturnData.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
@@ -149,13 +153,13 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult Edit(UpdateTimeSheetModel EditModel)
         {
-             if (Session["Username"] == null)
+            if (UserRoles.UserCanEditTimesheet() != true)
             {
-                return RedirectToAction("Login", "Login");
+
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-             //   int EditId = Convert.ToInt32( TempData["EditID"].ToString());
                 if (EditModel== null)
                 {
                     Session["ErrorMessage"] = "Please Update With Valid Details!";
@@ -176,17 +180,16 @@ namespace TimeSheet.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
         [HttpPost]
         public ActionResult UpdateCandidate(UpdateTimeSheetModel CandidateEdit)
         {
-            if (Session["Username"] == null)
+            if (UserRoles.UserCanEditTimesheet() != true)
             {
-                return RedirectToAction("Login", "Login");
+
+                return RedirectToAction("Index", "Home");
             }
             else
-            {
-                //   int EditId = Convert.ToInt32( TempData["EditID"].ToString());
+            {               
                 if (CandidateEdit == null)
                 {
                     Session["ErrorMessage"] = "Please Update With Valid Details!";
@@ -247,8 +250,15 @@ namespace TimeSheet.Controllers
         }
         public ActionResult Rating()
         {
-           
-            return PartialView("RatingDetails");
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                
+                return PartialView("RatingDetails");
+            }
         }
     }
 }
