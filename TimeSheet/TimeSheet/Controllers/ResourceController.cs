@@ -27,7 +27,7 @@ namespace TimeSheet.Controllers
                     model.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");
                     return View(model);
                 }
-                Session["ErrorMessage"] = "Register Time Pemission Is Restricted";
+                Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -73,7 +73,7 @@ namespace TimeSheet.Controllers
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
                 return View(model);
                 }
-                Session["ErrorMessage"] = "Register Time Pemission Is Restricted";
+                Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -83,6 +83,11 @@ namespace TimeSheet.Controllers
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
+            }
+            if (UserRoles.UserCanRegisterTimesheet() != true)
+            {
+                Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
+                return RedirectToAction("Index", "Home");
             }
             if (theModel == null)
             {
