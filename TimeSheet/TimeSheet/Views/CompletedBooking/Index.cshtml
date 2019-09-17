@@ -113,7 +113,14 @@
                     {
                         <tr>
                             <td>
-                                <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
+                                @if (Model.HasUserPermissionsToEdit)
+                                {
+                                    <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.CandidateName)
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.OpportunityNumber)
@@ -129,8 +136,14 @@
                                 @Html.DisplayFor(modelItem => item.EndTime)
                             </td>
                             <td>
-                                <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
-                                @*@Html.DisplayFor(modelItem => item.ProjectName)*@
+                                @if (Model.HasUserPermissionsToEdit)
+                                {
+                                    <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.ProjectName)
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.JobNo)

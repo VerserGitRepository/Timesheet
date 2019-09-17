@@ -192,8 +192,8 @@
         CandidateEdit.Id = row.find(".Id").find("span").html();
         CandidateEdit.ActualQuantity = row.find(".ActualQuantity").find("span").html();
         CandidateEdit.TimeSheetComments = row.find(".TimeSheetComments").find("span").html();
-        CandidateEdit.StartTime = row.find(".StartTime").find("span").html();
-        CandidateEdit.EndTime = row.find(".EndTime").find("span").html();
+        CandidateEdit.StartTime = row.find("#startTime").val();
+        CandidateEdit.EndTime = row.find("#endTime").val();
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
         CandidateEdit.Day = row.find(".Day").find("span").html();
 

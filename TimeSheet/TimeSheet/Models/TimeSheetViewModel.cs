@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Web.Mvc;
+
+
 namespace TimeSheet.Models
 {
     public class TimeSheetViewModel
@@ -68,6 +70,7 @@ namespace TimeSheet.Models
         public string jsonEvents { get; set; }
         public string StartTimeString { get { return Convert.ToDateTime(this.StartTime).ToString("yyyy-MM-ddTHH:mm:ss"); }  }
         public string EndTimeString { get { return Convert.ToDateTime(this.EndTime).ToString("yyyy-MM-ddTHH:mm:ss"); } }
+        public bool HasUserPermissionsToEdit { get; set; }
         
 
     }   

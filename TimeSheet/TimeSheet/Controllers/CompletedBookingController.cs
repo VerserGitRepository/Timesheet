@@ -22,6 +22,7 @@ namespace TimeSheet.Controllers
             {
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
                 model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+                model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
                 return View(model);
             }
         }
