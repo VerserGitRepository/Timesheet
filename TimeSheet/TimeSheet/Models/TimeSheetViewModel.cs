@@ -72,6 +72,7 @@ namespace TimeSheet.Models
         public string EndTimeString { get { return Convert.ToDateTime(this.EndTime).ToString("yyyy-MM-ddTHH:mm:ss"); } }
         public bool HasUserPermissionsToEdit { get; set; }
         
+        public string Vechicles { get; set; }
 
     }   
 }
