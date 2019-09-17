@@ -69,6 +69,10 @@ namespace TimeSheet.Controllers
                 model.projectionOpportunityModel = listA;
                 return View(model);
             }
+            else if (Session["Username"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             else
             {
                 return RedirectToAction("Login", "Login");
@@ -78,8 +82,7 @@ namespace TimeSheet.Controllers
         public ActionResult Index(ProjectionModel ProjectionEntryModel)
         {
             ProjectionModel model = new ProjectionModel();
-
-            if (Session["Username"] != null && Session["ProjectManager"] !=null || Session["Administrator"] != null)
+            if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
             {
                 if (ProjectionEntryModel != null)
                 {
@@ -94,15 +97,17 @@ namespace TimeSheet.Controllers
                         ActivityId = ProjectionEntryModel.ActivityId,
                         ServiceActivityId = ProjectionEntryModel.ServiceActivityId
                     };
-
                     var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
                 }
-               
+            }        
+            else if (Session["Username"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             else
             {
-                    return RedirectToAction("Login", "Login");
-             }
-            }
+                return RedirectToAction("Login", "Login");
+            }            
             return View(LoadDropDownsServices.ProjectionDropdowns());
         }
         public ActionResult InlineEditing()
@@ -112,7 +117,6 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult UpdateProjection(ProjectionModel projectionUpdate)
         {
-
             if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
             {
                 if (projectionUpdate == null)
@@ -131,10 +135,14 @@ namespace TimeSheet.Controllers
                     var IsReturnValid = ProjectionHelperService.EditProjectionModel(projectionupdate);
                 }
             }
+            else if(Session["Username"] != null)
+            {
+                return RedirectToAction("Index", "Home");               
+            }
             else
             {
                 return RedirectToAction("Login", "Login");
-            }               
+            }           
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
@@ -168,7 +176,7 @@ namespace TimeSheet.Controllers
                     }
                 }              
             }
-            else
+            else 
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -181,6 +189,10 @@ namespace TimeSheet.Controllers
             if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
             {
                 return View();
+            }
+            else if (Session["Username"] != null)
+            {
+                return RedirectToAction("Index", "Home");
             }
             else
             {
