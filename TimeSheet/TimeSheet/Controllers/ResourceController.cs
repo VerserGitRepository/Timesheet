@@ -116,6 +116,7 @@ namespace TimeSheet.Controllers
                 regModel.StatusID = theModel.StatusID;
                 regModel.WarehouseNameId = theModel.WarehouseID;
                 regModel.JobID = theModel.JobID;
+                regModel.TimeSheetComments = theModel.TimeSheetComments;
                 var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
             }
            
