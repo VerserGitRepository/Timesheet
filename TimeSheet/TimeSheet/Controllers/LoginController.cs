@@ -55,7 +55,7 @@ namespace TimeSheet.Controllers
                         {
                             Session["Accounts"] = true;
                         }
-                        if (r.Value == "ProjectManagerAdmin")
+                        if (r.Value == "ProjectmanagerAdmin")
                         {
                             Session["ProjectManager"] = true;
                         }
