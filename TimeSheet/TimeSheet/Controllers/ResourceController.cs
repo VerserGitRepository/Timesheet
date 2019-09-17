@@ -27,7 +27,7 @@ namespace TimeSheet.Controllers
                     model.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");
                     return View(model);
                 }
-                Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
+                Session["ErrorMessage"] = "Resource Specifics Pemission Is Restricted!";
                 return RedirectToAction("Index", "Home");
             }
 
