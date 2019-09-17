@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace TimeSheet.Models
 {
@@ -28,6 +29,8 @@ namespace TimeSheet.Models
         //public DateTime? EndDate { get; set; }
         public int? OLATarget { get; set; }
         public int? ActualQuantity { get; set; }
+        [DataType(DataType.MultilineText)]
+        [AllowHtml]
         public string TimeSheetComments { get; set; }
         [Required(ErrorMessage = "Opportunity Is Mandatory")]
         public int? OpportunityNumberID { get; set; }
@@ -49,5 +52,6 @@ namespace TimeSheet.Models
         [Required(ErrorMessage = "Resource selection is Mandatory")]
         public List<int?> ResourceIDs { get; set; }
         public string FullName { get; set; }
+        public string Vechicles { get; set; }
     }
 }
