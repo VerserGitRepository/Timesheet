@@ -378,6 +378,48 @@ $('#ddlRegOpportunityNumberID').change(function () {
     $('#btnregister, #btnregisterPM').click(function () {
         var data = null;
        // alert(this.id);
+        if (this.id == "btnregister") {
+            var end_time = $('#txtEndTime').val();
+            var start_time = $('#txtStartTime').val();
+
+            var stt = new Date("May 26, 2016 " + start_time);//arbitary
+            stt = stt.getTime();
+
+            var endt = new Date("May 26, 2016 " + end_time);//arbitary
+            endt = endt.getTime();
+            var diff = (endt - stt) / 1000;
+            diff /= (60);
+            diff = Math.abs(Math.round(diff));
+            if (stt >= endt) {
+                alert('start time should be prior to endtime');
+                return;
+            }
+            if (diff <= 15) {
+                alert("Minimum booking time shold not be less than 15 mins.");
+                return;
+            }
+        }
+        if (this.id == "btnregisterPM") {
+            var end_time = $('#txtEndTimePM').val();
+            var start_time = $('#txtStartTimePM').val();
+
+            var stt = new Date("May 26, 2016 " + start_time);//arbitary
+            stt = stt.getTime();
+
+            var endt = new Date("May 26, 2016 " + end_time);//arbitary
+            endt = endt.getTime();
+            var diff = (endt - stt) / 1000;
+            diff /= (60);
+            diff = Math.abs(Math.round(diff));
+            if (stt >= endt) {
+                alert('start time should be prior to endtime');
+                return;
+            }
+            if (diff <= 15) {
+                alert("Minimum booking time shold not be less than 15 mins.");
+                return;
+            }
+        }
                     @if (!ViewData.ModelState.IsValid)
                     {
 
