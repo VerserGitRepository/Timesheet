@@ -278,7 +278,7 @@
     var CandidateRatingDetailsURL = './Rating';
     function Rate(rowid) {
 
-      //  alert('rating');
+      
       //  debugger;
         var $buttonClicked = $(this);
         var tr = $(rowid).closest("tr");
@@ -295,7 +295,7 @@
             data: {},
             datatype: "json",
             success: function (data) {
-                // debugger;
+              
 
                 $.confirm({
                          title: 'Resource Rating!',
@@ -369,7 +369,6 @@
         
 
     }
-
 
 </script>
 <style>
