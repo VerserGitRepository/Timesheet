@@ -191,6 +191,31 @@ namespace TimeSheet.Controllers
             {
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
                 model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+                //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
+                DateTime dtFrom = DateTime.Parse("10:00 AM");
+                DateTime dtTo = DateTime.Parse("12:00 PM");
+                model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
+                model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
+                //int timeDiff = dtFrom.Value.Subtract(dtTo.Value).Hours;
+                var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new {completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g  ;
+                // var trwer = model.CompletedTimeSheetList.GroupBy(item => item.CandidateName).Select(g => new {Sum = g.Sum(x => x.EndTime.Value.Subtract(x.StartTime.Value).Hours),}) });
+               
+               
+                foreach (var subgroup in group)
+                {
+                    int hours = 0;
+                    AggregatedCompletedTimesheetModel agrModel = new AggregatedCompletedTimesheetModel();
+                    
+                    foreach (var t in subgroup)
+                    {
+                        agrModel.CandidateName = t.CandidateName;
+                        agrModel.ProjectManager = t.ProjectManager;
+                        agrModel.EmploymentTypeID = t.EmploymentTypeID;
+                        hours += t.EndTime.Value.Subtract(t.StartTime.Value).Hours;
+                    }
+                    agrModel.Hours = hours;
+                    model.AggregaredTimesheetModel.Add(agrModel);
+                }
                 return View(model);
             }
             else if (Session["Username"] != null)
@@ -210,6 +235,20 @@ namespace TimeSheet.Controllers
             var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("ResourceDetails", model);
+        }
+        [HttpPost]
+        public ActionResult ApprovePaymentIndividual(string activityId)
+        {
+            return PartialView("ResourceDetails");
+        }
+        [HttpPost]
+        public ActionResult ApprovePaymentBulk(string CandidateName)
+        {
+            CompletedTimesheetModel model = new CompletedTimesheetModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
+            List<int> activityIds = model.CompletedTimeSheetList.Select(i => i.Id).ToList();
             return PartialView("ResourceDetails", model);
         }
     }  

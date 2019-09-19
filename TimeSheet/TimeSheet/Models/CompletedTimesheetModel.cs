@@ -61,6 +61,7 @@ namespace TimeSheet.Models
         public SelectList Projectlist { get; set; }
         public int? ProjectID { get; set; }
         public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }
         public SelectList EmploymentList { get; set; }
         public virtual TimeSheetRegisterModel TimeSheetRegisterModel { get; set; }
@@ -69,5 +70,6 @@ namespace TimeSheet.Models
         public string StartTimeString { get { return Convert.ToDateTime(this.StartTime).ToString("yyyy-MM-ddTHH:mm:ss"); } }
         public string EndTimeString { get { return Convert.ToDateTime(this.EndTime).ToString("yyyy-MM-ddTHH:mm:ss"); } }
         public bool HasUserPermissionsToEdit { get; set; }
+        public List<AggregatedCompletedTimesheetModel> AggregaredTimesheetModel { get; set; }
     }
 }
