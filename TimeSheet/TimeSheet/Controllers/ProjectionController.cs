@@ -240,7 +240,11 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ApprovePaymentIndividual(string activityId)
         {
-            return PartialView("ResourceDetails");
+           var model = new CompletedTimesheetModel();
+            model.CompletedTimeSheetList= TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            int _timesheetid = Convert.ToInt32(activityId);
+            var _a = TimeSheetAPIHelperService.TimeSheetApproval(_timesheetid).Result;
+            return PartialView("ResourceDetails", model);
         }
         [HttpPost]
         public ActionResult ApprovePaymentBulk(string CandidateName)
@@ -249,6 +253,11 @@ namespace TimeSheet.Controllers
             var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
             List<int> activityIds = model.CompletedTimeSheetList.Select(i => i.Id).ToList();
+
+            foreach (var activityId in activityIds)
+            {
+             var _a =   TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
+            }
             return PartialView("ResourceDetails", model);
         }
     }  

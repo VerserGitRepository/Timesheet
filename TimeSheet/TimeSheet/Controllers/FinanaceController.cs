@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TimeSheet.ServiceHelper;
 
 namespace TimeSheet.Controllers
 {
@@ -27,7 +28,9 @@ namespace TimeSheet.Controllers
 
             if (Session["Username"] != null && Session["Accounts"] != null)
             {
-                return View();
+
+             var model=   TimeSheetAPIHelperService.TimeSheetApprovedList().Result;
+                return View(model);
             }
             else
             {
