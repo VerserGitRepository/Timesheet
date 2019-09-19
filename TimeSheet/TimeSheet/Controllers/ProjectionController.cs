@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
@@ -188,7 +189,9 @@ namespace TimeSheet.Controllers
         {
             if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
             {
-                return View();
+                CompletedTimesheetModel model = new CompletedTimesheetModel();
+                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+                return View(model);
             }
             else if (Session["Username"] != null)
             {
@@ -200,5 +203,14 @@ namespace TimeSheet.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult ResourceDetails(string CandidateName)
+        {
+            CompletedTimesheetModel model = new CompletedTimesheetModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("ResourceDetails", model);
+        }
     }  
 }
