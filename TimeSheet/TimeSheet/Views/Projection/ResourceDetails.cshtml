@@ -65,7 +65,7 @@
                         <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
                     </td>
                     <td width="5%">
-                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;">
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" onclick="Process(this);">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             <span><strong>Approve</strong></span>
                         </a>
@@ -79,16 +79,15 @@
 </div>
 
 <script type="text/javascript">
-
-    $("body").on("click", "#tblCustomers .Update", function () {
-       // debugger;
-    var row = $(this).closest("tr");
+    function Process(rowId) {
+        var row = $(rowId).closest("tr");
+        var candidateName = row.find("#txtCandidateName").text();
         var theactivityId = row.find("#activityId").text();
 
         $.ajax({
             url: "./ApprovePaymentIndividual",
             type: "POST",
-            data: { activityId: theactivityId},
+            data: { activityId: theactivityId },
             dataType: "json",
             traditional: true,
             success: function (data) {
@@ -96,9 +95,32 @@
                     window.location.href = data.Url
                 }
 
+
+            }
+
+        });
+        alert("The payment has been approved.");
+        $.ajax({
+            type: "GET",
+            url: './ResourceDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "CandidateName": candidateName },
+            datatype: "json",
+            success: function (data) {
+                //  debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
             }
         });
-        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+    }
+     
 
     $("#myModal").draggable({
         handle: ".modal-header"
