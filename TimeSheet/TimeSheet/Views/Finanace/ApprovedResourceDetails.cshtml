@@ -1,0 +1,139 @@
+﻿@model  TimeSheet.Models.CompletedTimesheetModel
+<div>
+    <div class="modal-header" style="background-color:lightgray;width:1228px">
+        <h5 class="modal-title text-center">Resource Details</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1200px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1200px">
+            <thead style="background-color:#FFA500;color:white">
+                <tr>
+                    <th>Id</th>
+                    <th>CandidateName</th>
+                    <th>Project</th>
+                    <th>Activity</th>
+                    <th style="width:50px">StartDate </th>
+                    <th>StartTime</th>
+                    <th style="width:50px">EndTime </th>
+                    <th style="width:10px">OLA</th>
+                    <th style="width:10px">Actual</th>
+                    <th style="width:10px">Comments</th>
+                    @*<th style="width:10px"></th>*@
+                </tr>
+            </thead>
+            <tbody class="table">
+                @foreach (var item in Model.CompletedTimeSheetList)
+                {
+                    <tr>
+                        <td class="Id" id="activityId"> <span>@item.Id</span> </td>
+                        <td class="CandidateName">
+                            <span id="txtCandidateName">@item.CandidateName</span>
+                        </td>
+                        <td class="Project">
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td class="Activity">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
+
+                        <td class="Day" width="7%">
+                            <span>@item.Day.Value.ToShortDateString()</span>
+                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+
+                        </td>
+                        <td class="StartTime">
+                            <span>@item.StartTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
+
+
+                        <td class="EndTime" width="8%">
+                            <span>@item.EndTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
+
+                        <td class="OLATarget">
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td class="ActualQuantity">
+                            <span style="width:2px">@item.ActualQuantity</span>
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        </td>
+                        <td class="TimeSheetComments">
+                            <span>@item.TimeSheetComments</span>
+                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                        </td>
+                        @*<td width="5%">
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                <span><strong>Approve</strong></span>
+                            </a>
+
+                        </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("body").on("click", "#tblCustomers .Update", function () {
+       // debugger;
+    var row = $(this).closest("tr");
+        var theactivityId = row.find("#activityId").text();
+
+        $.ajax({
+            url: "./ApprovePaymentIndividual",
+            type: "POST",
+            data: { activityId: theactivityId},
+            dataType: "json",
+            traditional: true,
+            success: function (data) {
+                if (data.Url === "/Projection/Index") {
+                    window.location.href = data.Url
+                }
+                }
+        });
+        });
+
+    $("#myModal").draggable({
+        handle: ".modal-header"
+    });
+</script>
+
+<style>
+    .modal-dialog {
+        width: 1250px;
+        margin: 30px auto;
+        margin-bottom: 10px;
+    }
+
+    .table-hover > tbody > tr:hover > td,
+    .table-hover > tbody > tr:hover > th {
+        background-color: lightgray;
+    }
+
+    .selected {
+        color: black;
+        background-color: lightgray;
+    }
+
+    .btn {
+        font-size: 10px;
+    }
+
+    table tr.active {
+        background: red;
+    }
+
+    a.btn {
+        -webkit-transform: scale(0.9);
+        -moz-transform: scale(0.6);
+        -o-transform: scale(0.6);
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        -o-transition-duration: 0.5s;
+    }
+</style>
