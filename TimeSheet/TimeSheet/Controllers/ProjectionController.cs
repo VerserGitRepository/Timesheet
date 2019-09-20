@@ -203,7 +203,7 @@ namespace TimeSheet.Controllers
                
                 foreach (var subgroup in group)
                 {
-                    int hours = 0;
+                    double hours = 0;
                     AggregatedCompletedTimesheetModel agrModel = new AggregatedCompletedTimesheetModel();
                     
                     foreach (var t in subgroup)
@@ -211,7 +211,7 @@ namespace TimeSheet.Controllers
                         agrModel.CandidateName = t.CandidateName;
                         agrModel.ProjectManager = t.ProjectManager;
                         agrModel.EmploymentTypeID = t.EmploymentTypeID;
-                        hours += t.EndTime.Value.Subtract(t.StartTime.Value).Hours;
+                        hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes/60;
                     }
                     agrModel.Hours = hours;
                     model.AggregaredTimesheetModel.Add(agrModel);
