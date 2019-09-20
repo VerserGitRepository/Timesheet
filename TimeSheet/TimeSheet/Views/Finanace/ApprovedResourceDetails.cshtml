@@ -18,59 +18,59 @@
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th style="width:10px">Comments</th>
-                    <th style="width:10px"></th>
+                    @*<th style="width:10px"></th>*@
                 </tr>
             </thead>
             <tbody class="table">
                 @foreach (var item in Model.CompletedTimeSheetList)
                 {
-                <tr>
-                    <td class="Id" id="activityId"> <span>@item.Id</span> </td>
-                    <td class="CandidateName">
-                        <span id="txtCandidateName">@item.CandidateName</span>
-                    </td>
-                    <td class="Project">
-                        @Html.DisplayFor(modelItem => item.ProjectName)
-                    </td>
-                    <td class="Activity">
-                        @Html.DisplayFor(modelItem => item.Activity)
-                    </td>
+                    <tr>
+                        <td class="Id" id="activityId"> <span>@item.Id</span> </td>
+                        <td class="CandidateName">
+                            <span id="txtCandidateName">@item.CandidateName</span>
+                        </td>
+                        <td class="Project">
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td class="Activity">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
 
-                    <td class="Day" width="7%">
-                        <span>@item.Day.Value.ToShortDateString()</span>
-                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                        <td class="Day" width="7%">
+                            <span>@item.Day.Value.ToShortDateString()</span>
+                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
 
-                    </td>
-                    <td class="StartTime">
-                        <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
+                        </td>
+                        <td class="StartTime">
+                            <span>@item.StartTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
 
-                    <td class="EndTime" width="8%">
-                        <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
+                        <td class="EndTime" width="8%">
+                            <span>@item.EndTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
-                    <td class="OLATarget">
-                        @Html.DisplayFor(modelItem => item.OLATarget)
-                    </td>
-                    <td class="ActualQuantity">
-                        <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                    </td>
-                    <td class="TimeSheetComments">
-                        <span>@item.TimeSheetComments</span>
-                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-                    </td>
-                    <td width="5%">
-                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;">
-                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                            <span><strong>Approve</strong></span>
-                        </a>
+                        <td class="OLATarget">
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td class="ActualQuantity">
+                            <span style="width:2px">@item.ActualQuantity</span>
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        </td>
+                        <td class="TimeSheetComments">
+                            <span>@item.TimeSheetComments</span>
+                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                        </td>
+                        @*<td width="5%">
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                <span><strong>Approve</strong></span>
+                            </a>
 
-                    </td>
-                </tr>
+                        </td>*@
+                    </tr>
                 }
             </tbody>
         </table>
@@ -94,8 +94,7 @@
                 if (data.Url === "/Projection/Index") {
                     window.location.href = data.Url
                 }
-
-            }
+                }
         });
         });
 

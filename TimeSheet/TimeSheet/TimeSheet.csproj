@@ -423,6 +423,7 @@
     <Content Include="Views\CompletedBooking\CandidateDetails.cshtml" />
     <Content Include="Views\Home\RatingDetails.cshtml" />
     <Content Include="Views\Projection\ResourceDetails.cshtml" />
+    <Content Include="Views\Finanace\ApprovedResourceDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
