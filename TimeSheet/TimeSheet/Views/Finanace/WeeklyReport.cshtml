@@ -1,5 +1,4 @@
-﻿@model  IEnumerable<TimeSheet.Models.CompletedTimesheetModel>
-@{
+﻿@{
     ViewBag.Title = "WeeklyReport";
 }
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
@@ -26,76 +25,48 @@
     <div class="row">
         <div class="col-md-12">
 
-            @*<div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1200px">*@
-            <table id="TimeSheetTable" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1200px">
+            
+            <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
                 <thead style="background-color:#FFA500;color:white">
                     <tr>
-                        <th>Id</th>
-                        <th>CandidateName</th>
-                        <th>Project</th>
-                        <th>Activity</th>
-                        @*<th style="width:50px">StartDate</th>
-                        <th>StartTime</th>
-                        <th style="width:50px">EndTime </th>
-                        <th style="width:10px">OLA</th>
-                        <th style="width:10px">Actual</th>
-                        <th style="width:10px">Comments</th>*@
-                        <th style="width:10px">Status</th>
+                        <th>Project Manager</th>
+                        <th>Resource</th>
+                        <th>Hours</th>
+                        <th>Resource Ttpe</th>
+                        <th>Approve</th>
                         <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (TimeSheet.Models.AggregatedCompletedTimesheetModel item in Model.AggregaredTimesheetModel)
                     {
-                    <tr>
-                        <td class="Id" id="activityId"> <span>@item.Id</span> </td>
-                        <td class="CandidateName">
-                            <span id="txtCandidateName">@item.CandidateName</span>
-                        </td>
-                        <td class="Project">
-                            @Html.DisplayFor(modelItem => item.ProjectName)
-                        </td>
-                        <td class="Activity">
-                            @Html.DisplayFor(modelItem => item.Activity)
-                        </td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectManager)
 
-                        @*<td class="Day" width="7%">
-            <span>@item.Day.Value.ToShortDateString()</span>
-            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                            </td>
+                            <td>
+                                <span id="txtCandidateName">@item.CandidateName</span>
 
-        </td>
-        <td class="StartTime">
-            <span>@item.StartTime.Value.ToShortTimeString()</span>
-            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-        </td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Hours)
+                            </td>
+                            <td>
+                                PERMANENT
+                            </td>
 
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayCycle)
+                            </td>
 
-        <td class="EndTime" width="8%">
-            <span>@item.EndTime.Value.ToShortTimeString()</span>
-            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-        </td>
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.CandidateName">
+                                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                                </a>
+                            </td>
 
-        <td class="OLATarget">
-            @Html.DisplayFor(modelItem => item.OLATarget)
-        </td>
-        <td class="ActualQuantity">
-            <span style="width:2px">@item.ActualQuantity</span>
-            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-        </td>
-        <td class="TimeSheetComments">
-            <span>@item.TimeSheetComments</span>
-            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-        </td>*@
-                        <td class="TimeSheetComments">
-                            <span>@item.Status</span>
-                            <input type="text" id="txtComments" value="@item.Status" style="display:none" />
-                        </td>
-                        <td>
-                            <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.CandidateName">
-                                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                    </tr>
+                        </tr>
                     }
                 </tbody>
             </table>
