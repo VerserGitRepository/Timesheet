@@ -93,8 +93,6 @@
                 if (data.Url === "/Projection/Index") {
                     window.location.href = data.Url
                 }
-
-
             }
 
         }); 
@@ -117,8 +115,7 @@
         $('#myModal').on('hidden.bs.modal', function (e) {
             location.reload();
         })
-    }
-     
+    }     
 
     $("#myModal").draggable({
         handle: ".modal-header"
@@ -131,12 +128,10 @@
         margin: 30px auto;
         margin-bottom: 10px;
     }
-
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
     }
-
     .selected {
         color: black;
         background-color: lightgray;

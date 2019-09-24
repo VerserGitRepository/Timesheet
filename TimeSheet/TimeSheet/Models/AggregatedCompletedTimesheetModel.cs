@@ -9,14 +9,10 @@ namespace TimeSheet.Models
 {
     public class AggregatedCompletedTimesheetModel
     {
-       
-    
         public double Hours { get; set; }
         public string CandidateName { get; set; }
         public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }
         public string PayCycle { get; set; }
-
-
     }
 }
