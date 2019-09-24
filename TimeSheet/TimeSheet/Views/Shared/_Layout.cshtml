@@ -7,14 +7,28 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <style type="text/css">
+        * {
+            margin: 0;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -30px;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse fixed-top" style="margin-left:0px;">
         <div class="container">
             <div class="navbar-header">
+    @*<div class="wrapper">
+        <div class="navbar navbar-default">
+            <div class="navbar-header">*@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -28,81 +42,81 @@
             <div class="navbar-collapse collapse" style="font-size:smaller">
                 @if (@Session["Username"] != null)
                 {
-                <ul class="nav navbar-nav">
-                    @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
-                            <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
-                            <li>@Html.ActionLink("COMPLETED BOOKINGS", "Index", "CompletedBooking")</li>
-                            
-                        </ul>
-                    </li>
+                    <ul class="nav navbar-nav">
+                        @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
+                                <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                                <li>@Html.ActionLink("COMPLETED BOOKINGS", "Index", "CompletedBooking")</li>
 
-                       <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">CALENDAR AND TIMELINE</a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("RESOURCE CALENDAR", "Index", "ManageCalender")</li>
-                            <li>@Html.ActionLink("RESOURCE TIMELINE", "Index", "ResourceTimeline")</li>
-                            <li>@Html.ActionLink("RESOURCE SPECIFICS", "Index", "Resource")</li>
-                        </ul>
-                    </li>
-                    @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>*@
-                    @if (Session["ProjectManager"] != null || Session["Administrator"] != null)
-                    {
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")">PROJECTION</a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
-                                <li>@Html.ActionLink("TIMESHEET APPROVAL", "ApproveProjectTimesheet", "Projection")</li>
-                                <li>@Html.ActionLink("PROFIT AND LOSS", "Index", "ProfitLoss")</li>
                             </ul>
                         </li>
-                    }
-                    @if (Session["Accounts"] != null || Session["Administrator"] != null)
-                    {
-                       
+
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">CALENDAR AND TIMELINE</a>
                             <ul class="dropdown-menu">
-               
-                                <li>@Html.ActionLink("WEEKLY REPORT", "WeeklyReport", "Finanace")</li>
-                                <li>@Html.ActionLink("MONTHLY REPORT", "monthlyReport", "Finanace")</li>
-                                <li>@Html.ActionLink("OVERTIME REPORT", "OvertimeReport", "Finanace")</li>
+                                <li>@Html.ActionLink("RESOURCE CALENDAR", "Index", "ManageCalender")</li>
+                                <li>@Html.ActionLink("RESOURCE TIMELINE", "Index", "ResourceTimeline")</li>
+                                <li>@Html.ActionLink("RESOURCE SPECIFICS", "Index", "Resource")</li>
                             </ul>
                         </li>
-                    }
-                    @if (Session["Administrator"] != null)
-                    {
-                        <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
-                    }
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
-                        <ul class="dropdown-menu">
-                           
-                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TIMESHEET</a></li>
-                            @*<li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">RESOURCE Available</a></li>*@
-                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">PROJECTION</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                            <ul class="nav navbar-nav" @*style="float:right"*@>
-                                <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
-                            </ul>
-                            }
-                            @if (@Session["Username"] == null)
-                            {
-                                <ul>
-                                    <li class="nav navbar-nav" style="float:right">@Html.ActionLink("Login", "Login", "Login")</li>
+                        @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>*@
+                        @if (Session["ProjectManager"] != null || Session["Administrator"] != null)
+                        {
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")">PROJECTION</a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
+                                    <li>@Html.ActionLink("TIMESHEET APPROVAL", "ApproveProjectTimesheet", "Projection")</li>
+                                    <li>@Html.ActionLink("PROFIT AND LOSS", "Index", "ProfitLoss")</li>
                                 </ul>
-                            }
-</div>
+                            </li>
+                        }
+                        @if (Session["Accounts"] != null || Session["Administrator"] != null)
+                        {
+
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
+                                <ul class="dropdown-menu">
+
+                                    <li>@Html.ActionLink("WEEKLY REPORT", "WeeklyReport", "Finanace")</li>
+                                    <li>@Html.ActionLink("MONTHLY REPORT", "monthlyReport", "Finanace")</li>
+                                    <li>@Html.ActionLink("OVERTIME REPORT", "OvertimeReport", "Finanace")</li>
+                                </ul>
+                            </li>
+                        }
+                        @if (Session["Administrator"] != null)
+                        {
+                            <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
+                        }
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TIMESHEET</a></li>
+                                @*<li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">RESOURCE Available</a></li>*@
+                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">PROJECTION</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav" @*style="float:right"*@>
+                        <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
+                    </ul>
+                }
+                @if (@Session["Username"] == null)
+                {
+                    <ul>
+                        <li class="nav navbar-nav" style="float:right">@Html.ActionLink("Login", "Login", "Login")</li>
+                    </ul>
+                }
+            </div>
         </div>
     </div>
     @*container-fluid body-content*@
 
-    <div class="container body-content" >
+    <div class="container body-content">
         @if (HttpContext.Current.Session["ResultMessage"] != null)
         {
             <div class="alert alert-info text-center  alert-dismissible" role="alert" style="margin-left:0px">
@@ -140,7 +154,7 @@
 </body>
 </html>
 <style>
-    
+
 #navbar {
   overflow: hidden;
   background-color: #f1f1f1;
@@ -211,5 +225,5 @@
         padding: 4px 10px;
     }
 
-</style>
+    </style>
 
