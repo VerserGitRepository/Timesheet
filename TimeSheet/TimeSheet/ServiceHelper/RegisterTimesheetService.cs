@@ -22,7 +22,11 @@ namespace TimeSheet.ServiceHelper
                 if (response.IsSuccessStatusCode)
                 {
                      ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                     HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                    if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
+                    {
+                        ReturnResult.Message = "Candidate Timesheet has been resistered successfully.";
+                    }
                 }
                 else
                 {
