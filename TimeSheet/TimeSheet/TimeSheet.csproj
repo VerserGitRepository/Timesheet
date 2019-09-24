@@ -186,6 +186,7 @@
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
     <Compile Include="Models\CandidateTimeSheetsModel.cs" />
+    <Compile Include="Models\CompletedtimesheetExcelExportModel.cs" />
     <Compile Include="Models\CompletedtimesheetExportModel.cs" />
     <Compile Include="Models\AggregatedCompletedTimesheetModel.cs" />
     <Compile Include="Models\CompletedTimesheetModel.cs" />
