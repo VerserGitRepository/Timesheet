@@ -79,6 +79,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -163,6 +166,7 @@
     <Compile Include="Controllers\AdminUpdateController.cs" />
     <Compile Include="Controllers\CompletedBookingController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
+    <Compile Include="Controllers\ExcelUtils.cs" />
     <Compile Include="Controllers\FinanaceController.cs" />
     <Compile Include="Controllers\ProfitLossController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
@@ -443,6 +447,7 @@
     <Folder Include="Scripts\FullCalender\rrule\" />
     <Folder Include="Scripts\FullCalender\timegrid\" />
     <Folder Include="Scripts\FullCalender\timeline\src\util\" />
+    <Folder Include="Templates\" />
     <Folder Include="Views\AdminUpdate\" />
     <Folder Include="Views\Partial\" />
   </ItemGroup>

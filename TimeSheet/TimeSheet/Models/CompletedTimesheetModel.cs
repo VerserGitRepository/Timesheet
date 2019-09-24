@@ -71,5 +71,6 @@ namespace TimeSheet.Models
         public string EndTimeString { get { return Convert.ToDateTime(this.EndTime).ToString("yyyy-MM-ddTHH:mm:ss"); } }
         public bool HasUserPermissionsToEdit { get; set; }
         public List<AggregatedCompletedTimesheetModel> AggregaredTimesheetModel { get; set; }
+        public int AdpEmployeeID { get; set; }
     }
 }

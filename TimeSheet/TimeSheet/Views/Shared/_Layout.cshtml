@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+
 </head>
 <body>
     <div class="navbar navbar-inverse fixed-top" style="margin-left:0px;">
@@ -67,9 +68,9 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
                             <ul class="dropdown-menu">
                
-                                <li>@Html.ActionLink("WEEKLY REPORT", "WeeklyReport", "Finanace")</li>
-                                <li>@Html.ActionLink("MONTHLY REPORT", "monthlyReport", "Finanace")</li>
-                                <li>@Html.ActionLink("OVERTIME REPORT", "OvertimeReport", "Finanace")</li>
+                                <li>@Html.ActionLink("WEEKLY REPORT", "WeeklyReport", "Finanace", new { @Title = "Weekly Report" })</li>
+                                <li>@Html.ActionLink("MONTHLY REPORT", "monthlyReport", "Finanace", new { @Title = "Monthly Report" })</li>
+                                <li>@Html.ActionLink("OVERTIME REPORT", "OvertimeReport", "Finanace", new { @Title = "Overtime Report" })</li>
                             </ul>
                         </li>
                     }

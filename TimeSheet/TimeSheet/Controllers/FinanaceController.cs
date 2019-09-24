@@ -143,42 +143,84 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetApprovedList().Result;
-                foreach (var item in TimeSheetmodel)
-                {
+                #region Old Code
+                //var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetApprovedList().Result;
+                //foreach (var item in TimeSheetmodel)
+                //{
 
-                    TimeSheetExportData.Add(new CompletedtimesheetExportModel
-                    {
-                        ProjectName = item.ProjectName,
-                        CandidateName = item.CandidateName,
-                        OpportunityNumber = item.OpportunityNumber,
-                        Activity = item.Activity,
-                        WarehouseName = item.WarehouseName,
-                        StartTime = item.StartTime,
-                        EndTime = item.EndTime,
-                        JobNo = item.JobNo,
-                        OLATarget = item.OLATarget,
-                        ActualQuantity = item.ActualQuantity,
-                        Day = item.Day.Value.Date,
-                        Status = item.Status,
-                        TimeSheetComments = item.TimeSheetComments,
-                        Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60
-                });
+                //    TimeSheetExportData.Add(new CompletedtimesheetExportModel
+                //    {
+                //        ProjectName = item.ProjectName,
+                //        CandidateName = item.CandidateName,
+                //        OpportunityNumber = item.OpportunityNumber,
+                //        Activity = item.Activity,
+                //        WarehouseName = item.WarehouseName,
+                //        StartTime = item.StartTime,
+                //        EndTime = item.EndTime,
+                //        JobNo = item.JobNo,
+                //        OLATarget = item.OLATarget,
+                //        ActualQuantity = item.ActualQuantity,
+                //        Day = item.Day.Value.Date,
+                //        Status = item.Status,
+                //        TimeSheetComments = item.TimeSheetComments,
+                //        Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60
+                //});
+                //}
+                //GridView gv = new GridView();
+                //gv.DataSource = TimeSheetExportData;
+                //gv.DataBind();
+                //Response.ClearContent();
+                //Response.Buffer = true;
+                //Response.AddHeader("content-disposition", "attachment; filename=ApprovedTimeSchedule.xls");
+                //Response.ContentType = "application/ms-excel";
+                //Response.Charset = "";
+                //StringWriter sw = new StringWriter();
+                //HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+                //gv.RenderControl(htw);
+                //Response.Output.Write(sw.ToString());
+                //Response.Flush();
+                //Response.End();
+                #endregion
+
+                CompletedTimesheetModel model = new CompletedTimesheetModel();
+                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+               
+                
+
+                DateTime today = DateTime.Today;
+                int currentDayOfWeek = (int)today.DayOfWeek;
+                DateTime sunday = today.AddDays(-currentDayOfWeek);
+                DateTime monday = sunday.AddDays(1);
+                // If we started on Sunday, we should actually have gone *back*
+                // 6 days instead of forward 1...
+                if (currentDayOfWeek == 0)
+                {
+                    monday = monday.AddDays(-7);
                 }
-                GridView gv = new GridView();
-                gv.DataSource = TimeSheetExportData;
-                gv.DataBind();
-                Response.ClearContent();
-                Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment; filename=ApprovedTimeSchedule.xls");
-                Response.ContentType = "application/ms-excel";
-                Response.Charset = "";
-                StringWriter sw = new StringWriter();
-                HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-                gv.RenderControl(htw);
-                Response.Output.Write(sw.ToString());
-                Response.Flush();
-                Response.End();
+                var dates = Enumerable.Range(0, 7).Select(days => monday.AddDays(days)).ToList();
+
+                var group = from completedTimeSheet in model.CompletedTimeSheetList.OrderBy(x => x.CandidateName) select completedTimeSheet;
+                string path = Server.MapPath(@"\Templates");
+                ExcelUtils.openExcel(group, path);
+
+
+
+                //string path = @"~/Templates/TimeSchedulerCopyToModify.xls";
+                System.IO.FileInfo file = new System.IO.FileInfo(path+ "\\ApprovedList.xls");
+                if (file.Exists)
+                {
+                    Response.Clear();
+                    Response.AddHeader("Content-Disposition", "attachment; filename=ApprovedTimeSchedule.xls");
+                    
+
+                    Response.AddHeader("Content-Length", file.Length.ToString());
+                    Response.ContentType = "application/ms-excel";
+                    Response.WriteFile(file.FullName);
+                    Response.Flush();
+                    Response.End();
+                    file.Delete();
+
+                }
             }
             return RedirectToAction("WeeklyReport", "Finanace");
         }
