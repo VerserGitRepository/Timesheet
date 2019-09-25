@@ -32,6 +32,7 @@ namespace TimeSheet.Controllers
                 model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
                 model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
+                Session["HasUserPermissionsToEdit"] = UserRoles.UserCanEditTimesheet();
                 Session["HomeIndex"] = model;
                 return View(model);
             }                 
