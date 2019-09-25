@@ -240,7 +240,7 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ApprovePaymentIndividual(string activityId)
         {
-           var model = new CompletedTimesheetModel();
+            var model = new CompletedTimesheetModel();
             model.CompletedTimeSheetList= TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
             int _timesheetid = Convert.ToInt32(activityId);
             var _a = TimeSheetAPIHelperService.TimeSheetApproval(_timesheetid).Result;

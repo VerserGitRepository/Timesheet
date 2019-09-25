@@ -372,7 +372,7 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/TimeSheetApproval/{0}", activityId)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/UpdateTimesheetPaid/{0}", activityId)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult  = await response.Content.ReadAsAsync<ReturnModel>();
