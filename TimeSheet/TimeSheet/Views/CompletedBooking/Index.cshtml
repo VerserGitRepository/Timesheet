@@ -113,7 +113,7 @@
                     {
                         <tr>
                             <td>
-                                @if (Model.HasUserPermissionsToEdit)
+                                @if ((bool)Session["HasUserPermissionsToEdit"])
                                 {
                                     <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
                                 }
@@ -136,7 +136,7 @@
                                 @Html.DisplayFor(modelItem => item.EndTime)
                             </td>
                             <td>
-                                @if (Model.HasUserPermissionsToEdit)
+                                @if ((bool)Session["HasUserPermissionsToEdit"])
                                 {
                                     <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
                                 }
