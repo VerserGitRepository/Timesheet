@@ -11,7 +11,7 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
+           if (UserRoles.UserCanApproveTimesheet() == true)
             {
                 ProjectionModel model = new ProjectionModel();
                 model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");              
@@ -187,7 +187,7 @@ namespace TimeSheet.Controllers
 
         public ActionResult ApproveProjectTimesheet()
         {
-            if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
+            if (UserRoles.UserCanApproveTimesheet() == true)
             {
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
                 model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
@@ -249,6 +249,10 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ApprovePaymentBulk(string CandidateName)
         {
+            if (UserRoles.UserCanApproveTimesheet() != true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             CompletedTimesheetModel model = new CompletedTimesheetModel();
             var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
