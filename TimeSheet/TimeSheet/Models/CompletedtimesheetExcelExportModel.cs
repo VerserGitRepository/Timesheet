@@ -23,6 +23,10 @@ namespace TimeSheet.Models
         public string Status { get; set; }
         public string TimeSheetComments { get; set; }
         public double Hours { get; set; }
+        public string OTHours { get; set; }
+        public string OTWeekEndSatDay { get; set; }
+        public string OTWeekEndSatDayException { get; set; }
+        public string OTWeekEndSunDay { get; set; }
 
     }
 }

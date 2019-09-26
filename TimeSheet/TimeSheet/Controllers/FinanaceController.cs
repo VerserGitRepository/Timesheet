@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -145,7 +146,13 @@ namespace TimeSheet.Controllers
         public ActionResult ExportCompletedScheduls()
         {
             var TimeSheetExportData = new List<CompletedtimesheetExcelExportModel>();
-
+            string otHours = (string)ConfigurationManager.AppSettings["OTHours"];
+            List<string> otvalues = new List<string>();
+            otvalues = otHours.Split(';').ToList();
+            string OTWeekEndSatDay = (string)ConfigurationManager.AppSettings["OTWeekEndSatDay"];
+            string OTWeekEndSatDayException = (string)ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
+            string OTWeekEndSunDay = (string)ConfigurationManager.AppSettings["OTWeekEndSunDay"];
+            string OTHoursVal = string.Empty;
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -156,13 +163,21 @@ namespace TimeSheet.Controllers
                 CultureInfo defaultCultureInfo = CultureInfo.CurrentCulture;
                 DayOfWeek firstDay = defaultCultureInfo.DateTimeFormat.FirstDayOfWeek;
                 DateTime firstDayInWeek = DateTime.Now.Date;
+               
                 while (firstDayInWeek.DayOfWeek != firstDay)
                 {
                     firstDayInWeek = firstDayInWeek.AddDays(-1);
                 }
-                var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetApprovedList().Result;
+                DateTime lastDayInWeek = firstDayInWeek.AddDays(6);
+                var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetApprovedList().Result;//.Where(item => item.Day.Value.Date >= firstDayInWeek.Date && item.Day.Value.Date <= lastDayInWeek.Date);
+                //TimeSheet
                 foreach (var item in TimeSheetmodel)
                 {
+                    if((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= double.Parse(otvalues[0].Replace("GT","")) && item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 <=  double.Parse(otvalues[0].Replace("LT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
+                    {
+
+                        OTHoursVal = Convert.ToString((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
+                    }
 
                     TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
                     {
@@ -181,6 +196,8 @@ namespace TimeSheet.Controllers
                        Status = item.Status,
                        TimeSheetComments = item.TimeSheetComments,
                        Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60
+
+                       
                   });
                 }
                
