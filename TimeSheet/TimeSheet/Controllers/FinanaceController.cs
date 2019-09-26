@@ -173,7 +173,7 @@ namespace TimeSheet.Controllers
                 //TimeSheet
                 foreach (var item in TimeSheetmodel)
                 {
-                    if((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= double.Parse(otvalues[0].Replace("GT","")) && item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 <=  double.Parse(otvalues[0].Replace("LT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
+                    if((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= double.Parse(otvalues[0].Replace("GT","")) )//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
                     {
 
                         OTHoursVal = Convert.ToString((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
@@ -181,6 +181,8 @@ namespace TimeSheet.Controllers
 
                     TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
                     {
+                        
+                        ADPEmployeeId = item.AdpEmployeeID.ToString(),
                         ProjectName = item.ProjectName,
                        CandidateName = item.CandidateName,
                        OpportunityNumber = item.OpportunityNumber,
@@ -195,10 +197,11 @@ namespace TimeSheet.Controllers
                        Day = item.Day.Value.Date.ToShortDateString(),
                        Status = item.Status,
                        TimeSheetComments = item.TimeSheetComments,
-                       Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60
+                       Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                       OTHours = OTHoursVal
 
-                       
-                  });
+
+                    });
                 }
                
                 GridView gv = new GridView();
