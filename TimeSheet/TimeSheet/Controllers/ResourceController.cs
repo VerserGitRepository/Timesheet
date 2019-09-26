@@ -128,6 +128,39 @@ namespace TimeSheet.Controllers
         {
             var result = ResourceHelperService.RateResource(theModel);
             return Json(result, JsonRequestBehavior.AllowGet);
-        }        
+        }
+
+        public ActionResult PMRegister()
+        {
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                if (UserRoles.UserCanRegisterTimesheet() == true)
+                {
+                    TimeSheetViewModel model = new TimeSheetViewModel();
+                    model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
+                    model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
+                    var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
+                    {
+                        Id = x.Id,
+                        Value = x.Value
+                    });
+                 //   int opportunityId = listitem.FirstOrDefault().Id;
+                 //  model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
+                    model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
+                    model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+                    model.ProjectManagerNameList = new SelectList(ListItemService.ProjectManagers().Result, "ID", "Value");
+                    model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
+                    model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
+                    return View(model);
+                }
+                Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
     }
 }
