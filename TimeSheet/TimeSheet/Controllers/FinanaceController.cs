@@ -276,6 +276,19 @@ namespace TimeSheet.Controllers
             }
             return RedirectToAction("WeeklyReport", "Finanace");
         }
+        [HttpPost]
+        public ActionResult ApprovePaymentBulk(string CandidateName)
+        {
+            CompletedTimesheetModel model = new CompletedTimesheetModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
+            List<int> activityIds = model.CompletedTimeSheetList.Select(i => i.Id).ToList();
 
+            foreach (var activityId in activityIds)
+            {
+             var _a =   TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
+            }
+            return View(model);
+        }
     }
 }

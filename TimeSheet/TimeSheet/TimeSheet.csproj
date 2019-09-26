@@ -169,6 +169,7 @@
     <Compile Include="Controllers\ExcelUtils.cs" />
     <Compile Include="Controllers\FinanaceController.cs" />
     <Compile Include="Controllers\ProfitLossController.cs" />
+    <Compile Include="Controllers\ProjectManagerController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\CostModelListItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -193,11 +194,13 @@
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
     <Compile Include="Models\ListItems.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
+    <Compile Include="Models\PMRegisterViewModel.cs" />
     <Compile Include="Models\ProjectionEntryModel.cs" />
     <Compile Include="Models\ProjectionModel.cs" />
     <Compile Include="Models\ProjectionOppurtunityModel.cs" />
     <Compile Include="Models\ProjectionUpdate.cs" />
     <Compile Include="Models\ProjectListModel.cs" />
+    <Compile Include="Models\ProjectManagerTimesheet.cs" />
     <Compile Include="Models\ResourceAvailable.cs" />
     <Compile Include="Models\ResourceEventsModel.cs" />
     <Compile Include="Models\ResourceListModel.cs" />
@@ -429,6 +432,8 @@
     <Content Include="Views\Home\RatingDetails.cshtml" />
     <Content Include="Views\Projection\ResourceDetails.cshtml" />
     <Content Include="Views\Finanace\ApprovedResourceDetails.cshtml" />
+    <Content Include="Views\Resource\PMRegister.cshtml" />
+    <Content Include="Views\ProjectManager\Register.cshtml" />
     <Content Include="Views\Projection\AddProjection.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -36,9 +36,9 @@
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
                             <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                            <li>@Html.ActionLink("PM BOOKING", "Register", "ProjectManager")</li>
                             <li>@Html.ActionLink("COMPLETED BOOKINGS", "Index", "CompletedBooking")</li>
-                            
-                        </ul>
+                            </ul>
                     </li>
 
                        <li class="dropdown">
@@ -67,10 +67,9 @@
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
                             <ul class="dropdown-menu">
-               
-                                <li>@Html.ActionLink("WEEKLY", "WeeklyReport", "Finanace")</li>
-                                <li>@Html.ActionLink("MONTHLY", "monthlyReport", "Finanace")</li>
-                                <li>@Html.ActionLink("OVERTIME", "OvertimeReport", "Finanace")</li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Approved Weekly Timesheet Report">@Html.ActionLink("WEEKLY", "WeeklyReport", "Finanace")</li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Approved Monthly Timesheet Report">@Html.ActionLink("MONTHLY", "monthlyReport", "Finanace")</li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Approved Overtime Timesheet Report">@Html.ActionLink("OVERTIME", "OvertimeReport", "Finanace")</li>
                             </ul>
                         </li>
                     }
@@ -140,6 +139,12 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
 <style>
     
 #navbar {
@@ -205,12 +210,15 @@
         background-color: #FFA500;
     }
 
-    .nav {
-
-    }
     .navbar .navbar-toggle {
         padding: 4px 10px;
     }
 
+    .tooltip-inner {
+        /*max-width: 350px;*/
+        height:20px;
+        /* If max-width does not work, try using width instead */
+        width: 250px;
+    }
 </style>
 

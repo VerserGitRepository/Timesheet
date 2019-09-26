@@ -57,7 +57,7 @@
                                 @Html.DisplayFor(modelItem => item.Hours)
                             </td>
                             <td>
-                                PERMANENT
+                                @Html.DisplayFor(modelItem => item.EmployeementType)
                             </td>
 
                             <td>
@@ -154,7 +154,6 @@
             buttons: {
                 confirm: function () {
                     
-                   
                     $.ajax({
                         data: { CandidateName: candidateName },
                         url: '@Url.Action("ApprovePaymentBulk", "Projection")',
