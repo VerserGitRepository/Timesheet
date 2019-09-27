@@ -76,6 +76,7 @@ namespace TimeSheet.Controllers
                         agrModel.CandidateName = t.CandidateName;
                         agrModel.ProjectManager = t.ProjectManager;
                         agrModel.EmploymentTypeID = t.EmploymentTypeID;
+                        agrModel.EmployeementType = t.EmployeementType;
                         hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60;
                         DateTime date = t.Day.Value.Date;
                         DateTime firstMonthDay = new DateTime(date.Year, date.Month, 1);
@@ -121,15 +122,91 @@ namespace TimeSheet.Controllers
         public ActionResult OverTimeReport()
         {
 
+            CultureInfo defaultCultureInfo = CultureInfo.CurrentCulture;
+            DayOfWeek firstDay = defaultCultureInfo.DateTimeFormat.FirstDayOfWeek;
+            DateTime firstDayInWeek = DateTime.Now.Date;
+            while (firstDayInWeek.DayOfWeek != firstDay)
+            {
+                firstDayInWeek = firstDayInWeek.AddDays(-1);
+            }
+            //firstDayInWeek
+
             if (Session["Username"] != null && Session["Accounts"] != null)
             {
-                return View();
+                string otHours = (string)ConfigurationManager.AppSettings["OTHours"];
+                List<string> otvalues = new List<string>();
+                otvalues = otHours.Split(';').ToList();
+                string OTWeekEndSatDay = (string)ConfigurationManager.AppSettings["OTWeekEndSatDay"];
+                string OTWeekEndSatDayException = (string)ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
+                string OTWeekEndSunDay = (string)ConfigurationManager.AppSettings["OTWeekEndSunDay"];
+                string OTHoursVal = string.Empty;
+
+                CompletedTimesheetModel model = new CompletedTimesheetModel();
+                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+                //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
+                DateTime dtFrom = DateTime.Parse("10:00 AM");
+                DateTime dtTo = DateTime.Parse("12:00 PM");
+                model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
+                DateTime reference = DateTime.Now;
+                System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
+
+                IEnumerable<int> daysInMonth = Enumerable.Range(1, calendar.GetDaysInMonth(reference.Year, reference.Month));
+
+                List<Tuple<DateTime, DateTime>> weeks = daysInMonth.Select(day => new DateTime(reference.Year, reference.Month, day))
+                    .GroupBy(d => calendar.GetWeekOfYear(d, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday))
+                    .Select(g => new Tuple<DateTime, DateTime>(g.First(), g.Last()))
+                    .ToList();
+
+                weeks.ForEach(x => Console.WriteLine("{0:MM/dd/yyyy} - {1:MM/dd/yyyy}", x.Item1, x.Item2));
+
+                model.CompletedTimeSheetList = model.CompletedTimeSheetList.Where(item => item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 > double.Parse(otvalues[0].Replace("GT", ""))).ToList();
+
+                var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new { completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g;
+                int weekofMonth = 0;
+                //DateTime date = new DateTime();
+                foreach (var subgroup in group)
+                {
+                    double hours = 0;
+                    AggregatedCompletedTimesheetModel agrModel = new AggregatedCompletedTimesheetModel();
+
+                    foreach (var t in subgroup)
+                    {
+                        // date = new DateTime(t.Day.Value.Year, t.Day.Value.Month, t.Day.Value.Day);
+                        agrModel.CandidateName = t.CandidateName;
+                        agrModel.ProjectManager = t.ProjectManager;
+                        agrModel.EmploymentTypeID = t.EmploymentTypeID;
+                        agrModel.EmployeementType = t.EmployeementType;
+                        //if (t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60 > double.Parse(otvalues[0].Replace("GT", "")))
+                        //{
+                        hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60 - double.Parse(otvalues[0].Replace("GT", ""));
+                        //}
+                        DateTime date = t.Day.Value.Date;
+                        DateTime firstMonthDay = new DateTime(date.Year, date.Month, 1);
+                        DateTime firstMonthMonday = firstMonthDay.AddDays((DayOfWeek.Monday + 7 - firstMonthDay.DayOfWeek) % 7);
+                        if (firstMonthMonday > date)
+                        {
+                            firstMonthDay = firstMonthDay.AddMonths(-1);
+                            firstMonthMonday = firstMonthDay.AddDays((DayOfWeek.Monday + 7 - firstMonthDay.DayOfWeek) % 7);
+                        }
+                        weekofMonth = (date - firstMonthMonday).Days / 7 + 1;
+                        agrModel.PayCycle = "Pay Cycle for week -" + weekofMonth;
+
+
+                    }
+
+                    agrModel.Hours = hours;
+                    model.AggregaredTimesheetModel.Add(agrModel);
+                }
+                //return View(model);
+
+                // var model=   TimeSheetAPIHelperService.TimeSheetApprovedList().Result;
+                return View(model);
+
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }
-
         }
 
         [HttpGet]
@@ -173,10 +250,14 @@ namespace TimeSheet.Controllers
                 //TimeSheet
                 foreach (var item in TimeSheetmodel)
                 {
-                    if((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= double.Parse(otvalues[0].Replace("GT","")) )//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
+                    if ((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
                     {
 
                         OTHoursVal = Convert.ToString((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
+                    }
+                    else
+                    {
+                        OTHoursVal = "0";
                     }
 
                     TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
