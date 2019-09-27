@@ -66,6 +66,7 @@ namespace TimeSheet.Models
         public int? EmploymentTypeID { get; set; }
         public SelectList EmploymentList { get; set; }
         public virtual TimeSheetRegisterModel TimeSheetRegisterModel { get;set;}
+        public virtual PMRegisterViewModel PMRegisterViewModel { get; set; }
         public string jsonResources { get; set; }
         public string jsonEvents { get; set; }
         public string StartTimeString { get { return Convert.ToDateTime(this.StartTime).ToString("yyyy-MM-ddTHH:mm:ss"); }  }

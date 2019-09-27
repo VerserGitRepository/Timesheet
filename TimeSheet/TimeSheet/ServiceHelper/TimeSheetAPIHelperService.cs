@@ -307,6 +307,25 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
+        public static async Task<List<ProjectManagerTimesheet>> PMTimeSheetList()
+        {
+            List<ProjectManagerTimesheet> CostModelLists = new List<ProjectManagerTimesheet>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ProjectMangersTimesheet/PMTimeSheetList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ProjectManagerTimesheet>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
 
         public static async Task<List<CompletedTimesheetModel>> TimeSheetCompletedList()
         {
