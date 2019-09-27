@@ -8,6 +8,7 @@ namespace TimeSheet.Models
 {
     public class CompletedtimesheetExcelExportModel
     {
+        public string ADPEmployeeId { get; set; }
         public string ProjectName { get; set; }
         public string CandidateName { get; set; }
         public int OpportunityNumber { get; set; }
@@ -26,8 +27,7 @@ namespace TimeSheet.Models
         public string OTHours { get; set; }
         public string OTWeekEndSatDay { get; set; }
         public string OTWeekEndSatDayException { get; set; }
-        public string OTWeekEndSunDay { get; set; }
-        public string ADPEmployeeId { get; set; }
+        public string OTWeekEndSunDay { get; set; }       
 
     }
 }
