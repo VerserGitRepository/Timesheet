@@ -27,7 +27,8 @@ namespace TimeSheet.Models
         public string OTHours { get; set; }
         public string OTWeekEndSatDay { get; set; }
         public string OTWeekEndSatDayException { get; set; }
-        public string OTWeekEndSunDay { get; set; }       
+        public string OTWeekEndSunDay { get; set; }
+        public string PayFrequency { get; set; }
 
     }
 }

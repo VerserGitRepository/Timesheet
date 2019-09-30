@@ -246,7 +246,7 @@ namespace TimeSheet.Controllers
                     firstDayInWeek = firstDayInWeek.AddDays(-1);
                 }
                 DateTime lastDayInWeek = firstDayInWeek.AddDays(6);
-                var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetApprovedList().Result;//.Where(item => item.Day.Value.Date >= firstDayInWeek.Date && item.Day.Value.Date <= lastDayInWeek.Date);
+                var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;//.Where(item => item.Day.Value.Date >= firstDayInWeek.Date && item.Day.Value.Date <= lastDayInWeek.Date);
                 //TimeSheet
                 foreach (var item in TimeSheetmodel)
                 {
@@ -279,7 +279,8 @@ namespace TimeSheet.Controllers
                        Status = item.Status,
                        TimeSheetComments = item.TimeSheetComments,
                        Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
-                       OTHours = OTHoursVal
+                       OTHours = OTHoursVal,
+                       PayFrequency = item.PayFrequency
 
 
                     });
