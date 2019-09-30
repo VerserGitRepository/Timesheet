@@ -124,7 +124,20 @@ namespace TimeSheet.Controllers
                 //TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
                 if (regModel.JobID == null || regModel.JobID == 0)
                 {
-                    TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
+                    //TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
+                    TimeSheetRegisterPMModel regPMModel = new TimeSheetRegisterPMModel
+                    {
+                        Day = regModel.Day,
+                        StartTime = regModel.StartTime,
+                        EndTime = regModel.EndTime,
+                        ServiceActivityID = regModel.ServiceActivityId,
+                        ResourceID = theModel.ResourceIDs[i],
+                        ProjectID = regModel.ProjectID,
+                        OpportunityID = regModel.OpportunityNumberID,
+                        Colour = regModel.Colour,
+                        TimeSheetComments = regModel.TimeSheetComments
+                    };
+
                     var a = RegisterTimesheetService.RegisterPMBooking(regPMModel);
                 }
                 else
