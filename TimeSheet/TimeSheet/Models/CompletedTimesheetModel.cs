@@ -73,5 +73,6 @@ namespace TimeSheet.Models
         public bool HasUserPermissionsToEdit { get; set; }
         public List<AggregatedCompletedTimesheetModel> AggregaredTimesheetModel { get; set; }
         public int AdpEmployeeID { get; set; }
+        public string PayFrequency { get; set; }
     }
 }
