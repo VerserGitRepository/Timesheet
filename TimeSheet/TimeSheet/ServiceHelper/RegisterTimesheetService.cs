@@ -17,21 +17,28 @@ namespace TimeSheet.ServiceHelper
             ReturnModel ReturnResult = new ReturnModel();
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("TimeSheet/Register"), RegisterModel).Result;
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-                     HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
-                    if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
+                    client.BaseAddress = new Uri(TimeSheetAPIURl);
+                    HttpResponseMessage response = client.PostAsJsonAsync(string.Format("TimeSheet/Register"), RegisterModel).Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        ReturnResult.Message = "Candidate Timesheet has been registered successfully.";
+                        ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                        HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                        if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
+                        {
+                            ReturnResult.Message = "Candidate Timesheet has been registered successfully.";
+                        }
+                    }
+                    else
+                    {
+                        ReturnResult.Message = "There is an issue with the booking. The detail are " + response.ReasonPhrase;
+                        HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ReturnResult.Message = "There is an issue with the booking. The detail are "+response.ReasonPhrase;
-                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                    HttpContext.Current.Session["ErrorMessage"] = "There is an issue with the booking. The detail are " + ex.Message;
                 }
             }
             return ReturnResult; 
@@ -58,26 +65,33 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult; 
         }
 
-        public static async Task<ReturnModel> RegisterPMBooking(PMRegisterViewModel RegisterModel)
+        public static async Task<ReturnModel> RegisterPMBooking(TimeSheetRegisterPMModel RegisterModel)
         {
             ReturnModel ReturnResult = new ReturnModel();
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ProjectMangers/RegisterPMBooking"), RegisterModel).Result;
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
-                    if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
+                    client.BaseAddress = new Uri(TimeSheetAPIURl);
+                    HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ProjectMangers/RegisterPMBooking"), RegisterModel).Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        ReturnResult.Message = "PM Timesheet has been registered successfully.";
+                        ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                        HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                        if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
+                        {
+                            ReturnResult.Message = "PM Timesheet has been registered successfully.";
+                        }
+                    }
+                    else
+                    {
+                        ReturnResult.Message = "There is an issue with the booking. The detail are " + response.ReasonPhrase;
+                        HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ReturnResult.Message = "There is an issue with the booking. The detail are " + response.ReasonPhrase;
-                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                    HttpContext.Current.Session["ErrorMessage"] = "There is an issue with the booking. The detail are " + ex.Message;
                 }
             }
             return ReturnResult;

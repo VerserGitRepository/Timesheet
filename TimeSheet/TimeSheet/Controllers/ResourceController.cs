@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
+using System.Reflection;
+using TimeSheet.Utils;
 
 namespace TimeSheet.Controllers
 {
@@ -118,7 +120,21 @@ namespace TimeSheet.Controllers
                 regModel.JobID = theModel.JobID;
                 regModel.FullName = Session["FullName"].ToString();                     
                 regModel.TimeSheetComments = theModel.TimeSheetComments;
-                var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
+
+                //TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
+                if (regModel.JobID == null || regModel.JobID == 0)
+                {
+                    TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
+                    var a = RegisterTimesheetService.RegisterPMBooking(regPMModel);
+                }
+                else
+                {
+                    var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
+                }
+
+
+
+
             }
            
             return View("~ManageCalender/Index");

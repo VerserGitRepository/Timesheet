@@ -208,6 +208,7 @@
     <Compile Include="Models\ResourceTimelineModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\TimesheetEditModel.cs" />
+    <Compile Include="Models\TimeSheetRegisterPMModel.cs" />
     <Compile Include="Models\TimeSheetViewModel.cs" />
     <Compile Include="Models\CostModelViewModel.cs" />
     <Compile Include="Models\JMSProjectsViewModel.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="ServiceHelper\SearchFilterService.cs" />
     <Compile Include="ServiceHelper\TimeSheetAPIHelperService.cs" />
     <Compile Include="ServiceHelper\UserRoles.cs" />
+    <Compile Include="Utils\ReflectionUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
