@@ -433,8 +433,9 @@
     <Content Include="Views\Projection\ResourceDetails.cshtml" />
     <Content Include="Views\Finanace\ApprovedResourceDetails.cshtml" />
     <Content Include="Views\Resource\PMRegister.cshtml" />
-    <Content Include="Views\ProjectManager\Register.cshtml" />
+    <Content Include="Views\ProjectManager\Index.cshtml" />
     <Content Include="Views\Projection\AddProjection.cshtml" />
+    <Content Include="Views\ResourceTimeline\VehicleTimeline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
