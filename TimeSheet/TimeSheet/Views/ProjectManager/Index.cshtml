@@ -20,7 +20,7 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <div class="container" style="margin-left:0px">
     <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
                 <thead style="background-color:#FFA500;color:white; ">
                     <tr>
@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<style>
+@*<style>
     .form-control-100 {
         max-width: 90%;
     }
@@ -144,5 +144,12 @@
         color: red;
         padding-bottom: 15px;
     }
-</style>
+</style>*@
 
+<script>
+    $(document).ready(function () {
+        $('#TimeSheetTable').dataTable();
+        $('.dataTables_filter').addClass('pull-right');
+    });
+
+    </script>

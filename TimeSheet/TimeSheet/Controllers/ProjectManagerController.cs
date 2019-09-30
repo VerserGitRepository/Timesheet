@@ -13,7 +13,7 @@ namespace TimeSheet.Controllers
 
         // GET: ProjectManager
 
-        public ActionResult Register()
+        public ActionResult Index()
         {
             if (Session["Username"] == null)
             {
