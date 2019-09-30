@@ -145,12 +145,9 @@ namespace TimeSheet.Controllers
                     var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
                 }
 
-
-
-
             }
-           
-            return View("~ManageCalender/Index");
+            return RedirectToAction("Index", "ManageCalender");
+           // return View("~ManageCalender/Index");
         }
         [HttpPost]
         public ActionResult RateResource(ResourceRatingModel theModel)
