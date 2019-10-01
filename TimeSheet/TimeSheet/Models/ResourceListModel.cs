@@ -9,7 +9,7 @@ namespace TimeSheet.Models
     {
         public int id { get; set; }
         public string ResourceName { get; set; }
-        public string Warehouse { get; set; }
+        public string WarehouseName { get; set; }
         public bool IsActive { get; set; }
         public string title { get; set; }
         public string eventColor { get; set; }

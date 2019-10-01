@@ -1,0 +1,403 @@
+﻿
+@{
+    ViewBag.Title = "TimesheetPMDetails";
+}
+
+@model  TimeSheet.Models.ProjectManagerTimesheet
+
+<div>
+    <div class="modal-header" style="background-color:lightgray;width:1350px">
+        <h5 class="modal-title text-center">PM Details</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div style="align-content:center;padding-bottom:40px;padding-left:20px;width:1200px;padding-top:5px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1200px">
+            <thead style="background-color:#FFA500;color:white">
+                <tr>
+                    <th>Id</th>
+                    <th>CandidateName</th>
+                    <th>Activity</th>
+                    <th style="width:50px">StartDate </th>
+                    <th>StartTime</th>
+                    <th style="width:50px">EndTime </th>
+                    <th>Status</th>
+                    <th style="width:10px">Comments</th>
+                    <th style="width:10px"></th>
+                </tr>
+            </thead>
+            <tbody class="table">
+                @foreach (var item in Model.PMTimeSheetList)
+                {
+                <tr>
+                    <td class="Id"> <span>@item.Id</span> </td>
+                    <td class="CandidateName">
+                        <span id="txtCandidateName">@item.CandidateName</span>
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Activity)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Day)
+                    </td>
+
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td class="TimeSheetComments">
+                        <span>@item.TimeSheetComments</span>
+                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                    </td>
+                    <td width="5%">
+                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+                        @*<a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            <span><strong>Rate</strong></span>
+                        </a>*@
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
+
+                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span><strong>Cancel</strong></span>
+                        </a>
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<div id="myRatingModal" class="modal fade bs-modal-sm" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myRatingModalContent"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#tblCustomers').dataTable({
+        responsive: true
+    });
+    SetDDLValue();
+    function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
+        //Bind CustomerId.
+        $(".Id", row).find("span").html(Id);
+
+        //Bind Name.
+        $(".OLATarget", row).find("span").html(OLATarget);
+        $(".OLATarget", row).find("input").val(OLATarget);
+
+        //Bind Country.
+        $(".ActualQuantity", row).find("span").html(ActualQuantity);
+        $(".ActualQuantity", row).find("input").val(ActualQuantity);
+
+        //Bind Name.
+        $(".TimeSheetComments", row).find("span").html(TimeSheetComments);
+        $(".TimeSheetComments", row).find("input").val(TimeSheetComments);
+
+        //Bind Name.
+        $(".Day", row).find("span").html(Day);
+        $(".Day", row).find("input").val(Day);
+
+        ////Bind Name.
+        $(".EndDate", row).find("span").html(EndDate);
+        $(".EndDate", row).find("input").val(EndDate);
+        //Bind Country.
+        $(".StartTime", row).find("span").html(StartTime);
+        $(".StartTime", row).find("input").val(StartTime);
+
+        //Bind Name.
+        $(".EndTime", row).find("span").html(EndTime);
+        $(".EndTime", row).find("input").val(EndTime);
+
+        row.find(".Edit").show();
+        row.find(".Delete").show();
+        $("#tblCustomers").append(row);
+    };
+    function SetDDLValue() {
+        //alert('before document ready');
+         //debugger;
+        $("tbody tr td.Status").each(function LoopTR() {
+            var ratingTdText = $(this);
+            if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                $(ratingTdText).find("#ddlStatus option").each(function (i) {
+                    //alert($(ratingTdText).find("#hdnddlLidt").val());
+                    if (($(this).val() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                        $(this).attr('selected', 'selected')
+                    }
+                });
+            }
+
+
+        });
+    }
+    //Edit event handler.
+    $("body").on("click", "#tblCustomers .Edit", function () {
+        // debugger;
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                $(this).find("input").show();
+                $(this).find("span").hide();
+                $(this).toggleClass('selected');
+
+            }
+        });
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+        row.find("#Rate").show();
+
+        $(this).hide();
+    });
+
+    //Update event handler.
+    $("body").on("click", "#tblCustomers .Update", function () {
+                var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                //span.html(input.val());
+                span.show();
+                input.hide();
+                $(this).removeClass('selected');
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Cancel").hide();
+        row.find("#Rate").hide();
+        $(this).hide();
+       // debugger;
+        var CandidateEdit = {};
+        var options = { "backdrop": "static", keyboard: true };
+        CandidateEdit.Id = row.find(".Id").find("span").html();
+        CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
+        CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
+        CandidateEdit.StartTime = row.find("#startTime").val();
+        CandidateEdit.EndTime = row.find("#endTime").val();
+        CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
+        CandidateEdit.Day = row.find(".Day").find("span").html();
+        CandidateEdit.StatusID = row.find("#ddlStatus").val();
+
+        $.ajax({
+            type: "POST",
+            url: "./UpdateCandidate",
+            data: '{CandidateEdit:' + JSON.stringify(CandidateEdit) + '}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+
+        });
+        $.ajax({
+            type: "GET",
+            url: './TimesheetCandidateDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "CandidateName": row.find("#txtCandidateName").text() },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+
+    });
+
+    $("#myModal").draggable({
+        handle: ".modal-header"
+    });
+
+
+    $(".Edit").on("click", function () {
+        $(".popup-overlay, .popup-content").addClass("active");
+    });
+
+    //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
+    $(".Update, .popup-overlay").on("click", function () {
+        $(".popup-overlay, .popup-content").removeClass("active");
+    });
+
+    //Cancel event handler.
+    $("body").on("click", "#tblCustomers .Cancel", function () {
+        var row = $(this).closest("tr");
+      //  debugger;
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                $(this).removeClass('selected');
+               // input.val(span.html());
+                span.show();
+                input.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Update").hide();
+        row.find("#Rate").hide();
+        $(this).hide();
+    });
+
+    var CandidateRatingDetailsURL = './Rating';
+    function Rate(rowid) {
+
+
+      //  debugger;
+        var $buttonClicked = $(this);
+        var tr = $(rowid).closest("tr");
+        var td = tr.find("td:nth-child(1)");
+        var options = { "backdrop": "static", keyboard: true };
+        $('#myModal').modal('hide');
+        var data = ""
+       // alert(td.val());
+       // $('#myRatingModal').modal('show');
+        $.ajax({
+            type: "GET",
+            url: CandidateRatingDetailsURL,
+            contentType: "application/json; charset=utf-8",
+            data: {},
+            datatype: "json",
+            success: function (data) {
+
+
+                $.confirm({
+                         title: 'Resource Rating!',
+                         content: data,
+                         buttons: {
+                             Rate: function () {
+                                 var model = {
+                                     'CandidateTimeSheetID': td.text(),
+                                     'Punctuality': $('#rating-input').val(),
+                                     'ProfessionalService': $('#rating-input1').val(),
+                                     'PoliteAndCourteous': $('#rating-input2').val(),
+                                     'WorkQuality': $('#rating-input3').val(),
+                                     'Comments': $('#txtcomments3').val()
+
+                                 };
+                                     $.ajax({
+                                         data: model,
+                                         url: '@Url.Action("RateResource", "Resource")',
+                                         type: "POST",
+                                         success: function (data) {
+
+
+                                                 var row = $(rowid).closest("tr");
+                                                 $("td", row).each(function () {
+                                                     if ($(this).find("input").length > 0) {
+                                                         $(this).find("input").hide();
+                                                         $(this).find("span").show();
+                                                         $(this).toggleClass('selected');
+
+                                                     }
+                                                 });
+                                                 row.find(".Update").hide();
+                                                 row.find(".Cancel").hide();
+                                                 row.find("#Rate").hide();
+
+                                                 $(".Edit").show();
+                                                // return;
+                                         }
+                                 });
+                                 $('#myModal').modal('show');
+                                 $(".Cancel").hide();
+                                 return;
+                             },
+                             cancel: function () {
+                                 $('#myModal').modal('show');
+                                 var row = $(rowid).closest("tr");
+                                 $("td", row).each(function () {
+                                     if ($(this).find("input").length > 0) {
+                                         $(this).find("input").hide();
+                                         $(this).find("span").show();
+                                         $(this).toggleClass('selected');
+
+                                     }
+                                 });
+                                 row.find(".Update").hide();
+                                 row.find(".Cancel").hide();
+                                 row.find("#Rate").hide();
+
+                                 $(".Edit").show();
+                                 return;
+                             }
+                         }
+
+                     });
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+
+
+
+    }
+
+</script>
+<style>
+    .modal-dialog {
+        width: 1370px;
+        margin: 30px auto;
+        margin-bottom: 10px;
+    }
+
+    .table-hover > tbody > tr:hover > td,
+    .table-hover > tbody > tr:hover > th {
+        background-color: lightgray;
+    }
+
+    .selected {
+        color: black;
+        background-color: lightgray;
+    }
+
+    .btn {
+        font-size: 10px;
+    }
+
+    table tr.active {
+        background: red;
+    }
+    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #FFA500;
+        border-color: white;
+    }
+
+    a.btn {
+        -webkit-transform: scale(0.9);
+        -moz-transform: scale(0.6);
+        -o-transform: scale(0.6);
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        -o-transition-duration: 0.5s;
+    }
+
+    #myRatingModal {
+        top: 5%;
+        right: 50%;
+        outline: none;
+        overflow: hidden;
+    }
+</style>
+
+

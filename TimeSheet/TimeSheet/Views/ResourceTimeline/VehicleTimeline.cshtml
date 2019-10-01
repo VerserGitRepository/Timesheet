@@ -126,6 +126,7 @@
                         $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
                         $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
                         $description.append($('<p/>').html('<b>Vehicles:</b>' + calEvent.event.extendedProps.Vechicles));
+                        $description.append($('<p/>').html('<b>Warehouse:</b>' + calEvent.event.extendedProps.warehousename));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();
@@ -186,10 +187,10 @@
                        var $description = $('<div/>');
                         $description.append($('<p/>').html('<b>Project Manager:</b>' + calEvent.event.extendedProps.projectmanager));
                         $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.start).format('lll')));
-
                         $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
-               $description.append($('<p/>').html('<b>Vehicles:</b>' + calEvent.event.extendedProps.Vechicles));
-                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
+                        $description.append($('<p/>').html('<b>Vehicles:</b>' + calEvent.event.extendedProps.Vechicles));
+               $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
+               $description.append($('<p/>').html('<b>Warehouse:</b>' + calEvent.event.extendedProps.warehousename));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();
@@ -277,22 +278,7 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
 
                     data: { 'ProjectId': $('#ddlProjectId').val(), 'warehouseId': $('#ddlWarehouseId').val(), 'opportunityId': $('#OpportunityID').val(),'ResourceIds': $('#CandidateNameId').val() },
                     success: function (data) {
-                        //$.each(data.CandidateTimeSheetList, function (i, v) {
-                        //  //  alert(v.StartTime);
-                        //     //   alert(v.CandidateName);
-                        //    events.push({
-                        //        resourceId: v.ResourceID,
-                        //        title: v.Activity,
-                        //        start:v.StartTime,
-                        //        end: v.EndTime
-
-                        //    });
-                        //    resources.push({
-                        //        id: v.ResourceID,
-                        //        title: v.CandidateName,
-                        //        eventColor: v.Colour
-                        //    });
-                        //})
+        
                         RenderCalendar(data.jsonResources,data.jsonEvents);
                     },
                     error: function (error) {

@@ -221,6 +221,7 @@
     <Compile Include="Models\ResourcesViewModel.cs" />
     <Compile Include="Models\ReturnModel.cs" />
     <Compile Include="Models\UpdateOpportunityList.cs" />
+    <Compile Include="Models\UpdateProjectManagerModel.cs" />
     <Compile Include="Models\UpdateTimeSheetModel.cs" />
     <Compile Include="Models\WarehousesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -438,6 +439,8 @@
     <Content Include="Views\ProjectManager\Index.cshtml" />
     <Content Include="Views\Projection\AddProjection.cshtml" />
     <Content Include="Views\ResourceTimeline\VehicleTimeline.cshtml" />
+    <Content Include="Views\ProjectManager\ProjectDetails.cshtml" />
+    <Content Include="Views\ProjectManager\TimesheetPMDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
