@@ -2,16 +2,16 @@
 @{
     ViewBag.Title = "TimesheetPMDetails";
 }
-@ using system.
+
 @model  TimeSheet.Models.ProjectManagerTimesheet
 
 <div>
     <div class="modal-header" style="background-color:lightgray;width:1350px">
-        <h5 class="modal-title text-center">Resource Details</h5>
+        <h5 class="modal-title text-center">PM Details</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
-    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1200px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1200px">
+    <div style="align-content:center;padding-bottom:40px;padding-left:20px;width:1200px;padding-top:5px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1200px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -20,9 +20,6 @@
                     <th style="width:50px">StartDate </th>
                     <th>StartTime</th>
                     <th style="width:50px">EndTime </th>
-                    @*<th>EndTime</th>*@
-                    <th style="width:10px">OLA</th>
-                    <th style="width:10px">Actual</th>
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
@@ -31,46 +28,52 @@
             <tbody class="table">
                 @foreach (var item in Model.PMTimeSheetList)
                 {
-                    <tr>
-                        <td class="Id"> <span>@item.Id</span> </td>
-                        <td class="CandidateName">
-                            <span id="txtCandidateName">@item.CandidateName</span>
-                        </td>
-                        <td class="Activity">
-                            @Html.DisplayFor(modelItem => item.Activity)
-                        </td>
+                <tr>
+                    <td class="Id"> <span>@item.Id</span> </td>
+                    <td class="CandidateName">
+                        <span id="txtCandidateName">@item.CandidateName</span>
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Activity)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Day)
+                    </td>
 
-                     
-                        
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td class="TimeSheetComments">
+                        <span>@item.TimeSheetComments</span>
+                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                    </td>
+                    <td width="5%">
+                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+                        @*<a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            <span><strong>Rate</strong></span>
+                        </a>*@
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
 
-                        <td class="TimeSheetComments">
-                            <span>@item.TimeSheetComments</span>
-                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-                        </td>
-                        <td width="5%">
-                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Edit</strong></span>
-                            </a>
-                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span><strong>Rate</strong></span>
-                            </a>
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Update</strong></span>
-                            </a>
+                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span><strong>Cancel</strong></span>
+                        </a>
 
-                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                <span><strong>Cancel</strong></span>
-                            </a>
-
-                            @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
-                            @*<a class="Delete" href="javascript:;">Delete</a>*@
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -374,6 +377,10 @@
 
     table tr.active {
         background: red;
+    }
+    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #FFA500;
+        border-color: white;
     }
 
     a.btn {

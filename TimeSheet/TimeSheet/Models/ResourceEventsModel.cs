@@ -13,6 +13,6 @@ namespace TimeSheet.Models
         public string end { get; set; }
         public string projectmanager { get; set; }
         public string Vechicles { get; set; }
-
+        public string WarehouseName { get; set; }
     }
 }

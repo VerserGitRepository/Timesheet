@@ -221,6 +221,7 @@
     <Compile Include="Models\ResourcesViewModel.cs" />
     <Compile Include="Models\ReturnModel.cs" />
     <Compile Include="Models\UpdateOpportunityList.cs" />
+    <Compile Include="Models\UpdateProjectManagerModel.cs" />
     <Compile Include="Models\UpdateTimeSheetModel.cs" />
     <Compile Include="Models\WarehousesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
