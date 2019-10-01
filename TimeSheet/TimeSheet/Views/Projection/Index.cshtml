@@ -50,7 +50,7 @@
                         <td class="PM">
                             <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
                         </td>
-                        <td data-balloon-length="xlarge" aria-label='@item.Activity' data-balloon-pos="up">
+                        <td  title="@item.Activity @Environment.NewLine @item.Activity @Environment.NewLine  @item.Activity @Environment.NewLine  @item.Activity @Environment.NewLine ">
                             <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
                             <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
 
@@ -127,10 +127,13 @@
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 <span><strong>Change</strong></span>
                             </a>
-                            <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                <span><strong>Add</strong></span>
-                            </a>
+                            @if (item.ActualQuantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
+                            {
+                                <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    <span><strong>Add</strong></span>
+                                </a>
+                            }
                             <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 <span><strong>Update</strong></span>
@@ -388,10 +391,11 @@
 
         if (theRow.find("input#hdnTxtDtInvced").val() == row.find("input#endTime").val() &&
             theRow.find("select#hdnddlWarehouseId").val() == row.find("select#ddlWarehouseID").val() &&
-            theRow.find("input#hdnTxtQnty").val() == row.find("input#quantity").val()) {
+            Number(theRow.find("input#hdnTxtQnty").val()) == Number(row.find("input#quantity").val())) {
 
-            CheckDuplicateInsert(row,theRow);
+            CheckDuplicateInsert(row, theRow, 'Are you sure you want to add the record for same Facility, Date and Quantity?');
         }
+       
         else {
             AddOrUpdateProjection(row, theRow, true);
         }
@@ -399,10 +403,10 @@
                                
     }
 
-    function CheckDuplicateInsert(row,theRow) {
+    function CheckDuplicateInsert(row,theRow,message) {
         $.confirm({
                          title: 'Confirm!',
-                         content: 'Are you sure you want to add the record for same Facility, Date and Quantity?',
+                         content: message,
                          buttons: {
                              confirm: function () {
                                  AddOrUpdateProjection(row,theRow,true)
@@ -420,17 +424,50 @@
         var row = null;
         var activityId = "";
         var serviceActivityId = "";
+        var message = "";
+        var inputHiddenQuantity = 0;
         if (isAdd) {
             row = $(modalrow).closest("tr");
             activityId = gridrow.find("#txtActvty").val();
             serviceActivityId = gridrow.find("#txtServiceActvty").val();
+            inputHiddenQuantity = gridrow.find("input#hdnTxtQnty").val();
         }
         else {
             row = $(gridrow).closest("tr");
             activityId = row.find("#txtActvty").val();
             serviceActivityId = row.find("#txtServiceActvty").val();
+            inputHiddenQuantity = row.find("input#hdnTxtQnty").val();
         }
-         var model = {
+
+        if (Number(row.find("input#quantity").val()) > Number(inputHiddenQuantity)) {
+            message = 'The entered quantity exceeds the actual projected quantity. Are you sure of this quantity?';
+        }
+        else if (Number(row.find("input#quantity").val()) < Number(inputHiddenQuantity)) {
+            message = 'The entered quantity is lower than the actual projected quantity. Are you sure of this quantity?';
+        }
+
+        $.confirm({
+            title: 'Confirm!',
+            content: message,
+            buttons: {
+                confirm: function () {
+                    PerformAction(row, serviceActivityId, activityId, true)
+
+                },
+                cancel: function () {
+
+                    return;
+                }
+            }
+
+        });
+
+         
+                    
+    }
+    function PerformAction(row, serviceActivityId, activityId,isAdd) {
+
+        var model = {
                 'OpportunityId': row.find("span#txtOpportunityId").text(),
                 'Quantity': row.find("input#quantity").val(),
                 'DateAllocated': row.find("input#startTime").val(),
@@ -456,7 +493,6 @@
                         }
                     }
                 });
-                    
     }
 
     function Register(theRow,isAdd)
@@ -700,4 +736,5 @@
             visibility: visible;
             opacity: 1;
         }
+
 </style>
