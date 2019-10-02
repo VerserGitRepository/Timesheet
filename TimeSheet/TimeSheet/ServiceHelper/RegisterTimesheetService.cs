@@ -24,10 +24,14 @@ namespace TimeSheet.ServiceHelper
                     if (response.IsSuccessStatusCode)
                     {
                         ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-                        HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
                         if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
                         {
                             ReturnResult.Message = "Candidate Timesheet has been registered successfully.";
+                            HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                        }
+                        else
+                        {
+                            HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
                         }
                     }
                     else
@@ -98,10 +102,14 @@ namespace TimeSheet.ServiceHelper
                     if (response.IsSuccessStatusCode)
                     {
                         ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-                        HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
                         if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
                         {
                             ReturnResult.Message = "PM Timesheet has been registered successfully.";
+                            HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                        }
+                        else
+                        {
+                            HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
                         }
                     }
                     else
