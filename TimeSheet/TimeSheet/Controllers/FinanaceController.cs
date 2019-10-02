@@ -45,25 +45,19 @@ namespace TimeSheet.Controllers
             {
 
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
-                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
-                //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
-                DateTime dtFrom = DateTime.Parse("10:00 AM");
-                DateTime dtTo = DateTime.Parse("12:00 PM");
-                model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
-                DateTime reference = DateTime.Now;
-                System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
+                List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
+                List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
 
-                IEnumerable<int> daysInMonth = Enumerable.Range(1, calendar.GetDaysInMonth(reference.Year, reference.Month));
+                model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
 
-                List<Tuple<DateTime, DateTime>> weeks = daysInMonth.Select(day => new DateTime(reference.Year, reference.Month, day))
-                    .GroupBy(d => calendar.GetWeekOfYear(d, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday))
-                    .Select(g => new Tuple<DateTime, DateTime>(g.First(), g.Last()))
-                    .ToList();
                 
-                weeks.ForEach(x => Console.WriteLine("{0:MM/dd/yyyy} - {1:MM/dd/yyyy}", x.Item1, x.Item2));
+                //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
+              
+                model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
+                
 
                 var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new { completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g;
-                int weekofMonth = 0;
+               
                 //DateTime date = new DateTime();
                 foreach (var subgroup in group)
                 {
@@ -78,16 +72,11 @@ namespace TimeSheet.Controllers
                         agrModel.EmploymentTypeID = t.EmploymentTypeID;
                         agrModel.EmployeementType = t.EmployeementType;
                         hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60;
-                        DateTime date = t.Day.Value.Date;
-                        DateTime firstMonthDay = new DateTime(date.Year, date.Month, 1);
-                        DateTime firstMonthMonday = firstMonthDay.AddDays((DayOfWeek.Monday + 7 - firstMonthDay.DayOfWeek) % 7);
-                        if (firstMonthMonday > date)
-                        {
-                            firstMonthDay = firstMonthDay.AddMonths(-1);
-                            firstMonthMonday = firstMonthDay.AddDays((DayOfWeek.Monday + 7 - firstMonthDay.DayOfWeek) % 7);
-                        }
-                        weekofMonth = (date - firstMonthMonday).Days / 7 + 1;
-                        agrModel.PayCycle = "Pay Cycle for week -" + weekofMonth;
+                        double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5)+1;
+                        
+                        agrModel.PayCycle = pc.ToString();
+                        agrModel.ADPEmployeeID = t.AdpEmployeeID;
+                        agrModel.PayFrequency = t.PayFrequency;
 
 
                     }
@@ -144,20 +133,9 @@ namespace TimeSheet.Controllers
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
                 model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
                 //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
-                DateTime dtFrom = DateTime.Parse("10:00 AM");
-                DateTime dtTo = DateTime.Parse("12:00 PM");
+               
                 model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
-                DateTime reference = DateTime.Now;
-                System.Globalization.Calendar calendar = CultureInfo.CurrentCulture.Calendar;
-
-                IEnumerable<int> daysInMonth = Enumerable.Range(1, calendar.GetDaysInMonth(reference.Year, reference.Month));
-
-                List<Tuple<DateTime, DateTime>> weeks = daysInMonth.Select(day => new DateTime(reference.Year, reference.Month, day))
-                    .GroupBy(d => calendar.GetWeekOfYear(d, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday))
-                    .Select(g => new Tuple<DateTime, DateTime>(g.First(), g.Last()))
-                    .ToList();
-
-                weeks.ForEach(x => Console.WriteLine("{0:MM/dd/yyyy} - {1:MM/dd/yyyy}", x.Item1, x.Item2));
+               
 
                 model.CompletedTimeSheetList = model.CompletedTimeSheetList.Where(item => item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 > double.Parse(otvalues[0].Replace("GT", ""))).ToList();
 
@@ -213,7 +191,10 @@ namespace TimeSheet.Controllers
         public ActionResult ApprovedResourceDetails(string CandidateName)
         {
             CompletedTimesheetModel model = new CompletedTimesheetModel();
-            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
+            List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+
+            var AlltimesheetRecords = permCompleted.Concat(casualApproved).Distinct().ToList();
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("ApprovedResourceDetails", model);
@@ -246,7 +227,13 @@ namespace TimeSheet.Controllers
                     firstDayInWeek = firstDayInWeek.AddDays(-1);
                 }
                 DateTime lastDayInWeek = firstDayInWeek.AddDays(6);
-                var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;//.Where(item => item.Day.Value.Date >= firstDayInWeek.Date && item.Day.Value.Date <= lastDayInWeek.Date);
+
+                List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
+                List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+
+               // model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
+
+                var TimeSheetmodel = permCompleted.Concat(casualApproved).Distinct().ToList();//.Where(item => item.Day.Value.Date >= firstDayInWeek.Date && item.Day.Value.Date <= lastDayInWeek.Date);
                 //TimeSheet
                 foreach (var item in TimeSheetmodel)
                 {
@@ -262,25 +249,26 @@ namespace TimeSheet.Controllers
 
                     TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
                     {
-                        
+
                         ADPEmployeeId = item.AdpEmployeeID.ToString(),
                         ProjectName = item.ProjectName,
-                       CandidateName = item.CandidateName,
-                       OpportunityNumber = item.OpportunityNumber,
-                       Activity = item.Activity,
-                       WarehouseName = item.WarehouseName,
-                       //Monday
-                       StartTime = item.StartTime.Value.ToString("HH:mm"),
-                       EndTime = item.EndTime.Value.ToString("HH:mm"),
-                       JobNo = item.JobNo,
-                       OLATarget = item.OLATarget,
-                       ActualQuantity = item.ActualQuantity,
-                       Day = item.Day.Value.Date.ToShortDateString(),
-                       Status = item.Status,
-                       TimeSheetComments = item.TimeSheetComments,
-                       Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
-                       OTHours = OTHoursVal,
-                       PayFrequency = item.PayFrequency
+                        CandidateName = item.CandidateName,
+                        OpportunityNumber = item.OpportunityNumber,
+                        Activity = item.Activity,
+                        WarehouseName = item.WarehouseName,
+                        //Monday
+                        StartTime = item.StartTime.Value.ToString("HH:mm"),
+                        EndTime = item.EndTime.Value.ToString("HH:mm"),
+                        JobNo = item.JobNo,
+                        OLATarget = item.OLATarget,
+                        ActualQuantity = item.ActualQuantity,
+                        Day = item.Day.Value.Date.ToShortDateString(),
+                        Status = item.Status,
+                        TimeSheetComments = item.TimeSheetComments,
+                        Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                        OTHours = OTHoursVal,
+                        PayFrequency = item.PayFrequency,
+                        PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)
 
 
                     });
