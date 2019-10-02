@@ -27,7 +27,7 @@ namespace TimeSheet.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-          
+
         }
         public ActionResult WeeklyReport()
         {
@@ -59,7 +59,7 @@ namespace TimeSheet.Controllers
                     .GroupBy(d => calendar.GetWeekOfYear(d, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday))
                     .Select(g => new Tuple<DateTime, DateTime>(g.First(), g.Last()))
                     .ToList();
-                
+
                 weeks.ForEach(x => Console.WriteLine("{0:MM/dd/yyyy} - {1:MM/dd/yyyy}", x.Item1, x.Item2));
 
                 var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new { completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g;
@@ -72,7 +72,7 @@ namespace TimeSheet.Controllers
 
                     foreach (var t in subgroup)
                     {
-                       // date = new DateTime(t.Day.Value.Year, t.Day.Value.Month, t.Day.Value.Day);
+                        // date = new DateTime(t.Day.Value.Year, t.Day.Value.Month, t.Day.Value.Day);
                         agrModel.CandidateName = t.CandidateName;
                         agrModel.ProjectManager = t.ProjectManager;
                         agrModel.EmploymentTypeID = t.EmploymentTypeID;
@@ -91,13 +91,13 @@ namespace TimeSheet.Controllers
 
 
                     }
-                    
+
                     agrModel.Hours = hours;
                     model.AggregaredTimesheetModel.Add(agrModel);
                 }
                 //return View(model);
 
-               // var model=   TimeSheetAPIHelperService.TimeSheetApprovedList().Result;
+                // var model=   TimeSheetAPIHelperService.TimeSheetApprovedList().Result;
                 return View(model);
             }
             else
@@ -108,16 +108,20 @@ namespace TimeSheet.Controllers
         }
         public ActionResult MonthlyReport()
         {
-
-            if (Session["Username"] != null && Session["Accounts"] != null)
-            {
-                return View();
-            }
-            else
+            if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
-
+            else
+            {
+                TimeSheetViewModel model = new TimeSheetViewModel();
+                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
+                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
+                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
+                model.CandidateTimeSheetList = TimeSheetAPIHelperService.PaidTimeSheetList().Result;
+                return View(model);
+            }
         }
         public ActionResult OverTimeReport()
         {
@@ -240,7 +244,7 @@ namespace TimeSheet.Controllers
                 CultureInfo defaultCultureInfo = CultureInfo.CurrentCulture;
                 DayOfWeek firstDay = defaultCultureInfo.DateTimeFormat.FirstDayOfWeek;
                 DateTime firstDayInWeek = DateTime.Now.Date;
-               
+
                 while (firstDayInWeek.DayOfWeek != firstDay)
                 {
                     firstDayInWeek = firstDayInWeek.AddDays(-1);
@@ -262,33 +266,33 @@ namespace TimeSheet.Controllers
 
                     TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
                     {
-                        
+
                         ADPEmployeeId = item.AdpEmployeeID.ToString(),
                         ProjectName = item.ProjectName,
-                       CandidateName = item.CandidateName,
-                       OpportunityNumber = item.OpportunityNumber,
-                       Activity = item.Activity,
-                       WarehouseName = item.WarehouseName,
-                       //Monday
-                       StartTime = item.StartTime.Value.ToString("HH:mm"),
-                       EndTime = item.EndTime.Value.ToString("HH:mm"),
-                       JobNo = item.JobNo,
-                       OLATarget = item.OLATarget,
-                       ActualQuantity = item.ActualQuantity,
-                       Day = item.Day.Value.Date.ToShortDateString(),
-                       Status = item.Status,
-                       TimeSheetComments = item.TimeSheetComments,
-                       Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
-                       OTHours = OTHoursVal,
-                       PayFrequency = item.PayFrequency
+                        CandidateName = item.CandidateName,
+                        OpportunityNumber = item.OpportunityNumber,
+                        Activity = item.Activity,
+                        WarehouseName = item.WarehouseName,
+                        //Monday
+                        StartTime = item.StartTime.Value.ToString("HH:mm"),
+                        EndTime = item.EndTime.Value.ToString("HH:mm"),
+                        JobNo = item.JobNo,
+                        OLATarget = item.OLATarget,
+                        ActualQuantity = item.ActualQuantity,
+                        Day = item.Day.Value.Date.ToShortDateString(),
+                        Status = item.Status,
+                        TimeSheetComments = item.TimeSheetComments,
+                        Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                        OTHours = OTHoursVal,
+                        PayFrequency = item.PayFrequency
 
 
                     });
                 }
-               
+
                 GridView gv = new GridView();
                 gv.DataSource = TimeSheetExportData;
-                
+
                 gv.DataBind();
                 foreach (GridViewRow row in gv.Rows)
                 {
@@ -361,6 +365,56 @@ namespace TimeSheet.Controllers
             }
             return RedirectToAction("WeeklyReport", "Finanace");
         }
+
+        [HttpPost]
+        public ActionResult ExportCompletedSchedule()
+        {
+            var TimeSheetExportData = new List<CompletedtimesheetExportModel>();
+
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                var TimeSheetmodel = TimeSheetAPIHelperService.PaidTimeSheetList().Result;
+                foreach (var item in TimeSheetmodel)
+                {
+
+                    TimeSheetExportData.Add(new CompletedtimesheetExportModel
+                    {
+                        ProjectName = item.ProjectName,
+                        CandidateName = item.CandidateName,
+                        OpportunityNumber = item.OpportunityNumber,
+                        Activity = item.Activity,
+                        WarehouseName = item.WarehouseName,
+                        StartTime = item.StartTime,
+                        EndTime = item.EndTime,
+                        JobNo = item.JobNo,
+                        OLATarget = item.OLATarget,
+                        ActualQuantity = item.ActualQuantity,
+                        Day = item.Day.Value.Date,
+                        Status = item.Status,
+                        TimeSheetComments = item.TimeSheetComments
+                    });
+                }
+                GridView gv = new GridView();
+                gv.DataSource = TimeSheetExportData;
+                gv.DataBind();
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=PaidTimeSchedule.xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Charset = "";
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+                gv.RenderControl(htw);
+                Response.Output.Write(sw.ToString());
+                Response.Flush();
+                Response.End();
+            }
+            return RedirectToAction("MonthlyReport", "Finanace");
+        }
         [HttpPost]
         public ActionResult ApprovePaymentBulk(string CandidateName)
         {
@@ -371,7 +425,7 @@ namespace TimeSheet.Controllers
 
             foreach (var activityId in activityIds)
             {
-             var _a =   TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
+                var _a = TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
             }
             return View(model);
         }
