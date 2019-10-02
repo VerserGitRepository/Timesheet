@@ -43,7 +43,7 @@
                         <th>Resource Type</th>
                         <th>Pay Frequency</th>
                         <th>Pay Cycle</th>
-                        <th>Approve</th>
+                        <th>Paid</th>
                         <th>Details</th>
                     </tr>
                 </thead>
@@ -76,11 +76,11 @@
                             @Html.DisplayFor(modelItem => item.PayCycle)
                         </td>
                         <td>
-                            <p data-placement="top" data-toggle="tooltip" title="Approve">
-                                <button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                </button>
-                            </p>
+                           
+                            <button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+
                         </td>
                         <td>
                             <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.CandidateName">
