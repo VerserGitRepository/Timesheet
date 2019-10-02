@@ -72,6 +72,24 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
+        public static async Task<List<ProjectionOppurtunityModel>> MergedProjectionServices()
+        {
+            List<ProjectionOppurtunityModel> ReturnResult = new List<ProjectionOppurtunityModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Projection/MergedProjectionServices")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<List<ProjectionOppurtunityModel>>();
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Projection Entries";
+                }
+            }
+            return ReturnResult;
+        }
         public static async Task<List<OpportunityListModel>> OpportunityListItems()
         {
             List<OpportunityListModel> ReturnResult = new List<OpportunityListModel>();
