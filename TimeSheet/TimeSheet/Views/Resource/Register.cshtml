@@ -113,7 +113,7 @@
                                 </div> <div class="form-group required col-md-6">
                                     <div id="time-range" style="padding-top:10px;width:300px">
                                         <p>
-                                            Start Time <span class="slider-time">08:30 AM</span> End Time <span class="slider-time2">5:00 PM</span>
+                                            Start Time <b><span class="slider-time">08:30 AM</span></b> End Time <b><span class="slider-time2">5:00 PM</span></b>
 
                                         </p>
                                         <div class="sliders_step1">
@@ -188,7 +188,7 @@
                            
                             <div id="time-rangePM" style="padding-top:10px;width:280px">
                                 <p>
-                                    Start Time <span class="slider-timePM">08:30 AM</span> End Time <span class="slider-time2PM">5:00 PM</span>
+                                    Start Time <b><span class="slider-timePM">08:30 AM</span></b> End Time <b><span class="slider-time2PM">5:00 PM</span></b>
 
                                 </p>
                                 <div class="sliders_step1">
@@ -628,7 +628,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                         });
                 });
     $('#btnregister, #btnregisterPM').click(function () {
-        alert($(".slider-time").val());
+        
         var data = null;
        // alert(this.id);
         if (this.id == "btnregister") {
