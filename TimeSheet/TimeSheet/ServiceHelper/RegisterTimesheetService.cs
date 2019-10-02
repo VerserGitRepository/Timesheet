@@ -72,7 +72,7 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("TimeSheet/UpdatePMTimeSheet"), UpdateModel).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ProjectMangers/UpdatePMTimeSheet"), UpdateModel).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();

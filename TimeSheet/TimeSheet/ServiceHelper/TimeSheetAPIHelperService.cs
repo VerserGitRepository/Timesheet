@@ -287,6 +287,25 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
+        public static async Task<List<TimeSheetViewModel>> PaidTimeSheetList()
+        {
+            List<TimeSheetViewModel> CostModelLists = new List<TimeSheetViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/PaidTimeSheetList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<TimeSheetViewModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
 
         public static async Task<List<TimeSheetViewModel>> VehicleTimeSheetList()
         {
