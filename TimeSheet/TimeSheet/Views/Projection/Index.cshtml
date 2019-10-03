@@ -50,7 +50,7 @@
                         <td class="PM">
                             <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
                         </td>
-                        <td  title="@item.Activity @Environment.NewLine @item.Activity @Environment.NewLine  @item.Activity @Environment.NewLine  @item.Activity @Environment.NewLine ">
+                        <td  title="@item.Activity @Environment.NewLine  @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity" >
                             <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
                             <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
 
@@ -65,7 +65,7 @@
 
                         </td>
                         <td>
-                            @if (item.ActualQuantity > 0)
+                            @if (item.Quantity >= 0)
                             {
                                 if (item.DateAllocated.HasValue)
                                 {
@@ -90,13 +90,13 @@
                         </td>
                         <td>
 
-                            <span>@Html.DisplayFor(modelItem => item.ActualQuantity)</span>
-                            <input type="text" id="quantity" class="txtQuantity" value="@item.ActualQuantity" style="display:none" />
-                            <input class="hidden" type="text" id="hdnTxtQnty" value="@item.ActualQuantity" />
+                            <span>@Html.DisplayFor(modelItem => item.Quantity)</span>
+                            <input type="text" id="quantity" class="txtQuantity" value="@item.Quantity" style="display:none" />
+                            <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
                         </td>
                         <td>
 
-                            @if (item.ActualQuantity > 0)
+                            @if (item.Quantity >= 0)
                             {
                                 if (item.DateInvoiced.HasValue)
                                 {
@@ -127,7 +127,7 @@
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 <span><strong>Change</strong></span>
                             </a>
-                            @if (item.ActualQuantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
+                            @if (item.Quantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
                             {
                                 <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -445,7 +445,9 @@
         else if (Number(row.find("input#quantity").val()) < Number(inputHiddenQuantity)) {
             message = 'The entered quantity is lower than the actual projected quantity. Are you sure of this quantity?';
         }
-
+        else {
+            return PerformAction(row, serviceActivityId, activityId, isAdd);
+        }
         $.confirm({
             title: 'Confirm!',
             content: message,
