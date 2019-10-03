@@ -15,11 +15,12 @@ namespace TimeSheet.Models
         public int Id { get; set; }
         public string ProjectName { get; set; }
         public int OpportinutyId { get; set; }
-        public int OpportunityNumber { get; set; }
+        public string OpportunityNumber { get; set; }
        
         public bool? IsActive { get; set; }
-        public int ServiceActivityId { get; set; }
+        public int? ServiceActivityId { get; set; }
         public int ActivityId { get; set; }
+        public int ServiceRevenueId { get; set; }
         public string ServiceActivityDescription { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -37,8 +38,8 @@ namespace TimeSheet.Models
         public string VerserBranch { get; set; }
         public string Activity { get; set; }
         public int ActualQuantity { get; set; }
-        public int wareHouseId { get; set; }
-        public string wareHouseName { get; set; }
+        public int WarehouseID { get; set; }
+        public string WarehouseName { get; set; }
         public string Comments { get; set; }
         public string ProjectManager { get; set; }
         public bool IsUpdated { get; set; }

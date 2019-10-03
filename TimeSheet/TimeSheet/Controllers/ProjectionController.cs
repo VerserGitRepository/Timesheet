@@ -17,57 +17,63 @@ namespace TimeSheet.Controllers
                 model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");              
 
                 List<ProjectionModel> listB = ProjectionHelperService.ProjectionListItems().Result;
-                List<ProjectionOppurtunityModel> listA = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;                
-                foreach (var x in listB)
-                {
-                    var itemToChange = listA.Find(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber) && d.OpportinutyId == x.OpportunityID && d.ServiceActivityId == x.ServiceActivityId && d.IsUpdated != true);
-                    if (itemToChange == null)
-                    {
-                        itemToChange = new ProjectionOppurtunityModel();
-                        itemToChange.Activity = x.Activity;
-                        itemToChange.ActivityId = x.ActivityId == 0?x.ServiceRevenueId:x.ActivityId;
-                        itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
-                        itemToChange.Comments = x.Comments;
-                        itemToChange.OpportinutyId = x.OpportunityID;
-                        itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
-                        itemToChange.DateInvoiced = x.DateInvoiced;
-                        itemToChange.DateAllocated = x.DateAllocated;
-                        itemToChange.Created = x.Created;
-                        itemToChange.ProjectManager = x.ProjectManager;
-                        itemToChange.wareHouseName = x.WarehouseName;
-                        itemToChange.wareHouseId = x.WarehouseID;
-                        itemToChange.ActualQuantity = x.Quantity;
-                        itemToChange.ProjectName = x.ProjectName;
-                        itemToChange.Id = x.Id;
-                        itemToChange.IsUpdated = true;
-                        listA.Add(itemToChange);
-                    }
-                    else
-                    {
-                        itemToChange.Activity = x.Activity;
-                        if (x.ActivityId == 0)
-                        {
-                            if (itemToChange.ActivityId == 0)
-                            {
-                                itemToChange.ActivityId = x.ActivityId;
-                            }
-                        }
-                        itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
-                        itemToChange.Comments = x.Comments;
-                        itemToChange.OpportinutyId = x.OpportunityID;
-                        itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
-                        itemToChange.DateInvoiced = x.DateInvoiced;
-                        itemToChange.DateAllocated = x.DateAllocated;
-                        itemToChange.Created = x.Created;
-                        itemToChange.ProjectManager = x.ProjectManager;
-                        itemToChange.wareHouseName = x.WarehouseName;
-                        itemToChange.ActualQuantity = x.Quantity;
-                        itemToChange.wareHouseId = x.WarehouseID;
-                        itemToChange.Id = x.Id;
-                        itemToChange.IsUpdated = true;                      
-                    }                        
-                }
-                model.projectionOpportunityModel = listA;
+                List<ProjectionModel> listA = ProjectionHelperService.MergedProjectionList().Result;
+                var merged = Utils.ReflectionUtils.CopyShallowArray<ProjectionOppurtunityModel>(listA.ToArray());
+               // List<ProjectionOppurtunityModel> listC = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
+                
+                //foreach (var x in listB)
+                //{
+                //    var itemToChange = listA.Find(d => d.ActivityId == x.ServiceRevenueId && d.OpportinutyId == x.OpportunityID && d.ServiceActivityId == x.ServiceActivityId);
+                //    if (itemToChange == null)
+                //    {
+                //        //itemToChange = new ProjectionOppurtunityModel();
+                //        //itemToChange.Activity = x.Activity;
+                //        //itemToChange.ActivityId = x.ActivityId == 0 ? x.ServiceRevenueId : x.ActivityId;
+                //        //itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
+                //        //itemToChange.Comments = x.Comments;
+                //        //itemToChange.OpportinutyId = x.OpportunityID;
+                //        //itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
+                //        //itemToChange.DateInvoiced = x.DateInvoiced;
+                //        //itemToChange.DateAllocated = x.DateAllocated;
+                //        //itemToChange.Created = x.Created;
+                //        //itemToChange.ProjectManager = x.ProjectManager;
+                //        //itemToChange.wareHouseName = x.WarehouseName;
+                //        //itemToChange.wareHouseId = x.WarehouseID;
+                //        //itemToChange.ActualQuantity = x.Quantity;
+                //        //itemToChange.ProjectName = x.ProjectName;
+                //        //itemToChange.Id = x.Id;
+                //        //itemToChange.IsUpdated = true;
+                //        //listA.Add(itemToChange);
+                //        continue;
+                //    }
+                //    else
+                //    {
+                //        itemToChange.Activity = x.Activity;
+                //        if (x.ActivityId == 0)
+                //        {
+                //            if (itemToChange.ActivityId == 0)
+                //            {
+                //                itemToChange.ActivityId = x.ActivityId;
+                //            }
+                //        }
+                //        itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
+                //        itemToChange.Comments = x.Comments;
+                //        itemToChange.OpportinutyId = x.OpportunityID;
+                //        itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
+                //        itemToChange.DateInvoiced = x.DateInvoiced;
+                //        itemToChange.DateAllocated = x.DateAllocated;
+                //        itemToChange.Created = x.Created;
+                //        itemToChange.ProjectManager = x.ProjectManager;
+                //        itemToChange.wareHouseName = x.WarehouseName;
+                //        itemToChange.ActualQuantity = x.Quantity;
+                //        itemToChange.wareHouseId = x.WarehouseID;
+                //        itemToChange.Id = x.Id;
+                //        itemToChange.IsUpdated = true;
+                //        itemToChange.ActualQuantity = 100;
+                //    }
+                //}
+               // listA.ac
+                model.projectionOpportunityModel = merged.ToList();
                 return View(model);
             }
             else if (Session["Username"] != null)
@@ -190,7 +196,7 @@ namespace TimeSheet.Controllers
             if (UserRoles.UserCanApproveTimesheet() == true)
             {
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
-                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType.ToLower() == "casual").ToList(); // fetch only casual employees.
                 //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
                 DateTime dtFrom = DateTime.Parse("10:00 AM");
                 DateTime dtTo = DateTime.Parse("12:00 PM");
@@ -210,7 +216,7 @@ namespace TimeSheet.Controllers
                     {
                         agrModel.CandidateName = t.CandidateName;
                         agrModel.ProjectManager = t.ProjectManager;
-                        agrModel.EmploymentTypeID = t.EmploymentTypeID;
+                        agrModel.EmployeementType = t.EmployeementType;
                         hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes/60;
                     }
                     agrModel.Hours = hours;

@@ -60,7 +60,7 @@
 
                             @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
 
-                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.WarehouseName" />
                             @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
 
                         </td>
@@ -127,7 +127,7 @@
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 <span><strong>Change</strong></span>
                             </a>
-                            @if (item.ActualQuantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
+                            @if (item.ActualQuantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.WarehouseName != string.Empty)
                             {
                                 <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -145,7 +145,7 @@
                             @*<a class="Delete" href="javascript:;">Delete</a>*@
                         </td>
                         <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
-                        <td class="hidden"><input type="text" id="txtActvty" value="@item.ActivityId" /></td>
+                        <td class="hidden"><input type="text" id="txtActvty" value="@item.ServiceRevenueId" /></td>
                         <td class="hidden"><input type="text" id="txtId" value="@item.Id" /></td>
                     </tr>
                     }
@@ -451,7 +451,7 @@
             content: message,
             buttons: {
                 confirm: function () {
-                    PerformAction(row, serviceActivityId, activityId, true)
+                    PerformAction(row, serviceActivityId, activityId, isAdd)
 
                 },
                 cancel: function () {
