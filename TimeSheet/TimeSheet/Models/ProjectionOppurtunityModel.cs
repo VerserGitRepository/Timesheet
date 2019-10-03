@@ -10,12 +10,11 @@ namespace TimeSheet.Models
     public class ProjectionOppurtunityModel
     {
        
-        public int ProjectId { get; set; }
-
+        public int? ProjectId { get; set; }
         public int Id { get; set; }
         public string ProjectName { get; set; }
-        public int OpportinutyId { get; set; }
-        public string OpportunityNumber { get; set; }
+        public int? OpportinutyId { get; set; }
+        public int? OpportunityNumber { get; set; }
        
         public bool? IsActive { get; set; }
         public int? ServiceActivityId { get; set; }
@@ -37,9 +36,9 @@ namespace TimeSheet.Models
 
         public string VerserBranch { get; set; }
         public string Activity { get; set; }
-        public int ActualQuantity { get; set; }
-        public int WarehouseID { get; set; }
-        public string WarehouseName { get; set; }
+        public int? ActualQuantity { get; set; }
+        public int? wareHouseId { get; set; }
+        public string wareHouseName { get; set; }
         public string Comments { get; set; }
         public string ProjectManager { get; set; }
         public bool IsUpdated { get; set; }

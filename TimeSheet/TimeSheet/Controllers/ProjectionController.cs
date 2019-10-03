@@ -11,40 +11,38 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-           if (UserRoles.UserCanApproveTimesheet() == true)
+            if (UserRoles.UserCanApproveTimesheet() == true)
             {
                 ProjectionModel model = new ProjectionModel();
-                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");              
 
-                List<ProjectionModel> listB = ProjectionHelperService.ProjectionListItems().Result;
-                List<ProjectionModel> listA = ProjectionHelperService.MergedProjectionList().Result;
-                var merged = Utils.ReflectionUtils.CopyShallowArray<ProjectionOppurtunityModel>(listA.ToArray());
-               // List<ProjectionOppurtunityModel> listC = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
-                
+                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
+
+                //List<ProjectionModel> listB = ProjectionHelperService.ProjectionListItems().Result;
+                //List<ProjectionOppurtunityModel> listA = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
+
                 //foreach (var x in listB)
                 //{
-                //    var itemToChange = listA.Find(d => d.ActivityId == x.ServiceRevenueId && d.OpportinutyId == x.OpportunityID && d.ServiceActivityId == x.ServiceActivityId);
+                //    var itemToChange = listA.Find(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber) && d.OpportinutyId == x.OpportunityID && d.ServiceActivityId == x.ServiceActivityId && d.IsUpdated != true);
                 //    if (itemToChange == null)
                 //    {
-                //        //itemToChange = new ProjectionOppurtunityModel();
-                //        //itemToChange.Activity = x.Activity;
-                //        //itemToChange.ActivityId = x.ActivityId == 0 ? x.ServiceRevenueId : x.ActivityId;
-                //        //itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
-                //        //itemToChange.Comments = x.Comments;
-                //        //itemToChange.OpportinutyId = x.OpportunityID;
-                //        //itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
-                //        //itemToChange.DateInvoiced = x.DateInvoiced;
-                //        //itemToChange.DateAllocated = x.DateAllocated;
-                //        //itemToChange.Created = x.Created;
-                //        //itemToChange.ProjectManager = x.ProjectManager;
-                //        //itemToChange.wareHouseName = x.WarehouseName;
-                //        //itemToChange.wareHouseId = x.WarehouseID;
-                //        //itemToChange.ActualQuantity = x.Quantity;
-                //        //itemToChange.ProjectName = x.ProjectName;
-                //        //itemToChange.Id = x.Id;
-                //        //itemToChange.IsUpdated = true;
-                //        //listA.Add(itemToChange);
-                //        continue;
+                //        itemToChange = new ProjectionOppurtunityModel();
+                //        itemToChange.Activity = x.Activity;
+                //        itemToChange.ActivityId = x.ActivityId == 0 ? x.ServiceRevenueId : x.ActivityId;
+                //        itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
+                //        itemToChange.Comments = x.Comments;
+                //        itemToChange.OpportinutyId = x.OpportunityID;
+                //        itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
+                //        itemToChange.DateInvoiced = x.DateInvoiced;
+                //        itemToChange.DateAllocated = x.DateAllocated;
+                //        itemToChange.Created = x.Created;
+                //        itemToChange.ProjectManager = x.ProjectManager;
+                //        itemToChange.wareHouseName = x.WarehouseName;
+                //        itemToChange.wareHouseId = x.WarehouseID;
+                //        itemToChange.ActualQuantity = x.Quantity;
+                //        itemToChange.ProjectName = x.ProjectName;
+                //        itemToChange.Id = x.Id;
+                //        itemToChange.IsUpdated = true;
+                //        listA.Add(itemToChange);
                 //    }
                 //    else
                 //    {
@@ -69,11 +67,11 @@ namespace TimeSheet.Controllers
                 //        itemToChange.wareHouseId = x.WarehouseID;
                 //        itemToChange.Id = x.Id;
                 //        itemToChange.IsUpdated = true;
-                //        itemToChange.ActualQuantity = 100;
                 //    }
                 //}
-               // listA.ac
-                model.projectionOpportunityModel = merged.ToList();
+                var listadd =new List<ProjectionOppurtunityModel>();
+                listadd= ProjectionHelperService.MergedProjectionServices().Result;
+                model.projectionOpportunityModel = listadd;  // listA;
                 return View(model);
             }
             else if (Session["Username"] != null)
@@ -106,7 +104,7 @@ namespace TimeSheet.Controllers
                     };
                     var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
                 }
-            }        
+            }
             else if (Session["Username"] != null)
             {
                 return RedirectToAction("Index", "Home");
@@ -114,7 +112,7 @@ namespace TimeSheet.Controllers
             else
             {
                 return RedirectToAction("Login", "Login");
-            }            
+            }
             return View(LoadDropDownsServices.ProjectionDropdowns());
         }
         public ActionResult InlineEditing()
@@ -142,14 +140,14 @@ namespace TimeSheet.Controllers
                     var IsReturnValid = ProjectionHelperService.EditProjectionModel(projectionupdate);
                 }
             }
-            else if(Session["Username"] != null)
+            else if (Session["Username"] != null)
             {
-                return RedirectToAction("Index", "Home");               
+                return RedirectToAction("Index", "Home");
             }
             else
             {
                 return RedirectToAction("Login", "Login");
-            }           
+            }
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
@@ -181,13 +179,13 @@ namespace TimeSheet.Controllers
                     {
                         Session["ErrorMessage"] = "Please Select Faciity to proceed.";
                     }
-                }              
+                }
             }
-            else 
+            else
             {
                 return RedirectToAction("Login", "Login");
             }
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Projection", new { });            
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Projection", new { });
             return Json(new { Url = redirectUrl, status = "OK" });
         }
 
@@ -196,22 +194,18 @@ namespace TimeSheet.Controllers
             if (UserRoles.UserCanApproveTimesheet() == true)
             {
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
-                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType.ToLower() == "casual").ToList(); // fetch only casual employees.
-                //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
+                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(c=>c.EmployeementType == "Casual").ToList();
+
                 DateTime dtFrom = DateTime.Parse("10:00 AM");
                 DateTime dtTo = DateTime.Parse("12:00 PM");
                 model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
                 model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
-                //int timeDiff = dtFrom.Value.Subtract(dtTo.Value).Hours;
-                var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new {completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g  ;
-                // var trwer = model.CompletedTimeSheetList.GroupBy(item => item.CandidateName).Select(g => new {Sum = g.Sum(x => x.EndTime.Value.Subtract(x.StartTime.Value).Hours),}) });
-               
-               
+                var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new { completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g;
                 foreach (var subgroup in group)
                 {
                     double hours = 0;
                     AggregatedCompletedTimesheetModel agrModel = new AggregatedCompletedTimesheetModel();
-                    
+
                     foreach (var t in subgroup)
                     {
                         agrModel.CandidateName = t.CandidateName;
@@ -247,7 +241,7 @@ namespace TimeSheet.Controllers
         public ActionResult ApprovePaymentIndividual(string activityId)
         {
             var model = new CompletedTimesheetModel();
-            model.CompletedTimeSheetList= TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
             int _timesheetid = Convert.ToInt32(activityId);
             var _a = TimeSheetAPIHelperService.TimeSheetApproval(_timesheetid).Result;
             return PartialView("ResourceDetails", model);
@@ -266,9 +260,9 @@ namespace TimeSheet.Controllers
 
             foreach (var activityId in activityIds)
             {
-             var _a =   TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
+                var _a = TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
             }
             return PartialView("ResourceDetails", model);
         }
-    }  
+    }
 }
