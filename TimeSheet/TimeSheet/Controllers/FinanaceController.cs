@@ -97,20 +97,58 @@ namespace TimeSheet.Controllers
         }
         public ActionResult MonthlyReport()
         {
-            if (Session["Username"] == null)
+
+            if (Session["Username"] != null && Session["Accounts"] != null)
             {
-                return RedirectToAction("Login", "Login");
+
+                CompletedTimesheetModel model = new CompletedTimesheetModel();
+                List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
+                List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+
+                model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
+
+
+                //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
+
+                model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
+
+
+                var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new { completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g;
+
+                //DateTime date = new DateTime();
+                foreach (var subgroup in group)
+                {
+                    double hours = 0;
+                    AggregatedCompletedTimesheetModel agrModel = new AggregatedCompletedTimesheetModel();
+
+                    foreach (var t in subgroup)
+                    {
+                        // date = new DateTime(t.Day.Value.Year, t.Day.Value.Month, t.Day.Value.Day);
+                        agrModel.CandidateName = t.CandidateName;
+                        agrModel.ProjectManager = t.ProjectManager;
+                        agrModel.EmploymentTypeID = t.EmploymentTypeID;
+                        agrModel.EmployeementType = t.EmployeementType;
+                        hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60;
+                        double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5) + 1;
+
+                        agrModel.PayCycle = pc.ToString();
+                        agrModel.ADPEmployeeID = t.AdpEmployeeID;
+                        agrModel.PayFrequency = t.PayFrequency;
+
+
+                    }
+
+                    agrModel.Hours = hours;
+                    model.AggregaredTimesheetModel.Add(agrModel);
+                }
+                model.CompletedTimeSheetList = TimeSheetAPIHelperService.PaidTimeSheetList().Result;
+                return View(model);
             }
             else
             {
-                TimeSheetViewModel model = new TimeSheetViewModel();
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
-                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
-                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
-                model.CandidateTimeSheetList = TimeSheetAPIHelperService.PaidTimeSheetList().Result;
-                return View(model);
+                return RedirectToAction("Login", "Login");
             }
+
         }
         public ActionResult OverTimeReport()
         {
@@ -202,6 +240,19 @@ namespace TimeSheet.Controllers
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("ApprovedResourceDetails", model);
+        }
+
+
+        [HttpGet]
+        public ActionResult PaidResourceDetails(string CandidateName)
+        {
+            CompletedTimesheetModel model = new CompletedTimesheetModel();
+
+
+            var AlltimesheetRecords = TimeSheetAPIHelperService.PaidTimeSheetList().Result;
+            model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("PaidResourceDetails", model);
         }
 
         [HttpPost]

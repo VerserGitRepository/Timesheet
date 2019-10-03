@@ -441,6 +441,7 @@
     <Content Include="Views\ResourceTimeline\VehicleTimeline.cshtml" />
     <Content Include="Views\ProjectManager\ProjectDetails.cshtml" />
     <Content Include="Views\ProjectManager\TimesheetPMDetails.cshtml" />
+    <Content Include="Views\Finanace\PaidResourceDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
