@@ -135,16 +135,19 @@ namespace TimeSheet.Controllers
                 string OTHoursVal = string.Empty;
 
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
-                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+                List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
+                List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+
+                model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
                 //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
-               
+
                 model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
                
 
                 model.CompletedTimeSheetList = model.CompletedTimeSheetList.Where(item => item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 > double.Parse(otvalues[0].Replace("GT", ""))).ToList();
 
                 var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new { completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g;
-                int weekofMonth = 0;
+                
                 //DateTime date = new DateTime();
                 foreach (var subgroup in group)
                 {
@@ -162,16 +165,10 @@ namespace TimeSheet.Controllers
                         //{
                         hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60 - double.Parse(otvalues[0].Replace("GT", ""));
                         //}
-                        DateTime date = t.Day.Value.Date;
-                        DateTime firstMonthDay = new DateTime(date.Year, date.Month, 1);
-                        DateTime firstMonthMonday = firstMonthDay.AddDays((DayOfWeek.Monday + 7 - firstMonthDay.DayOfWeek) % 7);
-                        if (firstMonthMonday > date)
-                        {
-                            firstMonthDay = firstMonthDay.AddMonths(-1);
-                            firstMonthMonday = firstMonthDay.AddDays((DayOfWeek.Monday + 7 - firstMonthDay.DayOfWeek) % 7);
-                        }
-                        weekofMonth = (date - firstMonthMonday).Days / 7 + 1;
-                        agrModel.PayCycle = "Pay Cycle for week -" + weekofMonth;
+                        double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5) + 1;
+                        agrModel.PayCycle =pc.ToString();
+                        agrModel.ADPEmployeeID = t.AdpEmployeeID;
+                        agrModel.PayFrequency = t.PayFrequency;
 
 
                     }
