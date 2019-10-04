@@ -144,56 +144,69 @@
                             }
                             <div class="row" style="padding-top:10px">
 
-                                <div class="form-group  required col-md-6" tabindex=1 >
+                                <div class="form-group  required col-md-6" tabindex=1>
                                     <label class="control-label">Project</label>
                                     @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerIDPM" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.ProjectID, "", new { @class = "text-danger" })
 
                                 </div>
-                                <div class="form-group required col-md-6" tabindex=2 >
+                                <div class="form-group required col-md-6" tabindex=2>
                                     <label class="control-label">Resource</label><br />
                                     @Html.DropDownListFor(model => Model.ResourceID, Model.ProjectManagerNameList, new { @id = "CandidateNameIdPM", @style = "height:10px; width:10px;", @multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => Model.ResourceID, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="row" style="padding-top:10px">
-                                <div class="form-group  required col-md-6" tabindex=3 >
+                                <div class="form-group  required col-md-6" tabindex=3>
                                     <label class="control-label">Opportunity Number</label>
                                     @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberIDPM" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.OpportunityID, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group  required col-md-6" tabindex=4 >
+                                <div class="form-group col-md-6" tabindex=4>
+                                    <label>Theme Colour</label>
+                                    @Html.DropDownListFor(model => model.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColourPM" })
+                                </div>
+
+                            </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="form-group  required col-md-6" tabindex=5>
                                     <label class="control-label">Activity</label>
 
                                     @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityIDPM" })
                                     @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
 
                                 </div>
-                            </div>
-                            <div class="row" style="padding-top:10px">
-                                <div class="form-group required col-md-6" tabindex=5 >
+                                <div class="form-group required col-md-6" tabindex=6>
                                     <label class="control-label">Start Date</label>
 
                                     @Html.EditorFor(model => model.Day, DateTime.Now.Date.ToShortDateString(), new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickIdPM" } })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.Day, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group col-md-6" tabindex=6 >
-                                    <label>Theme Colour</label>
-                                    @Html.DropDownListFor(model => model.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColourPM" })
+
+
+                            </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="form-group  required col-md-6" tabindex=7>
+                                    
+
                                 </div>
+                                <div class="form-group required col-md-6" tabindex=8>
+                                    <div id="time-rangePM" style="padding-top:10px;width:280px" tabindex=7>
+                                        <p>
+                                            Start Time <b><span class="slider-timePM">08:30 AM</span></b> End Time <b><span class="slider-time2PM">5:00 PM</span></b>
+
+                                        </p>
+                                        <div class="sliders_step1">
+                                            <div id="slider-rangePM"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                             </div>
 
-                            <div id="time-rangePM" style="padding-top:10px;width:280px" tabindex=7 >
-                                <p>
-                                    Start Time <b><span class="slider-timePM">08:30 AM</span></b> End Time <b><span class="slider-time2PM">5:00 PM</span></b>
-
-                                </p>
-                                <div class="sliders_step1">
-                                    <div id="slider-rangePM"></div>
-                                </div>
-                            </div>
                             
+
                             <br>
                             <div class="row" style="width:650px;padding-left:20px">
                                 <label>Comments</label>
