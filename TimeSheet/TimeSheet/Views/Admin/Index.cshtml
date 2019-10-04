@@ -23,7 +23,7 @@
                 <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">OPPORTUNITIES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">RESOURCES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEPROJECTS">PROJECTS</a></li>
-                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEACTIVITIES">ACTIVITIES</a></li>
+                @*<li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEACTIVITIES">ACTIVITIES</a></li>*@
                 @*<li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEUSER">USER ROLE</a></li>*@
             </ul>
         </nav>
@@ -88,7 +88,7 @@
                         <tr>
 
                             <td>@item.ResourceName</td>
-                            <td>@item.Warehouse</td>
+                            <td>@item.WarehouseName</td>
                             <td>
                                 <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this);" />
                             </td>
@@ -105,7 +105,7 @@
                             <th>
                                 PROJECT NAME
                             </th>
-                                
+
 
                             <th>
                                 Is Active
@@ -129,74 +129,74 @@
                 </table>
             </div>
 
-            <div id="MANAGEACTIVITIES" class="tab-pane fade" role="tabpanel">
-                <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
-                    <thead style="background-color:lightgray">
-                        <tr>
-                            <th>
-                                Activity Category
-                            </th>
-                            <th>
-                                Activity
-                            </th>
-                            <th>
-                                OLA/15mins
-                            </th>
-                            <th>
-                                OLA/30mins
-                            </th>
-                            <th>
-                                OLA/Day
-                            </th>
-                            <th>
-                                Description
-                            </th>
-                            <th>
-                                Edit
-                            </th>
+            @*<div id="MANAGEACTIVITIES" class="tab-pane fade" role="tabpanel">
+        <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
+            <thead style="background-color:lightgray">
+                <tr>
+                    <th>
+                        Activity Category
+                    </th>
+                    <th>
+                        Activity
+                    </th>
+                    <th>
+                        OLA/15mins
+                    </th>
+                    <th>
+                        OLA/30mins
+                    </th>
+                    <th>
+                        OLA/Day
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Edit
+                    </th>
 
-                        </tr>
-                    </thead>
+                </tr>
+            </thead>
 
-                    @foreach (var item in Model.ActivityList)
+            @foreach (var item in Model.ActivityList)
 
 
-                    {
-                        <tr>
-                            <td width="15%">@item.serviceCategory</td>
-                            <td width="30%">@item.serviceActivityDescription</td>
+            {
+                <tr>
+                    <td width="15%">@item.serviceCategory</td>
+                    <td width="30%">@item.serviceActivityDescription</td>
 
-                            <td width="10%">
+                    <td width="10%">
 
-                                <span>@Html.DisplayFor(modelItem => item.OLA_15mins)</span>
-                                <input type="text" id="quantity" value="@item.OLA_15mins" style="display:none" />
-                            </td>
+                        <span>@Html.DisplayFor(modelItem => item.OLA_15mins)</span>
+                        <input type="text" id="quantity" value="@item.OLA_15mins" style="display:none" />
+                    </td>
 
-                            <td width="10%">
+                    <td width="10%">
 
-                                <span>@Html.DisplayFor(modelItem => item.OLA_30mins)</span>
-                                <input type="text" id="quantity" value="@item.OLA_30mins" style="display:none" />
-                            </td>
+                        <span>@Html.DisplayFor(modelItem => item.OLA_30mins)</span>
+                        <input type="text" id="quantity" value="@item.OLA_30mins" style="display:none" />
+                    </td>
 
-                            <td width="10%">
+                    <td width="10%">
 
-                                <span>@Html.DisplayFor(modelItem => item.OLA_Day)</span>
-                                <input type="text" id="quantity" value="@item.OLA_Day" style="display:none" />
-                            </td>
+                        <span>@Html.DisplayFor(modelItem => item.OLA_Day)</span>
+                        <input type="text" id="quantity" value="@item.OLA_Day" style="display:none" />
+                    </td>
 
-                            @*<td width="10%">@item.OLA_15mins</td>
-                                <td width="10%">@item.OLA_30mins</td>
-                                <td width="10%">@item.OLA_Day</td>*@
-                            <td width="15%">@item.olA_Filter</td>
-                            <td width="10%">
-                                <a class="Edit" href="javascript:;">Edit</a>
-                                <a class="Update" href="javascript:;" style="display:none">Update</a>
-                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </div>
+                    @*<td width="10%">@item.OLA_15mins</td>
+                        <td width="10%">@item.OLA_30mins</td>
+                        <td width="10%">@item.OLA_Day</td>*@
+            @*  <td width="15%">@item.olA_Filter</td>
+                        <td width="10%">
+                            <a class="Edit" href="javascript:;">Edit</a>
+                            <a class="Update" href="javascript:;" style="display:none">Update</a>
+                            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>*@
         </div>
     </div>
 </section>

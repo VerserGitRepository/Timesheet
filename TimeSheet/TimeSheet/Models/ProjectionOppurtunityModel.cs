@@ -33,7 +33,7 @@ namespace TimeSheet.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateAllocated { get; set; }
-
+        public int? Quantity { get; set; }
         public string VerserBranch { get; set; }
         public string Activity { get; set; }
         public int? ActualQuantity { get; set; }
