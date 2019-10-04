@@ -53,5 +53,7 @@ namespace TimeSheet.Models
         public SelectList OpportunityNumberList { get; internal set; }
         public SelectList Projectlist { get; internal set; }
         public SelectList ActivityList { get; internal set; }
+        public string jsonResources { get; internal set; }
+        public string jsonEvents { get; internal set; }
     }
 }
