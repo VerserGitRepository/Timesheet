@@ -39,7 +39,7 @@
                         }
                             <div class="row" style="padding-top:10px">
 
-                                <div class="form-group required col-md-6">
+                                <div class="form-group required col-md-6" tabindex=1 >
                                     <label class="control-label">Facility</label>
 
                                     @Html.DropDownListFor(model => model.TimeSheetRegisterModel.WarehouseNameId, Model.WarehouseNameList, "Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
@@ -47,7 +47,7 @@
                                 </div>
 
 
-                                <div class="form-group  required col-md-6">
+                                <div class="form-group  required col-md-6" tabindex=2 >
                                     <label class="control-label">Project</label>
 
                                     @Html.DropDownListFor(model => model.TimeSheetRegisterModel.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerID" })
@@ -55,31 +55,36 @@
 
                                 </div>
 
-                                <div class="form-group  required col-md-6">
+                                <div class="form-group  required col-md-6" tabindex=3>
                                     <label class="control-label">Employment Type</label>
                                     @Html.DropDownListFor(model => model.TimeSheetRegisterModel.EmploymentTypeID, Model.EmploymentList, "RESOURCE TYPE", new { @class = "form-control", id = "ddlEmploymentId" })
                                 </div>
 
-                                <div class="form-group  required col-md-6">
+                                <div class="form-group  required col-md-6" tabindex=4 >
                                     <label class="control-label">Opportunity Number</label>
 
                                     @Html.DropDownListFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberID" })
                                     @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group required col-md-6">
+                                <div class="form-group required col-md-6" tabindex=5 >
                                     <label class="control-label">Resource</label><br />
                                     @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
 
                                     @Html.ValidationMessageFor(model => Model.ResourceIDs, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group  required col-md-6">
+                                <div class="form-group  required col-md-6" tabindex=6 >
                                     <label class="control-label">Job Number</label>
                                     @Html.DropDownListFor(model => model.TimeSheetRegisterModel.JobID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Job", new { @class = "form-control", id = "JobID" })
                                     @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.JobID, "", new { @class = "text-danger" })
                                 </div>
 
+                                <div class="form-group col-md-6" tabindex=7 >
+                                    <label>OLA Target</label>
+                                    @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
+                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
 
-                                <div class="form-group  required col-md-6">
+                                </div>
+                                <div class="form-group  required col-md-6" tabindex=8 >
                                     <label class="control-label">Activity</label>
 
                                     @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityID" })
@@ -87,30 +92,23 @@
 
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label>OLA Target</label>
-                                    @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
-                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
-
-                                </div>
-
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6" tabindex=9 >
                                     <label>Vehicle</label>
                                     @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Vechicles, new SelectList(new[] { "No Vehicle", "Verser Van ", "Versr Transit", "Verser Truck" }), new { @class = "form-control", id = "ddlVan" })
                                 </div>
 
-                                <div class="form-group col-md-6">
-                                    <label>Theme Colour</label>
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColour" })
-                                </div>
-
-                                <div class="form-group required col-md-6">
+                                <div class="form-group required col-md-6" tabindex=10 >
                                     <label class="control-label">Start Date</label>
 
                                     @Html.EditorFor(model => model.TimeSheetRegisterModel.Day, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
                                     @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })
 
-                                </div> <div class="form-group required col-md-6">
+                                </div>
+                                <div class="form-group col-md-6" tabindex=11 >
+                                    <label>Theme Colour</label>
+                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColour" })
+                                </div>
+                                <div class="form-group required col-md-6" tabindex=12 >
                                     <div id="time-range" style="padding-top:10px;width:300px">
                                         <p>
                                             Start Time <b><span class="slider-time">08:30 AM</span></b> End Time <b><span class="slider-time2">5:00 PM</span></b>
@@ -122,7 +120,7 @@
                                     </div>
                                 </div>
 
-                                </div>
+                            </div>
 
                                 <br />
                                 <div class=" col-md-offset-5">
@@ -146,72 +144,86 @@
                             }
                             <div class="row" style="padding-top:10px">
 
-                                <div class="form-group  required col-md-6">
+                                <div class="form-group  required col-md-6" tabindex=1>
                                     <label class="control-label">Project</label>
                                     @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerIDPM" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.ProjectID, "", new { @class = "text-danger" })
 
                                 </div>
-                                <div class="form-group required col-md-6">
+                                <div class="form-group required col-md-6" tabindex=2>
                                     <label class="control-label">Resource</label><br />
                                     @Html.DropDownListFor(model => Model.ResourceID, Model.ProjectManagerNameList, new { @id = "CandidateNameIdPM", @style = "height:10px; width:10px;", @multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => Model.ResourceID, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="row" style="padding-top:10px">
-                                <div class="form-group  required col-md-6">
+                                <div class="form-group  required col-md-6" tabindex=3>
                                     <label class="control-label">Opportunity Number</label>
                                     @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberIDPM" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.OpportunityID, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group  required col-md-6">
+                                <div class="form-group col-md-6" tabindex=4>
+                                    <label>Theme Colour</label>
+                                    @Html.DropDownListFor(model => model.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColourPM" })
+                                </div>
+
+                            </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="form-group  required col-md-6" tabindex=5>
                                     <label class="control-label">Activity</label>
 
                                     @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityIDPM" })
                                     @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
 
                                 </div>
-                            </div>
-                            <div class="row" style="padding-top:10px">
-                                <div class="form-group required col-md-6">
+                                <div class="form-group required col-md-6" tabindex=6>
                                     <label class="control-label">Start Date</label>
-                                    
+
                                     @Html.EditorFor(model => model.Day, DateTime.Now.Date.ToShortDateString(), new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickIdPM" } })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.Day, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label>Theme Colour</label>
-                                    @Html.DropDownListFor(model => model.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColourPM" })
-                                </div>
-
-                            </div>
-                           
-                            <div id="time-rangePM" style="padding-top:10px;width:280px">
-                                <p>
-                                    Start Time <b><span class="slider-timePM">08:30 AM</span></b> End Time <b><span class="slider-time2PM">5:00 PM</span></b>
-
-                                </p>
-                                <div class="sliders_step1">
-                                    <div id="slider-rangePM"></div>
-                                </div>
-                            </div>
-                                <br>
-                                <div class="row" style="width:650px;padding-left:20px">
-                                    <label>Comments</label>
-                                    @Html.TextAreaFor(model => model.PMRegisterViewModel.TimeSheetComments, new { @id = "txtComments", placeholder = "Comments here...", @class = "form-control-100 textarea", style = "border:solid 1px lightgray;" })
-                                    @Html.ValidationMessageFor(model => model.PMRegisterViewModel.TimeSheetComments, "", new { @class = "text-danger" })
-                                </div>
-
-                                <div class=" col-md-offset-5" style="padding-top:20px">
-                                    <button type="submit" class="btn btn-warning btn-md" id="btnregisterPM">
-                                        <span class="glyphicon glyphicon-ok-sign"></span> Register
-                                    </button>
-                                </div>
-
-                                }
 
 
                             </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="form-group  required col-md-6" tabindex=7>
+                                    
+
+                                </div>
+                                <div class="form-group required col-md-6" tabindex=8>
+                                    <div id="time-rangePM" style="padding-top:10px;width:280px" tabindex=7>
+                                        <p>
+                                            Start Time <b><span class="slider-timePM">08:30 AM</span></b>&nbsp;&nbsp;&nbsp;End Time <b><span class="slider-time2PM">5:00 PM</span></b>
+
+                                        </p>
+                                        <div class="sliders_step1">
+                                            <div id="slider-rangePM"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            
+
+                            <br>
+                            <div class="row" style="width:670px;padding-left:20px">
+                                <label>Comments</label>
+                                @Html.TextAreaFor(model => model.PMRegisterViewModel.TimeSheetComments, new { @id = "txtComments", placeholder = "Comments here...", @class = "form-control-100 textarea", style = "border:solid 1px lightgray;" })
+                                @Html.ValidationMessageFor(model => model.PMRegisterViewModel.TimeSheetComments, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class=" col-md-offset-5" style="padding-top:20px">
+                                <button type="submit" class="btn btn-warning btn-md" id="btnregisterPM">
+                                    <span class="glyphicon glyphicon-ok-sign"></span> Register
+                                </button>
+                            </div>
+
+                        }
+
+
+                    </div>
 
 
                         </div>
@@ -225,6 +237,9 @@
 <style>
     .form-control-100 {
         max-width: 100%;
+    }
+    .form-control-75 {
+        max-width: 75%;
     }
 
     .form-group {
@@ -405,7 +420,39 @@
 </style>
 
 <script>
-
+    $('#addRow').click(function () {
+        // get the last person and html html
+        var $person = $('.person').last();
+        var person = $person.html().trim();
+        // find the number
+        var index = person.indexOf('firstname');
+        var number = parseInt(person.substring(index + 9, 1));
+        var next = number + 1;
+        // replace the number
+        // for firstname
+        person.replace('firstname' + number, 'firstname' + next);
+        // for lastname
+        person.replace('time-rangePM1' + number, 'time-rangePM1' + next);
+        person.replace('slider-timePM1' + number, 'slider-timePM1' + next);
+        person.replace('slider-time2PM' + number, 'slider-time2PM' + next);
+        person.replace('sliders_step11' + number, 'sliders_step11' + next);
+        person.replace('slider-rangePM1' + number, 'slider-rangePM1' + next);
+        // for gender
+        person.replace('gender' + number, 'gender' + next);
+        // insert the new person after the last one
+        $person.after($('<div class="person">' + person + '</div>'));
+        // get the new person
+        var $new = $('.person').last();
+        // hide it
+        $new.hide();
+        // reset the values
+        $new.find('input, select').val('');
+        // fade it in
+        $new.slideDown();
+    });
+    $('.sliders_step11').on("click", ".remove_field", function (e) { //user click on remove text
+        e.preventDefault(); $(this).parent('div').remove();// x--;
+    })
     $("#slider-range").slider({
         range: true,
         min: 0,

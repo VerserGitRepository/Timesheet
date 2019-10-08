@@ -42,10 +42,12 @@ namespace TimeSheet.Models
         //[DataType(DataType.Date)]
         //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         //public DateTime? EndDate { get; set; }
+        [Required(ErrorMessage = "Opportunity Is Mandatory")]
         public int? OpportunityID { get; set; }
         public SelectList OpportunityNumberList { get; set; }
         public int? WarehouseID { get; set; }
         public SelectList WarehouseNameList { get; set; }
+        [Required(ErrorMessage = "Activity selection is Mandatory")]
         public int? ServiceActivityID { get; set; }
         public string Activity { get; set; }
         public string Colour { get; set; }
@@ -60,6 +62,7 @@ namespace TimeSheet.Models
         public int? StatusID { get; set; }
         public string Status { get; set; }
         public SelectList Projectlist { get; set; }
+        [Required(ErrorMessage = "Project Is Mandatory")]
         public int? ProjectID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
