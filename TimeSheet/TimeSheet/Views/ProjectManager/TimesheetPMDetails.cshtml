@@ -11,7 +11,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div style="align-content:center;padding-bottom:40px;padding-left:20px;width:1200px;padding-top:5px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1200px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1200px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -23,7 +23,7 @@
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
-                    <th></th>
+                    
                 </tr>
             </thead>
             <tbody class="table">
@@ -34,27 +34,25 @@
                     <td class="CandidateName">
                         <span id="txtCandidateName">@item.CandidateName</span>
                     </td>
-                    <td class="Activity">
-
+                    <td class="Activity">                       
                         <span id="txtActivity">@item.Activity</span>
                     </td>
-                    <td class="Activity">
+                    <td class="Day" width="7%">
+                        <span>@item.Day.ToShortDateString()</span>
+                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                           </td>
 
-                        <span id="txtDay">@item.Day</span>
+                    <td class="StartTime">
+                        <span>@item.StartTime.ToShortTimeString()</span>
+                        <input type="time" id="startTime" value="@item.StartTime.ToString("HH:mm")" style="display:none" />
                     </td>
-
-                    <td class="Activity">
-
-                        <span id="txtStartTime">@item.StartTime</span>
+                    <td class="EndTime" width="8%">
+                        <span>@item.EndTime.ToShortTimeString()</span>
+                        <input type="time" id="endTime" value="@item.EndTime.ToString("HH:mm")" style="display:none" />
                     </td>
-                    <td class="Activity">
-
-                        <span id="txtEndTime">@item.EndTime</span>
-                    </td>
-                    <td class="Activity">
-
+                        <td class="Status">
                         <span id="txtStatus">@item.Status</span>
-                        <input type="hidden" id="txtHiddenStatusId" value="@item.StatusID" style="display:none" />
+                        <input type="hidden" id="hdnddlLidt" value="@item.StatusID" style="display:none" />
                     </td>
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
@@ -65,10 +63,7 @@
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             <span><strong>Edit</strong></span>
                         </a>
-                        @*<a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                <span><strong>Rate</strong></span>
-            </a>*@
+      
                         <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             <span><strong>Update</strong></span>
@@ -80,14 +75,7 @@
                         </a>
 
                     </td>
-                    <td>
-                        <input type="hidden" id="txtHiddenOpportunityID" value="@item.OpportunityID" />
-                        <input type="hidden" id="txtHiddenProjectID" value="@item.ProjectID" />
-                        <input type="hidden" id="txtHiddenColour" value="@item.Colour" />
-                        <input type="hidden" id="txtHiddenWarehouseID" value="@item.WarehouseID" />
-                        <input type="hidden" id="txtHiddenResourceID" value="@item.ResourceID" />
-                        <input type="hidden" id="txtHiddenServiceActivityID" value="@item.ServiceActivityID" />
-                    </td>
+
                 </tr>
                 }
             </tbody>
@@ -196,21 +184,18 @@
         row.find(".Cancel").hide();
         row.find("#Rate").hide();
         $(this).hide();
-       // debugger;
+        debugger;
         var CandidateEdit = {};
         var options = { "backdrop": "static", keyboard: true };
-        CandidateEdit.Id = row.find("#txtId").text();
+        CandidateEdit.Id = row.find(".Id").find("span").html();
         CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
-        CandidateEdit.StartTime = row.find("#txtStartTime").text();
-        CandidateEdit.EndTime = row.find("#txtEndTime").text();
-        CandidateEdit.Day = row.find("#txtDay").text();
-        CandidateEdit.StatusID = row.find("#txtHiddenStatusId").val();
-        CandidateEdit.OpportunityNumberID = row.find("#txtHiddenOpportunityID").val();
-        CandidateEdit.ProjectID = row.find("#txtHiddenProjectID").val();
-        CandidateEdit.Colour = row.find("#txtHiddenColour").val();
-        CandidateEdit.WarehouseID = row.find("#txtHiddenWarehouseID").val();
-        CandidateEdit.ResourceID = row.find("#txtHiddenResourceID").val();
-        CandidateEdit.ServiceActivityID = row.find("#txtHiddenServiceActivityID").val();
+        CandidateEdit.StartTime = row.find(".StartTime").val();
+        CandidateEdit.EndTime = row.find("#endTime").val();
+        CandidateEdit.StartTime = row.find("#startTime").text();
+        CandidateEdit.EndTime = row.find("#endTime").text();
+        CandidateEdit.Day = row.find(".Day").text();
+        CandidateEdit.StatusID = row.find("#ddlStatus").val();
+        
 
         $.ajax({
             type: "POST",
@@ -219,11 +204,10 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json"
 
-
         });
         $.ajax({
             type: "GET",
-            url: './TimesheetCandidateDetails',
+            url: './TimesheetPMDetails',
             contentType: "application/json; charset=utf-8",
             data: { "CandidateName": row.find("#txtCandidateName").text() },
             datatype: "json",

@@ -10,7 +10,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div style="align-content:center;padding-bottom:40px;padding-left:20px;width:1200px;padding-top:5px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1200px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1200px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -22,10 +22,7 @@
                     <th style="width:50px">EndTime </th>
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
-                    <th style="width:10px"></th>
-                    
-                    
-
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="table">
@@ -33,7 +30,7 @@
                 {
                 <tr>
                     <td class="Id"> <span id="txtId">@item.Id</span> </td>
-                    <td class="Project">
+                    <td class="ProjectName">
                         <span id="txtProject">@item.ProjectName</span>
                     </td>
                     <td class="CandidateName">
@@ -85,14 +82,7 @@
                         </a>
 
                     </td>
-                    @*<td>
-                        <input type="hidden" id="txtHiddenOpportunityID" value="@item.OpportunityID" />
-                        <input type="hidden" id="txtHiddenProjectID" value="@item.ProjectID" />
-                        <input type="hidden" id="txtHiddenColour" value="@item.Colour" />
-                        <input type="hidden" id="txtHiddenWarehouseID" value="@item.WarehouseID" />
-                        <input type="hidden" id="txtHiddenResourceID" value="@item.ResourceID" />
-                        <input type="hidden" id="txtHiddenServiceActivityID" value="@item.ServiceActivityID" />
-                    </td>*@
+         
                 </tr>
                 }
             </tbody>
@@ -187,7 +177,7 @@
     //Update event handler.
     $("body").on("click", "#tblCustomers .Update", function () {
         debugger;
-                var row = $(this).closest("tr");
+        var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
