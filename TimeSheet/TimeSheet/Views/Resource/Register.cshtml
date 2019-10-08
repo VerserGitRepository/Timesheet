@@ -12,7 +12,6 @@
 <script src="~/Scripts/bootstrap-multiselect.js"></script>
 <link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
@@ -31,7 +30,7 @@
 
             <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
                 <div class="table table-responsive" id="tblCustomers" style="padding-left:50px;padding-bottom:30px;border-color:lightgray">
-                    @using (Html.BeginForm("Register", "TimeSheet", FormMethod.Post))
+                    @using (Html.BeginForm("Register", "Resource", FormMethod.Post))
                     {
                         if (TempData["BookedResourceMessage"] != null)
                         {
@@ -89,7 +88,6 @@
 
                                     @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityID" })
                                     @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
-
                                 </div>
 
                                 <div class="form-group col-md-6" tabindex=9 >
@@ -136,7 +134,7 @@
 
                 <div class="table table-responsive" id="MANAGERESOURCES" style="padding-left:50px;padding-bottom:30px;border-color:lightgray">
                     <div class="form-group">
-                        @using (Html.BeginForm("Index", "ProjectManager", FormMethod.Post))
+                        @using (Html.BeginForm("Register", "Resource", FormMethod.Post))
                         {
                             if (TempData["BookedResourceMessage"] != null)
                             {

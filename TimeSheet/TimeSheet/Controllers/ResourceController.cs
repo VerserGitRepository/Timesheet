@@ -87,7 +87,7 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Login", "Login");
             }
             if (UserRoles.UserCanRegisterTimesheet() != true)
-            {
+            { 
                 Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
                 return RedirectToAction("Index", "Home");
             }
@@ -146,7 +146,7 @@ namespace TimeSheet.Controllers
                 }
 
             }
-            return RedirectToAction("Index", "ManageCalender");
+            return RedirectToAction("Register", "Resource");
            // return View("~ManageCalender/Index");
         }
         [HttpPost]
