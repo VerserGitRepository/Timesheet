@@ -62,7 +62,36 @@ namespace TimeSheet.Controllers
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("ProjectDetails", model);
         }
-
+        [HttpPost]
+        public ActionResult Edit(UpdateProjectManagerModel EditModel)
+        {
+            if (UserRoles.UserCanEditTimesheet() != true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                if (EditModel == null)
+                {
+                    Session["ErrorMessage"] = "Please Update With Valid Details!";
+                }
+                if (EditModel.Day != null && EditModel.StartTime != null && EditModel.EndTime != null)
+                {
+                    string dateString = String.Format("{0:dd/MM/yyyy}", EditModel.Day.Value.Date);
+                    string StartTimeString = String.Format("{0:HH:mm}", EditModel.StartTime.Value);
+                    string EndTimeString = String.Format("{0:HH:mm}", EditModel.EndTime.Value);
+                    string dtSt = dateString + " " + StartTimeString;
+                    string dtEn = dateString + " " + EndTimeString;
+                    var StartdateTime = Convert.ToDateTime(dtSt);
+                    var EnddateTime = Convert.ToDateTime(dtEn);
+                    EditModel.StartTime = StartdateTime;
+                    EditModel.EndTime = EnddateTime;
+                    EditModel.FullName = Session["FullName"].ToString();
+                }
+                var ReturnValue = RegisterTimesheetService.EditPMModel(EditModel);
+            }
+            return RedirectToAction("Index", "Home");
+        }
         [HttpPost]
         public ActionResult UpdateCandidate(UpdateProjectManagerModel CandidateEdit)
         {
