@@ -88,7 +88,7 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Login", "Login");
             }
             if (UserRoles.UserCanRegisterTimesheet() != true)
-            {
+            { 
                 Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
                 return RedirectToAction("Index", "Home");
             }

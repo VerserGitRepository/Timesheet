@@ -81,8 +81,8 @@ namespace TimeSheet.Controllers
                 model.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
                 List<ResourceEventsModel> resourceEvents = (from k in model.CandidateTimeSheetList select new ResourceEventsModel { Vechicles=k.Vechicles, projectmanager = k.ProjectManager,
                     WarehouseName = k.WarehouseName,
-                    resourceId = Convert.ToString(k.ResourceID), title = k.Vechicles + "-"+ k.ProjectName + "-" + k.ProjectManager + "-"  +"-" + k.Activity + "-" +
-                    k.WarehouseName, start = Convert.ToDateTime(k.StartTime.Value).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s") }).Distinct().ToList();
+                    resourceId = Convert.ToString(k.ResourceID), title = k.Vechicles + "-" +
+                k.WarehouseName +"-" + k.ProjectName + "-" + k.ProjectManager + "-"  +"-" + k.Activity  , start = Convert.ToDateTime(k.StartTime.Value).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s") }).Distinct().ToList();
                 model.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
 
                 return View(model);
