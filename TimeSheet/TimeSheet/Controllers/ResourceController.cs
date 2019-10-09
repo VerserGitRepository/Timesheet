@@ -82,6 +82,7 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult PostResourceData(TimeSheetViewModel theModel)
         {
+            bool isPMBooking = false;
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -125,6 +126,7 @@ namespace TimeSheet.Controllers
                 if (regModel.JobID == null || regModel.JobID == 0)
                 {
                     //TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
+                    isPMBooking = true;
                     TimeSheetRegisterPMModel regPMModel = new TimeSheetRegisterPMModel
                     {
                         Day = regModel.Day,
@@ -139,15 +141,25 @@ namespace TimeSheet.Controllers
                     };
 
                     var a = RegisterTimesheetService.RegisterPMBooking(regPMModel);
+                    
                 }
                 else
                 {
+                    isPMBooking = false;
                     var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
                 }
 
             }
-            return RedirectToAction("Index", "ManageCalender");
-           // return View("~ManageCalender/Index");
+            if (isPMBooking)
+            {
+                return Json(new { newUrl = Url.Action("Index", "ProjectManager") });
+            }
+            else
+            {
+                return Json(new { newUrl = Url.Action("Index", "ManageCalender") });
+            }
+            
+            // return View("~ManageCalender/Index");
         }
         [HttpPost]
         public ActionResult RateResource(ResourceRatingModel theModel)

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
 
@@ -23,19 +26,6 @@ namespace TimeSheet.Controllers
             {
 
                 ProjectManagerTimesheet model = new ProjectManagerTimesheet();
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
-                model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
-                var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
-                {
-                    Id = x.Id,
-                    Value = x.Value
-                });
-                int opportunityId = listitem.FirstOrDefault().Id;
-                model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
-                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
-                model.ProjectManagerNameList = new SelectList(ListItemService.ProjectManagers().Result, "ID", "Value");
-                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.PMTimeSheetList = TimeSheetAPIHelperService.PMTimeSheetList().Result;
                 return View(model);
             }
@@ -112,6 +102,36 @@ namespace TimeSheet.Controllers
                 }
             }
             return RedirectToAction("Index", "Home");
+        }
+        [HttpPost]
+        public ActionResult ExportPMBookingSchedule()
+        {
+            var TimeSheetExportData = new List<CompletedtimesheetExportModel>();
+
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                ProjectManagerTimesheet model = new ProjectManagerTimesheet();
+                model.PMTimeSheetList = TimeSheetAPIHelperService.PMTimeSheetList().Result;
+                GridView gv = new GridView();
+                gv.DataSource = model.PMTimeSheetList;
+                gv.DataBind();
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=PMScheduleExport.xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Charset = "";
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+                gv.RenderControl(htw);
+                Response.Output.Write(sw.ToString());
+                Response.Flush();
+                Response.End();
+            }
+            return RedirectToAction("Index", "CompletedBooking");
         }
     }
 }

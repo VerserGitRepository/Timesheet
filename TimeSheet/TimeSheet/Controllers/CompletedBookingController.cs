@@ -55,7 +55,8 @@ namespace TimeSheet.Controllers
                         ActualQuantity = item.ActualQuantity,
                         Day = item.Day.Value.Date,
                         Status = item.Status,
-                        TimeSheetComments = item.TimeSheetComments
+                        TimeSheetComments = item.TimeSheetComments,
+                        Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
                     });
                 }
                 GridView gv = new GridView();          

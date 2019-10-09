@@ -15,6 +15,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 <div class="container" style="margin-left:0px">
+    @using (Html.BeginForm("ExportProjections", "Projection", FormMethod.Post))
+    {
+        <div class="row">
+            <button type="submit" class="btn btn-default btn-sm" style="padding-left:10px;padding-top:2px;margin-left:10px">
+                <span class="glyphicon glyphicon-export"></span> Export
+            </button>
+        </div>
+    }
     <div class="row" id="MANAGEPROJECTION">
         <div class="col-md-12">
             <table class="table-bordered table-responsive-md text-center table-hover table-scroll" id="MANAGEPROJECTION">
@@ -40,114 +48,114 @@
                 <tbody class="table">
                     @foreach (var item in Model.projectionOpportunityModel)
                     {
-                    <tr>
-                        <td class="ProjectName">
-                            <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
-                        </td>
-                        <td class="opportunity">
-                            <span id="txtOpportunityId">@Html.DisplayFor(modelItem => item.OpportunityNumber) </span>
-                        </td>
-                        <td class="PM">
-                            <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
-                        </td>
-                        <td  title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity" >
-                            <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
-                            <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
+                        <tr>
+                            <td class="ProjectName">
+                                <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+                            </td>
+                            <td class="opportunity">
+                                <span id="txtOpportunityId">@Html.DisplayFor(modelItem => item.OpportunityNumber) </span>
+                            </td>
+                            <td class="PM">
+                                <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
+                            </td>
+                            <td title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity">
+                                <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
+                                <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
 
 
-                        </td>
-                        <td class="dropdownListTD">
+                            </td>
+                            <td class="dropdownListTD">
 
-                            @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
+                                @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
 
-                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
-                            @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
+                                <input class="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
+                                @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
 
-                        </td>
-                        <td>
-                            @if (item.Quantity >= 0)
-                            {
-                                if (item.DateAllocated.HasValue)
+                            </td>
+                            <td>
+                                @if (item.Quantity >= 0)
                                 {
-                                    <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
-                                    @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
-                                    <input class="hidden" type="text" id="hdnTxtDtAlctd" value="@item.DateAllocated.Value.ToString("yyyy-MM-dd")" />
+                                    if (item.DateAllocated.HasValue)
+                                    {
+                                        <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
+                                        @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                                        <input class="hidden" type="text" id="hdnTxtDtAlctd" value="@item.DateAllocated.Value.ToString("yyyy-MM-dd")" />
 
 
+                                    }
+                                    else
+                                    {
+                                        <span id="startTime"></span>
+                                        @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                                    }
                                 }
                                 else
                                 {
                                     <span id="startTime"></span>
                                     @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
                                 }
-                            }
-                            else
-                            {
-                                <span id="startTime"></span>
-                                @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
-                            }
 
-                        </td>
-                        <td>
+                            </td>
+                            <td>
 
-                            <span>@Html.DisplayFor(modelItem => item.Quantity)</span>
-                            <input type="text" id="quantity" class="txtQuantity" value="@item.Quantity" style="display:none" />
-                            <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
-                        </td>
-                        <td>
+                                <span>@Html.DisplayFor(modelItem => item.Quantity)</span>
+                                <input type="text" id="quantity" class="txtQuantity" value="@item.Quantity" style="display:none" />
+                                <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
+                            </td>
+                            <td>
 
-                            @if (item.Quantity >= 0)
-                            {
-                                if (item.DateInvoiced.HasValue)
+                                @if (item.Quantity >= 0)
                                 {
-                                    <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
-                                    @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
-                                    <input class="hidden" type="text" id="hdnTxtDtInvced" value="@item.DateInvoiced.Value.ToString("yyyy-MM-dd")" />
+                                    if (item.DateInvoiced.HasValue)
+                                    {
+                                        <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                                        @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                                        <input class="hidden" type="text" id="hdnTxtDtInvced" value="@item.DateInvoiced.Value.ToString("yyyy-MM-dd")" />
 
+                                    }
+                                    else
+                                    {
+                                        <span id="endTime"></span>
+                                        @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                                    }
                                 }
                                 else
                                 {
                                     <span id="endTime"></span>
                                     @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
                                 }
-                            }
-                            else
-                            {
-                                <span id="endTime"></span>
-                                @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
-                            }
 
-                        </td>
-                        <td class="commentsLine">
-                            <span id="comments">@item.Comments</span>
-                            <input type="text" id="comments" value="@item.Comments" style="display:none" />
-                        </td>
-                        <td>
-                            <a href="#" class="Change btn btn-primary a-btn-slide-text">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Change</strong></span>
-                            </a>
-                            @if (item.Quantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
-                            {
-                                <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    <span><strong>Add</strong></span>
+                            </td>
+                            <td class="commentsLine">
+                                <span id="comments">@item.Comments</span>
+                                <input type="text" id="comments" value="@item.Comments" style="display:none" />
+                            </td>
+                            <td>
+                                <a href="#" class="Change btn btn-primary a-btn-slide-text">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Change</strong></span>
                                 </a>
-                            }
-                            <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Update</strong></span>
-                            </a>
-                            <a href="#" class="Cancel btn btn-danger a-btn-slide-text" style="display:none">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                <span><strong>Cancel</strong></span>
-                            </a>
-                            @*<a class="Delete" href="javascript:;">Delete</a>*@
-                        </td>
-                        <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
-                        <td class="hidden"><input type="text" id="txtActvty" value="@item.ServiceRevenueId" /></td>
-                        <td class="hidden"><input type="text" id="txtId" value="@item.Id" /></td>
-                    </tr>
+                                @if (item.Quantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
+                                {
+                                    <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        <span><strong>Add</strong></span>
+                                    </a>
+                                }
+                                <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Update</strong></span>
+                                </a>
+                                <a href="#" class="Cancel btn btn-danger a-btn-slide-text" style="display:none">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    <span><strong>Cancel</strong></span>
+                                </a>
+                                @*<a class="Delete" href="javascript:;">Delete</a>*@
+                            </td>
+                            <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
+                            <td class="hidden"><input type="text" id="txtActvty" value="@item.ServiceRevenueId" /></td>
+                            <td class="hidden"><input type="text" id="txtId" value="@item.Id" /></td>
+                        </tr>
                     }
                 </tbody>
             </table>
