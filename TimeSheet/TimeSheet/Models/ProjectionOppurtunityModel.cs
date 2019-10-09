@@ -16,7 +16,7 @@ namespace TimeSheet.Models
         public int? OpportinutyId { get; set; }
         public int? OpportunityNumber { get; set; }
        
-        public bool? IsActive { get; set; }
+        //public bool? IsActive { get; set; }
         public int? ServiceActivityId { get; set; }
         public int ActivityId { get; set; }
         public int ServiceRevenueId { get; set; }
@@ -41,7 +41,7 @@ namespace TimeSheet.Models
         public string wareHouseName { get; set; }
         public string Comments { get; set; }
         public string ProjectManager { get; set; }
-        public bool IsUpdated { get; set; }
+       
 
     }
 }

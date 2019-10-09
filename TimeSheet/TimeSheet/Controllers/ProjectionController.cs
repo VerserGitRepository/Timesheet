@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
 namespace TimeSheet.Controllers
@@ -17,58 +20,6 @@ namespace TimeSheet.Controllers
 
                 model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
 
-                //List<ProjectionModel> listB = ProjectionHelperService.ProjectionListItems().Result;
-                //List<ProjectionOppurtunityModel> listA = ProjectionHelperService.ProjectionOppurtunityServiceListItems().Result;
-
-                //foreach (var x in listB)
-                //{
-                //    var itemToChange = listA.Find(d => d.OpportunityNumber == int.Parse(x.OpportunityNumber) && d.OpportinutyId == x.OpportunityID && d.ServiceActivityId == x.ServiceActivityId && d.IsUpdated != true);
-                //    if (itemToChange == null)
-                //    {
-                //        itemToChange = new ProjectionOppurtunityModel();
-                //        itemToChange.Activity = x.Activity;
-                //        itemToChange.ActivityId = x.ActivityId == 0 ? x.ServiceRevenueId : x.ActivityId;
-                //        itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
-                //        itemToChange.Comments = x.Comments;
-                //        itemToChange.OpportinutyId = x.OpportunityID;
-                //        itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
-                //        itemToChange.DateInvoiced = x.DateInvoiced;
-                //        itemToChange.DateAllocated = x.DateAllocated;
-                //        itemToChange.Created = x.Created;
-                //        itemToChange.ProjectManager = x.ProjectManager;
-                //        itemToChange.wareHouseName = x.WarehouseName;
-                //        itemToChange.wareHouseId = x.WarehouseID;
-                //        itemToChange.ActualQuantity = x.Quantity;
-                //        itemToChange.ProjectName = x.ProjectName;
-                //        itemToChange.Id = x.Id;
-                //        itemToChange.IsUpdated = true;
-                //        listA.Add(itemToChange);
-                //    }
-                //    else
-                //    {
-                //        itemToChange.Activity = x.Activity;
-                //        if (x.ActivityId == 0)
-                //        {
-                //            if (itemToChange.ActivityId == 0)
-                //            {
-                //                itemToChange.ActivityId = x.ActivityId;
-                //            }
-                //        }
-                //        itemToChange.ServiceActivityId = int.Parse(Convert.ToString(x.ServiceActivityId));
-                //        itemToChange.Comments = x.Comments;
-                //        itemToChange.OpportinutyId = x.OpportunityID;
-                //        itemToChange.OpportunityNumber = int.Parse(x.OpportunityNumber);
-                //        itemToChange.DateInvoiced = x.DateInvoiced;
-                //        itemToChange.DateAllocated = x.DateAllocated;
-                //        itemToChange.Created = x.Created;
-                //        itemToChange.ProjectManager = x.ProjectManager;
-                //        itemToChange.wareHouseName = x.WarehouseName;
-                //        itemToChange.ActualQuantity = x.Quantity;
-                //        itemToChange.wareHouseId = x.WarehouseID;
-                //        itemToChange.Id = x.Id;
-                //        itemToChange.IsUpdated = true;
-                //    }
-                //}
                 var listadd =new List<ProjectionOppurtunityModel>();
                 listadd= ProjectionHelperService.MergedProjectionServices().Result;
                 model.projectionOpportunityModel = listadd;  // listA;
@@ -263,6 +214,43 @@ namespace TimeSheet.Controllers
                 var _a = TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
             }
             return PartialView("ResourceDetails", model);
+        }
+        [HttpPost]
+        public ActionResult ExportProjections()
+        {
+            var TimeSheetExportData = new List<CompletedtimesheetExportModel>();
+
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                //ProjectionModel model = new ProjectionModel();
+
+                //model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
+
+                //var listadd = new List<ProjectionOppurtunityModel>();
+                //listadd = ProjectionHelperService.MergedProjectionServices().Result;
+                //model.projectionOpportunityModel = listadd;  // listA;
+
+                
+                GridView gv = new GridView();
+                gv.DataSource = ProjectionHelperService.MergedProjectionServices().Result;
+                gv.DataBind();
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=ProjectionListExport.xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Charset = "";
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+                gv.RenderControl(htw);
+                Response.Output.Write(sw.ToString());
+                Response.Flush();
+                Response.End();
+            }
+            return RedirectToAction("Index", "Projection");
         }
     }
 }

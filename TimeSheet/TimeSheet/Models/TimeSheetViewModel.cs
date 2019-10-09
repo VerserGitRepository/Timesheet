@@ -77,6 +77,6 @@ namespace TimeSheet.Models
         public bool HasUserPermissionsToEdit { get; set; }
        
         public string Vechicles { get; set; }
-
+        public int BreakHours { get; set; }
     }   
 }

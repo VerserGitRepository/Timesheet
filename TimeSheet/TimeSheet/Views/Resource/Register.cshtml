@@ -30,12 +30,8 @@
 
             <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
                 <div class="table table-responsive" id="tblCustomers" style="padding-left:50px;padding-bottom:30px;border-color:lightgray">
-                    @using (Html.BeginForm("Register", "Resource", FormMethod.Post))
-                    {
-                        if (TempData["BookedResourceMessage"] != null)
-                        {
-                            <script>alert(TempData["BookedResourceMessage"].ToString());</script>
-                        }
+                   
+                        
                             <div class="row" style="padding-top:10px">
 
                                 <div class="form-group required col-md-6" tabindex=1 >
@@ -122,24 +118,20 @@
 
                                 <br />
                                 <div class=" col-md-offset-5">
-                                    <button type="submit" class="btn btn-warning btn-md" id="btnregister">
+                                    <button type="submit" class="btn btn-warning btn-md" id="btnregister" onclick="PostData(this);">
                                         <span class="glyphicon glyphicon-ok-sign"></span> Register
                                     </button>
                                 </div>
 
-                                }
+                               
                             </div>
             </div>
             <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
 
                 <div class="table table-responsive" id="MANAGERESOURCES" style="padding-left:50px;padding-bottom:30px;border-color:lightgray">
                     <div class="form-group">
-                        @using (Html.BeginForm("Register", "Resource", FormMethod.Post))
-                        {
-                            if (TempData["BookedResourceMessage"] != null)
-                            {
-                                <script>alert(TempData["BookedResourceMessage"].ToString());</script>
-                            }
+                       
+                           
                             <div class="row" style="padding-top:10px">
 
                                 <div class="form-group  required col-md-6" tabindex=1>
@@ -213,12 +205,12 @@
                             </div>
 
                             <div class=" col-md-offset-5" style="padding-top:20px">
-                                <button type="submit" class="btn btn-warning btn-md" id="btnregisterPM">
+                                <button type="submit" class="btn btn-warning btn-md" id="btnregisterPM" onclick="PostData(this);">
                                     <span class="glyphicon glyphicon-ok-sign"></span> Register
                                 </button>
                             </div>
 
-                        }
+                       
 
 
                     </div>
@@ -672,11 +664,11 @@ $('#ddlRegOpportunityNumberID').change(function () {
                             });
                         });
                 });
-    $('#btnregister, #btnregisterPM').click(function () {
+    function PostData(id) {
         
         var data = null;
        // alert(this.id);
-        if (this.id == "btnregister") {
+        if (id.id == "btnregister") {
             var end_time = $(".slider-time2").text();
             var start_time = $(".slider-time").text();
 
@@ -692,7 +684,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 alert('start time should be prior to endtime');
                 return;
             }
-            if (diff <= 15) {
+            if (diff <= 14) {
                 alert("Minimum booking time shold not be less than 15 mins.");
                 return;
             }
@@ -700,7 +692,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 return;
             }
         }
-        if (this.id == "btnregisterPM") {
+        if (id.id == "btnregisterPM") {
             var end_time = $(".slider-time2PM").text();
             var start_time = $(".slider-timePM").text();
 
@@ -716,7 +708,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 alert('start time should be prior to endtime');
                 return;
             }
-            if (diff <= 15) {
+            if (diff <= 14) {
                 alert("Minimum booking time shold not be less than 15 mins.");
                 return;
             }
@@ -732,7 +724,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 var loadUrl = '@Url.Action("PostResourceData", "Resource")';
                 var loads = $('#ddlRegOpportunityNumberID');
         var test = $('#CandidateNameId').val();
-        if (this.id == "btnregister") {
+        if (id.id == "btnregister") {
             data = {
                 'Day': $('#DatePickId').val(),
                 'ProjectID': $('#ddlregCustomerID').val(),
@@ -766,9 +758,19 @@ $('#ddlRegOpportunityNumberID').change(function () {
             };
 
         }
-                $.post(loadUrl, data, function (response) {
-                });
-            })
+        $.ajax({
+            url: loadUrl,
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                window.location.href = data.newUrl;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+            }
 
     $('#CandidateNameId').multiselect({
         includeSelectAllOption: true,

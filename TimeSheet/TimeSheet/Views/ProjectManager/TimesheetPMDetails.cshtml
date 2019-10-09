@@ -20,7 +20,7 @@
                     <th style="width:50px">StartDate </th>
                     <th>StartTime</th>
                     <th style="width:50px">EndTime </th>
-                    <th>Status</th>
+                   
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
                     
@@ -30,7 +30,7 @@
                 @foreach (var item in Model.PMTimeSheetList)
                 {
                 <tr>
-                    <td class="Id"> <span>@item.Id</span> </td>
+                    <td class="Id"> <span id="txtId">@item.Id</span> </td>
                     <td class="CandidateName">
                         <span id="txtCandidateName">@item.CandidateName</span>
                     </td>
@@ -39,7 +39,7 @@
                     </td>
                     <td class="Day" width="7%">
                         <span>@item.Day.ToShortDateString()</span>
-                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none",@id= "txtDay" })
                            </td>
 
                     <td class="StartTime">
@@ -50,10 +50,7 @@
                         <span>@item.EndTime.ToShortTimeString()</span>
                         <input type="time" id="endTime" value="@item.EndTime.ToString("HH:mm")" style="display:none" />
                     </td>
-                        <td class="Status">
-                        <span id="txtStatus">@item.Status</span>
-                        <input type="hidden" id="hdnddlLidt" value="@item.StatusID" style="display:none" />
-                    </td>
+                       
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
                         <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
@@ -95,7 +92,7 @@
     $('#tblCustomers').dataTable({
         responsive: true
     });
-    SetDDLValue();
+
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
@@ -131,23 +128,7 @@
         row.find(".Delete").show();
         $("#tblCustomers").append(row);
     };
-    function SetDDLValue() {
-        //alert('before document ready');
-         //debugger;
-        $("tbody tr td.Status").each(function LoopTR() {
-            var ratingTdText = $(this);
-            if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
-                $(ratingTdText).find("#ddlStatus option").each(function (i) {
-                    //alert($(ratingTdText).find("#hdnddlLidt").val());
-                    if (($(this).val() == $(ratingTdText).find("#hdnddlLidt").val())) {
-                        $(this).attr('selected', 'selected')
-                    }
-                });
-            }
-
-
-        });
-    }
+   
     //Edit event handler.
     $("body").on("click", "#tblCustomers .Edit", function () {
         // debugger;
@@ -187,16 +168,13 @@
         debugger;
         var CandidateEdit = {};
         var options = { "backdrop": "static", keyboard: true };
-        CandidateEdit.Id = row.find(".Id").find("span").html();
+        CandidateEdit.Id = row.find("#txtId").text();
         CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
-        CandidateEdit.StartTime = row.find(".StartTime").val();
+        CandidateEdit.StartTime = row.find("#startTime").val();
         CandidateEdit.EndTime = row.find("#endTime").val();
-        CandidateEdit.StartTime = row.find("#startTime").text();
-        CandidateEdit.EndTime = row.find("#endTime").text();
-        CandidateEdit.Day = row.find(".Day").text();
-        CandidateEdit.StatusID = row.find("#ddlStatus").val();
+       
+        CandidateEdit.Day = row.find("#txtDay").val();
         
-
         $.ajax({
             type: "POST",
             url: "./UpdateCandidate",
