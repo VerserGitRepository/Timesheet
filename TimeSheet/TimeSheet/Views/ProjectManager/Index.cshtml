@@ -40,49 +40,52 @@
                         <th>Project</th>
                         <th>Activity</th>
                         <th>Facility</th>
-                       
+                        <th>Additional-Activities</th>
                         <th>Comments</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (TimeSheet.Models.ProjectManagerTimesheet item in Model.PMTimeSheetList)
                     {
-                        <tr>
-                            <td>
-                                <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
-                                @*@Html.DisplayFor(modelItem => item.CandidateName)*@
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OpportunityNumber)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Day)
-                            </td>
+                    <tr>
+                        <td>
+                            <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
+                            @*@Html.DisplayFor(modelItem => item.CandidateName)*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OpportunityNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Day)
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StartTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EndTime)
-                            </td>
-                            <td>
-                                <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
-                                @*@Html.DisplayFor(modelItem => item.ProjectName)*@
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
+                            @*@Html.DisplayFor(modelItem => item.ProjectName)*@
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Activity)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.WarehouseName)
-                            </td>
-                           
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TimeSheetComments)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WarehouseName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AdditionalActivities)
+                        </td>
 
-                        </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeSheetComments)
+                        </td>
+
+                    </tr>
                     }
                 </tbody>
             </table>
