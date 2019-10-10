@@ -137,7 +137,8 @@ namespace TimeSheet.Controllers
                         ProjectID = regModel.ProjectID,
                         OpportunityID = regModel.OpportunityNumberID,
                         Colour = regModel.Colour,
-                        TimeSheetComments = regModel.TimeSheetComments
+                        TimeSheetComments = regModel.TimeSheetComments,
+                        AdditionalActivities =theModel.AdditionalActivities
                     };
 
                     var a = RegisterTimesheetService.RegisterPMBooking(regPMModel);

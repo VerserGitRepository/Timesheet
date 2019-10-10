@@ -72,6 +72,21 @@ namespace TimeSheet.Controllers
             }
         }
 
+
+        //[HttpPost]
+        //public ActionResult UpdateActivityState(string Project, bool isActive)
+        //{
+        //    if (Session["Username"] != null && Session["Administrator"] != null)
+        //    {
+        //        var _r = AdminHelperService.UpdateProjectState(Project, isActive);
+        //        var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
+        //        return Json(new { Url = redirectUrl });
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "Login");
+        //    }
+        //}
     }
 
 }
