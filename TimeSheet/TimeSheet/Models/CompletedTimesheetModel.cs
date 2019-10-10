@@ -74,5 +74,6 @@ namespace TimeSheet.Models
         public List<AggregatedCompletedTimesheetModel> AggregaredTimesheetModel { get; set; }
         public int AdpEmployeeID { get; set; }
         public string PayFrequency { get; set; }
+        public int BreakHours { get; set; }
     }
 }
