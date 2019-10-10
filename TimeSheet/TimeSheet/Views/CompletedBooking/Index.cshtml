@@ -103,6 +103,7 @@
                         <th>Activity</th>
                         <th>OLA</th>
                         <th>Actual</th>
+                        <th>BreakTime</th>
                         <th>Warehouse</th>
                         <th>Status</th>
 
@@ -111,60 +112,63 @@
                 <tbody>
                     @foreach (TimeSheet.Models.CompletedTimesheetModel item in Model.CompletedTimeSheetList)
                     {
-                        <tr>
-                            <td>
-                                @if ((bool)Session["HasUserPermissionsToEdit"])
-                                {
-                                    <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
-                                }
-                                else
-                                {
-                                    @Html.DisplayFor(modelItem => item.CandidateName)
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OpportunityNumber)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Day)
-                            </td>
+                    <tr>
+                        <td>
+                            @if ((bool)Session["HasUserPermissionsToEdit"])
+                            {
+                                <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.CandidateName)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OpportunityNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Day)
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StartTime)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EndTime)
-                            </td>
-                            <td>
-                                @if ((bool)Session["HasUserPermissionsToEdit"])
-                                {
-                                    <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
-                                }
-                                else
-                                {
-                                    @Html.DisplayFor(modelItem => item.ProjectName)
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.JobNo)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Activity)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OLATarget)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ActualQuantity)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.WarehouseName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                        <td>
+                            @if ((bool)Session["HasUserPermissionsToEdit"])
+                            {
+                                <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.ProjectName)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JobNo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActualQuantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BreakHours)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WarehouseName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
 
-                        </tr>
+                    </tr>
                     }
                 </tbody>
             </table>
