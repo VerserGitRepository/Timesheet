@@ -88,7 +88,7 @@
                         <tr>
 
                             <td>@item.ResourceName</td>
-                            <td>@item.WarehouseName</td>
+                            <td>@item.Warehouse</td>
                             <td>
                                 <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ResourceCheckBoxID" onchange="ResourceIdChange(this);" />
                             </td>
