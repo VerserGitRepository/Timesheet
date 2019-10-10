@@ -98,6 +98,20 @@ namespace TimeSheet.Controllers
                 }
                 if (CandidateEdit != null)
                 {
+                    if (CandidateEdit.Day != null && CandidateEdit.StartTime != null && CandidateEdit.EndTime != null)
+                    {
+                        string dateString = String.Format("{0:dd/MM/yyyy}", CandidateEdit.Day.Value.Date);
+                        string StartTimeString = String.Format("{0:HH:mm}", CandidateEdit.StartTime.Value);
+                        string EndTimeString = String.Format("{0:HH:mm}", CandidateEdit.EndTime.Value);
+                        string dtSt = dateString + " " + StartTimeString;
+                        string dtEn = dateString + " " + EndTimeString;
+                        var StartdateTime = Convert.ToDateTime(dtSt);
+                        var EnddateTime = Convert.ToDateTime(dtEn);
+                        CandidateEdit.StartTime = StartdateTime;
+                        CandidateEdit.EndTime = EnddateTime;
+                        CandidateEdit.FullName = Session["FullName"].ToString();
+                    }
+
                     var ReturnValue = RegisterTimesheetService.EditPMModel(CandidateEdit);
                 }
             }

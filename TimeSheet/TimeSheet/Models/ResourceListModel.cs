@@ -19,6 +19,6 @@ namespace TimeSheet.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime{ get; set; }
         public string ProjectManager { get; set; }
-
+        public string Warehouse { get; set; }
     }
 }
