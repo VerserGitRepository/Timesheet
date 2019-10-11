@@ -134,7 +134,10 @@
             <thead style="background-color:lightgray">
                 <tr>
                     <th>
-                        Activity Category
+                        Opportunity Number
+                    </th>
+                    <th>
+                        Project Name
                     </th>
                     <th>
                         Activity
@@ -151,12 +154,13 @@
 
             {
             <tr>
-                <td >@item.serviceCategory</td>
-                <td >@item.serviceActivityDescription</td>
+                <td>@item.opportunityNumber</td>
+                <td>@item.projectName</td>
+                <td>@item.serviceActivityDescription</td>
                 <td>
-        <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />
+                    <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />
                 </td>
-              
+
             </tr>
                 }
             </table>
