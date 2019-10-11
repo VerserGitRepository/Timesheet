@@ -27,6 +27,8 @@ namespace TimeSheet.Controllers
 
                 ProjectManagerTimesheet model = new ProjectManagerTimesheet();
                 model.PMTimeSheetList = TimeSheetAPIHelperService.PMTimeSheetList().Result;
+                string Modifystring = model.AdditionalActivities;
+              //  Modifystring.Split("")
                 return View(model);
             }
 

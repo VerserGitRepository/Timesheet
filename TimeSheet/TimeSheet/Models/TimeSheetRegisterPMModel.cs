@@ -40,6 +40,7 @@ namespace TimeSheet.Models
         
         [Required(ErrorMessage = "Project Is Mandatory")]
         public int? ProjectID { get; set; }
-        
+        public string AdditionalActivities { get; set; }
+
     }
 }

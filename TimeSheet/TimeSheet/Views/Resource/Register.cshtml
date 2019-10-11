@@ -177,11 +177,15 @@
                             </div>
                             <div class="row" style="padding-top:10px">
                                 <div class="form-group  required col-md-6" tabindex=7>
-                                    
+                                    <div id="main">
+                                        <input type="button" id="btAdd" value="Add Activity" class="bt" />
+                                        <input type="button" id="btRemove" value="Remove Activity" class="bt" />
+                                        <input type="button" id="btRemoveAll" value="Remove All" class="bt" /><br />
+                                    </div>
 
                                 </div>
-                                <div class="form-group required col-md-6" tabindex=8>
-                                    <div id="time-rangePM" style="padding-top:10px;width:280px" tabindex=7>
+                                <div id="PMActivity"class="form-group required col-md-6" tabindex=8>
+                                    <div id="time-rangePM" style="padding-top:10px;width:270px" tabindex=7>
                                         <p>
                                             Start Time <b><span class="slider-timePM">08:30 AM</span></b>&nbsp;&nbsp;&nbsp;End Time <b><span class="slider-time2PM">5:00 PM</span></b>
 
@@ -410,6 +414,109 @@
 </style>
 
 <script>
+
+    $(document).ready(function () {
+
+        var iCnt = 0;
+        // CREATE A "DIV" ELEMENT AND DESIGN IT USING jQuery ".css()" CLASS.
+        var container = $(document.createElement('div')).css({
+            padding: '5px', margin: '10px', width: '300px', border: '1px solid',
+            borderTopColor: '#999', borderBottomColor: '#999',
+            borderLeftColor: '#999', borderRightColor: '#999'
+        }); $
+        $(container).attr('id', 'pmaddlActivities')
+        $('#btAdd').click(function () {
+            var html = "";
+            if (iCnt <= 4) {
+
+                iCnt = iCnt + 1;
+
+                // ADD TEXTBOX.
+                $(container).append('<br><input type=text  style = "border:solid 1.5px lightgray;width:300px;height:35px" class="input" id=tb' + iCnt + ' ' +
+                    'value="Activity ' + iCnt + '" /> <div id="time-range' + iCnt + '"> <p>Time : <span class="slider-time' + iCnt + '"></span> - <span class="slider-time2' + iCnt + '">0:15</span></p><div class="sliders_step1' + iCnt + '"><div id="slider-range' + iCnt + '"></div></div></div>');
+
+                // SHOW SUBMIT BUTTON IF ATLEAST "1" ELEMENT HAS BEEN CREATED.
+                //if (iCnt == 1) {
+                //    var divSubmit = $(document.createElement('div'));
+                //    $(divSubmit).append('<input type=button class="bt"' +
+                //        'onclick="GetTextValue()"' +
+                //        'id=btSubmit value=Submit />');
+                //}
+
+
+
+                html += '<script>';
+                html += '$("#slider-range' + iCnt + '").slider({range: true,min: 0,max: 120,step: 15,values: [0, 15],slide: function (e, ui) { var minutes1 = ui.values[0] ;';
+                html += 'if (minutes1.length == 1) minutes1 = "0" + minutes1;if (minutes1 == 0) minutes1 = "";minutes1 = minutes1;$(".slider-time' + iCnt + '").html(minutes1);';
+                html += 'var hours2 = Math.floor(ui.values[1] / 60);var minutes2 = ui.values[1] - (hours2 * 60);$(".slider-time2' + iCnt + '").html(hours2 + ":" + minutes2);}});';
+                //html+='//script>';
+
+                // ADD BOTH THE DIV ELEMENTS TO THE "main" CONTAINER.
+                $('#main').after(container);
+
+
+            }
+            // AFTER REACHING THE SPECIFIED LIMIT, DISABLE THE "ADD" BUTTON.
+            // (20 IS THE LIMIT WE HAVE SET)
+            else {
+                $(container).append('<label>Max. No. of Activities limit reached.</label>');
+                $('#btAdd').attr('class', 'bt-disable');
+                $('#btAdd').attr('disabled', 'disabled');
+            }
+            $("head").append(html);
+        });
+
+        // REMOVE ONE ELEMENT PER CLICK.
+        $('#btRemove').click(function () {
+            if (iCnt != 0) { $('#tb' + iCnt).remove(); $('#time-range' + iCnt).remove(); iCnt = iCnt - 1; }
+
+            if (iCnt == 0) {
+                $(container)
+                    .empty()
+                    .remove();
+
+                $('#btSubmit').remove();
+                $('#btAdd')
+                    .removeAttr('disabled')
+                    .attr('class', 'bt');
+            }
+        });
+
+        // REMOVE ALL THE ELEMENTS IN THE CONTAINER.
+        $('#btRemoveAll').click(function () {
+            $(container)
+                .empty()
+                .remove();
+
+            $('#btSubmit').remove();
+            iCnt = 0;
+
+            $('#btAdd')
+                .removeAttr('disabled')
+                .attr('class', 'bt');
+        });
+    });
+
+    // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
+    var divValue, values = '';
+
+    function GetTextValue() {
+        $(divValue)
+            .empty()
+            .remove();
+
+        values = '';
+
+        $('.input').each(function () {
+            divValue = $(document.createElement('div')).css({
+                padding: '5px', width: '200px'
+            });
+            values += this.value + '<br />'
+        });
+
+        $(divValue).append('<p><b>Your selected values</b></p>' + values);
+        $('body').append(divValue);
+    }
     $('#addRow').click(function () {
         // get the last person and html html
         var $person = $('.person').last();
@@ -665,6 +772,10 @@ $('#ddlRegOpportunityNumberID').change(function () {
                         });
                 });
     function PostData(id) {
+       
+        var textMessage = "";
+       
+            
         
         var data = null;
        // alert(this.id);
@@ -716,6 +827,11 @@ $('#ddlRegOpportunityNumberID').change(function () {
             if ($('#ddlregCustomerIDPM').val() == "" || $('#ddlRegOpportunityNumberIDPM').val() == "" || $('#ServiceActivityIDPM').val() == "") {
                 return;
             }
+            var childrenCount = $("#pmaddlActivities").children().length / 3;
+            for (var i = 1; i < childrenCount + 1; i++) {
+                textMessage += $("#tb" + i).val() + "-" + $(".slider-time2" + i).text() + ";";
+            }
+           
         }
                     @if (!ViewData.ModelState.IsValid)
                     {
@@ -753,7 +869,9 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 'EndTime': $(".slider-time2PM").text(),
 
                 'Colour': $('#ddlColourPM').val(),
-                'TimeSheetComments': $('#txtComments').val()
+                'TimeSheetComments': $('#txtComments').val(),
+                'AdditionalActivities': textMessage
+                
 
             };
 

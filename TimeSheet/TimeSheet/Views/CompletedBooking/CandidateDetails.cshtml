@@ -16,6 +16,7 @@
                     <th style="width:50px">EndTime </th>
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
+                    <th>Break (Minutes)</th>
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
@@ -24,65 +25,78 @@
             <tbody class="table">
                 @foreach (var item in Model.CompletedTimeSheetList)
                 {
-                    <tr>
-                        <td class="Id"> <span>@item.Id</span> </td>
-                        <td class="CandidateName">
-                            <span id="txtCandidateName">@item.CandidateName</span>
-                        </td>
-                        <td class="Activity">
-                            @Html.DisplayFor(modelItem => item.Activity)
-                        </td>
+                <tr>
+                    <td class="Id"> <span>@item.Id</span> </td>
+                    <td class="CandidateName">
+                        <span id="txtCandidateName">@item.CandidateName</span>
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Activity)
+                    </td>
 
-                        <td class="Day" width="7%">
-                            <span>@item.Day.Value.ToShortDateString()</span>
-                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                    <td class="Day" width="7%">
+                        <span>@item.Day.Value.ToShortDateString()</span>
+                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
 
-                        </td>
-                        <td class="StartTime">
-                            <span>@item.StartTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                        </td>
-                     
+                    </td>
+                    <td class="StartTime">
+                        <span>@item.StartTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                    </td>
 
-                        <td class="EndTime" width="8%">
-                            <span>@item.EndTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                        </td>
 
-                        <td class="OLATarget">
-                            @Html.DisplayFor(modelItem => item.OLATarget)
-                        </td>
-                        <td class="ActualQuantity">
-                            <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                        </td>
-                        <td class="ActivityStatus">
-                            <span text="Status" span />
-                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
-                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                        </td>
-                        <td class="TimeSheetComments">
-                            <span>@item.TimeSheetComments</span>
-                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-                        </td>
-                        <td width="5%">
-                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Edit</strong></span>
-                            </a>
+                    <td class="EndTime" width="8%">
+                        <span>@item.EndTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                    </td>
 
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Update</strong></span>
-                            </a>
+                    <td class="OLATarget">
+                        @Html.DisplayFor(modelItem => item.OLATarget)
+                    </td>
+                    <td class="ActualQuantity">
+                        <span style="width:2px">@item.ActualQuantity</span>
+                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                    </td>
+                    <td class="breakHrs">
 
-                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                <span><strong>Cancel</strong></span>
-                            </a>
+                        @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                        {
+                            new SelectListItem{ Text="No Break", Value = "0" },
+                            new SelectListItem{ Text="15 Mins", Value = "15" },
+                            new SelectListItem{ Text="30 Mins", Value = "30" },
+                            new SelectListItem{ Text="45 Mins", Value = "45" },
+                            new SelectListItem{ Text="60 Mins", Value = "60" },
+                         }, new { @id = "ddlBreak" })
+                        <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
 
-                        </td>
-                    </tr>
+                    </td>
+                    <td class="ActivityStatus">
+                        <span text="Status" span />
+                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
+                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                    </td>
+                    <td class="TimeSheetComments">
+                        <span>@item.TimeSheetComments</span>
+                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                    </td>
+                    <td width="5%">
+                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
+
+                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span><strong>Cancel</strong></span>
+                        </a>
+
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -143,6 +157,20 @@
        
 
         });
+
+        $("tbody tr td.breakHrs").each(function LoopTR() {
+            var brkTdText = $(this);
+            if ($(brkTdText).find("#hdnddlbrkhrs").val() != "") {
+                $(brkTdText).find("#ddlBreak option").each(function (i) {
+                    //alert($(ratingTdText).find("#hdnddlLidt").val());
+                    if (($(this).val() == $(brkTdText).find("#hdnddlbrkhrs").val())) {
+                        $(this).attr('selected', 'selected')
+                    }
+                });
+            }
+
+
+        });
     }
 
     //Edit event handler.
@@ -189,6 +217,7 @@
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
         CandidateEdit.Day = row.find(".Day").find("span").html();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
+        CandidateEdit.BreakHours = row.find("#ddlBreak").val();
 
         $.ajax({
             type: "POST",
