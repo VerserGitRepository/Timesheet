@@ -112,6 +112,25 @@ namespace TimeSheet.ServiceHelper
 
             }
         }
+
+        public static async Task UpdateActivity(int ServiceActivityID, bool isActive)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageServiceActivity", ServiceActivityID, isActive)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var ReturnResult = await response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Activity Updated Successfully";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Activity Update UN-Successfully!";
+                }
+
+            }
+        }
         public static async Task UpdateResourceState(string resourceName, bool isActive)
         {
             using (HttpClient client = new HttpClient())
