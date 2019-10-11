@@ -443,5 +443,24 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
+        public static async Task<List<CompletedTimesheetModel>> AllBookingEntries()
+        {
+            List<CompletedTimesheetModel> completeList = new List<CompletedTimesheetModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/AllTimesheetEnteries")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    completeList = await response.Content.ReadAsAsync<List<CompletedTimesheetModel>>();
+
+                    //foreach (var a in list)
+                    //{
+                    //    completeList.Add(a);
+                    //}
+                }
+            }
+            return completeList;
+        }
     }
 }

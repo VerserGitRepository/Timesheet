@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -252,6 +253,102 @@ namespace TimeSheet.Controllers
             {                
                 return PartialView("RatingDetails");
             }
+        }
+        public ActionResult AllBookingEntries()
+        {
+            Session["Accounts"] = "";
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+               CompletedTimesheetModel model = new CompletedTimesheetModel();
+               model.CompletedTimeSheetList =  TimeSheetAPIHelperService.AllBookingEntries().Result;
+               
+                
+                Session["HasUserPermissionsToEdit"] = UserRoles.UserCanEditTimesheet();
+                Session["HomeIndex"] = model;
+                return View("AllBookingEntries",model);
+            }
+        }
+        [HttpPost]
+        public ActionResult ExportCompleteBookingSchedule()
+        {
+            var TimeSheetExportData = new List<CompletedtimesheetExcelExportModel>();
+            var TimeSheetmodel = TimeSheetAPIHelperService.AllBookingEntries().Result;
+            string otHours = (string)ConfigurationManager.AppSettings["OTHours"];
+            List<string> otvalues = new List<string>();
+            otvalues = otHours.Split(';').ToList();
+            string OTWeekEndSatDay = (string)ConfigurationManager.AppSettings["OTWeekEndSatDay"];
+            string OTWeekEndSatDayException = (string)ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
+            string OTWeekEndSunDay = (string)ConfigurationManager.AppSettings["OTWeekEndSunDay"];
+            string OTHoursVal = string.Empty;                                                                             //TimeSheet
+            foreach (var item in TimeSheetmodel)
+            {
+                if ((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
+                {
+
+                    OTHoursVal = Convert.ToString((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
+                }
+                else
+                {
+                    OTHoursVal = "0";
+                }
+
+                TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
+                {
+
+                    ADPEmployeeId = item.AdpEmployeeID.ToString(),
+                    ProjectName = item.ProjectName,
+                    CandidateName = item.CandidateName,
+                    OpportunityNumber = item.OpportunityNumber,
+                    Activity = item.Activity,
+                    WarehouseName = item.WarehouseName,
+                    //Monday
+                    StartTime = item.StartTime.Value.ToString("HH:mm"),
+                    EndTime = item.EndTime.Value.ToString("HH:mm"),
+                    JobNo = item.JobNo,
+                    OLATarget = item.OLATarget,
+                    ActualQuantity = item.ActualQuantity,
+                    Day = item.Day.Value.Date.ToShortDateString(),
+                    Status = item.Status,
+                    TimeSheetComments = item.TimeSheetComments,
+                    Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                    OTHours = OTHoursVal,
+                    PayFrequency = item.PayFrequency,
+                    PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)
+
+
+                });
+            }
+
+            GridView gv = new GridView();
+            gv.DataSource = TimeSheetExportData;
+
+            gv.DataBind();
+            foreach (GridViewRow row in gv.Rows)
+            {
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    if (row.RowType == DataControlRowType.DataRow)
+                    {
+                        row.Cells[i].Attributes.Add("class", "text");
+                    }
+                }
+            }
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=CompleteTimeEntrySchedule.xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            gv.RenderControl(htw);
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+            return RedirectToAction("AllBookingEntries", "Home");
         }
     }
 }
