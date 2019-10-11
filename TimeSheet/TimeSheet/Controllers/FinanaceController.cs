@@ -77,7 +77,7 @@ namespace TimeSheet.Controllers
                         agrModel.PayCycle = pc.ToString();
                         agrModel.ADPEmployeeID = t.AdpEmployeeID;
                         agrModel.PayFrequency = t.PayFrequency;
-
+                        agrModel.ResourceId = Convert.ToInt32(t.ResourceID);
 
                     }
 
@@ -102,10 +102,10 @@ namespace TimeSheet.Controllers
             {
 
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
-                List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
-                List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+                //List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
+                //List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
 
-                model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
+                model.CompletedTimeSheetList = TimeSheetAPIHelperService.PaidTimeSheetList().Result;
 
 
                 //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});

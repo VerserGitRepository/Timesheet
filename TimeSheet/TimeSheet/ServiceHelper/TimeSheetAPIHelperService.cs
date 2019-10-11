@@ -423,7 +423,7 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
-        public static async Task<ReturnModel> TimeSheetApproval(int activityId)
+        public static async Task<ReturnModel> TimeSheetApproval(int? activityId)
         {
             ReturnModel ReturnResult = new ReturnModel();
             using (HttpClient client = new HttpClient())

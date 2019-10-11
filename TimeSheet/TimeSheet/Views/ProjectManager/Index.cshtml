@@ -79,7 +79,13 @@
                             @Html.DisplayFor(modelItem => item.WarehouseName)
                         </td>
                         <td style="width:40%">
-                            @*@Html.DisplayFor(modelItem => item.AdditionalActivities)*@
+                          @if (item.AdditionalActivities != null)
+                            {
+                                foreach (string val in item.AdditionalActivities.Split(';'))
+                                {
+                                    <span>@val <br /></span>
+                                }
+                            }
                         </td>
 
                         <td>

@@ -61,6 +61,7 @@
                         </td>
                         <td>
                             <span id="txtCandidateName">@item.CandidateName</span>
+                            <input type="hidden" id="txtResourceId" value="@item.ResourceId" />
 
                         </td>
                         <td>
@@ -77,7 +78,7 @@
                         </td>
                         <td>
                            
-                            <button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
+                            <button class="btn btn-success btn-xs" data-title="Approve" onclick="ApprovePayment(this);" data-toggle="modal" data-target="#approve">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </button>
 
@@ -152,15 +153,15 @@
     });
      function ApprovePayment(rowId) {
         var row = $(rowId).closest("tr");
-        var candidateName = row.find("#txtCandidateName").text();
+         var resourceId = row.find("#txtResourceId").val();
         var options = { "backdrop": "static", keyboard: true };
         $.confirm({
             title: 'Confirm!',
-            content: 'Are you sure you want to approve the payments for ,' + candidateName + '?',
+            content: 'Are you sure you want to approve the payments for ,' + row.find("#txtCandidateName").text() + '?',
             buttons: {
                 confirm: function () {
                        $.ajax({
-                        data: { CandidateName: candidateName },
+                           data: { resourceId: resourceId },
                         url: '@Url.Action("ApprovePaymentBulk", "Projection")',
                         type: "POST",
                         success: function (data) {

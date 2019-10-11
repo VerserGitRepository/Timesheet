@@ -198,22 +198,27 @@ namespace TimeSheet.Controllers
             return PartialView("ResourceDetails", model);
         }
         [HttpPost]
-        public ActionResult ApprovePaymentBulk(string CandidateName)
+        public ActionResult ApprovePaymentBulk(int resourceId)
         {
             if (UserRoles.UserCanApproveTimesheet() != true)
             {
                 return RedirectToAction("Index", "Home");
             }
-            CompletedTimesheetModel model = new CompletedTimesheetModel();
-            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
-            model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
-            List<int> activityIds = model.CompletedTimeSheetList.Select(i => i.Id).ToList();
+            //CompletedTimesheetModel model = new CompletedTimesheetModel();
 
-            foreach (var activityId in activityIds)
-            {
-                var _a = TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
-            }
-            return PartialView("ResourceDetails", model);
+            //List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
+            //List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+
+            //model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
+            //model.CompletedTimeSheetList = model.CompletedTimeSheetList.Where(c => c.CandidateName == CandidateName).ToList();
+
+            //List<int?> ResourceIds = model.CompletedTimeSheetList.Select(i => i. ResourceID).ToList();
+
+            //foreach (var _ResourceId in ResourceIds)
+            //{
+                var _a = TimeSheetAPIHelperService.TimeSheetApproval(resourceId).Result;
+            //}
+            return PartialView("WeeklyReport");
         }
         [HttpPost]
         public ActionResult ExportProjections()

@@ -11,6 +11,7 @@ namespace TimeSheet.Models
     {
         public double Hours { get; set; }
         public string CandidateName { get; set; }
+        public int ResourceId { get; set; }
         public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }
         public string PayCycle { get; set; }
