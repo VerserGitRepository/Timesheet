@@ -205,13 +205,15 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Index", "Home");
             }
             CompletedTimesheetModel model = new CompletedTimesheetModel();
+
             var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
-            List<int> activityIds = model.CompletedTimeSheetList.Select(i => i.Id).ToList();
 
-            foreach (var activityId in activityIds)
+            List<int?> ResourceIds = model.CompletedTimeSheetList.Select(i => i. ResourceID).ToList();
+
+            foreach (var _ResourceId in ResourceIds)
             {
-                var _a = TimeSheetAPIHelperService.TimeSheetApproval(activityId).Result;
+                var _a = TimeSheetAPIHelperService.TimeSheetApproval(_ResourceId).Result;
             }
             return PartialView("ResourceDetails", model);
         }
