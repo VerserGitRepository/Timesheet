@@ -75,7 +75,7 @@ namespace TimeSheet.Controllers
                         double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5)+1;
                         
                         agrModel.PayCycle = pc.ToString();
-                        agrModel.ADPEmployeeID = t.AdpEmployeeID;
+                        agrModel.ADPEmployeeID = Convert.ToInt32(t.AdpEmployeeID);
                         agrModel.PayFrequency = t.PayFrequency;
                         agrModel.ResourceId = Convert.ToInt32(t.ResourceID);
 
@@ -132,7 +132,7 @@ namespace TimeSheet.Controllers
                         double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5) + 1;
 
                         agrModel.PayCycle = pc.ToString();
-                        agrModel.ADPEmployeeID = t.AdpEmployeeID;
+                        agrModel.ADPEmployeeID = Convert.ToInt32(t.AdpEmployeeID);
                         agrModel.PayFrequency = t.PayFrequency;
 
 
@@ -205,7 +205,7 @@ namespace TimeSheet.Controllers
                         //}
                         double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5) + 1;
                         agrModel.PayCycle =pc.ToString();
-                        agrModel.ADPEmployeeID = t.AdpEmployeeID;
+                        agrModel.ADPEmployeeID = Convert.ToInt32(t.AdpEmployeeID);
                         agrModel.PayFrequency = t.PayFrequency;
 
 

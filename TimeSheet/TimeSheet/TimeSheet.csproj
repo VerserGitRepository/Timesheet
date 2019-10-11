@@ -344,6 +344,7 @@
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <Content Include="Scripts\Datepair.js" />
+    <None Include="Properties\PublishProfiles\TimeSheet20191011 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\FullCalender\core\main.css" />
     <Content Include="Scripts\FullCalender\core\main.js" />
@@ -443,6 +444,7 @@
     <Content Include="Views\ProjectManager\TimesheetPMDetails.cshtml" />
     <Content Include="Views\Finanace\PaidResourceDetails.cshtml" />
     <Content Include="Views\ResourceTimeline\PMTimeline.cshtml" />
+    <Content Include="Views\Home\AllBookingEntries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
