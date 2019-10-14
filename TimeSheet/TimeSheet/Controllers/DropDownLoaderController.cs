@@ -32,6 +32,17 @@ namespace TimeSheet.Controllers
             }).ToList();
             return Json(load, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public JsonResult VehicleListing(int warehouseId)
+        {
+            List<ListItemViewModel> load = new List<ListItemViewModel>();
+            load = TimeSheetAPIHelperService.VehicleListing(warehouseId).Result.Select(x => new ListItemViewModel()
+            {
+                Id = x.Id,
+                Value = x.Value
+            }).ToList();
+            return Json(load, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }
