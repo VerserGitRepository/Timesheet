@@ -88,7 +88,7 @@
 
                                 <div class="form-group col-md-6" tabindex=9 >
                                     <label>Vehicle</label>
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Vechicles, new SelectList(new[] { "No Vehicle", "Verser Van ", "Versr Transit", "Verser Truck" }), new { @class = "form-control", id = "ddlVan" })
+                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Vechicles, new SelectList(Enumerable.Empty<SelectListItem>()), "No Vehicle", new { @class = "form-control", id = "ddlVan" })
                                 </div>
 
                                 <div class="form-group required col-md-6" tabindex=10 >
@@ -687,7 +687,20 @@
                             });
 
                         $('#CandidateNameId').multiselect('rebuild');
+        });
+                    warehouseUrl = '@Url.Action("VehicleListing", "DropDownLoader")';
+
+                    $.getJSON(warehouseUrl, { WarehouseID: $('#ddlregWarehouseNameId').val()}, function (response) {
+                        $('#ddlVan').empty();
+                        $('#ddlVan').append($('<option></option>').text('No Vehicle').val(0));
+                            $.each(response, function (index, item) {
+                                $('#ddlVan').append($('<option></option>').text(item.Value).val(item.Id));
+
+                            });
+
+                        $('#CandidateNameId').multiselect('rebuild');
                        });
+
             });
 
             $('.project').change(function () {
@@ -853,7 +866,8 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 'EndTime': $(".slider-time2").text(),
                 //'EndDate': $('#EndDateId').val(),
                 'Colour': $('#ddlColour').val(),
-                'OLATarget': $('#txtOLA').val()
+                'OLATarget': $('#txtOLA').val(),
+                'Vechicles': $("#ddlVan option:selected").text()
             };
         }
         else {

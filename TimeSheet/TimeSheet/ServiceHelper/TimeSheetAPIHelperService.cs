@@ -462,5 +462,23 @@ namespace TimeSheet.ServiceHelper
             }
             return completeList;
         }
+        public static async Task<List<ListItemViewModel>> VehicleListing(int warehouseId)
+        {
+            List<ListItemViewModel> vanList = new List<ListItemViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/{0}/VehiclesList", warehouseId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ListItemViewModel>>();
+                    foreach (var a in projectactivities)
+                    {
+                        vanList.Add(new ListItemViewModel() { Id = a.Id, Value = a.Value });
+                    }
+                }
+            }
+            return vanList;
+        }
     }
 }

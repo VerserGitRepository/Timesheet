@@ -121,6 +121,7 @@ namespace TimeSheet.Controllers
                 regModel.JobID = theModel.JobID;
                 regModel.FullName = Session["FullName"].ToString();                     
                 regModel.TimeSheetComments = theModel.TimeSheetComments;
+                regModel.Vechicles = theModel.Vechicles;
 
                 //TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
                 if (regModel.JobID == null || regModel.JobID == 0)
