@@ -8,7 +8,7 @@ namespace TimeSheet.Models
     public class ActivityListModel
     {
         public int Id { get; set; }       
-        public string serviceActivityDescription { get; set; }
+        public int opportunityNumber { get; set; }
         public bool isActive { get; set; }
         public int OLA_Day { get; set; }
         public int OLA_30mins { get; set; }
@@ -16,6 +16,7 @@ namespace TimeSheet.Models
         public string olA_Filter { get; set; }
         public string serviceCategory { get; set; }
         public bool IsActive { get; set; }
-        public int ServiceActivityID { get; set; }
+        public string serviceActivityDescription { get; set; }
+        public string projectName { get; set; }
     }
 }
