@@ -494,10 +494,9 @@
                     data: model,
                     url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
                     type: "POST",
-                    success: function (model) {
+                    success: function (data) {
                         if (data.status === 'OK') {
-                           // window.location.href = data.Url
-                            $('#example').DataTable().ajax.reload();
+                            window.location.href = data.Url
                         }
                         else {
                             alert("The status cannot be updated at this time");
