@@ -4,169 +4,152 @@
 @{
     ViewBag.Title = "Index";
 }
-<script src="https://code.jquery.com/jquery-3.3.1.js" type="text/javascript"></script>
-<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-<script src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-
-<table class="table pull-right" style="width:50%;margin-right:170px"></table>
 
 <div class="container" style="margin-left:0px">
-    @using (Html.BeginForm("ExportProjections", "Projection", FormMethod.Post))
-    {
-        <div class="row">
-            <button type="submit" class="btn btn-default btn-sm" style="padding-left:10px;padding-top:2px;margin-left:10px">
-                <span class="glyphicon glyphicon-export"></span> Export
-            </button>
-        </div>
-    }
-    <div class="row" id="MANAGEPROJECTIONMAIN">
-        <div class="col-md-12">
-            <table class="table-bordered table-responsive-md text-center table-hover table-scroll" id="MANAGEPROJECTIONMAIN">
-                <thead style="background-color:#FFA500;color:white ">
+    <div class="modal-header" style="background-color:lightgray;width:1550px">
+        <h5 class="modal-title text-center">Resource Details</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1400px">
+        <table class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1400px" id="MANAGEPROJECTION">
+            <thead style="background-color:#FFA500;color:white ">
+                <tr>
+
+                    <th>ProjectName</th>
+                    <th>Oppurtunity</th>
+                    <th>PM</th>
+                    <th>Services</th>
+                    <th>Facility</th>
+                    <th>Week</th>
+                    <th>Quantity</th>
+                    <th>EstimatedInvoiceDate</th>
+                    <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th style="width:20px"></th>
+                    <th class="hidden"></th>
+                    <th class="hidden"></th>
+                    <th class="hidden"></th>
+
+                </tr>
+            </thead>
+            <tbody class="table">
+                @foreach (var item in Model.projectionOpportunityModel)
+                {
                     <tr>
-
-                        <th>ProjectName</th>
-                        <th>Oppurtunity</th>
-                        <th>PM</th>
-                        <th>Services</th>
-                        <th>Facility</th>
-                        <th>Week</th>
-                        <th>Quantity</th>
-                        <th>EstimatedInvoiceDate</th>
-                        <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                        <th style="width:20px"></th>
-                        <th class="hidden"></th>
-                        <th class="hidden"></th>
-                        <th class="hidden"></th>
-
-                    </tr>
-                </thead>
-                <tbody class="table">
-                    @foreach (var item in Model.projectionOpportunityModel)
-                    {
-                        <tr>
-                            <td class="ProjectName">
-                                <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
-                            </td>
-                            <td class="opportunity">
-                                <a href="javascript:void(0);" id="txtOpportunityId" class="CandidateName" data-id="@item.OpportunityNumber">@Html.DisplayFor(modelItem => item.OpportunityNumber)</a>
-                            </td>
-                            <td class="PM">
-                                <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
-                            </td>
-                            <td title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity">
-                                <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
-                                <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
+                        <td class="ProjectName">
+                            <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+                        </td>
+                        <td class="opportunity">
+                            <span id="txtOpportunityId">@Html.DisplayFor(modelItem => item.OpportunityNumber) </span>
+                        </td>
+                        <td class="PM">
+                            <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
+                        </td>
+                        <td title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity">
+                            <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
+                            <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
 
 
-                            </td>
-                            <td class="dropdownListTD">
+                        </td>
+                        <td class="dropdownListTD">
 
-                                @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
+                            @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
 
-                                <input class="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
-                                @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
+                            @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
 
-                            </td>
-                            <td>
-                                @if (item.Quantity >= 0)
+                        </td>
+                        <td>
+                            @if (item.Quantity >= 0)
+                            {
+                                if (item.DateAllocated.HasValue)
                                 {
-                                    if (item.DateAllocated.HasValue)
-                                    {
-                                        <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
-                                        @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
-                                        <input class="hidden" type="text" id="hdnTxtDtAlctd" value="@item.DateAllocated.Value.ToString("yyyy-MM-dd")" />
+                                    <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
+                                    @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                                    <input class="hidden" type="text" id="hdnTxtDtAlctd" value="@item.DateAllocated.Value.ToString("yyyy-MM-dd")" />
 
 
-                                    }
-                                    else
-                                    {
-                                        <span id="startTime"></span>
-                                        @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
-                                    }
                                 }
                                 else
                                 {
                                     <span id="startTime"></span>
                                     @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
                                 }
+                            }
+                            else
+                            {
+                                <span id="startTime"></span>
+                                @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                            }
 
-                            </td>
-                            <td>
+                        </td>
+                        <td>
 
-                                <span>@Html.DisplayFor(modelItem => item.Quantity)</span>
-                                <input type="text" id="quantity" class="txtQuantity" value="@item.Quantity" style="display:none" />
-                                <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
-                            </td>
-                            <td>
+                            <span>@Html.DisplayFor(modelItem => item.Quantity)</span>
+                            <input type="text" id="quantity" class="txtQuantity" value="@item.Quantity" style="display:none" />
+                            <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
+                        </td>
+                        <td>
 
-                                @if (item.Quantity >= 0)
+                            @if (item.Quantity >= 0)
+                            {
+                                if (item.DateInvoiced.HasValue)
                                 {
-                                    if (item.DateInvoiced.HasValue)
-                                    {
-                                        <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
-                                        @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
-                                        <input class="hidden" type="text" id="hdnTxtDtInvced" value="@item.DateInvoiced.Value.ToString("yyyy-MM-dd")" />
+                                    <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                                    @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                                    <input class="hidden" type="text" id="hdnTxtDtInvced" value="@item.DateInvoiced.Value.ToString("yyyy-MM-dd")" />
 
-                                    }
-                                    else
-                                    {
-                                        <span id="endTime"></span>
-                                        @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
-                                    }
                                 }
                                 else
                                 {
                                     <span id="endTime"></span>
                                     @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
                                 }
+                            }
+                            else
+                            {
+                                <span id="endTime"></span>
+                                @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                            }
 
-                            </td>
-                            <td class="commentsLine">
-                                <span id="comments">@item.Comments</span>
-                                <input type="text" id="comments" value="@item.Comments" style="display:none" />
-                            </td>
-                            <td>
-                                <a href="#" class="Change btn btn-primary a-btn-slide-text">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    <span><strong>Change</strong></span>
+                        </td>
+                        <td class="commentsLine">
+                            <span id="comments">@item.Comments</span>
+                            <input type="text" id="comments" value="@item.Comments" style="display:none" />
+                        </td>
+                        <td>
+                            <a href="#" class="Change btn btn-primary a-btn-slide-text">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Change</strong></span>
+                            </a>
+                            @if (item.Quantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
+                            {
+                                <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    <span><strong>Add</strong></span>
                                 </a>
-                                @if (item.Quantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
-                                {
-                                    <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
-                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        <span><strong>Add</strong></span>
-                                    </a>
-                                }
-                                <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    <span><strong>Update</strong></span>
-                                </a>
-                                <a href="#" class="Cancel btn btn-danger a-btn-slide-text" style="display:none">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    <span><strong>Cancel</strong></span>
-                                </a>
-                                @*<a class="Delete" href="javascript:;">Delete</a>*@
-                            </td>
-                            <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
-                            <td class="hidden"><input type="text" id="txtActvty" value="@item.ServiceRevenueId" /></td>
-                            <td class="hidden"><input type="text" id="txtId" value="@item.Id" /></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-        </div>
-
+                            }
+                            <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
+                            <a href="#" class="Cancel btn btn-danger a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                        <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
+                        <td class="hidden"><input type="text" id="txtActvty" value="@item.ServiceRevenueId" /></td>
+                        <td class="hidden"><input type="text" id="txtId" value="@item.Id" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
     </div>
+
+
 </div>
 <div id='myModal' class='modal'>
     <div class="modal-dialog" style="width:1000px;">
@@ -175,13 +158,7 @@
         </div>
     </div>
 </div>
-<div id='filterModal' class='modal'>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div id='filterModalContent'></div>
-        </div>
-    </div>
-</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
@@ -200,36 +177,14 @@
  SetDDLValue();
     $(document).ready(function () {
        // alert('document ready');
-        $('table#MANAGEPROJECTIONMAIN').DataTable();
+        $('#MANAGEPROJECTION').DataTable({
+            stateSave: true
+        });
        // SetDDLValue();
 
 
     });
-    var projectionsUrl = './GetProjections';
-    $(function () {
-        $("#MANAGEPROJECTIONMAIN").on("click", ".opportunity", function () {
-            // debugger;
-            var $buttonClicked = $(this);
-            var opportunityId = $buttonClicked.attr('data-id');
-            var options = { "backdrop": "static", keyboard: true };
-            $.ajax({
-                type: "GET",
-                url: projectionsUrl,
-                contentType: "application/json; charset=utf-8",
-                data: { "opportunityId": $(this).text().trim() },
-                datatype: "json",
-                success: function (data) {
-                    // debugger;
-                    $('#filterModalContent').html(data);
-                    $('#filterModal').modal(options);
-                    $('#filterModal').modal('show');
-                },
-                error: function () {
-                    alert("Dynamic content load failed.");
-                }
-            });
-        });
-    });
+
 
     function SetDDLValue() {
         //alert('before document ready');
@@ -254,9 +209,9 @@
 
         });
     }
-
+    
     //Edit event handler.
-    $("body").on("click", "#MANAGEPROJECTIONMAIN .Change", function () {
+    $("body").on("click", "#MANAGEPROJECTION .Change", function () {
         var row = $(this).closest("tr");
 
         $("td", row).each(function () {
@@ -274,31 +229,31 @@
     });
 
     //Update event handler.
-    //$("body").on("click", "#MANAGEPROJECTIONMAIN .Update", Register());
-    //$("body").on("click", "#MANAGEPROJECTIONMAIN .Add", Register());
+    //$("body").on("click", "#MANAGEPROJECTION .Update", Register());
+    //$("body").on("click", "#MANAGEPROJECTION .Add", Register());
     //Cancel event handler.
     function ShowModal(theRow) {
         var row = $(theRow).closest("tr");
         var options = { "backdrop": "static", keyboard: true };
 
 
-
+        
        //globalRow = row;
         var ther = row.find("span#txtOpportunityId").text();
-        var formcontent = '<table class="table-bordered table - responsive - md text - center table - hover table - scroll" id="MANAGEPROJECTIONMAIN">';
+        var formcontent = '<table class="table-bordered table - responsive - md text - center table - hover table - scroll" id="MANAGEPROJECTION">';
         formcontent += '<thead style = "background-color:#FFA500;color:white"><tr><th>Oppurtunity</th><th>Services</th> <th>Facility</th> <th>Week</th> <th>Quantity</th>';
         formcontent += '<th> EstimatedInvoiceDate</th> <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th class="hidden"></th><th class="hidden"></th>';
         formcontent += '</tr></thead ><tbody class="table">"';
         formcontent += '<tr role="row" class="odd" id="contentRow">';
 
-
+        
         formcontent += '<td class="opportunity">';
         formcontent += '<span id="txtOpportunityId">';
         formcontent += row.find("#txtOpportunityId").html();
         formcontent += '</span > ';
         formcontent += '</td>';
 
-
+        
         formcontent += '<td data-balloon-length="xlarge" aria-label="';
         formcontent += row.find("#txtActivityDesc").val();
         formcontent += 'data - balloon - pos="up" class="selected" > ';
@@ -362,7 +317,7 @@
         formcontent += '</td>';
 
         formcontent += '</td>';
-
+        
         formcontent += '<td class="hidden">';
         formcontent += '<input id="hdnTxtDtInvced"> value=';
         formcontent += row.find("#endTime").html();
@@ -390,25 +345,25 @@
         formcontent += '</tbody ></table > ';
 
 
-
+    
         $.confirm({
-
+           
         boxWidth: '1100px',
         title:'Projection Details',
         useBootstrap: false,
                 content: formcontent,
                 buttons: {
-                    Save: function () {
+                    Save: function () {        
                         return Save(row);
                     },
                     cancel: function () {
-
+                               
                         return;
                     }
                 }
 
             });
-
+    
     }
     function Save(theRow) {
         var row = $("#contentRow");
@@ -416,7 +371,7 @@
 
         if (row.find("select#ddlWarehouseID").val() == "") {
             alert("Please select Facility to Proceed.");
-            $(row).addClass('highlight_row')
+            $(row).addClass('highlight_row')                      
             return true;
         }
         if (row.find("input#endTime").val() == "") {
@@ -426,7 +381,7 @@
         }
         if (row.find("input#startTime").val() == "") {
             alert("Please select AllocatedDate to Proceed.");
-            $(row).addClass('highlight_row')
+            $(row).addClass('highlight_row')        
             return;
         }
 
@@ -436,12 +391,12 @@
 
             CheckDuplicateInsert(row, theRow, 'Are you sure you want to add the record for same Facility, Date and Quantity?');
         }
-
+       
         else {
             AddOrUpdateProjection(row, theRow, true);
         }
 
-
+                               
     }
 
     function CheckDuplicateInsert(row,theRow,message) {
@@ -451,7 +406,7 @@
                          buttons: {
                              confirm: function () {
                                  AddOrUpdateProjection(row,theRow,true)
-
+                                 
                              },
                              cancel: function () {
 
@@ -505,13 +460,13 @@
 
         });
 
-
-
+         
+                    
     }
     function PerformAction(row, serviceActivityId, activityId,isAdd) {
 
         var model = {
-                'OpportunityId': row.find("#txtOpportunityId").text(),
+                'OpportunityId': row.find("span#txtOpportunityId").text(),
                 'Quantity': row.find("input#quantity").val(),
                 'DateAllocated': row.find("input#startTime").val(),
                 'DateInvoiced': row.find("input#endTime").val(),
@@ -521,37 +476,50 @@
                 'Comments': row.find("input#comments").val(),
                 'IsAdd': isAdd
 
-            };
-
+        };
+        //$.ajax({
+        //    type: "POST",
+        //    url: "./AddOrUpdateProjectionModel",
+        //    data: model,
+        //    contentType: "application/json; charset=utf-8"
+           
+        //});
+                   
                 $.ajax({
                     data: model,
                     url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
                     type: "POST",
                     success: function (data) {
 
-                        if (data.status === 'OK') {
-                            window.location.href = data.Url
-                        }
+                     
                     },
                     error: function () {
                         alert("error");
                     }
-
+                    
         });
-
-        //$.ajax({
-        //    type: "GET",
-        //    url: projectionsUrl,
-        //    contentType: "application/json; charset=utf-8",
-        //    data: { "opportunityId": row.find("span#txtOpportunityId").text().trim() },
-        //    datatype: "json",
-        //    success: function (data) {
-        //        // debugger;
-        //        $('#filterModalContent').html(data);
-        //        $('#filterModal').modal(options);
-        //        $('#filterModal').modal('show');
-        //    }
-        //});
+        var projectionsUrl = './GetProjections';
+        var options = { "backdrop": "static", keyboard: true };
+        $.ajax({
+            type: "GET",
+            url: projectionsUrl,
+            contentType: "application/json; charset=utf-8",
+            data: { "opportunityId": row.find("span#txtOpportunityId").text() },
+            datatype: "json",
+            success: function (data) {
+                //// debugger;
+                $('#filterModalContent').html(data);
+                $('#filterModal').modal(options);
+                $('#filterModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+       
+        $('#filterModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
     }
 
 
@@ -574,14 +542,14 @@
             //        input.hide();
             //       $(this).removeClass('selected');
             //    }
-
-
+           
+            
         });
     }
     function CallConfirmMessage(canContinue) {
-
+        
     }
-    $("body").on("click", "#MANAGEPROJECTIONMAIN .Cancel", function () {
+    $("body").on("click", "#MANAGEPROJECTION .Cancel", function () {
         var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
@@ -605,77 +573,17 @@
                  $(this).removeClass('selected');
                 input.hide();
     }
-    function SearchAndFetchResourceDetails() {
-                events = [];
-       //
-
-        var thedata = { 'projectName': $('#ddlProjectId').val(), 'oppNumber': $('#OpportunityNumberID').val(), 'pmName': $('#ddlPMList').val() };
-       $.ajax({
-                data: thedata,
-                url:'@Url.Action("SearchIndex", "Projection")',
-                type: "POST",
-                success: function (data) {
-                    $("table#MANAGEPROJECTIONMAIN").DataTable().clear().draw();
-                       // window.location.href = data.Url
-                       // location.reload(true);
-                    $.each(data.projectionOpportunityModel, function (i, data) {
-                   var body = "<tr>";
-                        body += "<td>" + data.ProjectName + "</td>";
-                        body += "<td>" + data.OpportunityNumber + "</td>";
-                        body += "<td>" + data.ProjectManager + "</td>";
-                        body += "<td>" + data.Activity + "</td>";
-                        body += "<td>" + data.wareHouseName + "</td>";
-                        body += "<td>" + data.Created + "</td>";
-                        body += "<td>" + data.ActualQuantity + "</td>";
-                        body += "<td>" + data.DateInvoiced + "</td>";
-                        body += "<td>" + data.Comments + "</td>";
-
-
-                       body += "</tr>";
-                        $('table#MANAGEPROJECTIONMAIN').append(body);
-
-                    })
-                  //  $("table#MANAGEPROJECTIONMAIN").DataTable().ajax.reload(null, false);
-                    },
-           error: function() {
-                        alert("The status cannot be updated at this time");
-                    }
-
-            });
-
-
-    }
-
-    $('#ddlProjectId').change(function () {
-                        var loadUrl = '@Url.Action("ProjectOpportunities", "Projection")';
-        var loads = $('#OpportunityNumberID');
-                        var id = $(this).val();
-        $.getJSON(loadUrl, { projectName: id }, function (response) {
-                            loads.empty(); // remove any existing options
-                            loads.append($('<option></option>').text("Opportunity").val(null));
-                            $.each(response, function (index, item) {
-                                loads.append($('<option></option>').text(item).val(item));
-                            });
-                        });
-                });
-
-    $('#OpportunityNumberID').change(function () {
-                        var loadUrl = '@Url.Action("PMList", "Projection")';
-        var loads = $('#ddlPMList');
-                        var id = $(this).val();
-        $.getJSON(loadUrl, { OpportunityId: id }, function (response) {
-                            loads.empty(); // remove any existing options
-                            loads.append($('<option></option>').text("Project Manager").val(null));
-                            $.each(response, function (index, item) {
-                                loads.append($('<option></option>').text(item).val(item));
-                            });
-                        });
-                });
-
+                
 </script>
 
 
 <style>
+
+    .modal-dialog {
+        width: 1600px;
+        margin: 30px auto;
+        margin-bottom: 10px;
+    }
 
     .textarea {
         max-width: 280px;
@@ -865,4 +773,5 @@
             visibility: visible;
             opacity: 1;
         }
+
 </style>

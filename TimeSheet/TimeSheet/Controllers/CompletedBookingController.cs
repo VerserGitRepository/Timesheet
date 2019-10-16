@@ -56,7 +56,9 @@ namespace TimeSheet.Controllers
                         Day = item.Day.Value.Date,
                         Status = item.Status,
                         TimeSheetComments = item.TimeSheetComments,
-                        Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                        TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                        BreakHours = item.BreakHours,
+                        WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60
                     });
                 }
                 GridView gv = new GridView();          

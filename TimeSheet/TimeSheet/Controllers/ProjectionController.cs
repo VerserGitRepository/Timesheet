@@ -22,8 +22,61 @@ namespace TimeSheet.Controllers
 
                 var listadd =new List<ProjectionOppurtunityModel>();
                 listadd= ProjectionHelperService.MergedProjectionServices().Result;
+                model.ProjectList = new SelectList(listadd.Select(x => x.ProjectName).Distinct());
+                model.OpportunityNumberList = new SelectList(listadd.Select(x => x.OpportunityNumber).Distinct());
+                model.ProjectmanagerList = new SelectList(listadd.Select(x => x.ProjectManager).Distinct());
                 model.projectionOpportunityModel = listadd;  // listA;
+                Session["projectionModel"] = model;
                 return View(model);
+            }
+            else if (Session["Username"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+        }
+        [HttpGet]
+        public ActionResult GetProjections(int opportunityId)
+        {
+            ProjectionModel model = new ProjectionModel();
+
+            model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
+
+            var listadd = new List<ProjectionOppurtunityModel>();
+            listadd = ProjectionHelperService.MergedProjectionServices().Result;
+            model.ProjectList = new SelectList(listadd.Select(x => x.ProjectName).Distinct());
+            model.OpportunityNumberList = new SelectList(listadd.Select(x => x.OpportunityNumber).Distinct());
+            model.ProjectmanagerList = new SelectList(listadd.Select(x => x.ProjectManager).Distinct());
+            model.projectionOpportunityModel = listadd.Where(i=> i.OpportunityNumber == opportunityId).ToList();  // listA;
+            return PartialView("ProjectionsFilter", model);
+        }
+        public ActionResult SearchIndex(string projectName, int oppNumber,string pmName)
+        {
+            if (UserRoles.UserCanApproveTimesheet() == true)
+            {
+                if (Session["projectionModel"] != null)
+                {
+                    ProjectionModel model = new ProjectionModel();
+
+                    model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
+
+                    var listadd = new List<ProjectionOppurtunityModel>();
+                    listadd = ProjectionHelperService.MergedProjectionServices().Result;
+                    model.ProjectList = new SelectList(listadd.Select(x => x.ProjectName).Distinct());
+                    model.OpportunityNumberList = new SelectList(listadd.Select(x => x.OpportunityNumber).Distinct());
+                    model.ProjectmanagerList = new SelectList(listadd.Select(x => x.ProjectManager).Distinct());
+                    model.projectionOpportunityModel = listadd;  // listA;
+                    listadd = model.projectionOpportunityModel.Where(x => x.ProjectName == projectName && x.OpportunityNumber == Convert.ToInt32(oppNumber) && x.ProjectManager == pmName).ToList();
+                    model.projectionOpportunityModel = listadd;  // listA;
+                    return Json(model, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login");
+                }
             }
             else if (Session["Username"] != null)
             {
@@ -223,7 +276,7 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ExportProjections()
         {
-            var TimeSheetExportData = new List<CompletedtimesheetExportModel>();
+            List<ProjectionOppurtunityModel> list = ProjectionHelperService.MergedProjectionServices().Result;
 
             if (Session["Username"] == null)
             {
@@ -238,10 +291,10 @@ namespace TimeSheet.Controllers
                 //var listadd = new List<ProjectionOppurtunityModel>();
                 //listadd = ProjectionHelperService.MergedProjectionServices().Result;
                 //model.projectionOpportunityModel = listadd;  // listA;
+                List<ProjectionOppurtunityExportModel> theModel = Utils.ReflectionUtils.CopyShallowArray<ProjectionOppurtunityExportModel>(list.ToArray()).ToList();
 
-                
                 GridView gv = new GridView();
-                gv.DataSource = ProjectionHelperService.MergedProjectionServices().Result;
+                gv.DataSource = theModel;
                 gv.DataBind();
                 Response.ClearContent();
                 Response.Buffer = true;
@@ -256,6 +309,57 @@ namespace TimeSheet.Controllers
                 Response.End();
             }
             return RedirectToAction("Index", "Projection");
+        }
+
+        [HttpGet]
+        public JsonResult ProjectOpportunities(string projectName)
+        {
+            List<int> load = new List<int>();
+            if (Session["projectionModel"] != null)
+            {
+                ProjectionModel model = new ProjectionModel();
+
+                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
+
+                var listadd = new List<ProjectionOppurtunityModel>();
+                listadd = ProjectionHelperService.MergedProjectionServices().Result;
+              
+                model.projectionOpportunityModel = listadd;  // listA;
+                load = model.projectionOpportunityModel.Where(x => x.ProjectName == projectName).Select(x =>  Convert.ToInt32(x.OpportunityNumber)).Distinct().ToList();
+                // load = listadd.Select(x => new ListItemViewModel() { Id = Convert.ToInt32(x.OpportunityNumber) }).ToList();
+                // model.projectionOpportunityModel = listadd;  // listA;
+                return Json(load, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(load, JsonRequestBehavior.AllowGet);
+            }
+
+           // return Json(load, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult PMList(int OpportunityId)
+        {
+            List<string> load = new List<string>();
+            if (Session["projectionModel"] != null)
+            {
+                ProjectionModel model = new ProjectionModel();
+
+                model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
+
+                var listadd = new List<ProjectionOppurtunityModel>();
+                listadd = ProjectionHelperService.MergedProjectionServices().Result;
+               
+                model.projectionOpportunityModel = listadd;  // listA;
+                load = model.projectionOpportunityModel.Where(x => x.OpportunityNumber == OpportunityId).Select(x =>  x.ProjectManager ).Distinct().ToList();
+                // load = listadd.Select(x => new ListItemViewModel() { Id = Convert.ToInt32(x.OpportunityNumber) }).ToList();
+                // model.projectionOpportunityModel = listadd;  // listA;
+                return Json(load, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(load, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

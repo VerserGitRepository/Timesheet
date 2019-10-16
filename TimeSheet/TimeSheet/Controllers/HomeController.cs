@@ -20,6 +20,7 @@ namespace TimeSheet.Controllers
         [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]       
         public ActionResult Index()
         {
+            Session["Accounts"] = "";
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -286,10 +287,10 @@ namespace TimeSheet.Controllers
             string OTHoursVal = string.Empty;                                                                             //TimeSheet
             foreach (var item in TimeSheetmodel)
             {
-                if ((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
+                if (((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
                 {
 
-                    OTHoursVal = Convert.ToString((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
+                    OTHoursVal = Convert.ToString(((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
                 }
                 else
                 {
@@ -301,6 +302,7 @@ namespace TimeSheet.Controllers
 
                     ADPEmployeeId = item.AdpEmployeeID.ToString(),
                     ProjectName = item.ProjectName,
+                    ProjectManager = item.ProjectManager,
                     CandidateName = item.CandidateName,
                     OpportunityNumber = item.OpportunityNumber,
                     Activity = item.Activity,
@@ -314,11 +316,13 @@ namespace TimeSheet.Controllers
                     Day = item.Day.Value.Date.ToShortDateString(),
                     Status = item.Status,
                     TimeSheetComments = item.TimeSheetComments,
-                    Hours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                    TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                    BreakHours = item.BreakHours,
+                    WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours ) /60,
                     OTHours = OTHoursVal,
                     PayFrequency = item.PayFrequency,
                     PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)
-
+                   
 
                 });
             }
