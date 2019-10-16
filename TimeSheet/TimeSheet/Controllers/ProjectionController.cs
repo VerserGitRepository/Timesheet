@@ -190,7 +190,7 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Login", "Login");
             }
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Projection", new { });
-            return Json(new { newUrl = Url.Action("Index", "Projection") });
+            return Json(new { Url = redirectUrl, status = "OK" });
         }
 
         public ActionResult ApproveProjectTimesheet()
