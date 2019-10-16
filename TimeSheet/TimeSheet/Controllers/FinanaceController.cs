@@ -304,6 +304,7 @@ namespace TimeSheet.Controllers
 
                         ADPEmployeeId = item.AdpEmployeeID.ToString(),
                         ProjectName = item.ProjectName,
+                        ProjectManager = item.ProjectManager,
                         CandidateName = item.CandidateName,
                         OpportunityNumber = item.OpportunityNumber,
                         Activity = item.Activity,
