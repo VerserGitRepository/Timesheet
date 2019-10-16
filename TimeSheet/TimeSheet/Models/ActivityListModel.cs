@@ -15,7 +15,7 @@ namespace TimeSheet.Models
         public int OLA_15mins { get; set; }
         public string olA_Filter { get; set; }
         public string serviceCategory { get; set; }
-        public bool IsActive { get; set; }
+       
         public string serviceActivityDescription { get; set; }
         public string projectName { get; set; }
     }
