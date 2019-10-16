@@ -158,7 +158,7 @@
                 <td>@item.projectName</td>
                 <td>@item.serviceActivityDescription</td>
                 <td>
-                    <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />
+                    <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.isActive].Assigned" @(item.isActive ? "checked" : "") id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />
                 </td>
 
             </tr>
