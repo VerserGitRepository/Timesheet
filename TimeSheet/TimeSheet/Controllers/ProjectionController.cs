@@ -276,7 +276,7 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ExportProjections()
         {
-            var TimeSheetExportData = new List<CompletedtimesheetExportModel>();
+            List<ProjectionOppurtunityModel> list = ProjectionHelperService.MergedProjectionServices().Result;
 
             if (Session["Username"] == null)
             {
@@ -291,10 +291,10 @@ namespace TimeSheet.Controllers
                 //var listadd = new List<ProjectionOppurtunityModel>();
                 //listadd = ProjectionHelperService.MergedProjectionServices().Result;
                 //model.projectionOpportunityModel = listadd;  // listA;
+                List<ProjectionOppurtunityExportModel> theModel = Utils.ReflectionUtils.CopyShallowArray<ProjectionOppurtunityExportModel>(list.ToArray()).ToList();
 
-                
                 GridView gv = new GridView();
-                gv.DataSource = ProjectionHelperService.MergedProjectionServices().Result;
+                gv.DataSource = theModel;
                 gv.DataBind();
                 Response.ClearContent();
                 Response.Buffer = true;
