@@ -26,12 +26,15 @@ namespace TimeSheet.Models
         public string TimeSheetComments { get; set; }
         public string PayFrequency { get; set; }
         public string PayCycle { get; set; }
-        public double Hours { get; set; }
+        public double TotalHours { get; set; }
+        public int BreakHours { get; set; }
+        public double WorkedHours { get; set; }
         public string OTHours { get; set; }
         public string OTWeekEndSatDay { get; set; }
         public string OTWeekEndSatDayException { get; set; }
         public string OTWeekEndSunDay { get; set; }
        
+
 
     }
 }
