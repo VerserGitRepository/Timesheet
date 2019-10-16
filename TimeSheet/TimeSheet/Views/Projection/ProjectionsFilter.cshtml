@@ -1,0 +1,777 @@
+﻿@using System.Linq;
+@*@model IEnumerable<TimeSheet.Models.ProjectDetailsModel>*@
+@model TimeSheet.Models.ProjectionModel
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="container" style="margin-left:0px">
+    <div class="modal-header" style="background-color:lightgray;width:1550px">
+        <h5 class="modal-title text-center">Resource Details</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1400px">
+        <table class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1400px" id="MANAGEPROJECTION">
+            <thead style="background-color:#FFA500;color:white ">
+                <tr>
+
+                    <th>ProjectName</th>
+                    <th>Oppurtunity</th>
+                    <th>PM</th>
+                    <th>Services</th>
+                    <th>Facility</th>
+                    <th>Week</th>
+                    <th>Quantity</th>
+                    <th>EstimatedInvoiceDate</th>
+                    <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th style="width:20px"></th>
+                    <th class="hidden"></th>
+                    <th class="hidden"></th>
+                    <th class="hidden"></th>
+
+                </tr>
+            </thead>
+            <tbody class="table">
+                @foreach (var item in Model.projectionOpportunityModel)
+                {
+                    <tr>
+                        <td class="ProjectName">
+                            <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+                        </td>
+                        <td class="opportunity">
+                            <span id="txtOpportunityId">@Html.DisplayFor(modelItem => item.OpportunityNumber) </span>
+                        </td>
+                        <td class="PM">
+                            <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
+                        </td>
+                        <td title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity">
+                            <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
+                            <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
+
+
+                        </td>
+                        <td class="dropdownListTD">
+
+                            @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
+
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
+                            @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
+
+                        </td>
+                        <td>
+                            @if (item.Quantity >= 0)
+                            {
+                                if (item.DateAllocated.HasValue)
+                                {
+                                    <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
+                                    @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                                    <input class="hidden" type="text" id="hdnTxtDtAlctd" value="@item.DateAllocated.Value.ToString("yyyy-MM-dd")" />
+
+
+                                }
+                                else
+                                {
+                                    <span id="startTime"></span>
+                                    @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                                }
+                            }
+                            else
+                            {
+                                <span id="startTime"></span>
+                                @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                            }
+
+                        </td>
+                        <td>
+
+                            <span>@Html.DisplayFor(modelItem => item.Quantity)</span>
+                            <input type="text" id="quantity" class="txtQuantity" value="@item.Quantity" style="display:none" />
+                            <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
+                        </td>
+                        <td>
+
+                            @if (item.Quantity >= 0)
+                            {
+                                if (item.DateInvoiced.HasValue)
+                                {
+                                    <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                                    @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                                    <input class="hidden" type="text" id="hdnTxtDtInvced" value="@item.DateInvoiced.Value.ToString("yyyy-MM-dd")" />
+
+                                }
+                                else
+                                {
+                                    <span id="endTime"></span>
+                                    @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                                }
+                            }
+                            else
+                            {
+                                <span id="endTime"></span>
+                                @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                            }
+
+                        </td>
+                        <td class="commentsLine">
+                            <span id="comments">@item.Comments</span>
+                            <input type="text" id="comments" value="@item.Comments" style="display:none" />
+                        </td>
+                        <td>
+                            <a href="#" class="Change btn btn-primary a-btn-slide-text">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Change</strong></span>
+                            </a>
+                            @if (item.Quantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
+                            {
+                                <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    <span><strong>Add</strong></span>
+                                </a>
+                            }
+                            <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
+                            <a href="#" class="Cancel btn btn-danger a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                        <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
+                        <td class="hidden"><input type="text" id="txtActvty" value="@item.ServiceRevenueId" /></td>
+                        <td class="hidden"><input type="text" id="txtId" value="@item.Id" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+<div id='myModal' class='modal'>
+    <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+    <script type="text/javascript">
+    </script>
+}
+<script language="javascript" type="text/javascript">
+        function InsertSpaces(value) {
+            var emptySpaceString = "";
+            for (i = 0; i < value; i++)
+            {
+                emptySpaceString +="&nbsp;"
+            }
+            return emptySpaceString;
+    }
+ SetDDLValue();
+    $(document).ready(function () {
+       // alert('document ready');
+        $('#MANAGEPROJECTION').DataTable({
+            stateSave: true
+        });
+       // SetDDLValue();
+
+
+    });
+
+
+    function SetDDLValue() {
+        //alert('before document ready');
+        $("tbody tr td.dropdownListTD").each(function LoopTR() {
+            var ratingTdText = $(this);
+            if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                 $(ratingTdText).find("#ddlWarehouseID option").each(function(i){
+                     //alert($(ratingTdText).find("#hdnddlLidt").val());
+                     if (($(this).text() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                         $(this).attr('selected','selected')
+                     }
+                });
+            }
+             if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                 $(ratingTdText).find("#hdnddlWarehouseId option").each(function(i){
+                     //alert($(ratingTdText).find("#hdnddlLidt").val());
+                     if (($(this).text() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                         $(this).attr('selected','selected')
+                     }
+                });
+            }
+
+        });
+    }
+    
+    //Edit event handler.
+    $("body").on("click", "#MANAGEPROJECTION .Change", function () {
+        var row = $(this).closest("tr");
+
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                $(this).find("input").show();
+                $(this).find("span").hide();
+                 $(this).toggleClass('selected');
+            }
+        });
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+        row.find(".Add").show();
+
+        $(this).hide();
+    });
+
+    //Update event handler.
+    //$("body").on("click", "#MANAGEPROJECTION .Update", Register());
+    //$("body").on("click", "#MANAGEPROJECTION .Add", Register());
+    //Cancel event handler.
+    function ShowModal(theRow) {
+        var row = $(theRow).closest("tr");
+        var options = { "backdrop": "static", keyboard: true };
+
+
+        
+       //globalRow = row;
+        var ther = row.find("span#txtOpportunityId").text();
+        var formcontent = '<table class="table-bordered table - responsive - md text - center table - hover table - scroll" id="MANAGEPROJECTION">';
+        formcontent += '<thead style = "background-color:#FFA500;color:white"><tr><th>Oppurtunity</th><th>Services</th> <th>Facility</th> <th>Week</th> <th>Quantity</th>';
+        formcontent += '<th> EstimatedInvoiceDate</th> <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th class="hidden"></th><th class="hidden"></th>';
+        formcontent += '</tr></thead ><tbody class="table">"';
+        formcontent += '<tr role="row" class="odd" id="contentRow">';
+
+        
+        formcontent += '<td class="opportunity">';
+        formcontent += '<span id="txtOpportunityId">';
+        formcontent += row.find("#txtOpportunityId").html();
+        formcontent += '</span > ';
+        formcontent += '</td>';
+
+        
+        formcontent += '<td data-balloon-length="xlarge" aria-label="';
+        formcontent += row.find("#txtActivityDesc").val();
+        formcontent += 'data - balloon - pos="up" class="selected" > ';
+        formcontent += '<span class="tooltiptext" id="txtActivityDesc">';
+        formcontent += row.find("#txtActivityDesc").val();
+        formcontent += '</span> ';
+        formcontent += '</td>';
+
+        formcontent += '<td class="dropdownListTD selected">';
+        formcontent += '<select id="ddlWarehouseID" name="ddlWarehouseID">';
+        formcontent += row.find("select#ddlWarehouseID").html();
+        formcontent += '</select>';
+
+
+
+        formcontent += '</td>';
+        formcontent += '<td class="selected">';
+
+        formcontent += '<input id="startTime" style="" type="date"';
+        formcontent += 'value = "';
+        formcontent += row.find("#startTime").html().split("/").reverse().join("-");;
+        formcontent += '" >';
+
+        formcontent += '</td>';
+        formcontent += '<td class="selected">';
+
+
+        formcontent += '<input type="text" id="quantity" class="txtQuantity" value="';
+        formcontent += row.find("#quantity").val();
+        formcontent += '" style="">';
+
+        formcontent += '</td>';
+        formcontent += '<td class="selected">';
+
+
+        formcontent += '<input id="endTime" style="" type="date"';
+        formcontent += 'value = "';
+        formcontent += row.find("#endTime").html().split("/").reverse().join("-");;
+        formcontent += '" >';
+
+        formcontent += '</td>';
+        formcontent += '<td class="commentsLine selected">';
+
+        formcontent += '<input type="text" id="comments" value="';
+        formcontent += row.find("#comments").text();
+        formcontent += '" style="">';
+        formcontent += '</td>';
+
+        formcontent += '<td class="hidden">';
+        formcontent += '<input id="txtServiceActvty"> value=';
+        formcontent += row.find("#txtServiceActvty").val();
+        formcontent += '" /> ';
+
+        formcontent += '</td>';
+
+        formcontent += '<td class="hidden">';
+        formcontent += '<input id="txtActvty"> value=';
+        formcontent += row.find("#txtActvty").val();
+        formcontent += '" /> ';
+
+        formcontent += '</td>';
+
+        formcontent += '</td>';
+        
+        formcontent += '<td class="hidden">';
+        formcontent += '<input id="hdnTxtDtInvced"> value=';
+        formcontent += row.find("#endTime").html();
+        formcontent += '" /> ';
+
+        formcontent += '</td>';
+
+        formcontent += '<td class="hidden">';
+        formcontent += '<input id="hdnddlLidt"> value=';
+        formcontent += row.find("#ddlWarehouseID").val();
+        formcontent += '" /> ';
+
+        formcontent += '</td>';
+
+        formcontent += '</td>';
+
+        formcontent += '<td class="hidden">';
+        formcontent += '<input id="hdnTxtQnty"> value=';
+        formcontent += row.find("#quantity").val();
+        formcontent += '" /> ';
+
+        formcontent += '</td>';
+
+        formcontent += '</tr>';
+        formcontent += '</tbody ></table > ';
+
+
+    
+        $.confirm({
+           
+        boxWidth: '1100px',
+        title:'Projection Details',
+        useBootstrap: false,
+                content: formcontent,
+                buttons: {
+                    Save: function () {        
+                        return Save(row);
+                    },
+                    cancel: function () {
+                               
+                        return;
+                    }
+                }
+
+            });
+    
+    }
+    function Save(theRow) {
+        var row = $("#contentRow");
+        //alert(rowid);
+
+        if (row.find("select#ddlWarehouseID").val() == "") {
+            alert("Please select Facility to Proceed.");
+            $(row).addClass('highlight_row')                      
+            return true;
+        }
+        if (row.find("input#endTime").val() == "") {
+            alert("Please select InvoicedDate to Proceed.");
+            $(row).addClass('highlight_row')
+            return;
+        }
+        if (row.find("input#startTime").val() == "") {
+            alert("Please select AllocatedDate to Proceed.");
+            $(row).addClass('highlight_row')        
+            return;
+        }
+
+        if (theRow.find("input#hdnTxtDtInvced").val() == row.find("input#endTime").val() &&
+            theRow.find("select#hdnddlWarehouseId").val() == row.find("select#ddlWarehouseID").val() &&
+            Number(theRow.find("input#hdnTxtQnty").val()) == Number(row.find("input#quantity").val())) {
+
+            CheckDuplicateInsert(row, theRow, 'Are you sure you want to add the record for same Facility, Date and Quantity?');
+        }
+       
+        else {
+            AddOrUpdateProjection(row, theRow, true);
+        }
+
+                               
+    }
+
+    function CheckDuplicateInsert(row,theRow,message) {
+        $.confirm({
+                         title: 'Confirm!',
+                         content: message,
+                         buttons: {
+                             confirm: function () {
+                                 AddOrUpdateProjection(row,theRow,true)
+                                 
+                             },
+                             cancel: function () {
+
+                                 return;
+                             }
+                         }
+
+                     });
+    }
+    function AddOrUpdateProjection(modalrow,gridrow, isAdd) {
+        var row = null;
+        var activityId = "";
+        var serviceActivityId = "";
+        var message = "";
+        var inputHiddenQuantity = 0;
+        if (isAdd) {
+            row = $(modalrow).closest("tr");
+            activityId = gridrow.find("#txtActvty").val();
+            serviceActivityId = gridrow.find("#txtServiceActvty").val();
+            inputHiddenQuantity = gridrow.find("input#hdnTxtQnty").val();
+        }
+        else {
+            row = $(gridrow).closest("tr");
+            activityId = row.find("#txtActvty").val();
+            serviceActivityId = row.find("#txtServiceActvty").val();
+            inputHiddenQuantity = row.find("input#hdnTxtQnty").val();
+        }
+
+        if (Number(row.find("input#quantity").val()) > Number(inputHiddenQuantity)) {
+            message = 'The entered quantity exceeds the actual projected quantity. Are you sure of this quantity?';
+        }
+        else if (Number(row.find("input#quantity").val()) < Number(inputHiddenQuantity)) {
+            message = 'The entered quantity is lower than the actual projected quantity. Are you sure of this quantity?';
+        }
+        else {
+            return PerformAction(row, serviceActivityId, activityId, isAdd);
+        }
+        $.confirm({
+            title: 'Confirm!',
+            content: message,
+            buttons: {
+                confirm: function () {
+                    PerformAction(row, serviceActivityId, activityId, isAdd)
+
+                },
+                cancel: function () {
+
+                    return;
+                }
+            }
+
+        });
+
+         
+                    
+    }
+    function PerformAction(row, serviceActivityId, activityId,isAdd) {
+
+        var model = {
+                'OpportunityId': row.find("span#txtOpportunityId").text(),
+                'Quantity': row.find("input#quantity").val(),
+                'DateAllocated': row.find("input#startTime").val(),
+                'DateInvoiced': row.find("input#endTime").val(),
+                'WarehouseID': row.find("select#ddlWarehouseID").val(),
+                'ServiceActivityId': serviceActivityId,
+                'ActivityId': activityId,
+                'Comments': row.find("input#comments").val(),
+                'IsAdd': isAdd
+
+        };
+        //$.ajax({
+        //    type: "POST",
+        //    url: "./AddOrUpdateProjectionModel",
+        //    data: model,
+        //    contentType: "application/json; charset=utf-8"
+           
+        //});
+                   
+                $.ajax({
+                    data: model,
+                    url: '@Url.Action("AddOrUpdateProjectionModel", "Projection")',
+                    type: "POST",
+                    success: function (data) {
+
+                     
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                    
+        });
+        var projectionsUrl = './GetProjections';
+        var options = { "backdrop": "static", keyboard: true };
+        $.ajax({
+            type: "GET",
+            url: projectionsUrl,
+            contentType: "application/json; charset=utf-8",
+            data: { "opportunityId": row.find("span#txtOpportunityId").text() },
+            datatype: "json",
+            success: function (data) {
+                //// debugger;
+                $('#filterModalContent').html(data);
+                $('#filterModal').modal(options);
+                $('#filterModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+       
+        $('#filterModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+    }
+
+
+
+
+    function Register(theRow,isAdd)
+    {
+         $(document).ready(function () {
+            //if(isAdd)
+            //alert('test');
+            //return;
+
+            var row = $(theRow).closest("tr");
+            //$("td", row).each(function () {
+            //    if ($(this).find("input").length > 0) {
+            //        var span = $(this).find("span");
+            //        var input = $(this).find("input");
+            //        span.html(input.val());
+            //        span.show();
+            //        input.hide();
+            //       $(this).removeClass('selected');
+            //    }
+           
+            
+        });
+    }
+    function CallConfirmMessage(canContinue) {
+        
+    }
+    $("body").on("click", "#MANAGEPROJECTION .Cancel", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                //input.val(span.html());
+                span.show();
+                 $(this).removeClass('selected');
+                input.hide();
+            }
+        });
+        row.find(".Change").show();
+        row.find(".Add").hide();
+        row.find(".Update").hide();
+        row.find("input#txtActivityDesc").show();
+        $(this).hide();
+
+    });
+    function SpanShow() {
+        span.show();
+                 $(this).removeClass('selected');
+                input.hide();
+    }
+                
+</script>
+
+
+<style>
+
+    .modal-dialog {
+        width: 1600px;
+        margin: 30px auto;
+        margin-bottom: 10px;
+    }
+
+    .textarea {
+        max-width: 280px;
+        font-size: 10px;
+        border: 2px;
+        outline: 2px;
+    }
+
+    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #FFA500;
+        border-color: white;
+    }
+
+
+    .page-item.active .page-link {
+        color: white !important;
+        background-color: orange !important;
+        border-color: gray !important;
+    }
+
+
+
+    /* Active State */
+    .x-tab-pane > .active > a, .x-tab-pane > .active > a:hover {
+        background-color: #f0f0f0;
+    }
+
+    .form-group {
+        margin-bottom: 2px;
+        padding-right: 0;
+        padding-left: 0;
+        font-size: 10px;
+        border-radius: 9px;
+        padding-bottom: 2px;
+        margin-top: 0px;
+    }
+
+
+    .row-group {
+        width: 47%;
+        min-height: 100px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-bottom: 20px;
+        background-color: whitesmoke;
+        border: 1px solid #e3e3e3;
+        border-radius: 2px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    }
+
+    .commentsLine {
+        max-width: 50px;
+        word-wrap: break-word;
+    }
+
+    .txtQuantity {
+        width: 30px;
+    }
+
+    input[type=text] {
+        color: #000;
+        background-color: #fff;
+    }
+
+    .selected {
+        color: black;
+        background-color: lightgray;
+    }
+
+    .table-hover > tbody > tr:hover > td,
+    .table-hover > tbody > tr:hover > th {
+        background-color: lightgray;
+    }
+
+    .row {
+        width: 112%;
+    }
+
+    .body-content {
+        padding-left: 0px;
+        padding-right: 0px;
+        max-width: 100%;
+    }
+
+    .container {
+        padding-left: 0px;
+        padding-right: 5px;
+        max-width: 100%;
+    }
+
+    .dataTables_filter {
+        float: right;
+    }
+
+    .modal-header {
+        border-bottom: 0 none;
+    }
+
+    .modal-footer {
+        border-top: 0 none;
+    }
+
+    .glyphicon {
+        font-size: 14px;
+        color: lightgray;
+    }
+
+    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #FFA500;
+        border-color: white;
+    }
+
+
+    .page-item.active .page-link {
+        color: white !important;
+        background-color: orange !important;
+        border-color: gray !important;
+    }
+
+    .black {
+        color: black;
+    }
+
+    .highlight_row {
+        background-color: #CCC;
+        color: black;
+    }
+
+    a.btn:hover {
+        -webkit-transform: scale(0.8);
+        -moz-transform: scale(0.8);
+        -o-transform: scale(0.8);
+    }
+
+    a.btn {
+        -webkit-transform: scale(0.6);
+        -moz-transform: scale(0.6);
+        -o-transform: scale(0.6);
+        -webkit-transition-duration: 0.5s;
+        -moz-transition-duration: 0.5s;
+        -o-transition-duration: 0.5s;
+    }
+    /* Tooltip container */
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+    }
+
+        /* Tooltip text */
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            /* Position the tooltip text */
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            /* Fade in tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+            /* Tooltip arrow */
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+
+        /* Show the tooltip text when you mouse over the tooltip container */
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+</style>
