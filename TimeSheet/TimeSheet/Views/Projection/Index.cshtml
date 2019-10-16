@@ -509,7 +509,10 @@
 
     }
     function PerformAction(row, serviceActivityId, activityId,isAdd) {
-
+        if (row.find("select#ddlWarehouseID").val() == null || row.find("select#ddlWarehouseID").val() == "" || row.find("select#ddlWarehouseID").val() == "Facility") {
+            alert("Please select Facility to proceed.");
+            return;
+        }
         var model = {
                 'OpportunityId': row.find("#txtOpportunityId").text(),
                 'Quantity': row.find("input#quantity").val(),
