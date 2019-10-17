@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Models\ActivityListModel.cs" />
     <Compile Include="Models\AdminModel.cs" />
+	<Compile Include="Models\ApprovedTimesheetDetailedModel.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
     <Compile Include="Models\CandidateTimeSheetsModel.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Models\PMRegisterViewModel.cs" />
     <Compile Include="Models\ProjectionEntryModel.cs" />
     <Compile Include="Models\ProjectionModel.cs" />
+	<Compile Include="Models\ProjectionOppurtunityExportModel.cs" />
     <Compile Include="Models\ProjectionOppurtunityModel.cs" />
     <Compile Include="Models\ProjectionUpdate.cs" />
     <Compile Include="Models\ProjectListModel.cs" />
@@ -445,6 +447,7 @@
     <Content Include="Views\Finanace\PaidResourceDetails.cshtml" />
     <Content Include="Views\ResourceTimeline\PMTimeline.cshtml" />
     <Content Include="Views\Home\AllBookingEntries.cshtml" />
+	<Content Include="Views\Projection\ProjectionsFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
