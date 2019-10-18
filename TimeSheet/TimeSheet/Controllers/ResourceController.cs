@@ -154,11 +154,11 @@ namespace TimeSheet.Controllers
             }
             if (isPMBooking)
             {
-                return Json(new { newUrl = Url.Action("Index", "ProjectManager") });
+                return Json(new { newUrl = Url.Action("Register", "Resource") });
             }
             else
             {
-                return Json(new { newUrl = Url.Action("Index", "ManageCalender") });
+                return Json(new { newUrl = Url.Action("Register", "Resource") });
             }
             
             // return View("~ManageCalender/Index");
