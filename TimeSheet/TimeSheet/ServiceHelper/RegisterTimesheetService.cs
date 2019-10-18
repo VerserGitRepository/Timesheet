@@ -112,6 +112,11 @@ namespace TimeSheet.ServiceHelper
                             ReturnResult.Message = "PM Timesheet has been registered successfully.";
                             HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
                         }
+                        else if (ReturnResult.Message.Contains("Is Already Booked"))
+                        {
+                            // ReturnResult.Message = "Candidate Timesheet has been registered successfully.";
+                            HttpContext.Current.Session["InfoMessage"] = ReturnResult.Message;
+                        }
                         else
                         {
                             HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
