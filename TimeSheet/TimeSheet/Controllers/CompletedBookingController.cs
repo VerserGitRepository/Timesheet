@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TimeSheet.Models;
 using System.Linq;
+using System;
 using TimeSheet.ServiceHelper;
 
 namespace TimeSheet.Controllers
@@ -39,8 +40,17 @@ namespace TimeSheet.Controllers
             {
               var  TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
                 foreach (var item in TimeSheetmodel)
-                {                   
-
+                {
+                    int otEnd = 0;
+                    int otStart = 0;
+                    if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) > 18)
+                    {
+                        otEnd = Convert.ToInt32(item.EndTime.Value.ToString("HH")) - 18;
+                    }
+                    if (Convert.ToInt32(item.StartTime.Value.ToString("HH")) < 6)
+                    {
+                        otStart = 6 - Convert.ToInt32(item.StartTime.Value.ToString("HH"));
+                    }
                     TimeSheetExportData.Add(new CompletedtimesheetExportModel
                     {
                         ProjectName = item.ProjectName,
@@ -58,7 +68,8 @@ namespace TimeSheet.Controllers
                         TimeSheetComments = item.TimeSheetComments,
                         TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
                         BreakHours = item.BreakHours,
-                        WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60
+                        WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60,
+                        OutsideWorkHours = otStart + otEnd,
                     });
                 }
                 GridView gv = new GridView();          

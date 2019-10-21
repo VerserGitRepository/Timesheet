@@ -29,6 +29,7 @@ namespace TimeSheet.Models
         public double TotalHours { get; set; }
         public int BreakHours { get; set; }
         public double WorkedHours { get; set; }
+        public double OutsideWorkHours { get; set; }
         public string OTHours { get; set; }
         public string OTWeekEndSatDay { get; set; }
         public string OTWeekEndSatDayException { get; set; }

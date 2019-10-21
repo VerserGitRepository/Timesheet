@@ -30,6 +30,7 @@ namespace TimeSheet.Models
         public double TotalHours { get; set; }
         public int BreakHours { get; set; }
         public double WorkedHours { get; set; }
+        public double OutsideWorkHours { get; set; }
 
     }
 }

@@ -287,6 +287,8 @@ namespace TimeSheet.Controllers
             string OTHoursVal = string.Empty;                                                                             //TimeSheet
             foreach (var item in TimeSheetmodel)
             {
+                int otEnd = 0;
+                int otStart = 0;
                 if (((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
                 {
 
@@ -296,7 +298,14 @@ namespace TimeSheet.Controllers
                 {
                     OTHoursVal = "0";
                 }
-
+                if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) > 18)
+                {
+                    otEnd = Convert.ToInt32(item.EndTime.Value.ToString("HH")) - 18;
+                }
+                if (Convert.ToInt32(item.StartTime.Value.ToString("HH")) < 6)
+                {
+                    otStart = 6 - Convert.ToInt32(item.StartTime.Value.ToString("HH"));
+                }
                 TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
                 {
 
@@ -319,6 +328,7 @@ namespace TimeSheet.Controllers
                     TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
                     BreakHours = item.BreakHours,
                     WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours ) /60,
+                    OutsideWorkHours = otStart + otEnd,
                     OTHours = OTHoursVal,
                     PayFrequency = item.PayFrequency,
                     PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)
@@ -353,6 +363,22 @@ namespace TimeSheet.Controllers
             Response.Flush();
             Response.End();
             return RedirectToAction("AllBookingEntries", "Home");
+        }
+        [HttpGet]
+        public ActionResult ReturnSlider(string StartTime, string EndTime)
+        {
+            if (UserRoles.UserCanEditTimesheet() != true)
+            {
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                BreakTimeModel model = new BreakTimeModel();
+                model.BreakStartTime = Convert.ToDateTime(StartTime).ToString("hh:mm tt");
+                model.BreakEndTime = Convert.ToDateTime(EndTime).ToString("hh:mm tt");
+                return PartialView("_BreakTimeSlider",model);
+            }
         }
     }
 }
