@@ -480,5 +480,25 @@ namespace TimeSheet.ServiceHelper
             }
             return vanList;
         }
+
+        public static async Task<List<ProfitLossModel>> ProfitLoss()
+        {
+            List<ProfitLossModel> completeList = new List<ProfitLossModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("CostModels/ServicesProfileLossForcast")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    completeList = await response.Content.ReadAsAsync<List<ProfitLossModel>>();
+
+                    //foreach (var a in list)
+                    //{
+                    //    completeList.Add(a);
+                    //}
+                }
+            }
+            return completeList;
+        }
     }
 }
