@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
 
 <table class="table pull-right" style="width:50%;margin-right:170px"></table>
@@ -75,7 +76,7 @@
                                 @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
 
                             </td>
-                            <td>
+                            <td id="startTimeTD">
                                 @if (item.Quantity >= 0)
                                 {
                                     if (item.DateAllocated.HasValue)
@@ -105,7 +106,7 @@
                                 <input type="text" id="quantity" class="txtQuantity" value="@item.Quantity" style="display:none" />
                                 <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
                             </td>
-                            <td>
+                            <td id="endTimeTD">
 
                                 @if (item.Quantity >= 0)
                                 {
@@ -415,17 +416,21 @@
         //alert(rowid);
 
         if (row.find("select#ddlWarehouseID").val() == "") {
-            alert("Please select Facility to Proceed.");
+            var ctrl = row.find("td.dropdownListTD");
+            ctrl.effect("pulsate", { times: 10 }, "slow");
+            //alert("Please select Facility to Proceed.");
             $(row).addClass('highlight_row')
             return true;
         }
         if (row.find("input#endTime").val() == "") {
-            alert("Please select InvoicedDate to Proceed.");
+            var ctrl = row.find("td.endTimeTD");
+            ctrl.effect("pulsate", { times: 10 }, "slow");
             $(row).addClass('highlight_row')
             return;
         }
         if (row.find("input#startTime").val() == "") {
-            alert("Please select AllocatedDate to Proceed.");
+            var ctrl = row.find("td.startTimeTD");
+            ctrl.effect("pulsate", { times: 10 }, "slow");
             $(row).addClass('highlight_row')
             return;
         }
@@ -510,7 +515,21 @@
     }
     function PerformAction(row, serviceActivityId, activityId,isAdd) {
         if (row.find("select#ddlWarehouseID").val() == null || row.find("select#ddlWarehouseID").val() == "" || row.find("select#ddlWarehouseID").val() == "Facility") {
-            alert("Please select Facility to proceed.");
+            var ctrl = row.find("td.dropdownListTD");
+            ctrl.effect("pulsate", { times: 10 }, "slow");
+          //  alert("Please select Facility to proceed.");
+            return;
+        }
+        if (row.find("input#endTime").val() == "") {
+            var ctrl = row.find("td#endTimeTD");
+            ctrl.effect("pulsate", { times: 10 }, "slow");
+            $(row).addClass('highlight_row')
+            return;
+        }
+        if (row.find("input#startTime").val() == "") {
+            var ctrl = row.find("td#startTimeTD");
+            ctrl.effect("pulsate", { times: 10 }, "slow");
+            $(row).addClass('highlight_row')
             return;
         }
         var model = {

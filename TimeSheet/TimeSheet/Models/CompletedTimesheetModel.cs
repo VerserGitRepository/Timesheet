@@ -75,10 +75,8 @@ namespace TimeSheet.Models
         public int? AdpEmployeeID { get; set; }
         public string PayFrequency { get; set; }
         public int BreakHours { get; set; }
-        [DisplayFormat(DataFormatString = "{0:HH:mm tt}", ApplyFormatInEditMode = true)]
-        public DateTime? BreakStartTime { get; set; }
-        [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:HH:mm tt}", ApplyFormatInEditMode = true)]
-        public DateTime? BreakEndTime { get; set; }
+       
+        public string BreakTime { get; set; }
+       
     }
 }
