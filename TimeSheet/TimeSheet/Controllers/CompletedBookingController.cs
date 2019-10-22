@@ -70,6 +70,9 @@ namespace TimeSheet.Controllers
                         BreakHours = item.BreakHours,
                         WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60,
                         OutsideWorkHours = otStart + otEnd,
+                        ProjectManager = item.ProjectManager,
+                        BookedBy = item.BookedBy,
+                        ApprovedBy = item.ApprovedBy,
                     });
                 }
                 GridView gv = new GridView();          

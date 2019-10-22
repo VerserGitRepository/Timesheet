@@ -31,6 +31,9 @@ namespace TimeSheet.Models
         public int BreakHours { get; set; }
         public double WorkedHours { get; set; }
         public double OutsideWorkHours { get; set; }
+        public string ProjectManager { get; set; }
+        public string BookedBy { get; set; }
+        public string ApprovedBy { get; set; }
 
     }
 }

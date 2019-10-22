@@ -315,6 +315,8 @@ namespace TimeSheet.Controllers
                         ADPEmployeeId = item.AdpEmployeeID.ToString(),
                         ProjectName = item.ProjectName,
                         ProjectManager = item.ProjectManager,
+                        BookedBy = item.BookedBy,
+                        ApprovedBy = item.ApprovedBy,
                         CandidateName = item.CandidateName,
                         OpportunityNumber = item.OpportunityNumber,
                         Activity = item.Activity,
@@ -434,6 +436,8 @@ namespace TimeSheet.Controllers
                     TimeSheetExportData.Add(new CompletedtimesheetExportModel
                     {
                         ProjectName = item.ProjectName,
+                        BookedBy = item.BookedBy,
+                        ApprovedBy = item.ApprovedBy,
                         CandidateName = item.CandidateName,
                         OpportunityNumber = item.OpportunityNumber,
                         Activity = item.Activity,
