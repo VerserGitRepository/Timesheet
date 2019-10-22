@@ -82,7 +82,7 @@
         var row = $(rowId).closest("tr");
         var candidateName = row.find("#txtCandidateName").text();
         var theactivityId = row.find("#activityId").text();
-
+        var options = { "backdrop": "static", keyboard: true };
         $.ajax({
             url: "./ApprovePaymentIndividual",
             type: "POST",

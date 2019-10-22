@@ -451,6 +451,7 @@
     <Content Include="Views\Home\AllBookingEntries.cshtml" />
     <Content Include="Views\Projection\ProjectionsFilter.cshtml" />
     <Content Include="Views\ProfitLoss\CostDetails.cshtml" />
+    <Content Include="Views\Shared\_BreakTimeSlider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

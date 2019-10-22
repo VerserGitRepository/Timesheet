@@ -18,5 +18,6 @@ namespace TimeSheet.Models
         public DateTime? EndDate { get; set; }
         public string FullName { get; set; }
         public int BreakHours { get; set; }
+        public string BreakTime { get; set; }
     }
 }

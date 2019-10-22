@@ -75,5 +75,8 @@ namespace TimeSheet.Models
         public int? AdpEmployeeID { get; set; }
         public string PayFrequency { get; set; }
         public int BreakHours { get; set; }
+       
+        public string BreakTime { get; set; }
+       
     }
 }

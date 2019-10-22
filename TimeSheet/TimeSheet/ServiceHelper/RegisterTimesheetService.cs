@@ -73,6 +73,26 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult; 
         }
+        public static async Task<ReturnModel> UpdateBreakHours(UpdateTimeSheetModel UpdateModel)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/{0}/{1}/{2}/UpdateResourceBreakTime",UpdateModel.Id,UpdateModel.BreakHours,UpdateModel.BreakTime)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
 
         public static async Task<ReturnModel> EditPMModel(UpdateProjectManagerModel UpdateModel)
         {

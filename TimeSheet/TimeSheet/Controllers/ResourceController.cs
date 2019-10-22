@@ -128,6 +128,12 @@ namespace TimeSheet.Controllers
                 {
                     //TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
                     isPMBooking = true;
+                    string addlActvty = "";
+                    if (theModel.AdditionalActivities != null)
+                    {
+                        addlActvty = theModel.AdditionalActivities.Replace(";undefined", "");
+                    }
+                   
                     TimeSheetRegisterPMModel regPMModel = new TimeSheetRegisterPMModel
                     {
                         Day = regModel.Day,
@@ -139,7 +145,7 @@ namespace TimeSheet.Controllers
                         OpportunityID = regModel.OpportunityNumberID,
                         Colour = regModel.Colour,
                         TimeSheetComments = regModel.TimeSheetComments,
-                        AdditionalActivities =theModel.AdditionalActivities
+                        AdditionalActivities = addlActvty
                     };
 
                     var a = RegisterTimesheetService.RegisterPMBooking(regPMModel);

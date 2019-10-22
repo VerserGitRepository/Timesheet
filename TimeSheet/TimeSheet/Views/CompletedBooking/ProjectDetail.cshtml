@@ -20,6 +20,8 @@
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break (Minutes)</th>
+                    <th>BreakTime</th>
+                   
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
@@ -66,7 +68,7 @@
                         <span style="width:2px">@item.ActualQuantity</span>
                         <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
                     </td>
-                     <td class="breakHrs">
+                    <td class="breakHrs">
 
                         @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
                         {
@@ -75,8 +77,14 @@
                             new SelectListItem{ Text="30 Mins", Value = "30" },
                             new SelectListItem{ Text="45 Mins", Value = "45" },
                             new SelectListItem{ Text="60 Mins", Value = "60" },
-                         }, new { @id = "ddlBreak" })
+                         } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
                         <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
+
+                    </td>
+                     <td>
+                       
+                    <span id="spanbreakStartTime">@item.BreakTime</span>
+
 
                     </td>
                     <td class="Status">
@@ -116,6 +124,78 @@
         responsive: true
     });
     SetDDLValue();
+    function ShowSliderModal(rowid)
+    {
+
+        var row = $(rowid).closest("tr");
+        debugger;
+        var ddlValue = row.find("#hdnddlbrkhrs").val();
+        var sliderURL = '@Url.Action("ReturnSlider", "Home")'
+
+        $.ajax({
+            type: "GET",
+            url: sliderURL,
+            data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
+            success: function (data) {
+              $.confirm({
+                         title: 'Set Break Timimgs!',
+           content:data,
+                         buttons: {
+                             Set: function () {
+                                 row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text())  ;
+                                 //row.find("#spanbreakEndTime").html(($(".slider-time2").text())) ;
+                                 $(".slider-time2").text();
+                               //  alert($('#rating-input').val());
+                            @*$.ajax({
+                                data: model,
+                                url: '@Url.Action("ReturnSlider", "Home")',
+                                type: "POST",
+                                success: function (data) {
+
+
+
+                                        $("td", row).each(function () {
+                                            if ($(this).find("input").length > 0) {
+                                                $(this).find("input").hide();
+                                                $(this).find("span").show();
+                                                $(this).toggleClass('selected');
+
+                                            }
+                                        });
+                                        row.find(".Update").hide();
+                                        row.find(".Cancel").hide();
+                                        row.find("#Rate").hide();
+
+                                        $(".Edit").show();
+                                    // return;
+
+                                }
+                        });*@
+                        return;
+                             },
+                             cancel: function () {
+
+                                 $("#ddlBreak option").each(function (i) {
+
+                                     if ($(this).val() == ddlValue) {
+                                         $(this).attr('selected', 'selected')
+                                     }
+
+                                     return;
+                                 });
+                             }
+
+
+
+                         }
+
+                     });
+            },
+            error: function (errorData) { alert(errorData);}
+        });
+
+
+    }
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
@@ -227,6 +307,7 @@
         CandidateEdit.Day = row.find(".Day").find("span").html();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
         CandidateEdit.BreakHours = row.find("#ddlBreak").val();
+        CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text();
 
         $.ajax({
             type: "POST",
@@ -235,6 +316,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         });
+        
         $.ajax({
 
             type: "GET",

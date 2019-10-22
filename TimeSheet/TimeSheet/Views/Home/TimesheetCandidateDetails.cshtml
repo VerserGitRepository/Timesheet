@@ -21,6 +21,8 @@
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break (Minutes)</th>
+                    <th>BreakTime</th>
+                   
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
@@ -64,40 +66,45 @@
                             <span style="width:2px">@item.ActualQuantity</span>
                             <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
                         </td>
+                        <td class="breakHrs">
+
+                        @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                        {
+                            new SelectListItem{ Text="No Break", Value = "0" },
+                            new SelectListItem{ Text="15 Mins", Value = "15" },
+                            new SelectListItem{ Text="30 Mins", Value = "30" },
+                            new SelectListItem{ Text="45 Mins", Value = "45" },
+                            new SelectListItem{ Text="60 Mins", Value = "60" },
+                         } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                        <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
+
+                    </td>
                         <td>
-
-                            @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
-                            {
-                                new SelectListItem{ Text="No Break", Value = "0" },
-                                new SelectListItem{ Text="15 Mins", Value = "15" },
-                                new SelectListItem{ Text="30 Mins", Value = "30" },
-                                new SelectListItem{ Text="45 Mins", Value = "45" },
-                                new SelectListItem{ Text="60 Mins", Value = "60" },
-                             } , new { @id = "ddlBreak" })
+                            <span id="spanbreakStartTime">@item.BreakTime</span>
 
                         </td>
-                        <td class="Status">
-                            <span text="Status" span />
-                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
-                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                        </td>
-                        <td class="TimeSheetComments">
-                            <span>@item.TimeSheetComments</span>
-                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-                        </td>
-                        <td width="5%">
-                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Edit</strong></span>
-                            </a>
-                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span><strong>Rate</strong></span>
-                            </a>
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Update</strong></span>
-                            </a>
+                    <td class="Status">
+                        <span text="Status" span />
+                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
+                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                    </td>
+                    <td class="TimeSheetComments">
+                        <span>@item.TimeSheetComments</span>
+                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                    </td>
+                    <td width="5%">
+                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+                        <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            <span><strong>Rate</strong></span>
+                        </a>
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
 
                             <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -128,6 +135,78 @@
         responsive: true
     });
     SetDDLValue();
+
+    function ShowSliderModal(rowid)
+    {
+
+        var row = $(rowid).closest("tr");
+        debugger;
+        var ddlValue = row.find("#hdnddlbrkhrs").val();
+        var sliderURL = '@Url.Action("ReturnSlider", "Home")'
+
+        $.ajax({
+            type: "GET",
+            url: sliderURL,
+            data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
+            success: function (data) {
+              $.confirm({
+                         title: 'Set Break Timimgs!',
+           content:data,
+                         buttons: {
+                             Set: function () {
+                                 row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text());
+                                 $(".slider-time2").text();
+                               //  alert($('#rating-input').val());
+                            @*$.ajax({
+                                data: model,
+                                url: '@Url.Action("ReturnSlider", "Home")',
+                                type: "POST",
+                                success: function (data) {
+
+
+
+                                        $("td", row).each(function () {
+                                            if ($(this).find("input").length > 0) {
+                                                $(this).find("input").hide();
+                                                $(this).find("span").show();
+                                                $(this).toggleClass('selected');
+
+                                            }
+                                        });
+                                        row.find(".Update").hide();
+                                        row.find(".Cancel").hide();
+                                        row.find("#Rate").hide();
+
+                                        $(".Edit").show();
+                                    // return;
+
+                                }
+                        });*@
+                        return;
+                             },
+                             cancel: function () {
+
+                                 $("#ddlBreak option").each(function (i) {
+
+                                     if ($(this).val() == ddlValue) {
+                                         $(this).attr('selected', 'selected')
+                                     }
+
+                                     return;
+                                 });
+                             }
+
+
+
+                         }
+
+                     });
+            },
+            error: function (errorData) { alert(errorData);}
+        });
+
+
+    }
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
@@ -165,13 +244,26 @@
     };
     function SetDDLValue() {
         //alert('before document ready');
-         //debugger;
+         debugger;
         $("tbody tr td.Status").each(function LoopTR() {
             var ratingTdText = $(this);
             if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
                 $(ratingTdText).find("#ddlStatus option").each(function (i) {
                     //alert($(ratingTdText).find("#hdnddlLidt").val());
                     if (($(this).val() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                        $(this).attr('selected', 'selected')
+                    }
+                });
+            }
+
+
+        });
+        $("tbody tr td.breakHrs").each(function LoopTR() {
+            var brkTdText = $(this);
+            if ($(brkTdText).find("#hdnddlbrkhrs").val() != "") {
+                $(brkTdText).find("#ddlBreak option").each(function (i) {
+                    //alert($(ratingTdText).find("#hdnddlLidt").val());
+                    if (($(this).val() == $(brkTdText).find("#hdnddlbrkhrs").val())) {
                         $(this).attr('selected', 'selected')
                     }
                 });
@@ -228,6 +320,7 @@
         CandidateEdit.Day = row.find(".Day").find("span").html();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
         CandidateEdit.BreakHours = row.find("#ddlBreak").val();
+        CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text();
 
         $.ajax({
             type: "POST",
@@ -238,6 +331,7 @@
 
 
         });
+       
         $.ajax({
             type: "GET",
             url: './TimesheetCandidateDetails',
