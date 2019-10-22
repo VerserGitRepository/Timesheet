@@ -1,12 +1,14 @@
-﻿@model  TimeSheet.Models.TimeSheetViewModel
+﻿
+
+@model  TimeSheet.Models.TimeSheetViewModel
 
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1350px">
-        <h5 class="modal-title text-center">Resource Details</h5>
+    <div class="modal-header" style="background-color:lightgray;width:1320px;font-weight: bold">
+        <h5 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1200px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1200px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1200px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -27,86 +29,86 @@
             <tbody class="table">
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
-                <tr>
-                    <td class="Id"> <span>@item.Id</span> </td>
-                    <td class="CandidateName">
-                        <span id="txtCandidateName">@item.CandidateName</span>
-                    </td>
-                    <td class="Activity">
-                        @Html.DisplayFor(modelItem => item.Activity)
-                    </td>
+                    <tr>
+                        <td class="Id"> <span>@item.Id</span> </td>
+                        <td class="CandidateName">
+                            <span id="txtCandidateName">@item.CandidateName</span>
+                        </td>
+                        <td class="Activity">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
 
-                    <td class="Day" width="7%">
-                        <span>@item.Day.Value.ToShortDateString()</span>
-                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                        <td class="Day" width="7%">
+                            <span>@item.Day.Value.ToShortDateString()</span>
+                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
 
-                    </td>
-                    <td class="StartTime">
-                        <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
-                    @*<td class="EndDate" width="8%">
-            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                        <td class="StartTime">
+                            <span>@item.StartTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
+                        @*<td class="EndDate" width="8%">
+                                @Html.DisplayFor(modelItem => item.EndDate)
 
-        </td>*@
+                            </td>*@
 
-                    <td class="EndTime" width="8%">
-                        <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
+                        <td class="EndTime" width="8%">
+                            <span>@item.EndTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
-                    <td class="OLATarget">
-                        @Html.DisplayFor(modelItem => item.OLATarget)
-                    </td>
-                    <td class="ActualQuantity">
-                        <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                    </td>
-                    <td>
+                        <td class="OLATarget">
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td class="ActualQuantity">
+                            <span style="width:2px">@item.ActualQuantity</span>
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        </td>
+                        <td>
 
-                        @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
-                        {
-                            new SelectListItem{ Text="No Break", Value = "0" },
-                            new SelectListItem{ Text="15 Mins", Value = "15" },
-                            new SelectListItem{ Text="30 Mins", Value = "30" },
-                            new SelectListItem{ Text="45 Mins", Value = "45" },
-                            new SelectListItem{ Text="60 Mins", Value = "60" },
-                         } , new { @id = "ddlBreak" })
+                            @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="No Break", Value = "0" },
+                                new SelectListItem{ Text="15 Mins", Value = "15" },
+                                new SelectListItem{ Text="30 Mins", Value = "30" },
+                                new SelectListItem{ Text="45 Mins", Value = "45" },
+                                new SelectListItem{ Text="60 Mins", Value = "60" },
+                             } , new { @id = "ddlBreak" })
 
-                    </td>
-                    <td class="Status">
-                        <span text="Status" span />
-                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
-                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                    </td>
-                    <td class="TimeSheetComments">
-                        <span>@item.TimeSheetComments</span>
-                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-                    </td>
-                    <td width="5%">
-                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Edit</strong></span>
-                        </a>
-                        <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            <span><strong>Rate</strong></span>
-                        </a>
-                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Update</strong></span>
-                        </a>
+                        </td>
+                        <td class="Status">
+                            <span text="Status" span />
+                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                        </td>
+                        <td class="TimeSheetComments">
+                            <span>@item.TimeSheetComments</span>
+                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                        </td>
+                        <td width="5%">
+                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Edit</strong></span>
+                            </a>
+                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span><strong>Rate</strong></span>
+                            </a>
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
 
-                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            <span><strong>Cancel</strong></span>
-                        </a>
+                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
 
-                        @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
-                        @*<a class="Delete" href="javascript:;">Delete</a>*@
-                    </td>
-                </tr>
+                            @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -114,7 +116,7 @@
     </div>
 
 </div>
-<div id="myRatingModal" class="modal fade bs-modal-sm"  role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div id="myRatingModal" class="modal fade bs-modal-sm" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div id="myRatingModalContent"></div>
@@ -233,8 +235,8 @@
             data: '{CandidateEdit:' + JSON.stringify(CandidateEdit) + '}',
             contentType: "application/json; charset=utf-8",
             dataType: "json"
-            
-            
+
+
         });
         $.ajax({
             type: "GET",
@@ -255,7 +257,7 @@
         $('#myModal').on('hidden.bs.modal', function (e) {
             location.reload();
         })
-        
+
     });
 
     $("#myModal").draggable({
@@ -295,7 +297,7 @@
     var CandidateRatingDetailsURL = './Rating';
     function Rate(rowid) {
 
-      
+
       //  debugger;
         var $buttonClicked = $(this);
         var tr = $(rowid).closest("tr");
@@ -312,7 +314,7 @@
             data: {},
             datatype: "json",
             success: function (data) {
-              
+
 
                 $.confirm({
                          title: 'Resource Rating!',
@@ -325,16 +327,16 @@
                                      'ProfessionalService': $('#rating-input1').val(),
                                      'PoliteAndCourteous': $('#rating-input2').val(),
                                      'WorkQuality': $('#rating-input3').val(),
-                                     'Comments': $('#txtcomments3').val()                                    
+                                     'Comments': $('#txtcomments3').val()
 
-                                 };                                 
+                                 };
                                      $.ajax({
                                          data: model,
                                          url: '@Url.Action("RateResource", "Resource")',
                                          type: "POST",
                                          success: function (data) {
-                                             
-                                               
+
+
                                                  var row = $(rowid).closest("tr");
                                                  $("td", row).each(function () {
                                                      if ($(this).find("input").length > 0) {
@@ -349,7 +351,7 @@
                                                  row.find("#Rate").hide();
 
                                                  $(".Edit").show();
-                                                // return;                                             
+                                                // return;
                                          }
                                  });
                                  $('#myModal').modal('show');
@@ -383,14 +385,14 @@
             }
         });
 
-        
+
 
     }
 
 </script>
 <style>
     .modal-dialog {
-        width: 1370px;
+        width: 1340px;
         margin: 30px auto;
         margin-bottom: 10px;
     }
