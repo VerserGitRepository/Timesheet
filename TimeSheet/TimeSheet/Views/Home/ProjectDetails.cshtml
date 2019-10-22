@@ -15,11 +15,13 @@
                     <th>Activity</th>
                     <th style="width:50px">StartDate </th>
                     <th>StartTime</th>
-                    <th style="width:50px">EndDate </th>
-                    @*<th>EndTime</th>*@
+                    <th>EndTime </th>
+
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break (Minutes)</th>
+                    <th>BreakStartTime</th>
+                    <th>BreakEndTime</th>
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
@@ -28,89 +30,115 @@
             <tbody class="table">
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
-                <tr>
-                    <td class="Id"> <span>@item.Id</span> </td>
-                    <td class="CandidateName">
-                        <span id="ProjectName">@item.ProjectName</span>
-                    </td>
-                    <td class="CandidateName">
-                        @Html.DisplayFor(modelItem => item.CandidateName)
-                    </td>
-                    <td class="Activity">
-                        @Html.DisplayFor(modelItem => item.Activity)
-                    </td>
+                    <tr>
+                        <td class="Id"> <span>@item.Id</span> </td>
+                        <td class="CandidateName">
+                            <span id="ProjectName">@item.ProjectName</span>
+                        </td>
+                        <td class="CandidateName">
+                            @Html.DisplayFor(modelItem => item.CandidateName)
+                        </td>
+                        <td class="Activity">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
 
-                    <td class="Day" width="7%">
-                        <span>@item.Day.Value.ToShortDateString()</span>
-                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                        <td class="Day" width="7%">
+                            <span>@item.Day.Value.ToShortDateString()</span>
+                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
 
-                    </td>
-                    <td class="StartTime">
-                        <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
-                    @*<td class="EndDate" width="8%">
-            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                        <td class="StartTime">
+                            <span>@item.StartTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
+                        @*<td class="EndDate" width="8%">
+                                @Html.DisplayFor(modelItem => item.EndDate)
 
-        </td>*@
+                            </td>*@
 
-                    <td class="EndTime" width="8%">
-                        <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
+                        <td class="EndTime" width="8%">
+                            <span>@item.EndTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
-                    <td class="OLATarget">
-                        @Html.DisplayFor(modelItem => item.OLATarget)
-                    </td>
-                    <td class="ActualQuantity">
-                        <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                    </td>
-                    <td>
+                        <td class="OLATarget">
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td class="ActualQuantity">
+                            <span style="width:2px">@item.ActualQuantity</span>
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        </td>
+                        <td>
 
-                        @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
-                        {
-                            new SelectListItem{ Text="No Break", Value = "0" },
-                            new SelectListItem{ Text="15 Mins", Value = "15" },
-                            new SelectListItem{ Text="30 Mins", Value = "30" },
-                            new SelectListItem{ Text="45 Mins", Value = "45" },
-                            new SelectListItem{ Text="60 Mins", Value = "60" },
-                         } , new { @id = "ddlBreak" })
+                            @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="No Break", Value = "0" },
+                                new SelectListItem{ Text="15 Mins", Value = "15" },
+                                new SelectListItem{ Text="30 Mins", Value = "30" },
+                                new SelectListItem{ Text="45 Mins", Value = "45" },
+                                new SelectListItem{ Text="60 Mins", Value = "60" },
+                             } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                            <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
 
-                    </td>
-                    <td class="Status">
-                        <span text="Status" span />
-                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
-                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                    </td>
-                    <td class="TimeSheetComments">
-                        <span>@item.TimeSheetComments</span>
-                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-                    </td>
-                    <td width="5%">
-                        <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Edit</strong></span>
-                        </a>
-                        <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            <span><strong>Rate</strong></span>
-                        </a>
-                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Update</strong></span>
-                        </a>
+                        </td>
+                        <td>
+                            @if (@item.BreakStartTime.HasValue)
+                            {
+                                <span id="spanbreakStartTime">@item.BreakStartTime.Value.ToString("HH:mm tt")</span>
 
-                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            <span><strong>Cancel</strong></span>
-                        </a>
+                            }
+                            else
+                            {
+                                <span id="spanbreakStartTime">@DateTime.MinValue.ToString("HH:mm tt")</span>
 
-                        @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
-                        @*<a class="Delete" href="javascript:;">Delete</a>*@
-                    </td>
-                </tr>
+                            }
+                        </td>
+                        <td>
+                            @if (@item.BreakEndTime.HasValue)
+                            {
+                                <span id="spanbreakEndTime"> @item.BreakEndTime.Value.ToString("HH:mm tt")</span>
+
+                            }
+                            else
+                            {
+                                <span id="spanbreakEndTime">@DateTime.MinValue.ToString("HH:mm tt")</span>
+
+                            }
+
+                        </td>
+                        <td class="Status">
+                            <span text="Status" span />
+                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                        </td>
+                        <td class="TimeSheetComments">
+                            <span>@item.TimeSheetComments</span>
+                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                        </td>
+                        <td width="5%">
+                            <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Edit</strong></span>
+                            </a>
+                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span><strong>Rate</strong></span>
+                            </a>
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
+
+                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
+
+                            @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -127,6 +155,78 @@
     $('#tblCustomers').dataTable({
         responsive: true
     });
+    function ShowSliderModal(rowid)
+    {
+
+        var row = $(rowid).closest("tr");
+        debugger;
+        var ddlValue = row.find("#hdnddlbrkhrs").val();
+        var sliderURL = '@Url.Action("ReturnSlider", "Home")'
+
+        $.ajax({
+            type: "GET",
+            url: sliderURL,
+            data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
+            success: function (data) {
+              $.confirm({
+                         title: 'Set Break Timimgs!',
+           content:data,
+                         buttons: {
+                             Set: function () {
+                                 row.find("#spanbreakStartTime").html(($(".slider-time").text()))  ;
+                                 row.find("#spanbreakEndTime").html(($(".slider-time2").text())) ;
+                                 $(".slider-time2").text();
+                               //  alert($('#rating-input').val());
+                            @*$.ajax({
+                                data: model,
+                                url: '@Url.Action("ReturnSlider", "Home")',
+                                type: "POST",
+                                success: function (data) {
+
+
+
+                                        $("td", row).each(function () {
+                                            if ($(this).find("input").length > 0) {
+                                                $(this).find("input").hide();
+                                                $(this).find("span").show();
+                                                $(this).toggleClass('selected');
+
+                                            }
+                                        });
+                                        row.find(".Update").hide();
+                                        row.find(".Cancel").hide();
+                                        row.find("#Rate").hide();
+
+                                        $(".Edit").show();
+                                    // return;
+
+                                }
+                        });*@
+                        return;
+                             },
+                             cancel: function () {
+
+                                 $("#ddlBreak option").each(function (i) {
+
+                                     if ($(this).val() == ddlValue) {
+                                         $(this).attr('selected', 'selected')
+                                     }
+
+                                     return;
+                                 });
+                             }
+
+
+
+                         }
+
+                     });
+            },
+            error: function (errorData) { alert(errorData);}
+        });
+
+
+    }
     SetDDLValue();
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate) {
         //Bind CustomerId.
@@ -229,6 +329,7 @@
         CandidateEdit.Day = row.find(".Day").find("span").html();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
         CandidateEdit.BreakHours = row.find("#ddlBreak").val();
+        CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text() + ';' + row.find("#spanbreakEndTime").text();
 
         $.ajax({
             type: "POST",
@@ -237,9 +338,9 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         });
-       
+
         $.ajax({
-            
+
             type: "GET",
             url: './ProjectDetails',
             contentType: "application/json; charset=utf-8",
@@ -326,7 +427,7 @@
                                      'PoliteAndCourteous': $('#rating-input2').val(),
                                      'WorkQuality': $('#rating-input3').val(),
                                      'Comments': $('#txtcomments3').val()
-                                     
+
 
                                  };
                                //  alert($('#rating-input').val());
@@ -335,8 +436,8 @@
                                          url: '@Url.Action("RateResource", "Resource")',
                                          type: "POST",
                                          success: function (data) {
-                                             
-                                                
+
+
                                                  var row = $(rowid).closest("tr");
                                                  $("td", row).each(function () {
                                                      if ($(this).find("input").length > 0) {
@@ -352,7 +453,7 @@
 
                                                  $(".Edit").show();
                                                 // return;
-                                             
+
                                          }
                                  });
                                  $('#myModal').modal('show');
@@ -386,7 +487,7 @@
             }
         });
 
-        
+
 
     }
 </script>

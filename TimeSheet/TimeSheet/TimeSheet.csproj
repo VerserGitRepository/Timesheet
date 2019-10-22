@@ -187,6 +187,7 @@
     <Compile Include="Models\ApprovedTimesheetDetailedModel.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
+    <Compile Include="Models\BreakTimeModel.cs" />
     <Compile Include="Models\CandidateTimeSheetsModel.cs" />
     <Compile Include="Models\CompletedtimesheetExcelExportModel.cs" />
     <Compile Include="Models\CompletedtimesheetExportModel.cs" />
@@ -450,6 +451,7 @@
     <Content Include="Views\Home\AllBookingEntries.cshtml" />
     <Content Include="Views\Projection\ProjectionsFilter.cshtml" />
     <Content Include="Views\ProfitLoss\CostDetails.cshtml" />
+    <Content Include="Views\Shared\_BreakTimeSlider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
