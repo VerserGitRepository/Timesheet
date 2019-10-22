@@ -17,8 +17,8 @@
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break (Minutes)</th>
-                    <th>BreakStartTime</th>
-                    <th>BreakEndTime</th>
+                    <th>BreakTime</th>
+                   
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
@@ -59,7 +59,7 @@
                         <span style="width:2px">@item.ActualQuantity</span>
                         <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
                     </td>
-                    <td>
+                    <td class="breakHrs">
 
                         @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
                         {
@@ -73,28 +73,9 @@
 
                     </td>
                     <td>
-                        @if (@item.BreakStartTime.HasValue)
-                        {
-                            <span id="spanbreakStartTime">@item.BreakStartTime.Value.ToString("HH:mm tt")</span>
+                       
+                    <span id="spanbreakStartTime">@item.BreakTime</span>
 
-                        }
-                        else
-                        {
-                            <span id="spanbreakStartTime">@DateTime.MinValue.ToString("HH:mm tt")</span>
-
-                        }
-                    </td>
-                    <td>
-                        @if (@item.BreakEndTime.HasValue)
-                        {
-                            <span id="spanbreakEndTime"> @item.BreakEndTime.Value.ToString("HH:mm tt")</span>
-
-                        }
-                        else
-                        {
-                            <span id="spanbreakEndTime">@DateTime.MinValue.ToString("HH:mm tt")</span>
-
-                        }
 
                     </td>
                     <td class="ActivityStatus">
@@ -151,8 +132,7 @@
            content:data,
                          buttons: {
                              Set: function () {
-                                 row.find("#spanbreakStartTime").html(($(".slider-time").text()))  ;
-                                 row.find("#spanbreakEndTime").html(($(".slider-time2").text())) ;
+                                 row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text());
                                  $(".slider-time2").text();
                                //  alert($('#rating-input').val());
                             @*$.ajax({
@@ -318,7 +298,7 @@
         CandidateEdit.Day = row.find(".Day").find("span").html();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
         CandidateEdit.BreakHours = row.find("#ddlBreak").val();
-        CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text() + ';' + row.find("#spanbreakEndTime").text();
+        CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text();
 
         $.ajax({
             type: "POST",
@@ -328,7 +308,7 @@
             dataType: "json"
         });
 
-        
+      
 
         $.ajax({
             type: "GET",

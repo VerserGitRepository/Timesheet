@@ -11,6 +11,8 @@ namespace TimeSheet.Models
         public string ADPEmployeeId { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
+        public string BookedBy { get; set; }
+        public string ApprovedBy { get; set; }
         public string CandidateName { get; set; }
         public int OpportunityNumber { get; set; }
         public string Activity { get; set; }

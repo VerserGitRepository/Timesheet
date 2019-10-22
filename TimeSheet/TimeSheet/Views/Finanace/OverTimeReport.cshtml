@@ -22,8 +22,8 @@
     @using (Html.BeginForm("ExportCompletedScheduls", "Finanace", FormMethod.Post))
     {
         <div class="row">
-            <button type="submit" class="btn btn-default btn-sm" style="padding-left:10px;padding-top:2px;margin-left:10px;background-color:gray">
-                <span class="glyphicon glyphicon-export"></span> Export
+            <button type="submit" class="btn btn-default btn-sm" style="padding-left:10px;padding-top:2px;margin-left:10px;background-color:lightgray">
+                <span class="glyphicon glyphicon-export black"></span> Export
             </button>
         </div>
     }
@@ -188,10 +188,21 @@
     .glyphicon {
         padding-top: 0px;
         font-size: 10px;
+       
+    }
+
+    .black {
+        color: black;
     }
 
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
+    }
+
+    .page-item.active .page-link {
+        color: white !important;
+        background-color: orange !important;
+        border-color: gray !important;
     }
 </style>

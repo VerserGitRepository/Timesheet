@@ -181,8 +181,7 @@
                     },
 
            eventClick: function  (calEvent, jsEvent, view) {
-
-
+               
                         $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
                        var $description = $('<div/>');
                         $description.append($('<p/>').html('<b>Project Manager:</b>' + calEvent.event.extendedProps.projectmanager));

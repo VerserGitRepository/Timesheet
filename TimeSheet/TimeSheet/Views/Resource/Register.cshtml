@@ -30,108 +30,118 @@
 
             <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
                 <div class="table table-responsive" id="tblCustomers" style="padding-left:50px;padding-bottom:30px;border-color:lightgray">
-                   
-                        
-                            <div class="row" style="padding-top:10px">
+                    @using (Html.BeginForm("Register", "Resource", FormMethod.Post))
+                    {
+                        if (TempData["BookedResourceMessage"] != null)
+                        {
+                            <script>alert(TempData["BookedResourceMessage"].ToString());</script>
+                        }
 
-                                <div class="form-group required col-md-6" tabindex=1 >
-                                    <label class="control-label">Facility</label>
+                        <div class="row" style="padding-top:10px">
 
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.WarehouseNameId, Model.WarehouseNameList, "Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
-                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.WarehouseNameId, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group required col-md-6" tabindex=1>
+                                <label class="control-label">Facility</label>
+
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.WarehouseNameId, Model.WarehouseNameList, "Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.WarehouseNameId, "", new { @class = "text-danger" })
+                            </div>
 
 
-                                <div class="form-group  required col-md-6" tabindex=2 >
-                                    <label class="control-label">Project</label>
+                            <div class="form-group  required col-md-6" tabindex=2>
+                                <label class="control-label">Project</label>
 
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerID" })
-                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.ProjectID, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerID" })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.ProjectID, "", new { @class = "text-danger" })
 
-                                </div>
+                            </div>
 
-                                <div class="form-group  required col-md-6" tabindex=3>
-                                    <label class="control-label">Employment Type</label>
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.EmploymentTypeID, Model.EmploymentList, "RESOURCE TYPE", new { @class = "form-control", id = "ddlEmploymentId" })
-                                </div>
+                            <div class="form-group  required col-md-6" tabindex=3>
+                                <label class="control-label">Employment Type</label>
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.EmploymentTypeID, Model.EmploymentList, "RESOURCE TYPE", new { @class = "form-control", id = "ddlEmploymentId" })
+                            </div>
 
-                                <div class="form-group  required col-md-6" tabindex=4 >
-                                    <label class="control-label">Opportunity Number</label>
+                            <div class="form-group  required col-md-6" tabindex=4>
+                                <label class="control-label">Opportunity Number</label>
 
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberID" })
-                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="form-group required col-md-6" tabindex=5 >
-                                    <label class="control-label">Resource</label><br />
-                                    @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberID" })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group required col-md-6" tabindex=5>
+                                <label class="control-label">Resource</label><br />
+                                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
 
-                                    @Html.ValidationMessageFor(model => Model.ResourceIDs, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="form-group  required col-md-6" tabindex=6 >
-                                    <label class="control-label">Job Number</label>
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.JobID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Job", new { @class = "form-control", id = "JobID" })
-                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.JobID, "", new { @class = "text-danger" })
-                                </div>
+                                @Html.ValidationMessageFor(model => Model.ResourceIDs, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group  required col-md-6" tabindex=6>
+                                <label class="control-label">Job Number</label>
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.JobID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Job", new { @class = "form-control", id = "JobID" })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.JobID, "", new { @class = "text-danger" })
+                            </div>
 
-                                <div class="form-group col-md-6" tabindex=7 >
-                                    <label>OLA Target</label>
-                                    @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
-                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
+                            <div class="form-group col-md-6" tabindex=7>
+                                <label>OLA Target</label>
+                                @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
 
-                                </div>
-                                <div class="form-group  required col-md-6" tabindex=8 >
-                                    <label class="control-label">Activity</label>
+                            </div>
+                            <div class="form-group  required col-md-6" tabindex=8>
+                                <label class="control-label">Activity</label>
 
-                                    @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityID" })
-                                    @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
-                                </div>
+                                @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityID" })
+                                @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
+                            </div>
 
-                                <div class="form-group col-md-6" tabindex=9 >
-                                    <label>Vehicle</label>
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Vechicles, new SelectList(Enumerable.Empty<SelectListItem>()), "No Vehicle", new { @class = "form-control", id = "ddlVan" })
-                                </div>
+                            <div class="form-group col-md-6" tabindex=9>
+                                <label>Vehicle</label>
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Vechicles, new SelectList(Enumerable.Empty<SelectListItem>()), "No Vehicle", new { @class = "form-control", id = "ddlVan" })
+                            </div>
 
-                                <div class="form-group required col-md-6" tabindex=10 >
-                                    <label class="control-label">Start Date</label>
+                            <div class="form-group required col-md-6" tabindex=10>
+                                <label class="control-label">Start Date</label>
 
-                                    @Html.EditorFor(model => model.TimeSheetRegisterModel.Day, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
-                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.TimeSheetRegisterModel.Day, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })
 
-                                </div>
-                                <div class="form-group col-md-6" tabindex=11 >
-                                    <label>Theme Colour</label>
-                                    @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColour" })
-                                </div>
-                                <div class="form-group required col-md-6" tabindex=12 >
-                                    <div id="time-range" style="padding-top:10px;width:300px">
-                                        <p>
-                                            Start Time <b><span class="slider-time">08:30 AM</span></b> End Time <b><span class="slider-time2">5:00 PM</span></b>
+                            </div>
+                            <div class="form-group col-md-6" tabindex=11>
+                                <label>Theme Colour</label>
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColour" })
+                            </div>
+                            <div class="form-group required col-md-6" tabindex=12>
+                                <div id="time-range" style="padding-top:10px;width:300px">
+                                    <p>
+                                        Start Time <b><span class="slider-time">08:30 AM</span></b> End Time <b><span class="slider-time2">5:00 PM</span></b>
 
-                                        </p>
-                                        <div class="sliders_step1">
-                                            <div id="slider-range"></div>
-                                        </div>
+                                    </p>
+                                    <div class="sliders_step1">
+                                        <div id="slider-range"></div>
                                     </div>
                                 </div>
-
                             </div>
 
-                                <br />
-                                <div class=" col-md-offset-5">
-                                    <button type="submit" class="btn btn-warning btn-md" id="btnregister" onclick="PostData(this);">
-                                        <span class="glyphicon glyphicon-ok-sign"></span> Register
-                                    </button>
-                                </div>
+                        </div>
 
-                               
-                            </div>
+                        <br />
+                        <div class=" col-md-offset-5">
+                            <button type="submit" class="btn btn-warning btn-md" id="btnregister" onclick="PostData(this);">
+                                <span class="glyphicon glyphicon-ok-sign"></span> Register
+                            </button>
+                        </div>
+                    }
+
+                    </div>
             </div>
             <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
 
                 <div class="table table-responsive" id="MANAGERESOURCES" style="padding-left:50px;padding-bottom:30px;border-color:lightgray">
                     <div class="form-group">
-                       
-                           
+                        @using (Html.BeginForm("Register", "Resource", FormMethod.Post))
+                        {
+                            if (TempData["BookedResourceMessage"] != null)
+                            {
+                                <script>alert(TempData["BookedResourceMessage"].ToString());</script>
+                            }
+
                             <div class="row" style="padding-top:10px">
 
                                 <div class="form-group  required col-md-6" tabindex=1>
@@ -184,7 +194,7 @@
                                     </div>
 
                                 </div>
-                                <div id="PMActivity"class="form-group required col-md-6" tabindex=8>
+                                <div id="PMActivity" class="form-group required col-md-6" tabindex=8>
                                     <div id="time-rangePM" style="padding-top:10px;width:270px" tabindex=7>
                                         <p>
                                             Start Time <b><span class="slider-timePM">08:30 AM</span></b>&nbsp;&nbsp;&nbsp;End Time <b><span class="slider-time2PM">5:00 PM</span></b>
@@ -199,7 +209,7 @@
 
                             </div>
 
-                            
+
 
                             <br>
                             <div class="row" style="width:670px;padding-left:20px">
@@ -214,10 +224,10 @@
                                 </button>
                             </div>
 
-                       
+                        }
 
 
-                    </div>
+                        </div>
 
 
                         </div>
