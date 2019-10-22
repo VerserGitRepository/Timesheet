@@ -286,9 +286,12 @@ namespace TimeSheet.Controllers
                // model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
 
                 var TimeSheetmodel = permCompleted.Concat(casualApproved).Distinct().ToList();//.Where(item => item.Day.Value.Date >= firstDayInWeek.Date && item.Day.Value.Date <= lastDayInWeek.Date);
+               
                 //TimeSheet
                 foreach (var item in TimeSheetmodel)
                 {
+                    int otEnd = 0;
+                    int otStart = 0;
                     if (((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
                     {
 
@@ -298,7 +301,14 @@ namespace TimeSheet.Controllers
                     {
                         OTHoursVal = "0";
                     }
-
+                    if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) > 18)
+                    {
+                        otEnd = Convert.ToInt32(item.EndTime.Value.ToString("HH")) - 18;
+                    }
+                    if (Convert.ToInt32(item.StartTime.Value.ToString("HH")) < 6)
+                    {
+                        otStart = 6 - Convert.ToInt32(item.StartTime.Value.ToString("HH"));
+                    }
                     TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
                     {
 
@@ -321,6 +331,7 @@ namespace TimeSheet.Controllers
                         TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
                         BreakHours = item.BreakHours,
                         WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60,
+                        OutsideWorkHours = otStart + otEnd,                        
                         OTHours = OTHoursVal,
                         PayFrequency = item.PayFrequency,
                         PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)
