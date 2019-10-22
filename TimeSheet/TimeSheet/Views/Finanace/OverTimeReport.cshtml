@@ -14,6 +14,8 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 <div class="container" style="padding-top:2px;padding-bottom:0px;margin-left:0px;padding-left:0px;padding-right:10px;width:150%">
 
@@ -45,45 +47,46 @@
                 <tbody>
                     @foreach (TimeSheet.Models.AggregatedCompletedTimesheetModel item in Model.AggregaredTimesheetModel)
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ADPEmployeeID)
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ADPEmployeeID)
 
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProjectManager)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectManager)
 
-                        </td>
-                        <td>
-                            <span id="txtCandidateName">@item.CandidateName</span>
+                            </td>
+                            <td>
+                                <span id="txtCandidateName">@item.CandidateName</span>
+                                <input type="hidden" id="txtResourceId" value="@item.ResourceId" />
 
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Hours)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EmployeementType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayFrequency)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayCycle)
-                        </td>
-                        <td>
-                            <p data-placement="top" data-toggle="tooltip" title="Approve">
-                                <button class="btn btn-success btn-xs" data-title="Approve" data-toggle="modal" data-target="#approve">
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                </button>
-                            </p>
-                        </td>
-                        <td>
-                            <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.CandidateName">
-                                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                            </a>
-                        </td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Hours)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeementType)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayFrequency)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PayCycle)
+                            </td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Approve">
+                                    <button class="btn btn-success btn-xs" data-title="Approve" onclick="ApprovePayment(this);" data-toggle="modal" data-target="#approve">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    </button>
+                                </p>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.CandidateName">
+                                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                                </a>
+                            </td>
 
-                    </tr>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -147,7 +150,8 @@
     });
      function ApprovePayment(rowId) {
         var row = $(rowId).closest("tr");
-        var candidateName = row.find("#txtCandidateName").text();
+         var candidateName = row.find("#txtCandidateName").text();
+         var resourceId = row.find("#txtResourceId").val();
         var options = { "backdrop": "static", keyboard: true };
         $.confirm({
             title: 'Confirm!',
@@ -155,7 +159,7 @@
             buttons: {
                 confirm: function () {
                        $.ajax({
-                        data: { CandidateName: candidateName },
+                           data: { resourceId: resourceId },
                         url: '@Url.Action("ApprovePaymentBulk", "Projection")',
                         type: "POST",
                         success: function (data) {
@@ -190,5 +194,4 @@
         background-color: #FFA500;
         border-color: white;
     }
-
 </style>

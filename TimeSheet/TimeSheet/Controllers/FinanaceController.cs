@@ -134,7 +134,7 @@ namespace TimeSheet.Controllers
                         agrModel.PayCycle = pc.ToString();
                         agrModel.ADPEmployeeID = Convert.ToInt32(t.AdpEmployeeID);
                         agrModel.PayFrequency = t.PayFrequency;
-
+                        agrModel.ResourceId = Convert.ToInt32(t.ResourceID);
 
                     }
 
@@ -207,7 +207,7 @@ namespace TimeSheet.Controllers
                         agrModel.PayCycle =pc.ToString();
                         agrModel.ADPEmployeeID = Convert.ToInt32(t.AdpEmployeeID);
                         agrModel.PayFrequency = t.PayFrequency;
-
+                        agrModel.ResourceId = Convert.ToInt32(t.ResourceID);
 
                     }
 
