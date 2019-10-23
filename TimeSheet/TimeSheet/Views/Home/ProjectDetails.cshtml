@@ -44,7 +44,7 @@
 
                         <td class="Day" width="7%">
                             <span>@item.Day.Value.ToShortDateString()</span>
-                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                            @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
                         </td>
                         <td class="StartTime">
@@ -148,38 +148,16 @@
             data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
             success: function (data) {
               $.confirm({
-                         title: 'Set Break Timimgs!',
-           content:data,
+                  title: 'Set Break Timimgs!',
+                  boxWidth: '370px',
+                  useBootstrap: false,
+                   content:data,
                          buttons: {
                              Set: function () {
                                  row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text());
                                  $(".slider-time2").text();
                                //  alert($('#rating-input').val());
-                            @*$.ajax({
-                                data: model,
-                                url: '@Url.Action("ReturnSlider", "Home")',
-                                type: "POST",
-                                success: function (data) {
-
-
-
-                                        $("td", row).each(function () {
-                                            if ($(this).find("input").length > 0) {
-                                                $(this).find("input").hide();
-                                                $(this).find("span").show();
-                                                $(this).toggleClass('selected');
-
-                                            }
-                                        });
-                                        row.find(".Update").hide();
-                                        row.find(".Cancel").hide();
-                                        row.find("#Rate").hide();
-
-                                        $(".Edit").show();
-                                    // return;
-
-                                }
-                        });*@
+                           
                         return;
                              },
                              cancel: function () {

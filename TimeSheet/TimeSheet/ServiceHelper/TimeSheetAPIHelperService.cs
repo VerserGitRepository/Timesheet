@@ -423,6 +423,47 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
+        public static async Task<ReturnModel> ApproveIndividualTimesheet(int? activityId)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveIndividualTimesheet/{0}", activityId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    ReturnResult.Message = "There is an issue with the TimeSheetApproval. Details " + response.ReasonPhrase;
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
+        public static async Task<ReturnModel> ApproveBulkTimesheet(int? ResourceId)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveBulkTimesheet/{0}", ResourceId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    ReturnResult.Message = "There is an issue with the TimeSheet Approval. Details " + response.ReasonPhrase;
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
+
         public static async Task<ReturnModel> TimeSheetApproval(int? activityId)
         {
             ReturnModel ReturnResult = new ReturnModel();

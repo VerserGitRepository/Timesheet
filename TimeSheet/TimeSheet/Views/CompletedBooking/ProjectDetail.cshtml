@@ -44,7 +44,7 @@
 
                     <td class="Day" width="7%">
                         <span>@item.Day.Value.ToShortDateString()</span>
-                        @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                        @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
                     </td>
                     <td class="StartTime">
@@ -139,7 +139,8 @@
             success: function (data) {
               $.confirm({
                          title: 'Set Break Timimgs!',
-           content:data,
+                  content: data,
+                  boxWidth:'30px',
                          buttons: {
                              Set: function () {
                                  row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text())  ;
@@ -404,5 +405,9 @@
         -webkit-transition-duration: 0.5s;
         -moz-transition-duration: 0.5s;
         -o-transition-duration: 0.5s;
+    }
+    #jconfirm-holder {
+        width: 30px;
+        height: 60px;
     }
 </style>
