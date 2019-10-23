@@ -128,9 +128,12 @@
             data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
             success: function (data) {
               $.confirm({
-                         title: 'Set Break Timimgs!',
-           content:data,
-                         buttons: {
+                  title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<font size="3">Set Break Timimgs</font>',
+                  content: data,
+                  boxWidth: '370px',
+                  useBootstrap: false,
+                  buttons: {
+                             
                              Set: function () {
                                  row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text());
                                  $(".slider-time2").text();
@@ -176,7 +179,7 @@
 
 
 
-                         }
+                  }, align: 'center'
 
                      });
             },
