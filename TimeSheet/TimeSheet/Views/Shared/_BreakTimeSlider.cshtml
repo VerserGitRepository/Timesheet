@@ -11,11 +11,15 @@
     <div class="container body-content">
         <div id="time-range" style="padding-top:10px;width:300px">
             <p>
-                Start Time <b><span class="slider-time">@Model.BreakStartTime</span></b> End Time <b><span class="slider-time2">@Model.BreakEndTime</span></b>
+                Start Time <b><span class="slider-time">@Convert.ToDateTime(@Model.BreakStartTime).ToString("HH:mm")</span></b> End Time <b><span class="slider-time2">@Convert.ToDateTime(@Model.BreakEndTime).ToString("HH:mm")</span></b>
             </p>
             <div class="sliders_step1">
                 <div id="slider-range"></div>
             </div>
+            <br />
+            <p>
+                BreakTime:<b><span class="difference-hours"></span> (Mins)</b>
+            </p>
         </div>
     </div>
 
@@ -206,12 +210,19 @@
         }
     </style>
     <script>
+        debugger;
+        $(document).ready(function () {
+            var a = $(".slider-time").text().split(':');
+            var startMinutes = (+a[0]) * 60 + (+a[1].replace("AM","").replace("PM",""));
+            var b = $(".slider-time2").text().split(':');
+            var endMinutes = (+b[0]) * 60 + (+b[1].replace("AM", "").replace("PM", ""));
         $("#slider-range").slider({
             range: true,
-            min: 0,
-            max: 1440,
+            
+            min: startMinutes,
+            max: endMinutes,
             step: 15,
-            values: [540, 1020],
+            values: [startMinutes, endMinutes],
             slide: function (e, ui) {
                 var hours1 = Math.floor(ui.values[0] / 60);
                 var minutes1 = ui.values[0] - (hours1 * 60);
@@ -263,7 +274,16 @@
                 }
 
                 $('.slider-time2').html(hours2 + ':' + minutes2);
+                var date1 = new Date("May 26, 2016 " + $('.slider-time').text());
+                var date2 = new Date("May 26, 2016 " + $('.slider-time2').text());
+               // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
+                var msec = date2 - date1;
+                var mins = Math.floor(msec / 60000);
+                var hrs = Math.floor(mins / 60);
+                $('.difference-hours').html(mins);
             }
+            
+            });
         });
     </script>
 </body>
