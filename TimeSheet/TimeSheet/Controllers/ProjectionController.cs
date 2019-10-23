@@ -289,7 +289,7 @@ namespace TimeSheet.Controllers
             var model = new CompletedTimesheetModel();
             model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
             int _timesheetid = Convert.ToInt32(activityId);
-            var _a = TimeSheetAPIHelperService.TimeSheetApproval(_timesheetid).Result;
+            var _a = TimeSheetAPIHelperService.ApproveIndividualTimesheet(_timesheetid).Result;
             return PartialView("ResourceDetails", model);
         }
         [HttpPost]
@@ -298,21 +298,8 @@ namespace TimeSheet.Controllers
             if (UserRoles.UserCanApproveTimesheet() != true)
             {
                 return RedirectToAction("Index", "Home");
-            }
-            //CompletedTimesheetModel model = new CompletedTimesheetModel();
-
-            //List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
-            //List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
-
-            //model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
-            //model.CompletedTimeSheetList = model.CompletedTimeSheetList.Where(c => c.CandidateName == CandidateName).ToList();
-
-            //List<int?> ResourceIds = model.CompletedTimeSheetList.Select(i => i. ResourceID).ToList();
-
-            //foreach (var _ResourceId in ResourceIds)
-            //{
-                var _a = TimeSheetAPIHelperService.TimeSheetApproval(resourceId).Result;
-            //}
+            }            
+            var _a = TimeSheetAPIHelperService.ApproveBulkTimesheet(resourceId).Result;            
             return PartialView("WeeklyReport");
         }
         [HttpPost]
