@@ -340,7 +340,7 @@
         $.ajax({
             url: "./UpdateActivityState",
             type: "POST",
-            data: { ServiceActivityDescription: ServiceActivityID, isActive: ischecked },
+            data: { ServiceActivityID: ServiceActivityID, isActive: ischecked },
             dataType: "json",
             traditional: true,
             success: function (data) {
