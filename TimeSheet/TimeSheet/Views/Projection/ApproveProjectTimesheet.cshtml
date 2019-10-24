@@ -50,6 +50,7 @@
                             </td>
                             <td>
                                 <span id="txtCandidateName">@item.CandidateName</span>
+                                <input type="hidden" id="txtResourceId" value="@item.ResourceId" />
 
                             </td>
                             <td>
@@ -146,6 +147,7 @@
     function ApprovePayment(rowId) {
         var row = $(rowId).closest("tr");
         var candidateName = row.find("#txtCandidateName").text();
+        var candidateId = row.find("#txtResourceId").val();
         var options = { "backdrop": "static", keyboard: true };
         $.confirm({
             title: 'Confirm!',
@@ -154,7 +156,7 @@
                 confirm: function () {
                     
                     $.ajax({
-                        data: { CandidateName: candidateName },
+                        data: { resourceId: candidateId },
                         url: '@Url.Action("ApprovePaymentBulk", "Projection")',
                         type: "POST",
                         success: function (data) {

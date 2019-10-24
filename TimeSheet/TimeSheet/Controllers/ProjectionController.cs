@@ -258,6 +258,7 @@ namespace TimeSheet.Controllers
                         agrModel.ProjectManager = t.ProjectManager;
                         agrModel.EmployeementType = t.EmployeementType;
                         hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes/60;
+                        agrModel.ResourceId = Convert.ToInt32(t.ResourceID);
                     }
                     agrModel.Hours = hours;
                     model.AggregaredTimesheetModel.Add(agrModel);
