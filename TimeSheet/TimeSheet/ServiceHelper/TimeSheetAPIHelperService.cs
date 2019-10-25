@@ -287,6 +287,25 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
+        public static async Task<List<TimeSheetViewModel>> CandidateTimelines()
+        {
+            List<TimeSheetViewModel> CostModelLists = new List<TimeSheetViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/CandidateTimelines")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<TimeSheetViewModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
         public static async Task<List<CompletedTimesheetModel>> PaidTimeSheetList()
         {
             List<CompletedTimesheetModel> CostModelLists = new List<CompletedTimesheetModel>();
@@ -450,6 +469,27 @@ namespace TimeSheet.ServiceHelper
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
                 HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveBulkTimesheet/{0}", ResourceId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    ReturnResult.Message = "There is an issue with the TimeSheet Approval. Details " + response.ReasonPhrase;
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
+
+        public static async Task<ReturnModel> UpdatePaid(int? ResourceId)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/UpdateTimesheetPaid/{0}", ResourceId)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();

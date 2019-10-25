@@ -162,7 +162,7 @@
                 confirm: function () {
                        $.ajax({
                            data: { resourceId: resourceId },
-                        url: '@Url.Action("ApprovePaymentBulk", "Projection")',
+                        url: '@Url.Action("Updatepaid", "Projection")',
                         type: "POST",
                         success: function (data) {
                             if (data.status === 'OK') {

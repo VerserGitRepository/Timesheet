@@ -250,8 +250,7 @@ namespace TimeSheet.Controllers
                 foreach (var subgroup in group)
                 {
                     double hours = 0;
-                    AggregatedCompletedTimesheetModel agrModel = new AggregatedCompletedTimesheetModel();
-
+                    var agrModel = new AggregatedCompletedTimesheetModel();
                     foreach (var t in subgroup)
                     {
                         agrModel.CandidateName = t.CandidateName;
@@ -301,6 +300,16 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Index", "Home");
             }            
             var _a = TimeSheetAPIHelperService.ApproveBulkTimesheet(resourceId).Result;            
+            return PartialView("WeeklyReport");
+        }
+        [HttpPost]
+        public ActionResult Updatepaid(int resourceId)
+        {
+            if (UserRoles.UserCanApproveTimesheet() != true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var _a = TimeSheetAPIHelperService.UpdatePaid(resourceId).Result;
             return PartialView("WeeklyReport");
         }
         [HttpPost]
