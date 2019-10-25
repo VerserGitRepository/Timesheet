@@ -169,4 +169,3 @@ namespace TimeSheet.ServiceHelper
         }
     }
 }
-
