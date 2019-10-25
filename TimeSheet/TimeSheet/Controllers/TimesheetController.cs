@@ -176,6 +176,3 @@ namespace TimeSheet.Controllers
         }
     }
 }
-
-
-
