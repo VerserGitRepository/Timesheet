@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -44,20 +43,16 @@ namespace TimeSheet.Controllers
             if (Session["Username"] != null && Session["Accounts"] != null)
             {
 
-                CompletedTimesheetModel model = new CompletedTimesheetModel();
-                List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
-                List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+                var model = new CompletedTimesheetModel();
 
-                model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
+                List<CompletedTimesheetModel> _ApprovedResourceList = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.ToList();
 
-                
-                //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
-              
+                model.CompletedTimeSheetList = _ApprovedResourceList;
+
                 model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
-                
 
                 var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new { completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g;
-               
+
                 //DateTime date = new DateTime();
                 foreach (var subgroup in group)
                 {
@@ -72,8 +67,8 @@ namespace TimeSheet.Controllers
                         agrModel.EmploymentTypeID = t.EmploymentTypeID;
                         agrModel.EmployeementType = t.EmployeementType;
                         hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60;
-                        double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5)+1;
-                        
+                        double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5) + 1;
+
                         agrModel.PayCycle = pc.ToString();
                         agrModel.ADPEmployeeID = Convert.ToInt32(t.AdpEmployeeID);
                         agrModel.PayFrequency = t.PayFrequency;
@@ -164,29 +159,25 @@ namespace TimeSheet.Controllers
 
             if (Session["Username"] != null && Session["Accounts"] != null)
             {
-                string otHours = (string)ConfigurationManager.AppSettings["OTHours"];
+                string otHours = ConfigurationManager.AppSettings["OTHours"];
                 List<string> otvalues = new List<string>();
                 otvalues = otHours.Split(';').ToList();
-                string OTWeekEndSatDay = (string)ConfigurationManager.AppSettings["OTWeekEndSatDay"];
-                string OTWeekEndSatDayException = (string)ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
-                string OTWeekEndSunDay = (string)ConfigurationManager.AppSettings["OTWeekEndSunDay"];
+                string OTWeekEndSatDay = ConfigurationManager.AppSettings["OTWeekEndSatDay"];
+                string OTWeekEndSatDayException = ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
+                string OTWeekEndSunDay = ConfigurationManager.AppSettings["OTWeekEndSunDay"];
                 string OTHoursVal = string.Empty;
 
-                CompletedTimesheetModel model = new CompletedTimesheetModel();
-                List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
-                List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+                var model = new CompletedTimesheetModel();
+                List<CompletedTimesheetModel> _ApprovedResourceList = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.ToList();
 
-                model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
-                //  var result = model.CompletedTimeSheetList.GroupBy(x => new { (x.CandidateName, x.ProjectName)});
+                model.CompletedTimeSheetList = _ApprovedResourceList.ToList();
 
                 model.AggregaredTimesheetModel = new List<AggregatedCompletedTimesheetModel>();
-               
 
                 model.CompletedTimeSheetList = model.CompletedTimeSheetList.Where(item => item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60 > double.Parse(otvalues[0].Replace("GT", ""))).ToList();
 
                 var group = from completedTimeSheet in model.CompletedTimeSheetList group completedTimeSheet by new { completedTimeSheet.CandidateName, completedTimeSheet.ProjectManager } into g select g;
-                
-                //DateTime date = new DateTime();
+
                 foreach (var subgroup in group)
                 {
                     double hours = 0;
@@ -194,17 +185,14 @@ namespace TimeSheet.Controllers
 
                     foreach (var t in subgroup)
                     {
-                        // date = new DateTime(t.Day.Value.Year, t.Day.Value.Month, t.Day.Value.Day);
+
                         agrModel.CandidateName = t.CandidateName;
                         agrModel.ProjectManager = t.ProjectManager;
                         agrModel.EmploymentTypeID = t.EmploymentTypeID;
                         agrModel.EmployeementType = t.EmployeementType;
-                        //if (t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60 > double.Parse(otvalues[0].Replace("GT", "")))
-                        //{
                         hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes / 60 - double.Parse(otvalues[0].Replace("GT", ""));
-                        //}
                         double pc = (DateTime.Now.Date.Subtract(t.Day.Value).Days / 5) + 1;
-                        agrModel.PayCycle =pc.ToString();
+                        agrModel.PayCycle = pc.ToString();
                         agrModel.ADPEmployeeID = Convert.ToInt32(t.AdpEmployeeID);
                         agrModel.PayFrequency = t.PayFrequency;
                         agrModel.ResourceId = Convert.ToInt32(t.ResourceID);
@@ -214,9 +202,6 @@ namespace TimeSheet.Controllers
                     agrModel.Hours = hours;
                     model.AggregaredTimesheetModel.Add(agrModel);
                 }
-                //return View(model);
-
-                // var model=   TimeSheetAPIHelperService.TimeSheetApprovedList().Result;
                 return View(model);
 
             }
@@ -230,11 +215,11 @@ namespace TimeSheet.Controllers
         public ActionResult ApprovedResourceDetails(string CandidateName)
         {
             CompletedTimesheetModel model = new CompletedTimesheetModel();
-            List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
-            List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
+            List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.ToList();
 
-            var AlltimesheetRecords = permCompleted.Concat(casualApproved).Distinct().ToList();
+            var AlltimesheetRecords = casualApproved.ToList();
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
+
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("ApprovedResourceDetails", model);
         }
@@ -256,12 +241,12 @@ namespace TimeSheet.Controllers
         public ActionResult ExportCompletedScheduls()
         {
             var TimeSheetExportData = new List<CompletedtimesheetExcelExportModel>();
-            string otHours = (string)ConfigurationManager.AppSettings["OTHours"];
+            string otHours = ConfigurationManager.AppSettings["OTHours"];
             List<string> otvalues = new List<string>();
             otvalues = otHours.Split(';').ToList();
-            string OTWeekEndSatDay = (string)ConfigurationManager.AppSettings["OTWeekEndSatDay"];
-            string OTWeekEndSatDayException = (string)ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
-            string OTWeekEndSunDay = (string)ConfigurationManager.AppSettings["OTWeekEndSunDay"];
+            string OTWeekEndSatDay = ConfigurationManager.AppSettings["OTWeekEndSatDay"];
+            string OTWeekEndSatDayException = ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
+            string OTWeekEndSunDay = ConfigurationManager.AppSettings["OTWeekEndSunDay"];
             string OTHoursVal = string.Empty;
             if (Session["Username"] == null)
             {
@@ -283,10 +268,10 @@ namespace TimeSheet.Controllers
                 List<CompletedTimesheetModel> permCompleted = TimeSheetAPIHelperService.TimeSheetCompletedList().Result.Where(item => item.EmployeementType != "Casual" && item.Status == "Completed").ToList();
                 List<CompletedTimesheetModel> casualApproved = TimeSheetAPIHelperService.TimeSheetApprovedList().Result.Where(item => item.EmployeementType == "Casual" && item.Status == "Approved").ToList();
 
-               // model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
+                // model.CompletedTimeSheetList = permCompleted.Concat(casualApproved).Distinct().ToList();
 
                 var TimeSheetmodel = permCompleted.Concat(casualApproved).Distinct().ToList();//.Where(item => item.Day.Value.Date >= firstDayInWeek.Date && item.Day.Value.Date <= lastDayInWeek.Date);
-               
+
                 //TimeSheet
                 foreach (var item in TimeSheetmodel)
                 {
@@ -333,7 +318,7 @@ namespace TimeSheet.Controllers
                         TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
                         BreakHours = item.BreakHours,
                         WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60,
-                        OutsideWorkHours = otStart + otEnd,                        
+                        OutsideWorkHours = otStart + otEnd,
                         OTHours = OTHoursVal,
                         PayFrequency = item.PayFrequency,
                         PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)

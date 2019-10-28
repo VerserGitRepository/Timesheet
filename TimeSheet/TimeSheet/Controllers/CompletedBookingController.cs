@@ -129,8 +129,7 @@ namespace TimeSheet.Controllers
                 }
                 if (CandidateEdit != null)
                 {
-                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
-                    var ReturnValue1 = RegisterTimesheetService.UpdateBreakHours(CandidateEdit);
+                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);                    
                 }
             }
             return RedirectToAction("Index", "Home");

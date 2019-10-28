@@ -196,7 +196,7 @@ namespace TimeSheet.Controllers
                 {
                     CandidateEdit.FullName= Session["FullName"].ToString();
                     var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
-                    var ReturnValue1 = RegisterTimesheetService.UpdateBreakHours(CandidateEdit);
+                  
                 }                
             }
             return RedirectToAction("Index", "Home");
@@ -266,8 +266,7 @@ namespace TimeSheet.Controllers
             else
             {
                CompletedTimesheetModel model = new CompletedTimesheetModel();
-               model.CompletedTimeSheetList =  TimeSheetAPIHelperService.AllBookingEntries().Result;
-               
+               model.CompletedTimeSheetList =  TimeSheetAPIHelperService.AllBookingEntries().Result;              
                 
                 Session["HasUserPermissionsToEdit"] = UserRoles.UserCanEditTimesheet();
                 Session["HomeIndex"] = model;

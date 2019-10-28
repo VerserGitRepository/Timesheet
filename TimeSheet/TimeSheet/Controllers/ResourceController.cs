@@ -121,12 +121,9 @@ namespace TimeSheet.Controllers
                 regModel.JobID = theModel.JobID;
                 regModel.FullName = Session["FullName"].ToString();                     
                 regModel.TimeSheetComments = theModel.TimeSheetComments;
-                regModel.Vechicles = theModel.Vechicles;
-
-                //TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
+                regModel.Vechicles = theModel.Vechicles;          
                 if (regModel.JobID == null || regModel.JobID == 0)
                 {
-                    //TimeSheetRegisterPMModel regPMModel = ReflectionUtils.CopyShallow<TimeSheetRegisterPMModel>(regModel);
                     isPMBooking = true;
                     string addlActvty = "";
                     if (theModel.AdditionalActivities != null)
