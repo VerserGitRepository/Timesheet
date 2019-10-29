@@ -85,7 +85,7 @@
                     </td>
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
-                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                         <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
                     </td>
                     <td width="5%">
                         <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
@@ -261,9 +261,10 @@
       // debugger;
         var row = $(this).closest("tr");
         $("td", row).each(function () {
-            if ($(this).find("input").length > 0) {
+            if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
                 $(this).find("input").show();
                 $(this).find("span").hide();
+                $(this).find("#txtComments").show();
                 $(this).toggleClass('selected');
 
             }
@@ -281,9 +282,11 @@
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
                 var input = $(this).find("input");
+                var textArea = $(this).find("#txtComments");
                 //span.html(input.val());
                 span.show();
                 input.hide();
+                textArea.hide();
                 $(this).removeClass('selected');
             }
         });
@@ -352,13 +355,15 @@
     $("body").on("click", "#tblCustomers .Cancel", function () {
         var row = $(this).closest("tr");
         $("td", row).each(function () {
-            if ($(this).find("input").length > 0) {
+            if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
                 var span = $(this).find("span");
                 var input = $(this).find("input");
                 $(this).removeClass('selected');
+                var textArea = $(this).find("#txtComments");
                 //input.val(span.html());
                 span.show();
                 input.hide();
+                textArea.hide();
             }
         });
         row.find(".Edit").show();
