@@ -13,17 +13,17 @@
         <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1200px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>Id</th>
-                    <th>Project</th>
-                    <th>CandidateName</th>
-                    <th>Activity</th>
+                    <th style="width:20px">Id</th>
+                    <th style="width:70px">Project</th>
+                    <th style="width:70px">Candidate</th>
+                    <th style="width:70px">Activity</th>
                     <th style="width:50px">StartDate </th>
-                    <th>StartTime</th>
+                    <th style="width:50px">StartTime</th>
                     <th style="width:50px">EndTime </th>
                    
-                    <th style="width:10px">Comments</th>
+                    <th style="width:100px">Comments</th>
                     <th style="width:10px"></th>
-                    <th></th>
+                    
                 </tr>
             </thead>
             <tbody class="table">
@@ -83,14 +83,14 @@
 
                     </td>
                    
-                    <td>
+                    @*<td>
                         <input type="hidden" id="txtHiddenOpportunityID" value="@item.OpportunityID" />
                         <input type="hidden" id="txtHiddenProjectID" value="@item.ProjectID" />
                         <input type="hidden" id="txtHiddenColour" value="@item.Colour" />
                         <input type="hidden" id="txtHiddenWarehouseID" value="@item.WarehouseID" />
                         <input type="hidden" id="txtHiddenResourceID" value="@item.ResourceID" />
                         <input type="hidden" id="txtHiddenServiceActivityID" value="@item.ServiceActivityID" />
-                    </td>
+                    </td>*@
                     
                 </tr>
                 }
@@ -405,6 +405,17 @@
         -webkit-transition-duration: 0.5s;
         -moz-transition-duration: 0.5s;
         -o-transition-duration: 0.5s;
+    }
+    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #FFA500;
+        border-color: white;
+    }
+
+
+    .page-item.active .page-link {
+        color: white !important;
+        background-color: orange !important;
+        border-color: gray !important;
     }
 
     #myRatingModal {

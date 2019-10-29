@@ -14,14 +14,13 @@
         <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1200px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>Id</th>
-                    <th>CandidateName</th>
-                    <th>Activity</th>
+                    <th style="width:10px">Id</th>
+                    <th style="width:70px">Candidate</th>
+                    <th style="width:70px">Activity</th>
                     <th style="width:50px">StartDate </th>
-                    <th>StartTime</th>
+                    <th style="width:50px">StartTime</th>
                     <th style="width:50px">EndTime </th>
-                   
-                    <th style="width:10px">Comments</th>
+                    <th style="width:100px">Comments</th>
                     <th style="width:10px"></th>
                     
                 </tr>
@@ -362,6 +361,12 @@
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
+    }
+
+    .page-item.active .page-link {
+        color: white !important;
+        background-color: orange !important;
+        border-color: gray !important;
     }
 
     a.btn {
