@@ -131,7 +131,7 @@
         debugger;
         var ddlValue = row.find("#hdnddlbrkhrs").val();
         var sliderURL = '@Url.Action("ReturnSlider", "Home")'
-
+        var timetext = row.find("#spanbreakStartTime").html();
         $.ajax({
             type: "GET",
             url: sliderURL,
@@ -144,8 +144,41 @@
                   useBootstrap: false,
                          buttons: {
                              Set: function () {
-                                 row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text())  ;
-                                 //row.find("#spanbreakEndTime").html(($(".slider-time2").text())) ;
+                                 $(".slider-time2").text();
+                                 var twoDates = timetext.split(";");
+
+                                 var msec = 0;
+                                 for (var i = 1; i < twoDates.length; i += 2) {
+                                     var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
+                                     var chkDate2 = new Date("May 26, 2016 " + twoDates[twoDates.length - i - 1]);
+                                     msec += (chkDate1 - chkDate2)
+                                 }
+                                 var date1 = new Date("May 26, 2016 " + $('.slider-time').text());
+                                 var date2 = new Date("May 26, 2016 " + $('.slider-time2').text());
+                                 // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
+
+                                 //if (!(Number.isNaN(chkDate2 - chkDate1))) {
+                                 //     msec   = (chkDate2 - chkDate1) + (date2 - date1);
+                                 //}
+                                 //else {
+                                 msec += (date2 - date1);
+                                 //}
+                                 var mins = Math.floor(msec / 60000);
+                                 if (mins > 60) {
+                                     $.alert("<h4>Break time cannot exceed 60 mins.</h4> <br/> This includes the combined time for all breaks.");
+                                     return false;
+                                 }
+                                 timetext += ';' + $(".slider-time").text() + ';' + $(".slider-time2").text();
+                                 row.find("#spanbreakStartTime").html(timetext);
+                                 // row.find("#spanbreakStartTime").html(timetext);
+                                 //  alert($('#rating-input').val());
+
+                                 $(row).find("#ddlBreak option").each(function (i) {
+                                     //alert($(ratingTdText).find("#hdnddlLidt").val());
+                                     if (($(this).val() == mins)) {
+                                         $(this).attr('selected', 'selected')
+                                     }
+                                 });
                                  $(".slider-time2").text();
                                //  alert($('#rating-input').val());
                             @*$.ajax({
@@ -311,7 +344,17 @@
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
         CandidateEdit.Day = row.find(".Day").find("span").html();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
-        CandidateEdit.BreakHours = row.find("#ddlBreak").val();
+        var timetext = row.find("#spanbreakStartTime").html();
+        var twoDates = timetext.split(";");
+
+        var msec = 0;
+        for (var i = 1; i < twoDates.length; i += 2) {
+            var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
+            var chkDate2 = new Date("May 26, 2016 " + twoDates[twoDates.length - i - 1]);
+            msec += (chkDate1 - chkDate2)
+        }
+        var mins = Math.floor(msec / 60000);
+        CandidateEdit.BreakHours = mins;
         CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text();
 
         $.ajax({
