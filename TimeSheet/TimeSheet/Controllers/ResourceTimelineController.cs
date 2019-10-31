@@ -66,7 +66,7 @@ namespace TimeSheet.Controllers
                     Value = x.Value
                 });
                 int opportunityId = listitem.FirstOrDefault().Id;
-                model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
+              //  model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
                 model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.VehicleTimeSheetList().Result;
@@ -107,7 +107,7 @@ namespace TimeSheet.Controllers
                     Value = x.Value
                 });
                 int opportunityId = listitem.FirstOrDefault().Id;
-                model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
+               // model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
                 model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                 model.PMTimeSheetList = TimeSheetAPIHelperService.PMTimeSheetList().Result;

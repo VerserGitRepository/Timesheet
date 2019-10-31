@@ -36,7 +36,7 @@ namespace TimeSheet.Controllers
             });
             int opportunityId = listitem.FirstOrDefault().Id;
             
-            model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID","Value");
+           // model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID","Value");
             return View(model);
         }
         [HttpGet]
