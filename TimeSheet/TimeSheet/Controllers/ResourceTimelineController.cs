@@ -73,15 +73,15 @@ namespace TimeSheet.Controllers
                 Session["CalenderModel"] = model;
                 var jsonlist = Newtonsoft.Json.JsonConvert.SerializeObject(model.WarehouseNameList);
                 //var jsonobj= JsonResult { Data = model.WarehouseNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                List<ResourceListModel> reslt = (from k in model.CandidateTimeSheetList select new ResourceListModel { Vechicles = k.Vechicles, ProjectManager = k.ProjectManager,
-                    id = Convert.ToInt32(k.ResourceID), title = Convert.ToString(k.CandidateName), eventColor = k.Colour, ResourceName = k.CandidateName, ActivityDescription = k.Activity,
+                List<ResourceListModel> reslt = (from k in model.CandidateTimeSheetList.Where(m=>m.Vechicles != null && m.Vechicles != "No Vehicle" && m.Vechicles != "Brisbane Verser Van" &&  m.Vechicles != "Sydney Verser Van") select new ResourceListModel { Vechicles = k.Vechicles, ProjectManager = k.ProjectManager,
+                    id = Convert.ToInt32(k.ResourceID), title = Convert.ToString(k.Vechicles), eventColor = k.Colour, ResourceName = k.CandidateName, ActivityDescription = k.Activity,
                     WarehouseName = k.WarehouseName,
                     ProjectName = k.ProjectName, StartTime = Convert.ToDateTime(k.StartTime), EndTime = Convert.ToDateTime(k.EndTime) }).Distinct().ToList();
 
                 model.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
                 List<ResourceEventsModel> resourceEvents = (from k in model.CandidateTimeSheetList select new ResourceEventsModel { Vechicles=k.Vechicles, projectmanager = k.ProjectManager,
                     WarehouseName = k.WarehouseName,
-                    resourceId = Convert.ToString(k.ResourceID), title = k.Vechicles + "-" +
+                    resourceId = Convert.ToString(k.ResourceID), title = k.CandidateName + "-" +
                 k.WarehouseName +"-" + k.ProjectName + "-" + k.ProjectManager + "-"  +"-" + k.Activity  , start = Convert.ToDateTime(k.StartTime.Value).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s") }).Distinct().ToList();
                 model.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
 

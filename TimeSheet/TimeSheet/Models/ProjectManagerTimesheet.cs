@@ -56,5 +56,7 @@ namespace TimeSheet.Models
         public string jsonResources { get; internal set; }
         public string jsonEvents { get; internal set; }
         public string AdditionalActivities { get; set; }
+        public int BreakHours { get; set; }
+        public string BreakTime { get; set; }
     }
 }
