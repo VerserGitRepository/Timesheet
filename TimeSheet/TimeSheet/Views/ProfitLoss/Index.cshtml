@@ -28,9 +28,11 @@
                         <th>Project</th>
                         <th>Service Activity</th>
                         <th>Qty</th>
-                        <th>Date Allocated</th>
-                        <th>Date Invoiced</th>
-                        <th>Total Profit</th>
+                        <th>Allocated</th>
+                        <th>Invoiced</th>
+                        <th>Revenue</th>
+                        <th>Cost</th>
+                        <th>Profit</th>
                     </tr>
                 </thead>
 
@@ -57,6 +59,12 @@
                          </td>
                          <td>
                              @Html.DisplayFor(modelItem => item.dateInvoiced)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.totalPrice)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.totalCost)
                          </td>
                          <td>
                              @Html.DisplayFor(modelItem => item.totalProfit)
@@ -107,7 +115,6 @@
                             <th>Week 4</th>
                             <th>Week 5</th>
                             <th>Week 6</th>
-
                         </tr>
                     </thead>
                 </table>

@@ -2,45 +2,43 @@
 
 <div>
     <div class="modal-header" style="background-color:lightgray;width:1720px">
-        <h5 class="modal-title text-center">Service Cost Details</h5>
+        <h5 class="modal-title text-center">Service Cost</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div style="align-content:center;padding-bottom:40px;padding-left:20px;width:1200px">
         <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1450px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>Opportunity Number</th>
-                    <th>Service Description</th>
-                    <th>Cost Category</th>
-                    <th>TravelCostPerUnit</th>
-                    <th>WarehouseLabour Cost per unit</th>
-                    <th style="width:50px">Freight/Variable/Partner Cost per unit</th>
-                    <th>PM per unit</th>
-                    <th style="width:50px">Technician Hourly rate</th>
-                   <th style="width:10px">Travel Cost - hours per unit</th>
-                    <th style="width:10px">Freight/Variable/Partner Cost per unit</th>
-                    <th>PM Cost hours per unit</th>
-                    <th>Total cost</th>
-                    <th style="width:10px">Profit per unit/asset</th>
-                    <th style="width:10px">Total Profit</th>
+                    @*<th>Opportunity</th>*@
+                    <th>Service</th>
+                    <th>Category</th>
+                    <th>Travel</th>
+                    <th>WarehouseLabour</th>
+                    <th style="width:50px">Freight/Variable/Partner</th>
+                    <th>PMCostPerUnit</th>
+                    <th style="width:50px">TechnicianHourlyRate</th>
+                   <th style="width:10px">TravelCostPerHour</th>
+                    <th style="width:10px">Freight/Variable/Partner</th>
+                    <th>PMCostHoursPerUnit</th>
+                    <th>Cost</th>
+                    <th style="width:10px">ProfitPerUnit/Asset</th>
+                    <th style="width:10px">Profit</th>
                 </tr>
             </thead>
             <tbody class="table">
-                @foreach (var item in Model.ProfitLossList)
-                {
-                    <tr>
-    <td>
+@foreach (var item in Model.ProfitLossList)
+{
+    <tr>
+    @*<td>
         @Html.DisplayFor(modelItem => item.opportunityNumber)
-    </td>
+    </td>*@
     <td>
         @Html.DisplayFor(modelItem => item.serviceDescription)
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.costCategory)
     </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.costPerUnit)
-    </td>
+   
     <td>
         @Html.DisplayFor(modelItem => item.travelCostHoursPerunit)
     </td>
@@ -75,10 +73,10 @@
         @Html.DisplayFor(modelItem => item.totalProfit)
     </td>
 </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+}
+</tbody>
+</table>
+</div>
 </div>
 
 <script type="text/javascript">
