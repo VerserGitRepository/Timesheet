@@ -44,7 +44,7 @@
 
                         <span id="txtActivity">@item.Activity</span>
                     </td>
-                    <td class="Activity">
+                    <td class="Day">
 
                         <span>@item.Day.ToShortDateString()</span>
                         @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none", @id = "txtDay" })*@
@@ -348,7 +348,7 @@
         CandidateEdit.StartTime = row.find("#startTime").val();
         CandidateEdit.EndTime = row.find("#endTime").val();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
-        CandidateEdit.Day = row.find("#txtDay").val();
+        CandidateEdit.Day = row.find(".Day").find("span").html();
         var timetext = row.find("#spanbreakStartTime").html();
         var twoDates = timetext.split(";");
 

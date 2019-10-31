@@ -311,7 +311,7 @@
         CandidateEdit.StartTime = row.find("#startTime").val();
         CandidateEdit.EndTime = row.find("#endTime").val();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
-        CandidateEdit.Day = row.find("#txtDay").val();
+        CandidateEdit.Day = row.find(".Day").find("span").html();
         var timetext = row.find("#spanbreakStartTime").html();
         var twoDates = timetext.split(";");
 
