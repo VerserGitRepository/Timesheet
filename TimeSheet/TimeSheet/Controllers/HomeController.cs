@@ -194,6 +194,16 @@ namespace TimeSheet.Controllers
                 }
                 if (CandidateEdit != null)
                 {
+                    string dateString = String.Format("{0:dd/MM/yyyy}", CandidateEdit.Day);
+                    string StartTimeString = String.Format("{0:HH:mm}", CandidateEdit.StartTime);
+                    string EndTimeString = String.Format("{0:HH:mm}", CandidateEdit.EndTime);
+                    string dtSt = dateString + " " + StartTimeString;
+                    string dtEn = dateString + " " + EndTimeString;
+                    var StartdateTime = Convert.ToDateTime(dtSt);
+                    var EnddateTime = Convert.ToDateTime(dtEn);
+                    CandidateEdit.StartTime = StartdateTime;
+                    CandidateEdit.EndTime = EnddateTime;
+
                     CandidateEdit.FullName= Session["FullName"].ToString();
                     var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
                   
@@ -284,60 +294,122 @@ namespace TimeSheet.Controllers
             string OTWeekEndSatDay = (string)ConfigurationManager.AppSettings["OTWeekEndSatDay"];
             string OTWeekEndSatDayException = (string)ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
             string OTWeekEndSunDay = (string)ConfigurationManager.AppSettings["OTWeekEndSunDay"];
-            string OTHoursVal = string.Empty;                                                                             //TimeSheet
-            foreach (var item in TimeSheetmodel)
-            {
-                int otEnd = 0;
-                int otStart = 0;
-                if (((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
-                {
+            string OTHoursVal = string.Empty;
+            List<CompletedTimesheetModel> lunchBooking = new List<CompletedTimesheetModel>();//TimeSheet
 
-                    OTHoursVal = Convert.ToString(((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
-                }
-                else
-                {
-                    OTHoursVal = "0";
-                }
-                if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) > 18)
-                {
-                    otEnd = Convert.ToInt32(item.EndTime.Value.ToString("HH")) - 18;
-                }
-                if (Convert.ToInt32(item.StartTime.Value.ToString("HH")) < 6)
-                {
-                    otStart = 6 - Convert.ToInt32(item.StartTime.Value.ToString("HH"));
-                }
+            var groupedTimeSheetExcelExport = TimeSheetmodel.GroupBy(x => new { x.CandidateName,x.Day});
+
+            foreach (var grp in groupedTimeSheetExcelExport)
+            {
+                //foreach (var subgrp in grp)
+                //{
+                //    subgrp.
+                //}
+
+
                 TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
                 {
 
-                    ADPEmployeeId = item.AdpEmployeeID.ToString(),
-                    ProjectName = item.ProjectName,
-                    ProjectManager = item.ProjectManager,
-                    BookedBy = item.BookedBy,
-                    ApprovedBy = item.ApprovedBy,
-                    CandidateName = item.CandidateName,
-                    OpportunityNumber = item.OpportunityNumber,
-                    Activity = item.Activity,
-                    WarehouseName = item.WarehouseName,
+                    ADPEmployeeId = grp.FirstOrDefault().AdpEmployeeID.ToString(),
+                    ProjectName = grp.FirstOrDefault().ProjectName,
+                    ProjectManager = grp.FirstOrDefault().ProjectManager,
+                    BookedBy = grp.FirstOrDefault().BookedBy,
+                    ApprovedBy = grp.FirstOrDefault().ApprovedBy,
+                    CandidateName = grp.FirstOrDefault().CandidateName,
+                    OpportunityNumber = grp.FirstOrDefault().OpportunityNumber,
+                    Activity = grp.FirstOrDefault().Activity,
+                    WarehouseName = grp.FirstOrDefault().WarehouseName,
                     //Monday
-                    StartTime = item.StartTime.Value.ToString("HH:mm"),
-                    EndTime = item.EndTime.Value.ToString("HH:mm"),
-                    JobNo = item.JobNo,
-                    OLATarget = item.OLATarget,
-                    ActualQuantity = item.ActualQuantity,
-                    Day = item.Day.Value.Date.ToShortDateString(),
-                    Status = item.Status,
-                    TimeSheetComments = item.TimeSheetComments,
-                    TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
-                    BreakHours = item.BreakHours,
-                    WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours ) /60,
-                    OutsideWorkHours = otStart + otEnd,
+                    StartTime = grp.Count() > 1 ? grp.First().StartTime.Value.ToString("HH:mm"): grp.FirstOrDefault().StartTime.Value.ToString("HH:mm"),
+                    EndTime = grp.Count() > 1 ? grp.Last().EndTime.Value.ToString("HH:mm") : grp.FirstOrDefault().EndTime.Value.ToString("HH:mm"),
+                    JobNo = grp.FirstOrDefault().JobNo,
+                    OLATarget = grp.FirstOrDefault().OLATarget,
+                    ActualQuantity = grp.FirstOrDefault().ActualQuantity,
+                    Day = grp.FirstOrDefault().Day.Value.Date.ToShortDateString(),
+                    Status = grp.FirstOrDefault().Status,
+                    TimeSheetComments = grp.FirstOrDefault().TimeSheetComments,
+                    TotalHours = grp.Count() > 1 ? grp.Last().EndTime.Value.Subtract(grp.First().StartTime.Value).TotalMinutes / 60 : grp.FirstOrDefault().EndTime.Value.Subtract(grp.FirstOrDefault().StartTime.Value).TotalMinutes / 60,
+                    BreakMinutes = grp.FirstOrDefault().BreakHours,
+                    WorkedHours = grp.Count() > 1 ? grp.Last().EndTime.Value.Subtract(grp.First().StartTime.Value).TotalMinutes - grp.FirstOrDefault().BreakHours / 60 : grp.FirstOrDefault().EndTime.Value.Subtract(grp.FirstOrDefault().StartTime.Value).TotalMinutes - grp.FirstOrDefault().BreakHours / 60,
+                    OutsideWorkHours = 0,
                     OTHours = OTHoursVal,
-                    PayFrequency = item.PayFrequency,
-                    PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)
-                   
+                    PayFrequency = grp.FirstOrDefault().PayFrequency,
+                    PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(grp.FirstOrDefault().Day.Value).Days / 5) + 1)
+
 
                 });
+
+
             }
+
+            //foreach (var item in TimeSheetmodel)
+            //{
+            //    if (item.Activity.Contains("Lunch Break"))
+            //    {
+            //        lunchBooking.Add(item);
+            //        continue;
+            //    }
+            //    int otEnd = 0;
+            //    int otStart = 0;
+            //    if (((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
+            //    {
+
+            //        OTHoursVal = Convert.ToString(((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
+            //    }
+            //    else
+            //    {
+            //        OTHoursVal = "0";
+            //    }
+            //    if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) > 18)
+            //    {
+            //        otEnd = Convert.ToInt32(item.EndTime.Value.ToString("HH")) - 18;
+            //    }
+            //    if (Convert.ToInt32(item.StartTime.Value.ToString("HH")) < 6)
+            //    {
+            //        otStart = 6 - Convert.ToInt32(item.StartTime.Value.ToString("HH"));
+            //    }
+            //    TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
+            //    {
+
+            //        ADPEmployeeId = item.AdpEmployeeID.ToString(),
+            //        ProjectName = item.ProjectName,
+            //        ProjectManager = item.ProjectManager,
+            //        BookedBy = item.BookedBy,
+            //        ApprovedBy = item.ApprovedBy,
+            //        CandidateName = item.CandidateName,
+            //        OpportunityNumber = item.OpportunityNumber,
+            //        Activity = item.Activity,
+            //        WarehouseName = item.WarehouseName,
+            //        //Monday
+            //        StartTime = item.StartTime.Value.ToString("HH:mm"),
+            //        EndTime = item.EndTime.Value.ToString("HH:mm"),
+            //        JobNo = item.JobNo,
+            //        OLATarget = item.OLATarget,
+            //        ActualQuantity = item.ActualQuantity,
+            //        Day = item.Day.Value.Date.ToShortDateString(),
+            //        Status = item.Status,
+            //        TimeSheetComments = item.TimeSheetComments,
+            //        TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+            //        BreakMinutes = item.BreakHours,
+            //        WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours ) /60,
+            //        OutsideWorkHours = otStart + otEnd,
+            //        OTHours = OTHoursVal,
+            //        PayFrequency = item.PayFrequency,
+            //        PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)
+                   
+
+            //    });
+            //}
+
+            //foreach (CompletedtimesheetExcelExportModel theModel in TimeSheetExportData)
+            //{
+            //    var item = lunchBooking.Where(theitem => theitem.Day == Convert.ToDateTime(theModel.Day) && theitem.CandidateName == theModel.CandidateName).FirstOrDefault();
+            //    if (item != null)
+            //    {
+                   
+            //            theModel.BreakMinutes = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes);
+            //    }
+            //}
 
             GridView gv = new GridView();
             gv.DataSource = TimeSheetExportData;
