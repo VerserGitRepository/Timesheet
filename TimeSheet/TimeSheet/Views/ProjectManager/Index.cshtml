@@ -45,57 +45,60 @@
                         <th>Activity</th>
                         <th>Facility</th>
                         <th>Additional-Activities</th>
+                        <th>BreakTime</th>
                         <th>Comments</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (TimeSheet.Models.ProjectManagerTimesheet item in Model.PMTimeSheetList)
                     {
-                        <tr>
-                            <td>
-                                <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
-                                @*@Html.DisplayFor(modelItem => item.CandidateName)*@
-                            </td>
-                            <td style="width:5%">
-                                @Html.DisplayFor(modelItem => item.OpportunityNumber)
-                            </td>
-                            <td style="width:7%">
-                                @Html.DisplayFor(modelItem => item.Day)
-                            </td>
+                    <tr>
+                        <td style="width:10%">
+                            <a href="javascript:void(0);" class="CandidateName" data-id="@item.CandidateName">@Html.DisplayFor(modelItem => item.CandidateName)</a>
+                            @*@Html.DisplayFor(modelItem => item.CandidateName)*@
+                        </td>
+                        <td style="width:5%">
+                            @Html.DisplayFor(modelItem => item.OpportunityNumber)
+                        </td>
+                        <td style="width:7%">
+                            @Html.DisplayFor(modelItem => item.Day)
+                        </td>
 
-                            <td style="width:7%">
-                                @Html.DisplayFor(modelItem => item.StartTime)
-                            </td>
-                            <td style="width:7%">
-                                @Html.DisplayFor(modelItem => item.EndTime)
-                            </td>
-                            <td>
-                                <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
-                                @*@Html.DisplayFor(modelItem => item.ProjectName)*@
-                            </td>
+                        <td style="width:7%">
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td style="width:7%">
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="ProjectName" data-id="@item.ProjectName">@Html.DisplayFor(modelItem => item.ProjectName)</a>
+                            @*@Html.DisplayFor(modelItem => item.ProjectName)*@
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Activity)
-                            </td>
+                        <td style="width:18%">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.WarehouseName)
-                            </td>
-                            <td style="width:20%">
-                                @if (item.AdditionalActivities != null)
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WarehouseName)
+                        </td>
+                        <td style="width:15%">
+                            @if (item.AdditionalActivities != null)
+                            {
+                                foreach (string val in item.AdditionalActivities.Split(';'))
                                 {
-                                    foreach (string val in item.AdditionalActivities.Split(';'))
-                                    {
-                                        <span>@val <br /></span>
-                                    }
+                                    <span>@val <br /></span>
                                 }
-                            </td>
+                            }
+                        </td>
+                        <td style="width:2%">
+                            @Html.DisplayFor(modelItem => item.BreakHours) - Mins
+                        </td>
+                        <td style="width:28%">
+                            @Html.DisplayFor(modelItem => item.TimeSheetComments)
+                        </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TimeSheetComments)
-                            </td>
-
-                        </tr>
+                    </tr>
                     }
                 </tbody>
             </table>
