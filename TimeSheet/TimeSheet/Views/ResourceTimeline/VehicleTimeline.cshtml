@@ -270,7 +270,7 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
     function SearchAndRenderCalendar() {
         resources = [];
         events = [];
-       var loadUrl =  '@Url.Action("SearchResources", "ManageCalender")';
+       var loadUrl =  '@Url.Action("SearchVehicleTimeLine", "ManageCalender")';
 
                 $.ajax({
                     type: "POST",

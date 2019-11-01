@@ -124,6 +124,60 @@ namespace TimeSheet.Controllers
 
             return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+        public JsonResult SearchVehicleTimeLine(string ProjectID, string warehouseId, string opportunityId, List<int> ResourceIDs)
+        {
+            TimeSheetViewModel newModel = new TimeSheetViewModel();
+
+            TimeSheetViewModel model = (TimeSheetViewModel)Session["CalenderModel"];
+            newModel.Projectlist = model.Projectlist;
+            newModel.WarehouseNameList = model.WarehouseNameList;
+            newModel.CandidateNameList = model.CandidateNameList;
+            List<TimeSheetViewModel> whereList = model.CandidateTimeSheetList;
+
+            if (ResourceIDs != null && ResourceIDs.Count > 0)
+                whereList = model.CandidateTimeSheetList.Where(item => ResourceIDs.Contains(Convert.ToInt32(item.ResourceID))).ToList();
+            if (!string.IsNullOrEmpty(ProjectID))
+                whereList = whereList.Where(item => item.ProjectID == Convert.ToInt32(ProjectID)).ToList();
+            if (!string.IsNullOrEmpty(warehouseId))
+                whereList = whereList.Where(item => item.WarehouseID == Convert.ToInt32(warehouseId)).ToList();
+            if (!string.IsNullOrEmpty(opportunityId) && opportunityId != "0")
+                whereList = whereList.Where(item => item.OpportunityID == Convert.ToInt32(opportunityId)).ToList();
+            newModel.CandidateTimeSheetList = whereList;
+
+            List<ResourceListModel> reslt = (from k in whereList.Where(m => m.Vechicles != null && m.Vechicles != "No Vehicle" && m.Vechicles != "Brisbane Verser Van" && m.Vechicles != "Sydney Verser Van")
+                                             select new ResourceListModel
+                                             {
+                                                 Vechicles = k.Vechicles,
+                                                 ProjectManager = k.ProjectManager,
+                                                 id = Convert.ToInt32(k.ResourceID),
+                                                 title = Convert.ToString(k.Vechicles),
+                                                 eventColor = k.Colour,
+                                                 ResourceName = k.CandidateName,
+                                                 ActivityDescription = k.Activity,
+                                                 WarehouseName = k.WarehouseName,
+                                                 ProjectName = k.ProjectName,
+                                                 StartTime = Convert.ToDateTime(k.StartTime),
+                                                 EndTime = Convert.ToDateTime(k.EndTime)
+                                             }).Distinct().ToList();
+
+            newModel.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
+            List<ResourceEventsModel> resourceEvents = (from k in whereList
+                                                        select new ResourceEventsModel
+                                                        {
+                                                            Vechicles = k.Vechicles,
+                                                            projectmanager = k.ProjectManager,
+                                                            WarehouseName = k.WarehouseName,
+                                                            resourceId = Convert.ToString(k.ResourceID),
+                                                            title = k.CandidateName + "-" +
+k.WarehouseName + "-" + k.ProjectName + "-" + k.ProjectManager + "-" + "-" + k.Activity,
+                                                            start = Convert.ToDateTime(k.StartTime.Value).ToString("s"),
+                                                            end = Convert.ToDateTime(k.EndTime).ToString("s")
+                                                        }).Distinct().ToList();
+            newModel.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
+
+
+            return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
         public JsonResult SearchPM(string ProjectID, string warehouseId, string opportunityId, List<int> ResourceIDs)
         {
             ProjectManagerTimesheet newModel = new ProjectManagerTimesheet();
