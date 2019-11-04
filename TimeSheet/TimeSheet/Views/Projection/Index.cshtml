@@ -201,7 +201,9 @@
  SetDDLValue();
     $(document).ready(function () {
        // alert('document ready');
-        $('table#MANAGEPROJECTIONMAIN').DataTable();
+        $('table#MANAGEPROJECTIONMAIN').DataTable({
+            responsive: true
+        });
        // SetDDLValue();
 
 

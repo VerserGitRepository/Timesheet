@@ -255,7 +255,9 @@
 
 <script>
     $(document).ready(function () {
-        $('#TimeSheetTable').dataTable();
+        $('#TimeSheetTable').dataTable({
+            responsive: true
+        });
         $('.dataTables_filter').addClass('pull-right');
     });
     function Destroy() {
