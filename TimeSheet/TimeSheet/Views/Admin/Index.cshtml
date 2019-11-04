@@ -3,14 +3,16 @@
 @{
     ViewBag.Title = "Index";
 }
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
+
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap.min.js"></script>
+
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/css/mdb.min.css" rel="stylesheet">
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -30,7 +32,7 @@
         <div class="tab-content" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
 
             <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
-                <table class="table table-bordered table-responsive" id="tblCustomers">
+                <table class="table table-bordered table-responsive" id="tblCustomersTable">
                     <thead style="background-color:lightgray">
                         <tr>
 
@@ -41,24 +43,60 @@
                                 Opportunity
                             </th>
                             <th>
+                                ProjectManager
+                            </th>
+                            <th>
+                                SalesManager
+                            </th>
+                            <th></th>
+                            <th>
                                 Is Active
                             </th>
                         </tr>
                     </thead>
 
-                    @foreach (var item in Model.OpportunityList)
+                    @foreach (var item in Model.OpportunitesList)
 
                     {
-                        <tr>
+                    <tr>
 
-                            <td>@item.ProjectName</td>
-                            <td>@item.OpportunityNumber</td>
-                            <td>
-                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="OpportunityCheckBoxID" onchange="OpportunityIdChange(this);" />
-                            </td>
-                        </tr>
+                        <td>
+                            @item.Projectname
+                            <input class="hidden" type="text" id="hdnProjectname" value="@item.ProjectID" />
+                        </td>
+                        <td>
+                            @item.Opportunitynumber
+                            <input class="hidden" type="text" id="hdnOpportunitynumber" value="@item.Opportunitynumber" />
+                        </td>
+                        <td>
+                            <span>@item.ProjectManager</span>
+                            @Html.DropDownList("PMList", Model.ProjectManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlPM", @style = "display:none" })
+
+                        </td>
+                        <td>
+                            <span>@item.SalesManager</span>
+                            @Html.DropDownList("SMList", Model.SalesManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlSM",@style = "display:none" })
+                        </td>
+                        <td>
+                            <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Edit</strong></span>
+                            </a>
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
+                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
+                          </td>
+                        <td>
+                            <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.Isactive].Assigned" @(item.Isactive ? "checked" : "") value="@item.Isactive" id="OpportunityCheckBoxID" onchange="OpportunityIdChange(this);" />
+                        </td>
+                    </tr>
                     }
-                                    </table>
+                </table>
             </div>
 
 
@@ -119,7 +157,7 @@
 
                             <td>@item.projectName</td>
                             <td>
-                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive"  id="ProjectCheckBoxID" onchange="ProjectIdChange(this);" />
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.IsActive].Assigned" @(item.IsActive ? "checked" : "") value="@item.IsActive" id="ProjectCheckBoxID" onchange="ProjectIdChange(this);" />
                             </td>
                         </tr>
                     }
@@ -128,41 +166,41 @@
             </div>
 
             <div id="MANAGEACTIVITIES" class="tab-pane fade" role="tabpanel">
-        <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
-            <thead style="background-color:lightgray">
-                <tr>
-                    <th>
-                        Opportunity Number
-                    </th>
-                    <th>
-                        Project Name
-                    </th>
-                    <th>
-                        Activity
-                    </th>
-                    <th>
-                        Is Active
-                    </th>
+                <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
+                    <thead style="background-color:lightgray">
+                        <tr>
+                            <th>
+                                Opportunity Number
+                            </th>
+                            <th>
+                                Project Name
+                            </th>
+                            <th>
+                                Activity
+                            </th>
+                            <th>
+                                Is Active
+                            </th>
 
-                </tr>
-            </thead>
+                        </tr>
+                    </thead>
 
-            @foreach (var item in Model.ActivityList)
+                    @foreach (var item in Model.ActivityList)
 
 
-            {
-            <tr>
-                <td>@item.opportunityNumber</td>
-                <td>@item.projectName</td>
-                <td>@item.serviceActivityDescription</td>
-                <td>
-                    <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.isActive].Assigned" @(item.isActive ? "checked" : "") id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />
-                </td>
+                    {
+                        <tr>
+                            <td>@item.opportunityNumber</td>
+                            <td>@item.projectName</td>
+                            <td>@item.serviceActivityDescription</td>
+                            <td>
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.isActive].Assigned" @(item.isActive ? "checked" : "") id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />
+                            </td>
 
-            </tr>
-                }
-            </table>
-        </div>
+                        </tr>
+                    }
+                </table>
+            </div>
         </div>
     </div>
 </section>
@@ -174,9 +212,86 @@
     </script>
 }
 <script language="javascript" type="text/javascript">
+    $("body").on("click", "#tblCustomersTable .Edit", function () {
+        // debugger;
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("select").length > 0 ) {
+                $(this).find("select").show();
+                $(this).find("span").hide();
+                $(this).toggleClass('selected');
+
+            }
+        });
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+       
+
+        $(this).hide();
+    });
+
+    //Update event handler.
+    $("body").on("click", "#tblCustomersTable .Update", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("select").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("select");
+                var textArea = $(this).find("#txtComments");
+                //span.html(input.val());
+                span.show();
+                input.hide();
+                textArea.hide();
+                $(this).removeClass('selected');
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Cancel").hide();
+        row.find("#Rate").hide();
+        $(this).hide();
+        //debugger;
+        var options = { "backdrop": "static", keyboard: true };
+        var OpportunityListUpdateModel = {};
+
+        OpportunityListUpdateModel.Id = row.find("#hdnProjectname").val();
+        OpportunityListUpdateModel.OpportunityNumber = row.find("#hdnOpportunitynumber").val();
+        OpportunityListUpdateModel.IsActive = row.find("#OpportunityCheckBoxID").val();
+        OpportunityListUpdateModel.ProjectManagerID = row.find("#ddlPM").val();
+        OpportunityListUpdateModel.SalesManagerID = row.find("#ddlSM").val();
+       
+       
+        $.ajax({
+            type: "POST",
+            url: "./UpdateOpportunityModel",
+            data: JSON.stringify(OpportunityListUpdateModel) ,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    });
+
+    //Cancel event handler.
+        $("body").on("click", "#tblCustomersTable .Cancel", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("select").length > 0 ) {
+                var span = $(this).find("span");
+                var input = $(this).find("select");
+                $(this).removeClass('selected');
+                //input.val(span.html());
+               
+                span.show();
+                input.hide();
+               
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Update").hide();
+      
+        $(this).hide();
+    });
 
     $(document).ready(function () {
-        $('table#tblCustomers').DataTable();
+        $('table#tblCustomersTable').DataTable();
         $('table#MANAGERESOURCES').DataTable();
         $('table#MANAGEPROJECTS').DataTable();
         $('table#MANAGEACTIVITIES').DataTable();
@@ -188,7 +303,7 @@
         $('#OpportunityCheckBoxID').change(function () {
             if ($(this).is(":checked")) {
                 var returnVal = confirm("Are you sure you want to perform the activity?");
-                
+
                 $(this).attr("checked", returnVal);
             }
             $('#OpportunityCheckBoxID').val($(this).is(':checked'));
@@ -319,7 +434,7 @@
                 if (data.Url === "/Admin/Index") {
                     window.location.href = data.Url
                 }
-               
+
             }
         });
     }
@@ -367,7 +482,7 @@
                 if (data.Url === "/Admin/Index") {
                     window.location.href = data.Url
                 }
-               
+
             }
         });
     }
@@ -386,11 +501,11 @@
                 if (data.Url === "/Admin/Index") {
                     window.location.href = data.Url
                 }
-               
+
             }
         });
     }
-   
+
 </script>
 
 
@@ -433,9 +548,10 @@
         margin-top: 0px;
     }
 
-    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+   .btn, .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
+        font-size: 10px;
     }
 
 
@@ -500,8 +616,13 @@
         -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
         box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
     }
-
-
+    .selected {
+        color: black;
+        background-color: lightgray;
+    }
+    .btn-success {
+        background-color: green;
+    }
     input[type="checkbox"] {
         cursor: pointer;
         -webkit-appearance: none;

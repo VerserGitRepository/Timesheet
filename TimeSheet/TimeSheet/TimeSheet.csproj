@@ -195,10 +195,12 @@
     <Compile Include="Models\CompletedTimesheetModel.cs" />
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
     <Compile Include="Models\ListItems.cs" />
+    <Compile Include="Models\OpportunityListUpdateModel.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
     <Compile Include="Models\PMRegisterViewModel.cs" />
     <Compile Include="Models\ProfitLossModel.cs" />
     <Compile Include="Models\ProjectionEntryModel.cs" />
+    <Compile Include="Models\OpportunityListItem.cs" />
     <Compile Include="Models\ProjectionModel.cs" />
     <Compile Include="Models\ProjectionOppurtunityExportModel.cs" />
     <Compile Include="Models\ProjectionOppurtunityModel.cs" />

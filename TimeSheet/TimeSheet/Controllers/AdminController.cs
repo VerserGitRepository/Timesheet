@@ -80,14 +80,28 @@ namespace TimeSheet.Controllers
             if (Session["Username"] != null && Session["Administrator"] != null)
             {
                 var _r = AdminHelperService.UpdateActivity(ServiceActivityID, isActive);
-        var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
-                return Json(new { Url = redirectUrl
-    });
+                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
+                return Json(new { Url = redirectUrl });
             }
             else
             {
                 return RedirectToAction("Login", "Login");
             }        
+
+        }
+        [HttpPost]
+        public ActionResult UpdateOpportunityModel(OpportunityListUpdateModel theModel)
+        {
+            if (Session["Username"] != null && Session["Administrator"] != null)
+            {
+                var _r = AdminHelperService.UpdateOpportunityModel(theModel);
+                var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
+                return Json(new { Url = redirectUrl });
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
 
         }
     }

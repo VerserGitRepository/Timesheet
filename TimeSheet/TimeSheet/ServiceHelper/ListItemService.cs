@@ -190,6 +190,19 @@ namespace TimeSheet.ServiceHelper
             }
             return projectsList;
         }
-
+        public static async Task<List<OpportunityListItem>> ManageOpportunityModelList()
+        {
+            List<OpportunityListItem> opportunityList = new List<OpportunityListItem>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/ManageOpportunityModelList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                     opportunityList = await response.Content.ReadAsAsync<List<OpportunityListItem>>();
+                }
+            }
+            return opportunityList;
+        }
     }
 }

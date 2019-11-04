@@ -167,5 +167,23 @@ namespace TimeSheet.ServiceHelper
 
             }
         }
+        public static async Task UpdateOpportunityModel(OpportunityListUpdateModel theModel)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageOpportunities", theModel.OpportunityNumber, theModel.IsActive)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var ReturnResult = await response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Opportunity Updated Successfully";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                }
+
+            }
+        }
     }
 }
