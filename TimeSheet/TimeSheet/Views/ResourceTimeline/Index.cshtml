@@ -56,14 +56,14 @@
 
                 </div>
             </div>
-            <div id='calendar-room'  style="width:1800px;margin-left:20px;">
+            <div id='calendar-room' style="margin-left:20px;">
                 <div id='calendar'></div>
             </div>
 
         </div>
-        
+
     </div>
-    
+
     @*</div>*@
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -337,22 +337,23 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
         padding-right: 1px;
         padding-left: 1px;
     }
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
 
     .multiselect.dropdown-toggle {
         text-align: left;
@@ -377,10 +378,12 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
         -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
     }
+
     .fc-event {
         font-size: 1.50em;
         line-height: 3.0;
-        }
+    }
+
     .tooltip .tooltiptext::after {
         content: "";
         position: absolute;
@@ -396,4 +399,21 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
         visibility: visible;
         opacity: 1;
     }
+
+
+    .calendar-room {
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+    .fc-view-container {
+        width: auto;
+    }
+
+        .fc-view-container .fc-view {
+            overflow-x: scroll;
+            overflow-y: scroll;
+        }
+
+          
+
 </style>
