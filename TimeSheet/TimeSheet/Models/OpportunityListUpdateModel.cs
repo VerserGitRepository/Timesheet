@@ -14,6 +14,7 @@ namespace TimeSheet.Models
         public int OpportunityNumber { get; set; }        
         public bool IsActive { get; set; }
         public int ProjectManagerID { get; set; }
+        public int ProjectID { get; set; }
         public int SalesManagerID { get; set; }
     }
 }

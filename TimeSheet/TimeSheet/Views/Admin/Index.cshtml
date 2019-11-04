@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
@@ -11,11 +10,10 @@
 <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
-
-
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/css/mdb.min.css" rel="stylesheet">
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 @*<script src="Scripts/jquery-1.10.2.min.js"></script>*@
 
 <section id="tabs" class="project-tab">
@@ -37,10 +35,10 @@
                         <tr>
 
                             <th>
-                                Customer
+                                Opportunity
                             </th>
                             <th>
-                                Opportunity
+                                Project
                             </th>
                             <th>
                                 ProjectManager
@@ -61,21 +59,26 @@
                     <tr>
 
                         <td>
-                            @item.Projectname
-                            <input class="hidden" type="text" id="hdnProjectname" value="@item.ProjectID" />
-                        </td>
-                        <td>
                             @item.Opportunitynumber
                             <input class="hidden" type="text" id="hdnOpportunitynumber" value="@item.Opportunitynumber" />
                         </td>
+                        @*<td>
+                            @item.Projectname
+                            <input class="hidden" type="text" id="hdnProjectname" value="@item.ProjectID" />
+                        </td>*@
+                        <td>
+                            <span>@item.Projectname</span>
+                            @Html.DropDownList("ProjectList", Model.ProjectDetailsList.Select(i => new SelectListItem { Text = i.projectName, Value = i.Id.ToString() }), new { @id = "ddlProject", @style = "display:none" })
+
+                        </td>
                         <td>
                             <span>@item.ProjectManager</span>
-                            @Html.DropDownList("PMList", Model.ProjectManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlPM", @style = "display:none" })
+                            @Html.DropDownList("PMList", Model.OpportunitesList.Select(i => new SelectListItem { Text = i.ProjectManager, Value = i.ProjectManagerID.ToString() }), new { @id = "ddlPM", @style = "display:none" })
 
                         </td>
                         <td>
                             <span>@item.SalesManager</span>
-                            @Html.DropDownList("SMList", Model.SalesManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlSM",@style = "display:none" })
+                            @Html.DropDownList("SMList", Model.SalesManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlSM", @style = "display:none" })
                         </td>
                         <td>
                             <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
@@ -90,7 +93,7 @@
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 <span><strong>Cancel</strong></span>
                             </a>
-                          </td>
+                        </td>
                         <td>
                             <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.Isactive].Assigned" @(item.Isactive ? "checked" : "") value="@item.Isactive" id="OpportunityCheckBoxID" onchange="OpportunityIdChange(this);" />
                         </td>
@@ -258,8 +261,7 @@
         OpportunityListUpdateModel.IsActive = row.find("#OpportunityCheckBoxID").val();
         OpportunityListUpdateModel.ProjectManagerID = row.find("#ddlPM").val();
         OpportunityListUpdateModel.SalesManagerID = row.find("#ddlSM").val();
-       
-       
+        OpportunityListUpdateModel.projectId = row.find("#ddlProject").val();           
         $.ajax({
             type: "POST",
             url: "./UpdateOpportunityModel",
