@@ -107,7 +107,7 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
                 }
 
             }
@@ -126,7 +126,7 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Activity Update UN-Successfully!";
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
                 }
 
             }
@@ -144,7 +144,7 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
                 }
 
             }
@@ -162,7 +162,7 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
                 }
 
             }
@@ -172,7 +172,7 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = 
+                HttpResponseMessage response =
                 client.PostAsJsonAsync(string.Format("Administration/UpdateOpportunities"), OpportunityUpdateModel).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -181,7 +181,7 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
                 }
 
             }

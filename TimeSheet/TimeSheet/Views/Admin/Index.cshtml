@@ -74,7 +74,7 @@
                         </td>
                         <td>
                             <span>@item.ProjectManager</span>
-                            @Html.DropDownList("PMList", Model.OpportunitesList.Select(i => new SelectListItem { Text = i.ProjectManager, Value = i.ProjectManagerID.ToString() }), new { @id = "ddlPM", @style = "display:none" })
+                            @Html.DropDownList("PMList", Model.ProjectManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlPM", @style = "display:none" })
                             <input class="hidden" type="text" id="hdnPM" value="@item.ProjectManager" />
                         </td>
                         <td>
