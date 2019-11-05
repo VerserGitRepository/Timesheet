@@ -69,16 +69,18 @@
                         <td>
                             <span>@item.Projectname</span>
                             @Html.DropDownList("ProjectList", Model.ProjectDetailsList.Select(i => new SelectListItem { Text = i.projectName, Value = i.Id.ToString() }), new { @id = "ddlProject", @style = "display:none" })
+                            <input class="hidden" type="text" id="hdnProject" value="@item.Projectname" />
 
                         </td>
                         <td>
                             <span>@item.ProjectManager</span>
                             @Html.DropDownList("PMList", Model.OpportunitesList.Select(i => new SelectListItem { Text = i.ProjectManager, Value = i.ProjectManagerID.ToString() }), new { @id = "ddlPM", @style = "display:none" })
-
+                            <input class="hidden" type="text" id="hdnPM" value="@item.ProjectManager" />
                         </td>
                         <td>
                             <span>@item.SalesManager</span>
                             @Html.DropDownList("SMList", Model.SalesManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlSM", @style = "display:none" })
+                            <input class="hidden" type="text" id="hdnSM" value="@item.SalesManager" />
                         </td>
                         <td>
                             <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
@@ -223,7 +225,7 @@
                 $(this).find("select").show();
                 $(this).find("span").hide();
                 $(this).toggleClass('selected');
-
+                SetDDLValue(row);
             }
         });
         row.find(".Update").show();
@@ -232,7 +234,28 @@
 
         $(this).hide();
     });
+    function SetDDLValue(row) {
+        //alert('before document ready');
+       $(row).find("#ddlSM option").each(function (i) {
+           
+            if (($(this).text() == $(row).find("#hdnSM").val())) {
+                $(this).attr('selected', 'selected')
+            }
+        });
+            
+        $(row).find("#ddlPM option").each(function (i) {
 
+            if (($(this).text() == $(row).find("#hdnPM").val())) {
+                $(this).attr('selected', 'selected')
+            }
+        });
+        $(row).find("#ddlProject option").each(function (i) {
+
+            if (($(this).text() == $(row).find("#hdnProject").val())) {
+                $(this).attr('selected', 'selected')
+            }
+        });
+    }
     //Update event handler.
     $("body").on("click", "#tblCustomersTable .Update", function () {
         var row = $(this).closest("tr");
@@ -267,8 +290,16 @@
             url: "./UpdateOpportunityModel",
             data: JSON.stringify(OpportunityListUpdateModel) ,
             contentType: "application/json; charset=utf-8",
-            dataType: "json"
+            dataType: "json",
+            success: function (data) {
+                if (data.Url === "/Admin/Index") {
+                    window.location.href = data.Url
+                }
+
+            }
         });
+
+
     });
 
     //Cancel event handler.
@@ -423,7 +454,7 @@
     });
     function OpportunityIdChange(theRow) {
         var tr = $(theRow).closest("tr");
-        var td = tr.find("td:nth-child(2)");
+        var td = tr.find("td:nth-child(1)");
         var opportunityid = td.text();
         var ischecked = tr.find("#OpportunityCheckBoxID").is(':checked');
         $.ajax({
