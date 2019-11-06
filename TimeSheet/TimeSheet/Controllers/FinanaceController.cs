@@ -468,5 +468,38 @@ namespace TimeSheet.Controllers
             }
             return View(model);
         }
+        [HttpPost]
+        public ActionResult UpdateCandidate(UpdateTimeSheetModel CandidateEdit)
+        {
+            if (UserRoles.UserCanEditTimesheet() != true)
+            {
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                if (CandidateEdit == null)
+                {
+                    Session["ErrorMessage"] = "Please Update With Valid Details!";
+                }
+                if (CandidateEdit != null)
+                {
+                    string dateString = String.Format("{0:dd/MM/yyyy}", CandidateEdit.Day);
+                    string StartTimeString = String.Format("{0:HH:mm}", CandidateEdit.StartTime);
+                    string EndTimeString = String.Format("{0:HH:mm}", CandidateEdit.EndTime);
+                    string dtSt = dateString + " " + StartTimeString;
+                    string dtEn = dateString + " " + EndTimeString;
+                    var StartdateTime = Convert.ToDateTime(dtSt);
+                    var EnddateTime = Convert.ToDateTime(dtEn);
+                    CandidateEdit.StartTime = StartdateTime;
+                    CandidateEdit.EndTime = EnddateTime;
+
+                    CandidateEdit.FullName = Session["FullName"].ToString();
+                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
+
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

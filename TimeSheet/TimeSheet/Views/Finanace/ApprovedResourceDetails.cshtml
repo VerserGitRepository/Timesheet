@@ -17,60 +17,97 @@
                     <th style="width:50px">EndTime </th>
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
+                    <th>TotalHours</th>
+                    <th>BreakHours</th>
+                    <th>TotalWorkedHours</th>
+                    <th>Status</th>
                     <th style="width:10px">Comments</th>
                     @*<th style="width:10px"></th>*@
+                    <th style="width:10px"></th>
                 </tr>
             </thead>
             <tbody class="table">
                 @foreach (var item in Model.CompletedTimeSheetList)
                 {
-                    <tr>
-                        <td class="Id" id="activityId"> <span>@item.Id</span> </td>
-                        <td class="CandidateName">
-                            <span id="txtCandidateName">@item.CandidateName</span>
-                        </td>
-                        <td class="Project">
-                            @Html.DisplayFor(modelItem => item.ProjectName)
-                        </td>
-                        <td class="Activity">
-                            @Html.DisplayFor(modelItem => item.Activity)
-                        </td>
+                <tr>
+                    <td class="Id" id="activityId"> <span>@item.Id</span> </td>
+                    <td class="CandidateName">
+                        <span id="txtCandidateName">@item.CandidateName</span>
+                    </td>
+                    <td class="Project">
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Activity)
+                    </td>
 
-                        <td class="Day" width="7%">
-                            <span>@item.Day.Value.ToShortDateString()</span>
-                            @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
+                    <td class="Day" width="7%">
+                        <span>@item.Day.Value.ToShortDateString()</span>
+                        @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
-                        </td>
-                        <td class="StartTime">
-                            <span>@item.StartTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                        </td>
+                    </td>
+                    <td class="StartTime">
+                        <span>@item.StartTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                    </td>
 
 
-                        <td class="EndTime" width="8%">
-                            <span>@item.EndTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                        </td>
+                    <td class="EndTime" width="8%">
+                        <span>@item.EndTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                    </td>
 
-                        <td class="OLATarget">
-                            @Html.DisplayFor(modelItem => item.OLATarget)
-                        </td>
-                        <td class="ActualQuantity">
-                            <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                        </td>
-                        <td class="TimeSheetComments">
-                            <span>@item.TimeSheetComments</span>
-                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-                        </td>
-                        @*<td width="5%">
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;">
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                <span><strong>Approve</strong></span>
-                            </a>
+                    <td class="OLATarget">
+                        @Html.DisplayFor(modelItem => item.OLATarget)
+                    </td>
+                    <td class="ActualQuantity">
+                        <span style="width:2px">@item.ActualQuantity</span>
+                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                    </td>
 
-                        </td>*@
-                    </tr>
+                    <td>
+                        <span style="width:2px">@item.TotalHours</span>
+
+                    </td>
+                    <td>
+                        <span style="width:2px">@item.BreakHours</span>
+                        <input type="text" id="breakHours" value="@item.BreakHours" style="display:none;width:30px" />
+
+                    </td>
+                    <td>
+                        <span style="width:2px">@item.TotalWorkedHours</span>
+
+                    </td>
+
+                    <td class="Status">
+                        <span text="Status" span />
+                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
+                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                        <input id="username" type="hidden" value="@User.Identity.Name" />
+                    </td>
+                    <td class="TimeSheetComments">
+                        <span>@item.TimeSheetComments</span>
+                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                    </td>
+                    <td width="5%">
+                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
+
+                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span><strong>Cancel</strong></span>
+                        </a>
+
+
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -97,10 +134,140 @@
                 }
         });
         });
+    SetDDLValue();
+    function SetDDLValue() {
+        //alert('before document ready');
+        debugger;
+        $("tbody tr td.Status").each(function LoopTR() {
+            var ratingTdText = $(this);
+            if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                $(ratingTdText).find("#ddlStatus option").each(function (i) {
+                    //alert($(ratingTdText).find("#hdnddlLidt").val());
+                    if (($(this).val() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                        $(this).attr('selected', 'selected')
+                    }
+                });
+            }
 
+
+        });
+    }
     $("#myModal").draggable({
         handle: ".modal-header"
     });
+   
+    $("body").on("click", "#tblCustomers .Edit", function () {
+        debugger;
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                $(this).find("input").show();
+                $(this).find("#txtComments").show();
+                $(this).find("span").hide();
+                $(this).toggleClass('selected');
+
+            }
+        });
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+
+
+        $(this).hide();
+    });
+
+    //Update event handler.
+    $("body").on("click", "#tblCustomers .Update", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                var textArea = $(this).find("#txtComments");
+                //span.html(input.val());
+                span.show();
+                input.hide();
+                textArea.hide();
+                $(this).removeClass('selected');
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Cancel").hide();
+      
+        $(this).hide();
+     
+        var CandidateEdit = {};
+        var options = { "backdrop": "static", keyboard: true };
+        CandidateEdit.Id = row.find(".Id").find("span").html();
+        CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
+        CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
+        CandidateEdit.StartTime = row.find("#startTime").val();
+        CandidateEdit.EndTime = row.find("#endTime").val();
+        CandidateEdit.Day = row.find(".Day").find("span").html();
+        CandidateEdit.StatusID = row.find("#ddlStatus").val();
+        CandidateEdit.BreakHours = row.find("#breakHours").val();
+
+        
+        
+
+        
+        $.ajax({
+            type: "POST",
+            url: "./UpdateCandidate",
+            data: '{CandidateEdit:' + JSON.stringify(CandidateEdit) + '}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+
+
+        });
+
+        $.ajax({
+            type: "GET",
+            url: './ApprovedResourceDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "CandidateName": row.find("#txtCandidateName").text() },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+
+    });
+
+   
+
+    //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
+  
+    //Cancel event handler.
+    $("body").on("click", "#tblCustomers .Cancel", function () {
+        var row = $(this).closest("tr");
+        //  debugger;
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                $(this).removeClass('selected');
+    
+                // input.val(span.html());
+                span.show();
+                input.hide();
+         
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Update").hide();
+        row.find("#Rate").hide();
+        $(this).hide();
+    });
+
 </script>
 
 <style>

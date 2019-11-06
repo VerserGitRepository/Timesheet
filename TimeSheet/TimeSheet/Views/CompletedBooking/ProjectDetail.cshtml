@@ -87,11 +87,12 @@
 
 
                     </td>
-                    <td class="Status">
-                        <span text="Status" span />
-                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
-                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                    </td>
+                     <td class="Status">
+                         <span text="Status" span />
+                         @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
+                         <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                         <input id="username" type="hidden" value="@User.Identity.Name" />
+                     </td>
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
                         <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
@@ -123,6 +124,37 @@
     $('#tblCustomers').dataTable({
         responsive: true
     });
+    function ShowOTMessage(therowid) {
+        debugger;
+        var rowid = $(therowid).closest("tr");
+        var date1 = new Date("May 26, 2016 " + rowid.find("#startTime").val());
+        var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
+        var origVal = rowid.find("#hdnddlLidt").val();
+        var msec = (date2 - date1);
+       
+        
+        var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
+        if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
+
+            $.confirm({
+                title: 'Alert!!!',
+                content: 'The activity has Over Time work hours. Are you sure you want to approve?',
+                boxWidth: '370px',
+                useBootstrap: false,
+                buttons: {
+                    OK: function () {
+                        rowid.find("#txtComments").val("Approved Overtime by consent by ." + rowid.find("#username").val());
+                        return true;
+                    },
+                    cancel: function () {
+
+                        rowid.find("#ddlStatus").val(origVal);
+                        return ;
+                    }
+                }
+                    });
+        }
+    }
     SetDDLValue();
     function ShowSliderModal(rowid)
     {

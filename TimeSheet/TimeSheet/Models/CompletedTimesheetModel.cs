@@ -78,6 +78,8 @@ namespace TimeSheet.Models
         public string BookedBy { get; set; }
         public string ApprovedBy { get; set; }
         public string BreakTime { get; set; }
-       
+        public double TotalHours { get { return (EndTime.Value.Subtract(StartTime.Value).TotalMinutes / 60); } set { } }
+        public double TotalWorkedHours { get { return ((EndTime.Value.Subtract(StartTime.Value).TotalMinutes - BreakHours)/ 60); } set { } }
+
     }
 }
