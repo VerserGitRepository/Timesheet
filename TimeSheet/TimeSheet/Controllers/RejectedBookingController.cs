@@ -24,7 +24,8 @@ namespace TimeSheet.Controllers
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
                 model.CompletedTimeSheetList = TimeSheetAPIHelperService.RejectedTimeSheets().Result;
                 model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
-                return View(model);
+                model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+                return View("RejectedBooking",model);
             }
         }
         [HttpPost]
