@@ -164,6 +164,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUpdateController.cs" />
+    <Compile Include="Controllers\RejectedBookingController.cs" />
     <Compile Include="Controllers\CompletedBookingController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
     <Compile Include="Controllers\ExcelUtils.cs" />
@@ -454,6 +455,9 @@
     <Content Include="Views\Projection\ProjectionsFilter.cshtml" />
     <Content Include="Views\ProfitLoss\CostDetails.cshtml" />
     <Content Include="Views\Shared\_BreakTimeSlider.cshtml" />
+    <Content Include="Views\RejectedBooking\RejectedBooking.cshtml" />
+    <Content Include="Views\RejectedBooking\ProjectDetail.cshtml" />
+    <Content Include="Views\RejectedBooking\CandidateDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
