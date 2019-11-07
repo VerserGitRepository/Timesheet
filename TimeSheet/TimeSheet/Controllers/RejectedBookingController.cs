@@ -22,7 +22,7 @@ namespace TimeSheet.Controllers
             else
             {
                 CompletedTimesheetModel model = new CompletedTimesheetModel();
-                model.CompletedTimeSheetList = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+                model.CompletedTimeSheetList = TimeSheetAPIHelperService.RejectedTimeSheets().Result;
                 model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
                 return View(model);
             }
@@ -38,7 +38,7 @@ namespace TimeSheet.Controllers
             }
             else
             {
-              var  TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+              var  TimeSheetmodel = TimeSheetAPIHelperService.RejectedTimeSheets().Result;
                 foreach (var item in TimeSheetmodel)
                 {
                     int otEnd = 0;
@@ -97,7 +97,7 @@ namespace TimeSheet.Controllers
         public ActionResult CandidateDetails(string CandidateName)
         {
             CompletedTimesheetModel model = new CompletedTimesheetModel();
-            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            var AlltimesheetRecords = TimeSheetAPIHelperService.RejectedTimeSheets().Result;
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("CandidateDetails", model);
@@ -107,7 +107,7 @@ namespace TimeSheet.Controllers
         public ActionResult ProjectDetail(string ProjectName)
         {
             CompletedTimesheetModel model = new CompletedTimesheetModel();
-            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetCompletedList().Result;
+            var AlltimesheetRecords = TimeSheetAPIHelperService.RejectedTimeSheets().Result;
             model.CompletedTimeSheetList = AlltimesheetRecords.Where(c => c.ProjectName == ProjectName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("ProjectDetail", model);
