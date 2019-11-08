@@ -9,17 +9,15 @@
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
-                    <th>CandidateName</th>
+                    <th>Resource</th>
                     <th>Project</th>
                     <th>Activity</th>
                     <th style="width:50px">StartDate </th>
                     <th>StartTime</th>
-                    <th style="width:50px">EndTime </th>
-                    <th style="width:10px">OLA</th>
-                    <th style="width:10px">Actual</th>
-                    <th>TotalHours</th>
-                    <th>BreakHours</th>
-                    <th>TotalWorkedHours</th>
+                    <th style="width:50px">EndTime </th>                    
+                    <th>TotalHrs</th>
+                    <th>Break</th>
+                    <th>WorkedHrs</th>
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     @*<th style="width:10px"></th>*@
@@ -44,41 +42,26 @@
                     <td class="Day" width="7%">
                         <span>@item.Day.Value.ToShortDateString()</span>
                         @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
-
                     </td>
                     <td class="StartTime">
                         <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        @*<input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />*@
                     </td>
-
-
                     <td class="EndTime" width="8%">
                         <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        @*<input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />*@
                     </td>
-
-                    <td class="OLATarget">
-                        @Html.DisplayFor(modelItem => item.OLATarget)
-                    </td>
-                    <td class="ActualQuantity">
-                        <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                    </td>
-
                     <td>
                         <span style="width:2px">@item.TotalHours</span>
-
                     </td>
                     <td>
                         <span style="width:2px">@item.BreakHours</span>
-                        <input type="text" id="breakHours" value="@item.BreakHours" style="display:none;width:30px" />
-
+                        @*<input type="text" id="breakHours" value="@item.BreakHours" style="display:none;width:30px" />*@
                     </td>
                     <td>
                         <span style="width:2px">@item.TotalWorkedHours</span>
 
                     </td>
-
                     <td class="Status">
                         <span text="Status" span />
                         @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })

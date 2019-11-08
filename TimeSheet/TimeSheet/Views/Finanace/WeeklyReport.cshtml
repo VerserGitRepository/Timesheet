@@ -42,7 +42,7 @@
                         <th>Hours</th>
                         <th>Resource Type</th>
                         <th>Pay Frequency</th>
-                        <th>Pay Cycle</th>
+                        @*<th>Date</th>*@
                         <th>Paid</th>
                         <th>Details</th>
                     </tr>
@@ -73,9 +73,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.PayFrequency)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayCycle)
-                        </td>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.da)
+                        </td>*@
                         <td>
                            
                             <button class="btn btn-success btn-xs" data-title="Approve" onclick="ApprovePayment(this);" data-toggle="modal" data-target="#approve">
