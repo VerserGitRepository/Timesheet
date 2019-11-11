@@ -13,7 +13,7 @@ namespace TimeSheet.Controllers
     public class RejectedBookingController : Controller
     {
         // GET: CompletedTask
-        public ActionResult Index()
+        public ActionResult RejectedBooking()
         {
             if (Session["Username"] == null)
             {

@@ -384,6 +384,26 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
+
+        public static async Task<List<CompletedTimesheetModel>> RejectedTimeSheets()
+        {
+            List<CompletedTimesheetModel> CostModelLists = new List<CompletedTimesheetModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/RejectedTimeSheets")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<CompletedTimesheetModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
         public static async Task<List<CompletedTimesheetModel>> TimeSheetApprovedList()
         {
             List<CompletedTimesheetModel> CostModelLists = new List<CompletedTimesheetModel>();
