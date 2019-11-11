@@ -1,11 +1,11 @@
 ﻿@model  TimeSheet.Models.CompletedTimesheetModel
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1228px">
+    <div class="modal-header" style="background-color:lightgray;width:1500px">
         <h5 class="modal-title text-center" style="font-weight: bold">Resource Details</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
-    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1200px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1200px">
+    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1500px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1500px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -29,85 +29,85 @@
             <tbody class="table">
                 @foreach (var item in Model.CompletedTimeSheetList)
                 {
-                <tr>
-                    <td class="Id" id="activityId"> <span>@item.Id</span> </td>
-                    <td class="CandidateName">
-                        <span id="txtCandidateName">@item.CandidateName</span>
-                    </td>
-                    <td class="Project">
-                        @Html.DisplayFor(modelItem => item.ProjectName)
-                    </td>
-                    <td class="Activity">
-                        @Html.DisplayFor(modelItem => item.Activity)
-                    </td>
+                    <tr>
+                        <td class="Id" id="activityId"> <span>@item.Id</span> </td>
+                        <td class="CandidateName">
+                            <span id="txtCandidateName">@item.CandidateName</span>
+                        </td>
+                        <td class="Project">
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td class="Activity">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
 
-                    <td class="Day" width="7%">
-                        <span>@item.Day.Value.ToShortDateString()</span>
-                        @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
+                        <td class="Day" width="7%">
+                            <span>@item.Day.Value.ToShortDateString()</span>
+                            @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
-                    </td>
-                    <td class="StartTime">
-                        <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
-
-
-                    <td class="EndTime" width="8%">
-                        <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
-
-                    <td class="OLATarget">
-                        @Html.DisplayFor(modelItem => item.OLATarget)
-                    </td>
-                    <td class="ActualQuantity">
-                        <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                    </td>
-
-                    <td>
-                        <span style="width:2px">@item.TotalHours</span>
-
-                    </td>
-                    <td>
-                        <span style="width:2px">@item.BreakHours</span>
-                        <input type="text" id="breakHours" value="@item.BreakHours" style="display:none;width:30px" />
-
-                    </td>
-                    <td>
-                        <span style="width:2px">@item.TotalWorkedHours</span>
-
-                    </td>
-
-                    <td class="Status">
-                        <span text="Status" span />
-                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
-                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                        <input id="username" type="hidden" value="@User.Identity.Name" />
-                    </td>
-                    <td class="TimeSheetComments">
-                        <span>@item.TimeSheetComments</span>
-                        <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
-                    </td>
-                    <td width="5%">
-                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Edit</strong></span>
-                        </a>
-
-                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Update</strong></span>
-                        </a>
-
-                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            <span><strong>Cancel</strong></span>
-                        </a>
+                        </td>
+                        <td class="StartTime">
+                            <span>@item.StartTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
 
-                    </td>
-                </tr>
+                        <td class="EndTime" width="8%">
+                            <span>@item.EndTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
+
+                        <td class="OLATarget">
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td class="ActualQuantity">
+                            <span style="width:2px">@item.ActualQuantity</span>
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        </td>
+
+                        <td>
+                            <span style="width:2px">@item.TotalHours</span>
+
+                        </td>
+                        <td>
+                            <span style="width:2px">@item.BreakHours</span>
+                            <input type="text" id="breakHours" value="@item.BreakHours" style="display:none;width:30px" />
+
+                        </td>
+                        <td>
+                            <span style="width:2px">@item.TotalWorkedHours</span>
+
+                        </td>
+
+                        <td class="Status">
+                            <span text="Status" span />
+                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                            <input id="username" type="hidden" value="@User.Identity.Name" />
+                        </td>
+                        <td class="TimeSheetComments">
+                            <span>@item.TimeSheetComments</span>
+                            <input type="text" id="txtComments" value="@item.TimeSheetComments" style="display:none" />
+                        </td>
+                        <td width="5%">
+                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Edit</strong></span>
+                            </a>
+
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
+
+                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
+
+
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -115,7 +115,9 @@
 </div>
 
 <script type="text/javascript">
-
+    $('#tblCustomers').dataTable({
+      
+    });
     $("body").on("click", "#tblCustomers .Update", function () {
        // debugger;
     var row = $(this).closest("tr");
@@ -272,7 +274,7 @@
 
 <style>
     .modal-dialog {
-        width: 1250px;
+        width: 1550px;
         margin: 30px auto;
         margin-bottom: 10px;
     }
