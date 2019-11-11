@@ -89,7 +89,7 @@
                     </td>
                      <td class="Status">
                          <span text="Status" span />
-                         @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
+                         @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus" })
                          <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
                          <input id="username" type="hidden" value="@User.Identity.Name" />
                      </td>
