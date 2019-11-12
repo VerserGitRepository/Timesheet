@@ -26,12 +26,16 @@
                     <tr>
                         <th>Opportunity</th>
                         <th>Project</th>
-                        <th>Service Activity</th>
-                        <th>Qty</th>
+                        <th>Activities</th>
+                        <th>EstmatedQty</th>
+                        <th>ActualQty</th>
                         <th>Allocated</th>
                         <th>Invoiced</th>
-                        <th>Revenue</th>
-                        <th>Cost</th>
+                        <th>EstmatedRevenue</th>
+                        <th>ActualRevenue</th>
+                        <th>EstmatedCost</th>
+                        <th>ActualCost</th>
+                        <th>GAP</th>
                         <th>Profit</th>
                     </tr>
                 </thead>
@@ -62,6 +66,18 @@
                          </td>
                          <td>
                              @Html.DisplayFor(modelItem => item.totalPrice)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.totalPrice)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.totalCost)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.totalCost)
+                         </td>
+                         <td>
+                             @Html.DisplayFor(modelItem => item.totalProfit)
                          </td>
                          <td>
                              @Html.DisplayFor(modelItem => item.totalCost)
