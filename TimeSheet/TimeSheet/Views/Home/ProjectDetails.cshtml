@@ -374,11 +374,12 @@
             msec += (chkDate1 - chkDate2)
         }
         var mins = Math.floor(msec / 60000);
+        var statusval = row.find("#ddlStatus").val();
         CandidateEdit.BreakHours = mins;
         CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text() ;
         var start = new Date("May 26, 2016 " + CandidateEdit.StartTime);
         var end = new Date("May 26, 2016 " + CandidateEdit.EndTime);
-        if (Math.floor(end - start) / 60000 > 240 && mins <= 0) {
+        if ((Math.floor(end - start) / 60000 > 240 && mins <= 0) && (statusval == 4 || statusval == 7 || statusval == 9)) {
             $.alert("Please add some break time before you mark to Completed / Approved.")
             var ctrl = row.find("#ddlBreak");
             ctrl.effect("pulsate", { times: 60 }, "slow");
