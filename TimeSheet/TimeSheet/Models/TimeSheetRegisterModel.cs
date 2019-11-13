@@ -34,7 +34,6 @@ namespace TimeSheet.Models
         public string TimeSheetComments { get; set; }
         [Required(ErrorMessage = "Opportunity Is Mandatory")]
         public int? OpportunityNumberID { get; set; }
-        [Required(ErrorMessage = "Warehouse Is Mandatory")]
         public int? WarehouseNameId { get; set; }
         [Required(ErrorMessage = "Activity Is Mandatory")]
         public int? ServiceActivityId { get; set; }
