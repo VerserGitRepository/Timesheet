@@ -204,6 +204,12 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        [HttpGet]
+        public ActionResult FetchOLA(int serviceActivityId, int opportunityId, int totalMins)
+        {
+            var result = ResourceHelperService.FetchOLA(serviceActivityId,opportunityId,totalMins);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }
