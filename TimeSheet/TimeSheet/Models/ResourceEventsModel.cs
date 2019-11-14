@@ -14,5 +14,6 @@ namespace TimeSheet.Models
         public string projectmanager { get; set; }
         public string Vechicles { get; set; }
         public string WarehouseName { get; set; }
+        public string activitydescription { get; set; }
     }
 }
