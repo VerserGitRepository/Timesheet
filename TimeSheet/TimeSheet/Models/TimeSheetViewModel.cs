@@ -43,7 +43,7 @@ namespace TimeSheet.Models
         //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         //public DateTime? EndDate { get; set; }
         [Required(ErrorMessage = "Opportunity Is Mandatory")]
-        public int? OpportunityID { get; set; }
+        public int OpportunityID { get; set; }
         public SelectList OpportunityNumberList { get; set; }
         public int? WarehouseID { get; set; }
         public SelectList WarehouseNameList { get; set; }
