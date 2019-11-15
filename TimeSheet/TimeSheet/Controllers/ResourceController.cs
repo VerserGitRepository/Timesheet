@@ -107,12 +107,14 @@ namespace TimeSheet.Controllers
                 var StartdateTime = Convert.ToDateTime(dtSt);
                 var EnddateTime = Convert.ToDateTime(dtEn);
                 regModel.CandidateNameId = theModel.ResourceIDs[i];
+                regModel.ResourceID = theModel.ResourceIDs[i];
                 regModel.Colour = theModel.Colour;
                 regModel.Day = theModel.Day;
                 regModel.EndTime = EnddateTime;
                 regModel.Id = theModel.Id;
                 regModel.OLATarget = theModel.OLATarget;
                 regModel.OpportunityNumberID = theModel.OpportunityID;
+                regModel.OpportunityID = theModel.OpportunityID;
                 regModel.ProjectID = theModel.ProjectID;
                 regModel.ServiceActivityId = theModel.ServiceActivityID;
                 regModel.StartTime = StartdateTime;
