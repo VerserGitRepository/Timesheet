@@ -11,6 +11,8 @@
                     <th>Id</th>
                     <th>Candidate</th>
                     <th>Activity</th>
+                    <th>PM</th>
+                    <th>Project</th>
                     <th style="width:50px">Date </th>
                     <th>StartTime</th>
                     <th style="width:50px">EndTime </th>
@@ -18,7 +20,7 @@
                     <th style="width:10px">Actual</th>
                     <th>Break (Minutes)</th>
                     <th>BreakTime</th>
-                   
+
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
@@ -35,7 +37,12 @@
                     <td class="Activity">
                         @Html.DisplayFor(modelItem => item.Activity)
                     </td>
-
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectManager)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
                     <td class="Day" width="7%">
                         <span>@item.Day.Value.ToShortDateString()</span>
                         @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
@@ -73,8 +80,8 @@
 
                     </td>
                     <td>
-                       
-                    <span id="spanbreakStartTime">@item.BreakTime</span>
+
+                        <span id="spanbreakStartTime">@item.BreakTime</span>
 
 
                     </td>
@@ -86,7 +93,7 @@
                     </td>
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
-                         <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
+                        <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
                     </td>
                     <td width="5%">
                         <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
@@ -448,7 +455,7 @@
 </script>
 <style>
     .modal-dialog {
-        width: 1250px;
+        width: 1450px;
         margin: 30px auto;
         margin-bottom: 10px;
     }

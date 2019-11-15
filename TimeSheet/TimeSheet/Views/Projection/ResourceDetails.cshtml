@@ -78,6 +78,9 @@
 </div>
 
 <script type="text/javascript">
+        $('#tblCustomers').dataTable({
+        responsive: true
+    });
     function Process(rowId) {
         var row = $(rowId).closest("tr");
         var candidateName = row.find("#txtCandidateName").text();
