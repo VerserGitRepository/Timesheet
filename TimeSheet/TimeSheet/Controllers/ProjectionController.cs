@@ -258,6 +258,8 @@ namespace TimeSheet.Controllers
                         agrModel.EmployeementType = t.EmployeementType;
                         hours += t.EndTime.Value.Subtract(t.StartTime.Value).TotalMinutes/60;
                         agrModel.ResourceId = Convert.ToInt32(t.ResourceID);
+                        agrModel.ProjectID = Convert.ToInt32(t.ProjectID);
+                        agrModel.projectManagerID = Convert.ToInt32(t.projectManagerID);
                     }
                     agrModel.Hours = hours;
                     model.AggregaredTimesheetModel.Add(agrModel);
@@ -292,24 +294,24 @@ namespace TimeSheet.Controllers
             var _a = TimeSheetAPIHelperService.ApproveIndividualTimesheet(_timesheetid).Result;
             return PartialView("ResourceDetails", model);
         }
-        [HttpPost]
-        public ActionResult ApprovePaymentBulk(int resourceId)
+        [HttpGet]
+        public ActionResult ApprovePaymentBulk(int resourceId,int PMId,int projectId)
         {
             if (UserRoles.UserCanApproveTimesheet() != true)
             {
                 return RedirectToAction("Index", "Home");
             }            
-            var _a = TimeSheetAPIHelperService.ApproveBulkTimesheet(resourceId).Result;            
+            var _a = TimeSheetAPIHelperService.ApproveBulkTimesheet(resourceId,PMId,projectId).Result;            
             return PartialView("WeeklyReport");
         }
-        [HttpPost]
-        public ActionResult Updatepaid(int resourceId)
+        [HttpGet]
+        public ActionResult Updatepaid(int resourceId, int PMId, int projectId)
         {
             if (UserRoles.UserCanApproveTimesheet() != true)
             {
                 return RedirectToAction("Index", "Home");
             }
-            var _a = TimeSheetAPIHelperService.UpdatePaid(resourceId).Result;
+            var _a = TimeSheetAPIHelperService.UpdatePaid(resourceId, PMId, projectId).Result;
             return PartialView("WeeklyReport");
         }
         [HttpPost]
