@@ -482,13 +482,13 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
-        public static async Task<ReturnModel> ApproveBulkTimesheet(int? ResourceId)
+        public static async Task<ReturnModel> ApproveBulkTimesheet(int resourceId, int PMId, int projectId)
         {
             ReturnModel ReturnResult = new ReturnModel();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveBulkTimesheet/{0}", ResourceId)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveBulkTimesheet/{0}/{1}/{2}", resourceId, PMId,projectId)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
@@ -503,13 +503,13 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
-        public static async Task<ReturnModel> UpdatePaid(int? ResourceId)
+        public static async Task<ReturnModel> UpdatePaid(int? ResourceId, int PMId, int projectId)
         {
             ReturnModel ReturnResult = new ReturnModel();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/UpdateTimesheetPaid/{0}", ResourceId)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/UpdateTimesheetPaid/{0}/{1}/{2}", ResourceId, PMId, projectId)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();

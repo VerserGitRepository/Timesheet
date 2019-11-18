@@ -60,6 +60,7 @@ namespace TimeSheet.Models
         public string Status { get; set; }
         public SelectList Projectlist { get; set; }
         public int? ProjectID { get; set; }
+        public int projectManagerID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }

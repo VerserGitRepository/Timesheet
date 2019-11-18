@@ -73,7 +73,8 @@ namespace TimeSheet.Controllers
                         agrModel.ADPEmployeeID = Convert.ToInt32(t.AdpEmployeeID);
                         agrModel.PayFrequency = t.PayFrequency;
                         agrModel.ResourceId = Convert.ToInt32(t.ResourceID);
-
+                        agrModel.ProjectID = Convert.ToInt32(t.ProjectID);
+                        agrModel.projectManagerID = Convert.ToInt32(t.projectManagerID);
                     }
 
                     agrModel.Hours = hours;

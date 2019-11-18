@@ -15,6 +15,8 @@ namespace TimeSheet.Models
         public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }
         public string PayCycle { get; set; }
+        public int ProjectID { get; set; }
+        public int projectManagerID { get; set; }
         public string EmployeementType { get; set; }
         public int ADPEmployeeID { get; set; }
         public string PayFrequency { get; set; }
