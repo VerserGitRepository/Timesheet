@@ -9,7 +9,7 @@
         <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1300px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>Id</th>
+                    <th class="hidden">Id</th>
                     <th>Candidate</th>
                     <th>Activity</th>
                     <th>PM</th>
@@ -20,7 +20,7 @@
                     @*<th>EndTime</th>*@
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
-                    <th>Break (Minutes)</th>
+                    <th>Break</th>
                     <th>BreakTime</th>
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
@@ -31,7 +31,7 @@
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
                 <tr>
-                    <td class="Id"> <span>@item.Id</span> </td>
+                    <td class="hidden"> <span>@item.Id</span> </td>
                     <td class="CandidateName">
                         <span id="txtCandidateName">@item.CandidateName</span>
                     </td>

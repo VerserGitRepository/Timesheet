@@ -8,7 +8,7 @@
         <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1200px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>Id</th>
+                    <th class="hidden">Id</th>
                     <th>Candidate</th>
                     <th>Activity</th>
                     <th style="width:50px">Date </th>
@@ -28,7 +28,7 @@
                 @foreach (var item in Model.CompletedTimeSheetList)
                 {
                 <tr>
-                    <td class="Id"> <span>@item.Id</span> </td>
+                    <td class="hidden"> <span>@item.Id</span> </td>
                     <td class="CandidateName">
                         <span id="txtCandidateName">@item.CandidateName</span>
                     </td>
