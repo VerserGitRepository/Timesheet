@@ -81,6 +81,21 @@ namespace TimeSheet.Controllers
             return PartialView("ProjectionsFilter", model);
         }
         [HttpGet]
+        public ActionResult GetProjectionsForPM(string projectManager)
+        {
+            ProjectionModel model = new ProjectionModel();
+
+            model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
+
+            var listadd = new List<ProjectionOppurtunityModel>();
+            listadd = ProjectionHelperService.MergedProjectionServices().Result;
+            //model.ProjectList = new SelectList(listadd.Select(x => x.ProjectName).Distinct());
+            //model.OpportunityNumberList = new SelectList(listadd.Select(x => x.OpportunityNumber).Distinct());
+            //model.ProjectmanagerList = new SelectList(listadd.Select(x => x.ProjectManager).Distinct());
+            model.projectionOpportunityModel = listadd.Where(i => i.ProjectManager == projectManager).ToList();  // listA;
+            return PartialView("ProjectionsFilter", model);
+        }
+        [HttpGet]
         public ActionResult GetProjectionsJSONData(int opportunityId)
         {
             ProjectionModel model = new ProjectionModel();

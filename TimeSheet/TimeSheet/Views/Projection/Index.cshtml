@@ -60,7 +60,7 @@
                                 <a href="javascript:void(0);" id="txtOpportunityId" class="CandidateName" data-id="@item.OpportunityNumber">@Html.DisplayFor(modelItem => item.OpportunityNumber)</a>
                             </td>
                             <td class="PM">
-                                <span id="txtPM">@Html.DisplayFor(modelItem => item.ProjectManager) </span>
+                                <a href="javascript:void(0);" id="txtProjectManager"  data-id="@item.ProjectManager">@Html.DisplayFor(modelItem => item.ProjectManager)</a>
                             </td>
                             <td title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity">
                                 <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
@@ -220,6 +220,31 @@
                 url: projectionsUrl,
                 contentType: "application/json; charset=utf-8",
                 data: { "opportunityId": $(this).text().trim() },
+                datatype: "json",
+                success: function (data) {
+                    // debugger;
+                    $('#filterModalContent').html(data);
+                    $('#filterModal').modal(options);
+                    $('#filterModal').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+    });
+    var projectionsUrl = './GetProjectionsForPM';
+    $(function () {
+        $("#MANAGEPROJECTIONMAIN").on("click", ".PM", function () {
+            // debugger;
+            var $buttonClicked = $(this);
+            var projectManager = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: projectionsUrl,
+                contentType: "application/json; charset=utf-8",
+                data: { "projectManager": $(this).text().trim() },
                 datatype: "json",
                 success: function (data) {
                     // debugger;
