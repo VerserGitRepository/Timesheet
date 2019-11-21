@@ -10,13 +10,13 @@ namespace TimeSheet.Models
     public class ProjectionOppurtunityExportModel
     {
        
-        public string ProjectName { get; set; }
+        public string Project { get; set; }
 
-        public int? OpportunityNumber { get; set; }
+        public int? Opportunity { get; set; }
         public string ProjectManager { get; set; }
         public string Activity { get; set; }
-        [Display(Name = "Facility")]
-        public string Warehouse { get; set; }
+
+        public string Facility { get; set; }
         
        
         public string DateInvoiced { get; set; }        
@@ -27,7 +27,8 @@ namespace TimeSheet.Models
         public int Quantity { get; set; }        
         public int ActualQuantity { get; set; }
         public double EstimatedRevenue { get { return Math.Round((Quantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
-        public double ActualRevenue { get { return Math.Round((ActualQuantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }        
+        public double ActualRevenue { get { return Math.Round((ActualQuantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }  
+        public double Gap { get; set; }
         public string Comments { get; set; }
         
        

@@ -344,12 +344,13 @@ namespace TimeSheet.Controllers
                     modelexport.DateAllocated = mdl.DateAllocated.HasValue ? mdl.DateAllocated.Value.Date.ToString("dd/MM/yyyy") : "";
                     modelexport.DateInvoiced = mdl.DateInvoiced.HasValue ? mdl.DateInvoiced.Value.Date.ToString("dd/MM/yyyy") : "";
                     modelexport.EstimatedRevenue = Convert.ToDouble(mdl.Quantity * mdl.priceperUnit);
-                    modelexport.OpportunityNumber = mdl.OpportunityNumber;
+                    modelexport.Opportunity = mdl.OpportunityNumber;
                     modelexport.priceperUnit = mdl.priceperUnit;
                     modelexport.ProjectManager = mdl.ProjectManager;
-                    modelexport.ProjectName = mdl.ProjectName;
+                    modelexport.Project = mdl.ProjectName;
                     modelexport.Quantity = Convert.ToInt16( mdl.Quantity);
-                    modelexport.Warehouse = mdl.wareHouseName;
+                    modelexport.Facility = mdl.wareHouseName;
+                    modelexport.Gap = (modelexport.EstimatedRevenue - modelexport.ActualRevenue);
                     theModel.Add(modelexport);
 
                 }
