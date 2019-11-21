@@ -311,6 +311,10 @@ namespace TimeSheet.Controllers
                 if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) > 18)
                 {
                     otEnd = Convert.ToInt32(item.EndTime.Value.ToString("HH")) - 18;
+                    if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) >= 23 && Convert.ToInt32(item.EndTime.Value.ToString("mm")) >= 30)
+                    {
+                        otEnd = otEnd + 1;
+                    }
                 }
                 if (Convert.ToInt32(item.StartTime.Value.ToString("HH")) < 6)
                 {
@@ -337,9 +341,9 @@ namespace TimeSheet.Controllers
                     Day = item.Day.Value.Date.ToShortDateString(),
                     Status = item.Status,
                     TimeSheetComments = item.TimeSheetComments,
-                    TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                    TotalHours = Math.Round((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60), 1, MidpointRounding.ToEven),
                     BreakHours = item.BreakHours,
-                    WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60,
+                    WorkedHours = Math.Round(((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60), 1, MidpointRounding.ToEven),
                     OutsideWorkHours = otStart + otEnd,
                     OTHours = OTHoursVal,
                     PayFrequency = item.PayFrequency,

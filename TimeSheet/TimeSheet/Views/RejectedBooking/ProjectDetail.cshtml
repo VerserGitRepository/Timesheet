@@ -378,7 +378,12 @@
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
         var timetext = row.find("#spanbreakStartTime").html();
         var twoDates = timetext.split(";");
-
+        var start = new Date("May 26, 2016 " + CandidateEdit.StartTime);
+        var end = new Date("May 26, 2016 " + CandidateEdit.EndTime);
+        if (start >= end) {
+            $.alert('start time should be prior to endtime');
+            return;
+        }
         var msec = 0;
         for (var i = 1; i < twoDates.length; i += 2) {
             var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);

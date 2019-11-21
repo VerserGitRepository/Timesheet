@@ -332,7 +332,27 @@ namespace TimeSheet.Controllers
                 //var listadd = new List<ProjectionOppurtunityModel>();
                 //listadd = ProjectionHelperService.MergedProjectionServices().Result;
                 //model.projectionOpportunityModel = listadd;  // listA;
-                List<ProjectionOppurtunityExportModel> theModel = Utils.ReflectionUtils.CopyShallowArray<ProjectionOppurtunityExportModel>(list.ToArray()).ToList();
+                List<ProjectionOppurtunityExportModel> theModel = new List<ProjectionOppurtunityExportModel>();
+
+                foreach (ProjectionOppurtunityModel mdl in list)
+                {
+                    ProjectionOppurtunityExportModel modelexport = new ProjectionOppurtunityExportModel();
+                    modelexport.Activity = mdl.Activity;
+                    modelexport.ActualQuantity = Convert.ToInt32(mdl.ActualQuantity);
+                    modelexport.ActualRevenue = Convert.ToDouble(mdl.ActualQuantity * mdl.priceperUnit);
+                    modelexport.Comments = mdl.Comments;
+                    modelexport.DateAllocated = mdl.DateAllocated.HasValue ? mdl.DateAllocated.Value.Date.ToString("dd/MM/yyyy") : "";
+                    modelexport.DateInvoiced = mdl.DateInvoiced.HasValue ? mdl.DateInvoiced.Value.Date.ToString("dd/MM/yyyy") : "";
+                    modelexport.EstimatedRevenue = Convert.ToDouble(mdl.Quantity * mdl.priceperUnit);
+                    modelexport.OpportunityNumber = mdl.OpportunityNumber;
+                    modelexport.priceperUnit = mdl.priceperUnit;
+                    modelexport.ProjectManager = mdl.ProjectManager;
+                    modelexport.ProjectName = mdl.ProjectName;
+                    modelexport.Quantity = Convert.ToInt16( mdl.Quantity);
+                    modelexport.Warehouse = mdl.wareHouseName;
+                    theModel.Add(modelexport);
+
+                }
 
                 GridView gv = new GridView();
                 gv.DataSource = theModel;
