@@ -347,6 +347,7 @@ namespace TimeSheet.Controllers
                     modelexport.Opportunity = mdl.OpportunityNumber;
                     modelexport.priceperUnit = mdl.priceperUnit;
                     modelexport.ProjectManager = mdl.ProjectManager;
+                    modelexport.SalesManager = mdl.SalesManager;
                     modelexport.Project = mdl.ProjectName;
                     modelexport.Quantity = Convert.ToInt16( mdl.Quantity);
                     modelexport.Facility = mdl.wareHouseName;

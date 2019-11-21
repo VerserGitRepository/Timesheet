@@ -14,6 +14,7 @@ namespace TimeSheet.Models
 
         public int? Opportunity { get; set; }
         public string ProjectManager { get; set; }
+        public string SalesManager { get; set; }
         public string Activity { get; set; }
 
         public string Facility { get; set; }
