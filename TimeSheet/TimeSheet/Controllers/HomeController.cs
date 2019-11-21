@@ -181,19 +181,8 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult UpdateCandidate(UpdateTimeSheetModel CandidateEdit)
         {
-            if (UserRoles.UserCanEditTimesheet() != true)
-            {
-
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {               
-                if (CandidateEdit == null)
-                {
-                    Session["ErrorMessage"] = "Please Update With Valid Details!";
-                }
-                if (CandidateEdit != null)
-                {
+            if (UserRoles.UserCanEditTimesheet() == true && CandidateEdit != null && CandidateEdit.Id > 0)
+            {            
                     string dateString = String.Format("{0:dd/MM/yyyy}", CandidateEdit.Day);
                     string StartTimeString = String.Format("{0:HH:mm}", CandidateEdit.StartTime);
                     string EndTimeString = String.Format("{0:HH:mm}", CandidateEdit.EndTime);
@@ -203,11 +192,12 @@ namespace TimeSheet.Controllers
                     var EnddateTime = Convert.ToDateTime(dtEn);
                     CandidateEdit.StartTime = StartdateTime;
                     CandidateEdit.EndTime = EnddateTime;
-
                     CandidateEdit.FullName= Session["FullName"].ToString();
-                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
-                  
-                }                
+                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);                                  
+            }
+            else
+            {
+                Session["ErrorMessage"] = "Update Details Not Valid!";
             }
             return RedirectToAction("Index", "Home");
         }
