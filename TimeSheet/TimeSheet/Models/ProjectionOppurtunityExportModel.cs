@@ -13,20 +13,23 @@ namespace TimeSheet.Models
         public string ProjectName { get; set; }
 
         public int? OpportunityNumber { get; set; }
-       
-        public int? ServiceActivityId { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? DateInvoiced { get; set; }        
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? DateAllocated { get; set; }
-        public int? Quantity { get; set; }        
-        public string Activity { get; set; }
-        public int? ActualQuantity { get; set; }
-        public string wareHouseName { get; set; }
-        public string Comments { get; set; }
         public string ProjectManager { get; set; }
+        public string Activity { get; set; }
+        [Display(Name = "Facility")]
+        public string Warehouse { get; set; }
+        
+       
+        public string DateInvoiced { get; set; }        
+        
+       
+        public string DateAllocated { get; set; }
+        public double? priceperUnit { get; set; }
+        public int Quantity { get; set; }        
+        public int ActualQuantity { get; set; }
+        public double EstimatedRevenue { get { return Math.Round((Quantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
+        public double ActualRevenue { get { return Math.Round((ActualQuantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }        
+        public string Comments { get; set; }
+        
        
 
     }

@@ -41,7 +41,8 @@ namespace TimeSheet.Models
         public string wareHouseName { get; set; }
         public string Comments { get; set; }
         public string ProjectManager { get; set; }
-       
+        public double? priceperUnit { get; set; }
+
 
     }
 }
