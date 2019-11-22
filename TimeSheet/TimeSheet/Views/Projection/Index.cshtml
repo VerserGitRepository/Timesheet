@@ -60,7 +60,7 @@
                                 <a href="javascript:void(0);" id="txtOpportunityId" class="CandidateName" data-id="@item.OpportunityNumber">@Html.DisplayFor(modelItem => item.OpportunityNumber)</a>
                             </td>
                             <td class="PM">
-                                <a href="javascript:void(0);" id="txtProjectManager"  data-id="@item.ProjectManager">@Html.DisplayFor(modelItem => item.ProjectManager)</a>
+                                <a href="javascript:void(0);" id="txtProjectManager" class="projectManager" data-id="@item.ProjectManager">@Html.DisplayFor(modelItem => item.ProjectManager)</a>
                             </td>
                             <td title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity">
                                 <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
@@ -233,7 +233,7 @@
             });
         });
     });
-    var projectionsUrl = './GetProjectionsForPM';
+    var projectionsPMUrl = './GetProjectionsForPM';
     $(function () {
         $("#MANAGEPROJECTIONMAIN").on("click", ".PM", function () {
             // debugger;
@@ -242,7 +242,7 @@
             var options = { "backdrop": "static", keyboard: true };
             $.ajax({
                 type: "GET",
-                url: projectionsUrl,
+                url: projectionsPMUrl,
                 contentType: "application/json; charset=utf-8",
                 data: { "projectManager": $(this).text().trim() },
                 datatype: "json",
