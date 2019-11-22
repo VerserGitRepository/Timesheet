@@ -139,7 +139,7 @@
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                     <span><strong>Change</strong></span>
                                 </a>
-                                @if (item.Quantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
+                                @if (item.ProjectionID  == 0)
                                 {
                                     <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
