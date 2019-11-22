@@ -15,7 +15,7 @@ namespace TimeSheet.Models
         public string ProjectName { get; set; }
         public int? OpportinutyId { get; set; }
         public int? OpportunityNumber { get; set; }
-       
+        public int ProjectionID { get; set; }
         //public bool? IsActive { get; set; }
         public int? ServiceActivityId { get; set; }
         public int ActivityId { get; set; }
@@ -43,7 +43,9 @@ namespace TimeSheet.Models
         public string ProjectManager { get; set; }
         public string SalesManager { get; set; }
         public double? priceperUnit { get; set; }
-
+        public int ProjectionQuantity { get; set; }
+        public int CostModelQuantity { get; set; }
+        public Nullable<decimal> TotalPrice { get; set; }
 
     }
 }
