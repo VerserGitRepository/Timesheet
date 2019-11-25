@@ -23,10 +23,12 @@ namespace TimeSheet.Models
         public double? priceperUnit { get; set; }
         public int ProjectionQuantity { get; set; }
         public int CostModelQuantity { get; set; }      
-        public int Quantity { get; set; }        
+           
         public int ActualQuantity { get; set; }
-        public double EstimatedRevenue { get { return Math.Round((Quantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
-        public double ActualRevenue { get { return Math.Round((ActualQuantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }  
+
+        public double CostModelRevenue { get { return Math.Round((CostModelQuantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
+        public double ProjectionRevenue { get { return Math.Round((ProjectionQuantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
+
         public double Gap { get; set; }
         public string Comments { get; set; }
         

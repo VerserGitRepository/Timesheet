@@ -28,7 +28,10 @@ namespace TimeSheet.Models
         public int WarehouseID { get; set; }
         public string WarehouseName { get; set; }
         public int OpportunityID { get; set; }    
-        public int ProjectManagerID { get; set; }      
+        public int ProjectManagerID { get; set; }
+        public int ProjectionQuantity { get; set; }
+        public int CostModelQuantity { get; set; }
+        public int ProjectionId { get; set; }
         public int Quantity { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]

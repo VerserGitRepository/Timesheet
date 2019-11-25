@@ -362,24 +362,22 @@ namespace TimeSheet.Controllers
                 {
                     ProjectionOppurtunityExportModel modelexport = new ProjectionOppurtunityExportModel();
                     modelexport.Activity = mdl.Activity;
-                    modelexport.ActualQuantity = Convert.ToInt32(mdl.ActualQuantity);
-                    modelexport.ActualRevenue = Convert.ToDouble(mdl.ActualQuantity * mdl.priceperUnit);
+                    modelexport.ActualQuantity = Convert.ToInt32(mdl.ActualQuantity);                 
                     modelexport.Comments = mdl.Comments;
                     modelexport.DateAllocated = mdl.DateAllocated.HasValue ? mdl.DateAllocated.Value.Date.ToString("dd/MM/yyyy") : "";
-                    modelexport.DateInvoiced = mdl.DateInvoiced.HasValue ? mdl.DateInvoiced.Value.Date.ToString("dd/MM/yyyy") : "";
-                    modelexport.EstimatedRevenue = Convert.ToDouble(mdl.Quantity * mdl.priceperUnit);
+                    modelexport.DateInvoiced = mdl.DateInvoiced.HasValue ? mdl.DateInvoiced.Value.Date.ToString("dd/MM/yyyy") : "";                 
+                    modelexport.ProjectionRevenue = Convert.ToDouble(mdl.ProjectionQuantity * mdl.priceperUnit);
+                    modelexport.CostModelRevenue = Convert.ToDouble(mdl.CostModelQuantity * mdl.priceperUnit);
                     modelexport.Opportunity = mdl.OpportunityNumber;
                     modelexport.priceperUnit = mdl.priceperUnit;
                     modelexport.CostModelQuantity = mdl.CostModelQuantity;
                     modelexport.ProjectionQuantity = mdl.ProjectionQuantity;
                     modelexport.ProjectManager = mdl.ProjectManager;
-                    modelexport.ProjectionQuantity = mdl.ProjectionQuantity;
-                    modelexport.CostModelQuantity = mdl.CostModelQuantity;
                     modelexport.CostperUnit = mdl.CostperUnit;
                     modelexport.SalesManager = mdl.SalesManager;
                     modelexport.Project = mdl.ProjectName;
                     modelexport.Facility = mdl.wareHouseName;
-                    modelexport.Gap = (modelexport.EstimatedRevenue - modelexport.ActualRevenue);
+                    modelexport.Gap = (modelexport.CostModelRevenue - modelexport.ProjectionRevenue);
                     theModel.Add(modelexport);
                 }
                 GridView gv = new GridView();
