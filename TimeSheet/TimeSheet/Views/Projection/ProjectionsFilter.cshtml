@@ -122,17 +122,19 @@
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 <span><strong>Change</strong></span>
                             </a>
-                            @if (item.Quantity > 0 || item.DateInvoiced.HasValue || item.DateAllocated.HasValue || item.wareHouseName != string.Empty)
-                            {
+                           
                                 <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     <span><strong>Add</strong></span>
                                 </a>
+                           
+                            @if (item.ProjectionID > 0)
+                            {
+                                <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Update</strong></span>
+                                </a>
                             }
-                            <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Update</strong></span>
-                            </a>
                             <a href="#" class="Cancel btn btn-danger a-btn-slide-text" style="display:none">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 <span><strong>Cancel</strong></span>
