@@ -33,26 +33,6 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult; 
         }
-        public static async Task<ReturnModel> ProjectionEntryUpdate(ProjectionEntryModel ProjectionActivityEntryRecord)
-        {
-            ReturnModel ReturnResult = new ReturnModel();
-
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("Projection/ProjectionUpdate"), ProjectionActivityEntryRecord).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
-                }
-                else
-                {
-                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
-                }
-            }
-            return ReturnResult;
-        }
         public static async Task<ReturnModel> AddProjectionEnter(ProjectionModel ProjectionActivityEntryRecord)
         {
             ReturnModel ReturnResult = new ReturnModel();
@@ -82,8 +62,7 @@ namespace TimeSheet.ServiceHelper
                 HttpResponseMessage response = client.GetAsync(string.Format("Projection/ProjectionListItems")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<List<ProjectionModel>>();
-                   
+                    ReturnResult = await response.Content.ReadAsAsync<List<ProjectionModel>>();                   
                 }
                 else
                 {
@@ -120,7 +99,6 @@ namespace TimeSheet.ServiceHelper
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<List<OpportunityListModel>>();
-
                 }
                 else
                 {

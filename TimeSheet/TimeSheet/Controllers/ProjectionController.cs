@@ -352,14 +352,12 @@ namespace TimeSheet.Controllers
             else
             {
                 //ProjectionModel model = new ProjectionModel();
-
                 //model.WarehouseList = new SelectList(ListItemService.Warehouses().Result, "Id", "Value");
-
                 //var listadd = new List<ProjectionOppurtunityModel>();
                 //listadd = ProjectionHelperService.MergedProjectionServices().Result;
                 //model.projectionOpportunityModel = listadd;  // listA;
-                List<ProjectionOppurtunityExportModel> theModel = new List<ProjectionOppurtunityExportModel>();
 
+                List<ProjectionOppurtunityExportModel> theModel = new List<ProjectionOppurtunityExportModel>();
                 foreach (ProjectionOppurtunityModel mdl in list)
                 {
                     ProjectionOppurtunityExportModel modelexport = new ProjectionOppurtunityExportModel();
@@ -375,14 +373,15 @@ namespace TimeSheet.Controllers
                     modelexport.CostModelQuantity = mdl.CostModelQuantity;
                     modelexport.ProjectionQuantity = mdl.ProjectionQuantity;
                     modelexport.ProjectManager = mdl.ProjectManager;
+                    modelexport.ProjectionQuantity = mdl.ProjectionQuantity;
+                    modelexport.CostModelQuantity = mdl.CostModelQuantity;
+                    modelexport.CostperUnit = mdl.CostperUnit;
                     modelexport.SalesManager = mdl.SalesManager;
                     modelexport.Project = mdl.ProjectName;
                     modelexport.Facility = mdl.wareHouseName;
                     modelexport.Gap = (modelexport.EstimatedRevenue - modelexport.ActualRevenue);
                     theModel.Add(modelexport);
-
                 }
-
                 GridView gv = new GridView();
                 gv.DataSource = theModel;
                 gv.DataBind();
