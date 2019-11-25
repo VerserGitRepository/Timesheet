@@ -108,13 +108,13 @@
                         <td>
 
                             <span>@Html.DisplayFor(modelItem => item.CostModelQuantity)</span>
-                            <input type="text" id="quantity" class="txtQuantity" value="@item.CostModelQuantity" style="display:none" />
+                            <input type="text" id="costmodelquantity" class="txtQuantity" value="@item.CostModelQuantity" style="display:none" />
                             <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
                         </td>
                         <td>
 
                             <span>@Html.DisplayFor(modelItem => item.ProjectionQuantity)</span>
-                            <input type="text" id="quantity" class="txtQuantity" value="@item.ProjectionQuantity" style="display:none" />
+                            <input type="text" id="projectionquantity" class="txtQuantity" value="@item.ProjectionQuantity" style="display:none" />
                             <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
                         </td>
                         <td id="endTimeTD">
@@ -326,7 +326,7 @@
        //globalRow = row;
         var ther = row.find("span#txtOpportunityId").text();
         var formcontent = '<table class="table-bordered table - responsive - md text - center table - hover table - scroll" id="MANAGEPROJECTIONMAIN">';
-        formcontent += '<thead style = "background-color:#FFA500;color:white"><tr><th>Oppurtunity</th><th>Services</th> <th>Facility</th> <th>Week</th> <th>Quantity</th>';
+        formcontent += '<thead style = "background-color:#FFA500;color:white"><tr><th>Oppurtunity</th><th>Services</th> <th>Facility</th> <th>Week</th> <th>CostModel Quantity</th> <th>Projection Quantity</th>';
         formcontent += '<th> EstimatedInvoiceDate</th> <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><th class="hidden"></th><th class="hidden"></th>';
         formcontent += '</tr></thead ><tbody class="table">"';
         formcontent += '<tr role="row" class="odd" id="contentRow">';
@@ -366,11 +366,20 @@
         formcontent += '<td class="selected">';
 
 
-        formcontent += '<input type="text" id="quantity" class="txtQuantity" value="';
-        formcontent += row.find("#quantity").val();
+        formcontent += '<input type="text" id="costmodelquantity" class="txtQuantity" value="';
+        formcontent += row.find("#costmodelquantity").val();
         formcontent += '" style="">';
 
         formcontent += '</td>';
+        formcontent += '<td class="selected">';
+
+
+        formcontent += '<input type="text" id="projectionquantity" class="txtQuantity" value="';
+        formcontent += row.find("#projectionquantity").val();
+        formcontent += '" style="">';
+
+        formcontent += '</td>';
+
         formcontent += '<td class="selected">';
 
 
@@ -575,8 +584,8 @@
                 'Id': row.find("#hdnId").val(),
                 'ProjectionId': row.find("#hdnProjectionId").val(),
                 'OpportunityId': row.find("#txtOpportunityId").text(),
-                'ProjectionQuantity': row.find("#hdnProjectionQuantity").val(),
-                'CostModelQuantity': row.find("#hdnCostModelQuantity").val(),
+                'ProjectionQuantity': row.find("#projectionquantity").val(),
+                'CostModelQuantity': row.find("#costmodelquantity").val(),
                 'Quantity': row.find("input#quantity").val(),
                 'DateAllocated': row.find("input#startTime").val(),
                 'DateInvoiced': row.find("input#endTime").val(),
