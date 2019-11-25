@@ -108,7 +108,7 @@
                         <td>
 
                             <span>@Html.DisplayFor(modelItem => item.CostModelQuantity)</span>
-                            <input type="text" id="costmodelquantity" class="txtQuantity" value="@item.CostModelQuantity" style="display:none" />
+                            <input type="text" id="costmodelquantity" class="txtQuantity" value="@item.CostModelQuantity" style="display:none" readonly />
                             <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
                         </td>
                         <td>
@@ -368,7 +368,7 @@
 
         formcontent += '<input type="text" id="costmodelquantity" class="txtQuantity" value="';
         formcontent += row.find("#costmodelquantity").val();
-        formcontent += '" style="">';
+        formcontent += '" style="" readonly>';
 
         formcontent += '</td>';
         formcontent += '<td class="selected">';
