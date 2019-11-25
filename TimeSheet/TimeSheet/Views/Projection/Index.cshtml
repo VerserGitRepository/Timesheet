@@ -39,7 +39,8 @@
                         <th>Services</th>
                         <th>Facility</th>
                         <th>Week</th>
-                        <th>Quantity</th>
+                        <th>Costmodel Quantity</th>
+                        <th>Projection Quantity</th>
                         <th>EstimatedInvoiceDate</th>
                         <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                         <th style="width:20px"></th>
@@ -52,119 +53,125 @@
                 <tbody class="table">
                     @foreach (var item in Model.projectionOpportunityModel)
                     {
-                        <tr>
-                            <td class="ProjectName">
-                                <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
-                                <input type="hidden" id="hdnProjectionId" value="@item.ProjectionID" />
-                                <input type="hidden" id="hdnId" value="@item.Id" />
-                                <input type="hidden" id="hdnProjectionQuantity" value="@item.ProjectionQuantity" />
-                                <input type="hidden" id="hdnCostModelQuantity" value="@item.CostModelQuantity" />
-                            </td>
-                            <td class="opportunity">
-                                <a href="javascript:void(0);" id="txtOpportunityId" class="CandidateName" data-id="@item.OpportunityNumber">@Html.DisplayFor(modelItem => item.OpportunityNumber)</a>
-                            </td>
-                            <td class="PM">
-                                <a href="javascript:void(0);" id="txtProjectManager" class="projectManager" data-id="@item.ProjectManager">@Html.DisplayFor(modelItem => item.ProjectManager)</a>
-                            </td>
-                            <td title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity">
-                                <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
-                                <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
+                    <tr>
+                        <td class="ProjectName">
+                            <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+                            <input type="hidden" id="hdnProjectionId" value="@item.ProjectionID" />
+                            <input type="hidden" id="hdnId" value="@item.Id" />
+                            <input type="hidden" id="hdnProjectionQuantity" value="@item.ProjectionQuantity" />
+                            <input type="hidden" id="hdnCostModelQuantity" value="@item.CostModelQuantity" />
+                        </td>
+                        <td class="opportunity">
+                            <a href="javascript:void(0);" id="txtOpportunityId" class="CandidateName" data-id="@item.OpportunityNumber">@Html.DisplayFor(modelItem => item.OpportunityNumber)</a>
+                        </td>
+                        <td class="PM">
+                            <a href="javascript:void(0);" id="txtProjectManager" class="projectManager" data-id="@item.ProjectManager">@Html.DisplayFor(modelItem => item.ProjectManager)</a>
+                        </td>
+                        <td title="@item.Activity @Environment.NewLine  @Environment.NewLine Actual Quantity: @item.ActualQuantity &nbsp;- Current Quantity: @item.Quantity">
+                            <input type="text" id="txtActivityDesc" value='@item.Activity' disabled="disabled" />
+                            <input class="hidden" type="text" id="hdntxtActivityDesc" value="@item.Activity" />
 
 
-                            </td>
-                            <td class="dropdownListTD">
+                        </td>
+                        <td class="dropdownListTD">
 
-                                @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
+                            @Html.DropDownList("ddlWarehouseID", Model.WarehouseList, "Facility")
 
-                                <input class="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
-                                @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.wareHouseName" />
+                            @Html.DropDownList("hdnddlWarehouseId", Model.WarehouseList, "Facility", new { @class = "hidden" })
 
-                            </td>
-                            <td id="startTimeTD">
-                                @if (item.Quantity >= 0)
+                        </td>
+                        <td id="startTimeTD">
+                            @if (item.Quantity >= 0)
+                            {
+                                if (item.DateAllocated.HasValue)
                                 {
-                                    if (item.DateAllocated.HasValue)
-                                    {
-                                        <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
-                                        @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
-                                        <input class="hidden" type="text" id="hdnTxtDtAlctd" value="@item.DateAllocated.Value.ToString("yyyy-MM-dd")" />
+                                    <span id="startTime">@item.DateAllocated.Value.ToShortDateString()</span>
+                                    @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                                    <input class="hidden" type="text" id="hdnTxtDtAlctd" value="@item.DateAllocated.Value.ToString("yyyy-MM-dd")" />
 
 
-                                    }
-                                    else
-                                    {
-                                        <span id="startTime"></span>
-                                        @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
-                                    }
                                 }
                                 else
                                 {
                                     <span id="startTime"></span>
                                     @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
                                 }
+                            }
+                            else
+                            {
+                                <span id="startTime"></span>
+                                @Html.TextBoxFor(m => item.DateAllocated, "{0:yyyy-MM-dd}", new { @type = "date", @id = "startTime", @style = "display:none" })
+                            }
 
-                            </td>
-                            <td>
+                        </td>
+                        <td>
 
-                                <span>@Html.DisplayFor(modelItem => item.Quantity)</span>
-                                <input type="text" id="quantity" class="txtQuantity" value="@item.Quantity" style="display:none" />
-                                <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
-                            </td>
-                            <td id="endTimeTD">
+                            <span>@Html.DisplayFor(modelItem => item.CostModelQuantity)</span>
+                            <input type="text" id="quantity" class="txtQuantity" value="@item.CostModelQuantity" style="display:none" />
+                            <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
+                        </td>
+                        <td>
 
-                                @if (item.Quantity >= 0)
+                            <span>@Html.DisplayFor(modelItem => item.ProjectionQuantity)</span>
+                            <input type="text" id="quantity" class="txtQuantity" value="@item.ProjectionQuantity" style="display:none" />
+                            <input class="hidden" type="text" id="hdnTxtQnty" value="@item.Quantity" />
+                        </td>
+                        <td id="endTimeTD">
+
+                            @if (item.Quantity >= 0)
+                            {
+                                if (item.DateInvoiced.HasValue)
                                 {
-                                    if (item.DateInvoiced.HasValue)
-                                    {
-                                        <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
-                                        @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
-                                        <input class="hidden" type="text" id="hdnTxtDtInvced" value="@item.DateInvoiced.Value.ToString("yyyy-MM-dd")" />
+                                    <span id="endTime">@item.DateInvoiced.Value.ToShortDateString()</span>
+                                    @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                                    <input class="hidden" type="text" id="hdnTxtDtInvced" value="@item.DateInvoiced.Value.ToString("yyyy-MM-dd")" />
 
-                                    }
-                                    else
-                                    {
-                                        <span id="endTime"></span>
-                                        @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
-                                    }
                                 }
                                 else
                                 {
                                     <span id="endTime"></span>
                                     @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
                                 }
+                            }
+                            else
+                            {
+                                <span id="endTime"></span>
+                                @Html.TextBoxFor(m => item.DateInvoiced, "{0:yyyy-MM-dd}", new { @type = "date", @id = "endTime", @style = "display:none" })
+                            }
 
-                            </td>
-                            <td class="commentsLine">
-                                <span id="comments">@item.Comments</span>
-                                <input type="text" id="comments" value="@item.Comments" style="display:none" />
-                            </td>
-                            <td>
-                                <a href="#" class="Change btn btn-primary a-btn-slide-text">
+                        </td>
+                        <td class="commentsLine">
+                            <span id="comments">@item.Comments</span>
+                            <input type="text" id="comments" value="@item.Comments" style="display:none" />
+                        </td>
+                        <td>
+                            <a href="#" class="Change btn btn-primary a-btn-slide-text">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Change</strong></span>
+                            </a>
+
+                            <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span><strong>Add</strong></span>
+                            </a>
+                            @if (item.ProjectionID > 0)
+                            {
+                                <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    <span><strong>Change</strong></span>
+                                    <span><strong>Update</strong></span>
                                 </a>
-
-                                <a href="#" onclick="ShowModal(this);" class="Add btn btn-info a-btn-slide-text" style="display:none">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    <span><strong>Add</strong></span>
-                                </a>
-                                @if (item.ProjectionID > 0)
-                                {
-                                    <a href="#" onclick="AddOrUpdateProjection(null,this,false);" class="Update btn btn-success a-btn-slide-text" style="display:none">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        <span><strong>Update</strong></span>
-                                    </a>
-                                }
-                                    <a href="#" class="Cancel btn btn-danger a-btn-slide-text" style="display:none">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        <span><strong>Cancel</strong></span>
-                                    </a>
-                                    @*<a class="Delete" href="javascript:;">Delete</a>*@
-                                </td>
-                            <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
-                            <td class="hidden"><input type="text" id="txtActvty" value="@item.ServiceRevenueId" /></td>
-                            <td class="hidden"><input type="text" id="txtId" value="@item.Id" /></td>
-                        </tr>
+                            }
+                            <a href="#" class="Cancel btn btn-danger a-btn-slide-text" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                        <td class="hidden"><input type="text" id="txtServiceActvty" value="@item.ServiceActivityId" /></td>
+                        <td class="hidden"><input type="text" id="txtActvty" value="@item.ServiceRevenueId" /></td>
+                        <td class="hidden"><input type="text" id="txtId" value="@item.Id" /></td>
+                    </tr>
                     }
                 </tbody>
             </table>
