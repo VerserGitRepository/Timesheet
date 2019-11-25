@@ -17,6 +17,7 @@ namespace TimeSheet.Models
            
         }
         public int Id { get; set; }
+        public int ProjectionId { get; set; }
         public string OpportunityNumber { get; set; }
         public int ActivityId { get; set; }
         public bool? IsActive { get; set; }
@@ -30,7 +31,8 @@ namespace TimeSheet.Models
         public int OpportunityID { get; set; }    
         public int ProjectManagerID { get; set; }      
         public int Quantity { get; set; }
-
+        public int ProjectionQuantity { get; set; }
+        public int CostModelQuantity { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Created { get; set; }

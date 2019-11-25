@@ -224,6 +224,10 @@ namespace TimeSheet.Controllers
                         var ProjectionEntryModelRecord = new ProjectionEntryModel()
                         {
                             ProjectID = data.ProjectID,
+                            ProjectionQuantity = data.ProjectionQuantity,
+                            CostModelQuantity = data.CostModelQuantity,
+                            Id = data.Id,
+                            ProjectionId = data.ProjectionId,
                             OpportunityID = data.OpportunityID,
                             WarehouseId = data.WarehouseID,
                             Quantity = data.Quantity,
@@ -234,7 +238,14 @@ namespace TimeSheet.Controllers
                             Comments = data.Comments,
                             IsAdd = data.IsAdd
                         };
-                        var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
+                        if (data.IsAdd)
+                        {
+                            var returnstatus = ProjectionHelperService.ProjectionEntryAdd(ProjectionEntryModelRecord);
+                        }
+                        else
+                        {
+                            var returnstatus = ProjectionHelperService.ProjectionEntryUpdate(ProjectionEntryModelRecord);
+                        }
                     }
                     else
                     {
@@ -361,10 +372,11 @@ namespace TimeSheet.Controllers
                     modelexport.EstimatedRevenue = Convert.ToDouble(mdl.Quantity * mdl.priceperUnit);
                     modelexport.Opportunity = mdl.OpportunityNumber;
                     modelexport.priceperUnit = mdl.priceperUnit;
+                    modelexport.CostModelQuantity = mdl.CostModelQuantity;
+                    modelexport.ProjectionQuantity = mdl.ProjectionQuantity;
                     modelexport.ProjectManager = mdl.ProjectManager;
                     modelexport.SalesManager = mdl.SalesManager;
                     modelexport.Project = mdl.ProjectName;
-                    modelexport.Quantity = Convert.ToInt16( mdl.Quantity);
                     modelexport.Facility = mdl.wareHouseName;
                     modelexport.Gap = (modelexport.EstimatedRevenue - modelexport.ActualRevenue);
                     theModel.Add(modelexport);

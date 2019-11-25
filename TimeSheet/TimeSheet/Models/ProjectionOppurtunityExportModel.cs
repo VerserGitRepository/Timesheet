@@ -20,9 +20,10 @@ namespace TimeSheet.Models
         public string Facility { get; set; }
         
        
-        public string DateInvoiced { get; set; }        
-        
-       
+        public string DateInvoiced { get; set; }
+
+        public int ProjectionQuantity { get; set; }
+        public int CostModelQuantity { get; set; }
         public string DateAllocated { get; set; }
         public double? priceperUnit { get; set; }
         public int Quantity { get; set; }        

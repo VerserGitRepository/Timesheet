@@ -55,6 +55,10 @@
                         <tr>
                             <td class="ProjectName">
                                 <span id="txtProjectName"> @Html.DisplayFor(modelItem => item.ProjectName) </span>
+                                <input type="hidden" id="hdnProjectionId" value="@item.ProjectionID" />
+                                <input type="hidden" id="hdnId" value="@item.Id" />
+                                <input type="hidden" id="hdnProjectionQuantity" value="@item.ProjectionQuantity" />
+                                <input type="hidden" id="hdnCostModelQuantity" value="@item.CostModelQuantity" />
                             </td>
                             <td class="opportunity">
                                 <a href="javascript:void(0);" id="txtOpportunityId" class="CandidateName" data-id="@item.OpportunityNumber">@Html.DisplayFor(modelItem => item.OpportunityNumber)</a>
@@ -561,7 +565,11 @@
             return;
         }
         var model = {
+                'Id': row.find("#hdnId").val(),
+                'ProjectionId': row.find("#hdnProjectionId").val(),
                 'OpportunityId': row.find("#txtOpportunityId").text(),
+                'ProjectionQuantity': row.find("#hdnProjectionQuantity").val(),
+                'CostModelQuantity': row.find("#hdnCostModelQuantity").val(),
                 'Quantity': row.find("input#quantity").val(),
                 'DateAllocated': row.find("input#startTime").val(),
                 'DateInvoiced': row.find("input#endTime").val(),
