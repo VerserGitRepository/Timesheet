@@ -62,8 +62,7 @@ namespace TimeSheet.ServiceHelper
                 HttpResponseMessage response = client.GetAsync(string.Format("Projection/ProjectionListItems")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<List<ProjectionModel>>();
-                   
+                    ReturnResult = await response.Content.ReadAsAsync<List<ProjectionModel>>();                   
                 }
                 else
                 {
@@ -100,7 +99,6 @@ namespace TimeSheet.ServiceHelper
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<List<OpportunityListModel>>();
-
                 }
                 else
                 {
