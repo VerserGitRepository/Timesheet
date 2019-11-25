@@ -16,6 +16,7 @@ namespace TimeSheet.Models
         public int? OpportinutyId { get; set; }
         public int? OpportunityNumber { get; set; }
         public int ProjectionID { get; set; }
+        public decimal CostperUnit { get; set; }
         //public bool? IsActive { get; set; }
         public int? ServiceActivityId { get; set; }
         public int ActivityId { get; set; }

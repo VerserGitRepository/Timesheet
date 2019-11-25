@@ -30,22 +30,18 @@ namespace TimeSheet.Models
         public int OpportunityID { get; set; }    
         public int ProjectManagerID { get; set; }      
         public int Quantity { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Created { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateInvoiced { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateModified { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateAllocated { get; set; }
-
         public SelectList WarehouseList { get; set; }
         public SelectList SalesManagerList { get; set; }
         public SelectList ActivityList { get; set; }
