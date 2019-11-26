@@ -20,16 +20,16 @@ namespace TimeSheet.Models
         public string DateInvoiced { get; set; }           
         public string DateAllocated { get; set; }
         public decimal CostperUnit { get; set; }
-        public double? priceperUnit { get; set; }
-        public int ProjectionQuantity { get; set; }
-        public int CostModelQuantity { get; set; }      
+        public decimal? priceperUnit { get; set; }
+        public decimal ProjectionQuantity { get; set; }
+        public decimal CostModelQuantity { get; set; }      
            
         public int ActualQuantity { get; set; }
 
-        public double CostModelRevenue { get { return Math.Round((CostModelQuantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
-        public double ProjectionRevenue { get { return Math.Round((ProjectionQuantity * Convert.ToDouble(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
+        public decimal CostModelRevenue { get { return Math.Round((CostModelQuantity * Convert.ToDecimal(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
+        public decimal ProjectionRevenue { get { return Math.Round((ProjectionQuantity * Convert.ToDecimal(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
 
-        public double Gap { get; set; }
+        public decimal Gap { get; set; }
         public string Comments { get; set; }
         
        

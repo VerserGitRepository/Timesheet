@@ -34,7 +34,7 @@ namespace TimeSheet.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateAllocated { get; set; }
-        public int? Quantity { get; set; }
+        public decimal? Quantity { get; set; }
         public string VerserBranch { get; set; }
         public string Activity { get; set; }
         public int? ActualQuantity { get; set; }
@@ -43,9 +43,9 @@ namespace TimeSheet.Models
         public string Comments { get; set; }
         public string ProjectManager { get; set; }
         public string SalesManager { get; set; }
-        public double? priceperUnit { get; set; }
-        public int ProjectionQuantity { get; set; }
-        public int CostModelQuantity { get; set; }
+        public decimal? priceperUnit { get; set; }
+        public decimal ProjectionQuantity { get; set; }
+        public decimal CostModelQuantity { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
 
     }

@@ -366,8 +366,8 @@ namespace TimeSheet.Controllers
                     modelexport.Comments = mdl.Comments;
                     modelexport.DateAllocated = mdl.DateAllocated.HasValue ? mdl.DateAllocated.Value.Date.ToString("dd/MM/yyyy") : "";
                     modelexport.DateInvoiced = mdl.DateInvoiced.HasValue ? mdl.DateInvoiced.Value.Date.ToString("dd/MM/yyyy") : "";                 
-                    modelexport.ProjectionRevenue = Convert.ToDouble(mdl.ProjectionQuantity * mdl.priceperUnit);
-                    modelexport.CostModelRevenue = Convert.ToDouble(mdl.CostModelQuantity * mdl.priceperUnit);
+                    modelexport.ProjectionRevenue = Convert.ToDecimal(mdl.ProjectionQuantity * mdl.priceperUnit);
+                    modelexport.CostModelRevenue = Convert.ToDecimal(mdl.CostModelQuantity * mdl.priceperUnit);
                     modelexport.Opportunity = mdl.OpportunityNumber;
                     modelexport.priceperUnit = mdl.priceperUnit;
                     modelexport.CostModelQuantity = mdl.CostModelQuantity;

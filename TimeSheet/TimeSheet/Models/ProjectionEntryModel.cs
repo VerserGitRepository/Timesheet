@@ -18,9 +18,9 @@ namespace TimeSheet.Models
         [Required]
         public int WarehouseId { get; set; }
         public bool IsActive { get; set; }
-        public int Quantity { get; set; }
-        public int ProjectionQuantity { get; set; }
-        public int CostModelQuantity { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal ProjectionQuantity { get; set; }
+        public decimal CostModelQuantity { get; set; }
         [Required]
         public DateTime? DateModified { get; set; }
         public DateTime? Created { get; set; }
