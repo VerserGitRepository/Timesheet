@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -111,11 +112,12 @@ namespace TimeSheet.ServiceHelper
                 {
                     HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Projection Entries";
                 }
-
+                return ReturnResult;
 
 
             }
-            public static async Task<List<OpportunityListModel>> OpportunityListItems()
+        }
+        public static async Task<List<OpportunityListModel>> OpportunityListItems()
         {
             List<OpportunityListModel> ReturnResult = new List<OpportunityListModel>();
             using (HttpClient client = new HttpClient())
