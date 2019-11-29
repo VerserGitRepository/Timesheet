@@ -180,37 +180,40 @@ namespace TimeSheet.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult UpdateProjection(ProjectionModel projectionUpdate)
-        {
-            if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
-            {
-                if (projectionUpdate == null)
-                {
-                    Session["ErrorMessage"] = "Please Update With Valid Details!";
-                }
-                if (projectionUpdate != null)
-                {
-                    var projectionupdate = new ProjectionUpdate()
-                    {
-                        Id = projectionUpdate.Id,
-                        Quantity = projectionUpdate.Quantity,
-                        DateInvoiced = projectionUpdate.DateInvoiced.ToString(),
-                        Comments = projectionUpdate.Comments
-                    };
-                    var IsReturnValid = ProjectionHelperService.EditProjectionModel(projectionupdate);
-                }
-            }
-            else if (Session["Username"] != null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            return RedirectToAction("Index", "Home");
-        }
+
+        //[HttpPost]
+        //public ActionResult UpdateProjection(ProjectionModel projectionUpdate)
+        //{
+        //    if (Session["Username"] != null && Session["ProjectManager"] != null || Session["Administrator"] != null)
+        //    {
+        //        if (projectionUpdate == null)
+        //        {
+        //            Session["ErrorMessage"] = "Please Update With Valid Details!";
+        //        }
+        //        if (projectionUpdate != null)
+        //        {
+        //            var projectionupdate = new ProjectionUpdate()
+        //            {
+        //                Id = projectionUpdate.Id,
+        //                ProjectionQuantity = projectionUpdate.Quantity,
+        //                DateInvoiced = projectionUpdate.DateInvoiced.ToString(),
+        //                Comments = projectionUpdate.Comments
+        //            };
+        //            var IsReturnValid = ProjectionHelperService.EditProjectionModel(projectionupdate);
+        //        }
+        //    }
+        //    else if (Session["Username"] != null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "Login");
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
+
+
         [HttpPost]
         public ActionResult AddOrUpdateProjectionModel(ProjectionModel data)
         {
