@@ -96,20 +96,26 @@ namespace TimeSheet.ServiceHelper
             List<ProjectionOppurtunityModel> ReturnResult = new List<ProjectionOppurtunityModel>();
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("Projection/MergedProjectionServices")).Result;
+                client.BaseAddress = new Uri("http://localhost:3001/");
+                HttpResponseMessage response = client.GetAsync(string.Format("Projection")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<List<ProjectionOppurtunityModel>>();
+                    string varReturnResult = await response.Content.ReadAsStringAsync();
+                    varReturnResult = varReturnResult.Remove(0, 25);
+                    varReturnResult = varReturnResult.Remove(varReturnResult.Length - 1, 1);
+
+                    ReturnResult = JsonConvert.DeserializeObject<List<ProjectionOppurtunityModel>>(varReturnResult);
+
                 }
                 else
                 {
                     HttpContext.Current.Session["ErrorMessage"] = "Unable To Load Projection Entries";
                 }
+
+
+
             }
-            return ReturnResult;
-        }
-        public static async Task<List<OpportunityListModel>> OpportunityListItems()
+            public static async Task<List<OpportunityListModel>> OpportunityListItems()
         {
             List<OpportunityListModel> ReturnResult = new List<OpportunityListModel>();
             using (HttpClient client = new HttpClient())

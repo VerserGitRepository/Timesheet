@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -292,16 +293,15 @@ namespace TimeSheet.ServiceHelper
             List<TimeSheetViewModel> CostModelLists = new List<TimeSheetViewModel>();
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/CandidateTimelines")).Result;
+                client.BaseAddress = new Uri("http://localhost:3001/");
+                HttpResponseMessage response = client.GetAsync(string.Format("calender")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var projectactivities = await response.Content.ReadAsAsync<List<TimeSheetViewModel>>();
+                    string varReturnResult = await response.Content.ReadAsStringAsync();
+                    varReturnResult = varReturnResult.Remove(0, 25);
+                    varReturnResult = varReturnResult.Remove(varReturnResult.Length - 1, 1);
 
-                    foreach (var a in projectactivities)
-                    {
-                        CostModelLists.Add(a);
-                    }
+                    CostModelLists = JsonConvert.DeserializeObject<List<TimeSheetViewModel>>(varReturnResult);
                 }
             }
             return CostModelLists;
