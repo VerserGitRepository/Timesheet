@@ -293,15 +293,16 @@ namespace TimeSheet.ServiceHelper
             List<TimeSheetViewModel> CostModelLists = new List<TimeSheetViewModel>();
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:3001/");
-                HttpResponseMessage response = client.GetAsync(string.Format("calender")).Result;
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/CandidateTimelines")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    string varReturnResult = await response.Content.ReadAsStringAsync();
-                    varReturnResult = varReturnResult.Remove(0, 25);
-                    varReturnResult = varReturnResult.Remove(varReturnResult.Length - 1, 1);
+                    var projectactivities = await response.Content.ReadAsAsync<List<TimeSheetViewModel>>();
 
-                    CostModelLists = JsonConvert.DeserializeObject<List<TimeSheetViewModel>>(varReturnResult);
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
                 }
             }
             return CostModelLists;
