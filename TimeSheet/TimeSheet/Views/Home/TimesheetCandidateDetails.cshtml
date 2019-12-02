@@ -421,7 +421,7 @@
             $.alert('start time should be prior to endtime');
             return;
         }
-        if ((Math.floor(end - start) / 60000 > 240 && mins <= 0) && (statusval == 4 || statusval == 7 || statusval == 9)){
+        if ((Math.floor(end - start) / 60000 > 240 && row.find("#ddlBreak").val() == 0) && (statusval == 4 || statusval == 7 || statusval == 9)){
             $.alert("Please add some break time before you mark to Completed / Approved.")
             var ctrl = row.find("#ddlBreak");
             ctrl.effect("pulsate", { times: 60 }, "slow");status
