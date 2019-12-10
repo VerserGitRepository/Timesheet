@@ -82,7 +82,9 @@
                 </div>
                 <div class="modal-footer" style="background-color:lightgray;height:20%; padding:2px 2px;">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default">Update</button>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -192,7 +194,7 @@
     function RenderCalendar(resources,events) {
         //document.addEventListener('DOMContentLoaded', function () {
         //$('#calender').destroy();
-
+        var sliderURL = '@Url.Action("ResourceRegister", "Resource")'
        // FullCalendar.Calendar('destroy');
             var calendarEl = document.getElementById('calendar');
             //var res = $("#hdnJsonString").val();
