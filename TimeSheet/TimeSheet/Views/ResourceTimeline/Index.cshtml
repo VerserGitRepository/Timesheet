@@ -217,8 +217,27 @@
                   trigger: 'hover',
 
                 });
-                    },
-            select: function (start) { alert(start); },
+            },
+            selectable: true,
+            select: function (start) {
+                $.ajax({
+                    type: "GET",
+                    url: sliderURL,
+                    data: { "Day": start.startStr },
+                    success: function (data) {
+
+                        $.confirm({
+                            boxWidth: '760px',
+                            useBootstrap: false,
+                            title: '`',
+                            content: data
+                        });
+
+                    }
+                });
+
+
+            },
            eventClick: function  (calEvent, jsEvent, view) {
 
 
