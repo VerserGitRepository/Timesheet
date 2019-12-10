@@ -108,15 +108,16 @@
                     center: 'title',
                     right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth'
                 },
-               eventRender: function (info,event, element) {
-                        var tooltip = new Tooltip(info.el, {
-                      title: 'test',
-                      placement: 'top',
-                      trigger: 'hover',
+                eventRender: function (info, event, element) {
+                    var tooltip = new Tooltip(info.el, {
+                        title: 'test',
+                        placement: 'top',
+                        trigger: 'hover',
 
                     });
                 },
-              selectable: true,
+                selectable: true,
+                select: function (start) { alert(start);} ,
                     eventClick: function  (calEvent, jsEvent, view) {
 
                       $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
@@ -179,7 +180,7 @@
 
                 });
                     },
-
+            select: function () { alert(resource) },
            eventClick: function  (calEvent, jsEvent, view) {
 
 

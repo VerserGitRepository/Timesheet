@@ -122,7 +122,7 @@ namespace TimeSheet.Controllers
             newModel.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
 
 
-            return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet, MaxJsonLength = int.MaxValue };
         }
         public JsonResult SearchVehicleTimeLine(string ProjectID, string warehouseId, string opportunityId, List<int> ResourceIDs)
         {

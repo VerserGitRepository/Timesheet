@@ -88,7 +88,58 @@ namespace TimeSheet.Controllers
                 return View(model);
             }
         }
+        [HttpPost]
+        public ActionResult PostResourceTimelineData(TimeSheetViewModel theModel)
+        {
 
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            if (UserRoles.UserCanRegisterTimesheet() != true)
+            {
+                Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
+                return RedirectToAction("Index", "Home");
+            }
+            if (theModel == null)
+            {
+                return RedirectToAction("Register", "Timesheet");
+            }
+            for (int i = 0; i < theModel.ResourceIDs.Count; i++)
+            {
+                TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
+                string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
+                string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
+                string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
+                string dtSt = dateString + " " + StartTimeString;
+                string dtEn = dateString + " " + EndTimeString;
+                var StartdateTime = Convert.ToDateTime(dtSt);
+                var EnddateTime = Convert.ToDateTime(dtEn);
+                regModel.CandidateNameId = theModel.ResourceIDs[i];
+                regModel.ResourceID = theModel.ResourceIDs[i];
+                regModel.Colour = theModel.Colour;
+                regModel.Day = theModel.Day;
+                regModel.EndTime = EnddateTime;
+                regModel.Id = theModel.Id;
+                regModel.OLATarget = theModel.OLATarget;
+                regModel.OpportunityNumberID = theModel.OpportunityID;
+                regModel.OpportunityID = theModel.OpportunityID;
+                regModel.ProjectID = theModel.ProjectID;
+                regModel.ServiceActivityId = theModel.ServiceActivityID;
+                regModel.StartTime = StartdateTime;
+                regModel.StatusID = theModel.StatusID;
+                regModel.WarehouseNameId = theModel.WarehouseID;
+                regModel.JobID = theModel.JobID;
+                regModel.FullName = Session["FullName"].ToString();
+                regModel.TimeSheetComments = theModel.TimeSheetComments;
+                regModel.Vechicles = theModel.Vechicles;
+                var test = RegisterTimesheetService.RegisterTimesheetModel(regModel);
+
+            }
+            return Json(new { newUrl = Url.Action("Index", "ResourceTimeline") });
+
+            // return View("~ManageCalender/Index");
+        }
 
         public ActionResult PMTimeline()
         {
