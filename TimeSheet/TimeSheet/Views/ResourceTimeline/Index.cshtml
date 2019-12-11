@@ -145,10 +145,15 @@
                         success: function (data) {
                            
                             $.confirm({
-                                boxWidth: '760px',
+                                boxWidth: '600px',
                                 useBootstrap: false,
                                 title: '`',
-                                content: data
+                                content: data,
+                                closeIcon: true,
+                              
+                                buttons: {
+                                    yes: {isHidden:true}
+                                }
                             });
                            
                         }
@@ -229,10 +234,15 @@
                     success: function (data) {
 
                         $.confirm({
-                            boxWidth: '760px',
+                            boxWidth: '600px',
                             useBootstrap: false,
                             title: '`',
-                            content: data
+                            content: data,
+                            closeIcon: true,
+                            
+                            buttons: {
+                                yes: { isHidden: true }
+                            }
                         });
 
                     }

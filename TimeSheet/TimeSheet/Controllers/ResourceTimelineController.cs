@@ -174,5 +174,11 @@ namespace TimeSheet.Controllers
                 return View(model);
             }
         }
+        [HttpGet]
+        public ActionResult FetchOLA(int serviceActivityId, int opportunityId, int totalMins)
+        {
+            var result = ResourceHelperService.FetchOLA(serviceActivityId, opportunityId, totalMins);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }
