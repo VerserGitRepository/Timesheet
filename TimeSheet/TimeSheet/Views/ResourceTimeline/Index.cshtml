@@ -68,7 +68,9 @@
         </div>
 
     </div>
-
+    <div id="main">
+       
+    </div>
     @*</div>*@
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -84,7 +86,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-default">Update</button>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -114,6 +116,7 @@
             var res = $("#hdnJsonString").val();
             var events = $("#hdnJsonEvents").val();
             var sliderURL = '@Url.Action("ResourceRegister", "Resource")'
+              var updateTimeURL = '@Url.Action("UpdateTime", "ResourceTimeline")'
             var options = { "backdrop": "static", keyboard: true };
             
             calendar = new FullCalendar.Calendar(calendarEl, {
@@ -147,7 +150,7 @@
                             $.confirm({
                                 boxWidth: '600px',
                                 useBootstrap: false,
-                                title: '`',
+                                title: 'Book Resource',
                                 content: data,
                                 closeIcon: true,
                               
@@ -164,17 +167,27 @@
 
                     eventClick: function  (calEvent, jsEvent, view) {
 
-                      $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
-                        var $description = $('<div/>');
-                        $description.append($('<p/>').html('<b>Project Manager:</b>' + calEvent.event.extendedProps.projectmanager));
-                        $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.start).format('lll')));
+                        $.ajax({
+                            type: "GET",
+                            url: updateTimeURL,
+                            data: { "bookingId": calEvent.event.extendedProps.BookingId, "ResourceName": calEvent.event.getResources()[0].extendedProps.ResourceName, "ProjectManager": calEvent.event.extendedProps.projectmanager, "Start": moment(calEvent.event.start).format('lll'), "End": moment(calEvent.event.end).format('lll'), "Description": calEvent.event.extendedProps.activitydescription },
+                            success: function (data) {
 
-                            $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
+                                //$('#myModal').modal();
 
-                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.extendedProps.activitydescription));
-                        $('#myModal #pDetails').empty().html($description);
+                                $.confirm({
+                                    boxWidth: '600px',
+                                    useBootstrap: false,
+                                    title: '<b> Update Timings <b>',
+                                    content: data,
+                                    closeIcon: true,
 
-                        $('#myModal').modal();
+                                    buttons: {
+                                        Update: { isHidden: true}
+                                    }
+                                });
+                            }
+                        });
 
                     },
                 resourceAreaWidth: '150px',
@@ -236,7 +249,7 @@
                         $.confirm({
                             boxWidth: '600px',
                             useBootstrap: false,
-                            title: '`',
+                            title: 'Book Resource',
                             content: data,
                             closeIcon: true,
                             
@@ -250,22 +263,31 @@
 
 
             },
-           eventClick: function  (calEvent, jsEvent, view) {
+            eventClick: function (calEvent, jsEvent, view) {
 
+                $.ajax({
+                    type: "GET",
+                    url: updateTimeURL,
+                    data: { "bookingId": calEvent.event.extendedProps.BookingId, "ResourceName": calEvent.event.getResources()[0].extendedProps.ResourceName, "ProjectManager": calEvent.event.extendedProps.projectmanager, "Start": moment(calEvent.event.start).format('lll'), "End": moment(calEvent.event.end).format('lll'), "Description": calEvent.event.extendedProps.activitydescription },
+                    success: function (data) {
 
-                        $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
-                       var $description = $('<div/>');
-                        $description.append($('<p/>').html('<b>Project Manager:</b>' + calEvent.event.extendedProps.projectmanager));
-                        $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.start).format('lll')));
+                        //$('#myModal').modal();
 
-                            $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
+                        $.confirm({
+                            boxWidth: '600px',
+                            useBootstrap: false,
+                            title: '<b> Update Timings <b>',
+                            content: data,
+                            closeIcon: true,
 
-                        $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.extendedProps.activitydescription));
-                        $('#myModal #pDetails').empty().html($description);
+                            buttons: {
+                                Update: { isHidden: true }
+                            }
+                        });
+                    }
+                });
 
-                        $('#myModal').modal();
-
-                    },
+            },
 
                 resourceLabelText: 'RESOURCES',
                  resourceAreaWidth: '150px',

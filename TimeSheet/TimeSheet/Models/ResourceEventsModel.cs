@@ -15,5 +15,6 @@ namespace TimeSheet.Models
         public string Vechicles { get; set; }
         public string WarehouseName { get; set; }
         public string activitydescription { get; set; }
+        public int BookingId { get; set; }
     }
 }

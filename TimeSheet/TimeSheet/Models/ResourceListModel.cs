@@ -20,5 +20,6 @@ namespace TimeSheet.Models
         public DateTime EndTime{ get; set; }
         public string ProjectManager { get; set; }
         public string Warehouse { get; set; }
+        public int BookingId { get; set; }
     }
 }

@@ -38,10 +38,10 @@ namespace TimeSheet.Controllers
                 Session["CalenderModel"] = model;
                 var jsonlist = Newtonsoft.Json.JsonConvert.SerializeObject(model.WarehouseNameList);
                 //var jsonobj= JsonResult { Data = model.WarehouseNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                List<ResourceListModel> reslt = (from k in model.CandidateTimeSheetList  select new  ResourceListModel { ProjectManager = k.ProjectManager, id = Convert.ToInt32(k.ResourceID), title = Convert.ToString(k.CandidateName),eventColor=k.Colour, ResourceName = k.CandidateName, WarehouseName = k.WarehouseName, ActivityDescription = k.Activity,ProjectName=k.ProjectName,StartTime=Convert.ToDateTime(k.StartTime),EndTime=Convert.ToDateTime(k.EndTime) } ).Distinct().ToList();
+                List<ResourceListModel> reslt = (from k in model.CandidateTimeSheetList  select new  ResourceListModel { BookingId = k.Id,ProjectManager = k.ProjectManager, id = Convert.ToInt32(k.ResourceID), title = Convert.ToString(k.CandidateName),eventColor=k.Colour, ResourceName = k.CandidateName, WarehouseName = k.WarehouseName, ActivityDescription = k.Activity,ProjectName=k.ProjectName,StartTime=Convert.ToDateTime(k.StartTime),EndTime=Convert.ToDateTime(k.EndTime) } ).Distinct().ToList();
 
                 model.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
-                List<ResourceEventsModel> resourceEvents = (from k in model.CandidateTimeSheetList  select new ResourceEventsModel { projectmanager = k.ProjectManager, resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName + "-" + k.ProjectManager + "-" + k.Activity + "-" + k.WarehouseName, start=Convert.ToDateTime(k.StartTime.Value).ToString("s"),end=Convert.ToDateTime(k.EndTime).ToString("s"), activitydescription = k.Activity }).Distinct().ToList();
+                List<ResourceEventsModel> resourceEvents = (from k in model.CandidateTimeSheetList  select new ResourceEventsModel { BookingId = k.Id, projectmanager = k.ProjectManager, resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName + "-" + k.ProjectManager + "-" + k.Activity + "-" + k.WarehouseName, start=Convert.ToDateTime(k.StartTime.Value).ToString("s"),end=Convert.ToDateTime(k.EndTime).ToString("s"), activitydescription = k.Activity }).Distinct().ToList();
                 model.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
                
                 return View(model);
@@ -179,6 +179,42 @@ namespace TimeSheet.Controllers
         {
             var result = ResourceHelperService.FetchOLA(serviceActivityId, opportunityId, totalMins);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult UpdateTime(int bookingId,string resourceName, string projectManager,string start,string end,string activityDescription)
+        {
+            TimeSheetViewModel vm = new TimeSheetViewModel();
+            vm.CandidateName = resourceName;
+            vm.ProjectManager = projectManager;
+            vm.StartTime = Convert.ToDateTime(start);
+            vm.EndTime = Convert.ToDateTime(end);
+            vm.Activity = activityDescription;
+            vm.Id = bookingId;
+            return PartialView("UpdateResourceTimeline", vm);
+        }
+        [HttpPost]
+        public ActionResult UpdateCandidate(UpdateTimeSheetModel CandidateEdit)
+        {
+            if (UserRoles.UserCanEditTimesheet() == true && CandidateEdit != null && CandidateEdit.Id > 0)
+            {
+                string dateString = String.Format("{0:dd/MM/yyyy}", CandidateEdit.Day);
+                string StartTimeString = String.Format("{0:HH:mm}", CandidateEdit.StartTime);
+                string EndTimeString = String.Format("{0:HH:mm}", CandidateEdit.EndTime);
+                string dtSt = dateString + " " + StartTimeString;
+                string dtEn = dateString + " " + EndTimeString;
+                var StartdateTime = Convert.ToDateTime(dtSt);
+                var EnddateTime = Convert.ToDateTime(dtEn);
+                CandidateEdit.StartTime = StartdateTime;
+                CandidateEdit.Day = Convert.ToDateTime(CandidateEdit.Day.Value.ToString("dd/MM/yyyy"));
+                CandidateEdit.EndTime = EnddateTime;
+                CandidateEdit.FullName = Session["FullName"].ToString();
+                var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
+            }
+            else
+            {
+                Session["ErrorMessage"] = "Update Details Not Valid!";
+            }
+            return Json(new { newUrl = Url.Action("Index", "ResourceTimeline") });
         }
     }
 }
