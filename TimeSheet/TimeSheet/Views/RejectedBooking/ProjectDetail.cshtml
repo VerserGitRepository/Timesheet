@@ -125,7 +125,7 @@
         responsive: true
     });
     function ShowOTMessage(therowid) {
-        debugger;
+        
         var rowid = $(therowid).closest("tr");
         var date1 = new Date("May 26, 2016 " + rowid.find("#startTime").val());
         var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
@@ -160,7 +160,7 @@
     {
 
         var row = $(rowid).closest("tr");
-        debugger;
+        
         var ddlValue = row.find("#hdnddlbrkhrs").val();
         var sliderURL = '@Url.Action("ReturnSlider", "Home")'
         var timetext = row.find("#spanbreakStartTime").html();
