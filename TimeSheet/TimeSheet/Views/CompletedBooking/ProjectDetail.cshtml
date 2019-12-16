@@ -53,8 +53,8 @@
 
                     </td>
                     <td class="StartTime">
-                        <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        <span id="startTime">@item.StartTime.Value.ToShortTimeString()</span>
+                        @*<input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />*@
                     </td>
                     @*<td class="EndDate" width="8%">
             @Html.DisplayFor(modelItem => item.EndDate)
@@ -62,8 +62,8 @@
         </td>*@
 
                     <td class="EndTime" width="8%">
-                        <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        <span id="endTime">@item.EndTime.Value.ToShortTimeString()</span>
+                        @*<input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />*@
                     </td>
 
                     <td class="OLATarget">
@@ -132,8 +132,8 @@
     function ShowOTMessage(therowid) {
       
         var rowid = $(therowid).closest("tr");
-        var date1 = new Date("May 26, 2016 " + rowid.find("#startTime").val());
-        var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
+        var date1 = new Date("May 26, 2016 " + rowid.find("#startTime").text());
+        var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").text());
         var origVal = rowid.find("#hdnddlLidt").val();
         var msec = (date2 - date1);
        
@@ -172,7 +172,7 @@
         $.ajax({
             type: "GET",
             url: sliderURL,
-            data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
+            data: { "StartTime": row.find("#startTime").text(), "EndTime": row.find("#endTime").text()},
             success: function (data) {
               $.confirm({
                   title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<font size="3">Set Break Timimgs</font>',
@@ -376,8 +376,8 @@
        CandidateEdit.Id = row.find(".Id").find("span").html();
         CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
         CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
-        CandidateEdit.StartTime = row.find("#startTime").val();
-        CandidateEdit.EndTime = row.find("#endTime").val();
+        CandidateEdit.StartTime = row.find("#startTime").text();
+        CandidateEdit.EndTime = row.find("#endTime").text();
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
         CandidateEdit.Day = row.find(".Day").find("span").html();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
