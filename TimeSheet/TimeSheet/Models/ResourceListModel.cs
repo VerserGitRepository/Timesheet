@@ -7,7 +7,7 @@ namespace TimeSheet.Models
 {
     public class ResourceListModel
     {
-        public int id { get; set; }
+        public string id { get; set; }
         public string ResourceName { get; set; }
         public string WarehouseName { get; set; }
         public bool IsActive { get; set; }
