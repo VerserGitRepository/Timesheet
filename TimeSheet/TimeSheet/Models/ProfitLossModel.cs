@@ -40,9 +40,10 @@ namespace TimeSheet.Models
         public string actualMarginOnOverHead { get; set; }
         public string serviceDescription { get; set; }
         public string pricePerUnit { get; set; }
-        public string quantity { get; set; }
+        public int costmodelquantity { get; set; }
+        public string projectionquantity { get; set; }
         public string totalPrice { get; set; }
-
+        public List<AggregatedProfitLossModel> AggregatedProfitLossModel { get; set; }
         [Required(ErrorMessage = "Day Is Mandatory")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]

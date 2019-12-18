@@ -18,7 +18,14 @@
 <link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
 
 <div class="container" @*style="margin-left:0px;width:120%;margin-right:50px"*@>
-
+    @using (Html.BeginForm("ExportPandL", "ProfitLoss", FormMethod.Post))
+    {
+        <div class="row">
+            <button type="submit" class="btn btn-default btn-sm" style="padding-left:10px;padding-top:2px;margin-left:10px;background-color:lightgray">
+                <span class="glyphicon glyphicon-export black"></span> Export
+            </button>
+        </div>
+    }
     <div class="row">
         <div class="col-md-12">
             <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
@@ -29,66 +36,59 @@
                         <th>Activities</th>
                         <th>CostmodelQty</th>
                         <th>ProjectionQty</th>
-                        <th>Allocated</th>
-                        <th>Invoiced</th>
-                        <th>CostmodelRevenue</th>
-                        <th>ProjectionRevenue</th>
                         <th>CostmodelCost</th>
                         <th>ProjectionCost</th>
+                        <th>CostmodelProfit</th>
+                        <th>ProjectionProfit</th>
                         <th>GAP</th>
                         <th>Profit</th>
                     </tr>
                 </thead>
 
-                 <tbody>
-                    @foreach (TimeSheet.Models.ProfitLossModel item in Model.ProfitLossList)
+                <tbody>
+                    @foreach (TimeSheet.Models.AggregatedProfitLossModel item in Model.AggregatedProfitLossModel)
                     {
-                     <tr>
-                         <td>
-                             <a href="javascript:void(0);" class="opportunityNumber" data-id="@item.opportunityNumber">@Html.DisplayFor(modelItem => item.opportunityNumber)</a>
+                        <tr>
+                            <td>
+                                <a href="javascript:void(0);" class="opportunityNumber" data-id="@item.opportunityNumber">@Html.DisplayFor(modelItem => item.opportunityNumber)</a>
 
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.projectName)
-                         </td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.projectName)
+                            </td>
 
-                         <td>
-                             @Html.DisplayFor(modelItem => item.serviceDescription)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.quantity)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.dateAllocated)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.dateInvoiced)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.totalPrice)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.totalPrice)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.totalCost)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.totalCost)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.totalProfit)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.totalCost)
-                         </td>
-                         <td>
-                             @Html.DisplayFor(modelItem => item.totalProfit)
-                         </td>
-                     </tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.serviceDescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.costmodelquantity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.projectionquantity)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CostModeltotalCost)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectiontotalCost)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CostModeltotalProfit)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ProjectiontotalProfit)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GAP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Profit)
+                            </td>
+                        </tr>
                     }
                 </tbody>
-               
+
             </table>
 
         </div>
