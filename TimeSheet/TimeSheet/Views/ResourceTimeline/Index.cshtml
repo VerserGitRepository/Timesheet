@@ -165,31 +165,22 @@
                 
                 },
 
-                    eventClick: function  (calEvent, jsEvent, view) {
+                eventClick: function (calEvent, jsEvent, view) {
 
-                        $.ajax({
-                            type: "GET",
-                            url: updateTimeURL,
-                            data: { "bookingId": calEvent.event.extendedProps.BookingId, "ResourceName": calEvent.event.getResources()[0].extendedProps.ResourceName, "ProjectManager": calEvent.event.extendedProps.projectmanager, "Start": moment(calEvent.event.start).format('lll'), "End": moment(calEvent.event.end).format('lll'), "Description": calEvent.event.extendedProps.activitydescription },
-                            success: function (data) {
 
-                                //$('#myModal').modal();
+                    $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
+                    var $description = $('<div/>');
+                    $description.append($('<p/>').html('<b>Project Manager:</b>' + calEvent.event.extendedProps.projectmanager));
+                    $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.start).format('lll')));
 
-                                $.confirm({
-                                    boxWidth: '600px',
-                                    useBootstrap: false,
-                                    title: '<b> Update Timings <b>',
-                                    content: data,
-                                    closeIcon: true,
+                    $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
 
-                                    buttons: {
-                                        Update: { isHidden: true}
-                                    }
-                                });
-                            }
-                        });
+                    $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.extendedProps.activitydescription));
+                    $('#myModal #pDetails').empty().html($description);
 
-                    },
+                    $('#myModal').modal();
+
+                },
                 resourceAreaWidth: '150px',
                 resourceLabelText: 'RESOURCES',
                 resources: JSON.parse(res),
@@ -266,27 +257,18 @@
             },
             eventClick: function (calEvent, jsEvent, view) {
 
-                $.ajax({
-                    type: "GET",
-                    url: updateTimeURL,
-                    data: { "bookingId": calEvent.event.extendedProps.BookingId, "ResourceName": calEvent.event.getResources()[0].extendedProps.ResourceName, "ProjectManager": calEvent.event.extendedProps.projectmanager, "Start": moment(calEvent.event.start).format('lll'), "End": moment(calEvent.event.end).format('lll'), "Description": calEvent.event.extendedProps.activitydescription },
-                    success: function (data) {
 
-                        //$('#myModal').modal();
+                $('#myModal #eventTitle').text(calEvent.event.getResources()[0].extendedProps.ResourceName);
+                var $description = $('<div/>');
+                $description.append($('<p/>').html('<b>Project Manager:</b>' + calEvent.event.extendedProps.projectmanager));
+                $description.append($('<p/>').html('<b>Start:</b>' + moment(calEvent.event.start).format('lll')));
 
-                        $.confirm({
-                            boxWidth: '600px',
-                            useBootstrap: false,
-                            title: '<b> Update Timings <b>',
-                            content: data,
-                            closeIcon: true,
+                $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
 
-                            buttons: {
-                                Update: { isHidden: true }
-                            }
-                        });
-                    }
-                });
+                $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.extendedProps.activitydescription));
+                $('#myModal #pDetails').empty().html($description);
+
+                $('#myModal').modal();
 
             },
 
