@@ -25,7 +25,7 @@ namespace TimeSheet.Controllers
                 ProfitLossModel model = new ProfitLossModel();
                 model.ProfitLossList = TimeSheetAPIHelperService.ProfitLoss().Result;
                 // model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
-                var groupedPLModel = model.ProfitLossList.GroupBy(x => new { x.opportunityNumber, x.serviceDescription});
+                var groupedPLModel = model.ProfitLossList.GroupBy(x => new { x.opportunityNumber});
                 List<AggregatedProfitLossModel> agrProfitLossModel = new List<AggregatedProfitLossModel>();
                 foreach (var groupInfo in groupedPLModel)
                 {
