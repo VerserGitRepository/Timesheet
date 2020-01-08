@@ -176,6 +176,7 @@
                     $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
 
                     $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.extendedProps.activitydescription));
+                    $description.append($('<p/>').html('<b>Job:</b>' + calEvent.event.extendedProps.JobId));
                     $('#myModal #pDetails').empty().html($description);
 
                     $('#myModal').modal();
@@ -266,6 +267,7 @@
                 $description.append($('<p/>').html('<b>End:</b>' + moment(calEvent.event.end).format('lll')));
 
                 $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.extendedProps.activitydescription));
+                $description.append($('<p/>').html('<b>Job:</b>' + calEvent.event.extendedProps.JobId));
                 $('#myModal #pDetails').empty().html($description);
 
                 $('#myModal').modal();

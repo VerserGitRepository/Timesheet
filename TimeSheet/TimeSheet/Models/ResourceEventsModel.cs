@@ -17,5 +17,6 @@ namespace TimeSheet.Models
         public string activitydescription { get; set; }
         public int BookingId { get; set; }
         public string id { get; set; }
+        public int JobId { get; set; }
     }
 }
