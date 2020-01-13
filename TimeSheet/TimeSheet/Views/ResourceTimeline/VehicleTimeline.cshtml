@@ -55,12 +55,13 @@
                     </button>
 
                 </div>
-            </div>
+               
+                </div>
 
-            <div id='calendar-room' style="width:1800px;margin-left:20px;">
-                <div id='calendar'></div>
+                <div id='calendar-room' style="width:1800px;margin-left:20px;">
+                    <div id='calendar'></div>
+                </div>
             </div>
-        </div>
     </div>
     @*</div>*@
     <div id="myModal" class="modal fade" role="dialog">
@@ -128,6 +129,7 @@
                         $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
                         $description.append($('<p/>').html('<b>Vehicles:</b>' + calEvent.event.extendedProps.Vechicles));
                         $description.append($('<p/>').html('<b>Warehouse:</b>' + calEvent.event.extendedProps.WarehouseName));
+                        $description.append($('<p/>').html('<b>Job:</b>' + calEvent.event.extendedProps.jobid));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();
@@ -192,6 +194,7 @@
                         $description.append($('<p/>').html('<b>Vehicles:</b>' + calEvent.event.extendedProps.Vechicles));
                         $description.append($('<p/>').html('<b>Description:</b>' + calEvent.event.getResources()[0].extendedProps.ActivityDescription));
                         $description.append($('<p/>').html('<b>Warehouse:</b>' + calEvent.event.extendedProps.WarehouseName));
+                        $description.append($('<p/>').html('<b>Job:</b>' + calEvent.event.extendedProps.jobid));
                         $('#myModal #pDetails').empty().html($description);
 
                         $('#myModal').modal();

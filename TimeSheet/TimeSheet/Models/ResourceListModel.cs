@@ -21,5 +21,6 @@ namespace TimeSheet.Models
         public string ProjectManager { get; set; }
         public string Warehouse { get; set; }
         public int BookingId { get; set; }
+        public int JobId { get; set; }
     }
 }
