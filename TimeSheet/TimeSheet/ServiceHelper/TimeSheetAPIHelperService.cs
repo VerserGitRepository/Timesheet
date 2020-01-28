@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -287,7 +286,83 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
+        public static async Task<List<TimeSheetViewModel>> CandidateTimelines()
+        {
+            List<TimeSheetViewModel> CostModelLists = new List<TimeSheetViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/CandidateTimelines")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<TimeSheetViewModel>>();
 
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
+        public static async Task<List<CompletedTimesheetModel>> PaidTimeSheetList()
+        {
+            List<CompletedTimesheetModel> CostModelLists = new List<CompletedTimesheetModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/PaidTimeSheetList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<CompletedTimesheetModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
+
+        public static async Task<List<TimeSheetViewModel>> VehicleTimeSheetList()
+        {
+            List<TimeSheetViewModel> CostModelLists = new List<TimeSheetViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/VechiclebookingList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<TimeSheetViewModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
+        public static async Task<List<ProjectManagerTimesheet>> PMTimeSheetList()
+        {
+            List<ProjectManagerTimesheet> CostModelLists = new List<ProjectManagerTimesheet>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ProjectMangersTimesheet/PMTimeSheetList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ProjectManagerTimesheet>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
 
         public static async Task<List<CompletedTimesheetModel>> TimeSheetCompletedList()
         {
@@ -309,6 +384,44 @@ namespace TimeSheet.ServiceHelper
             return CostModelLists;
         }
 
+        public static async Task<List<CompletedTimesheetModel>> RejectedTimeSheets()
+        {
+            List<CompletedTimesheetModel> CostModelLists = new List<CompletedTimesheetModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/RejectedTimeSheets")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<CompletedTimesheetModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
+        public static async Task<List<CompletedTimesheetModel>> TimeSheetApprovedList()
+        {
+            List<CompletedTimesheetModel> CostModelLists = new List<CompletedTimesheetModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/TimeSheetApprovedList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<CompletedTimesheetModel>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
 
         public static async Task<TimeSheetViewModel> TimeSheetSearchById(int id)
         {
@@ -348,6 +461,165 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
+        public static async Task<ReturnModel> ApproveIndividualTimesheet(int? activityId)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveIndividualTimesheet/{0}", activityId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    ReturnResult.Message = "There is an issue with the TimeSheetApproval. Details " + response.ReasonPhrase;
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
+        public static async Task<ReturnModel> ApproveBulkTimesheet(int resourceId, int PMId, int projectId)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveBulkTimesheet/{0}/{1}/{2}", resourceId, PMId,projectId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    ReturnResult.Message = "There is an issue with the TimeSheet Approval. Details " + response.ReasonPhrase;
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
 
+        public static async Task<ReturnModel> UpdatePaid(int? ResourceId, int PMId, int projectId)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/UpdateTimesheetPaid/{0}/{1}/{2}", ResourceId, PMId, projectId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    ReturnResult.Message = "There is an issue with the TimeSheet Approval. Details " + response.ReasonPhrase;
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
+
+        public static async Task<ReturnModel> TimeSheetApproval(int? activityId)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/UpdateTimesheetPaid/{0}", activityId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult  = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    ReturnResult.Message = "There is an issue with the TimeSheetApproval. Details " + response.ReasonPhrase;
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
+        public static async Task<List<CompletedTimesheetModel>> AllBookingEntries()
+        {
+            List<CompletedTimesheetModel> completeList = new List<CompletedTimesheetModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/AllTimesheetEnteries")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    completeList = await response.Content.ReadAsAsync<List<CompletedTimesheetModel>>();
+
+                    //foreach (var a in list)
+                    //{
+                    //    completeList.Add(a);
+                    //}
+                }
+            }
+            return completeList;
+        }
+        public static async Task<List<ListItemViewModel>> VehicleListing(int warehouseId)
+        {
+            List<ListItemViewModel> vanList = new List<ListItemViewModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/{0}/VehiclesList", warehouseId)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ListItemViewModel>>();
+                    foreach (var a in projectactivities)
+                    {
+                        vanList.Add(new ListItemViewModel() { Id = a.Id, Value = a.Value });
+                    }
+                }
+            }
+            return vanList;
+        }
+
+        public static async Task<List<ProfitLossModel>> ProfitLoss()
+        {
+            List<ProfitLossModel> completeList = new List<ProfitLossModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("CostModels/ServicesProfileLossForcast")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    completeList = await response.Content.ReadAsAsync<List<ProfitLossModel>>();
+
+                    //foreach (var a in list)
+                    //{
+                    //    completeList.Add(a);
+                    //}
+                }
+            }
+            return completeList;
+        }
+        //public static async Task<List<CompletedTimesheetModel>> RejectedTimeSheets()
+        //{
+        //    List<CompletedTimesheetModel> CostModelLists = new List<CompletedTimesheetModel>();
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(TimeSheetAPIURl);
+        //        HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/RejectedTimeSheets")).Result;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var projectactivities = await response.Content.ReadAsAsync<List<CompletedTimesheetModel>>();
+
+
+
+        //            foreach (var a in projectactivities)
+        //            {
+        //                CostModelLists.Add(a);
+        //            }
+        //        }
+        //    }
+        //    return CostModelLists;
+        //}
     }
 }

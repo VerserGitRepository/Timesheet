@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Web.Mvc;
+
+
 namespace TimeSheet.Models
 {
     public class TimeSheetViewModel
@@ -36,14 +38,16 @@ namespace TimeSheet.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day { get; set; }
-        [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? EndDate { get; set; }
-        public int? OpportunityID { get; set; }
+        //[Required]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        //public DateTime? EndDate { get; set; }
+        [Required(ErrorMessage = "Opportunity Is Mandatory")]
+        public int OpportunityID { get; set; }
         public SelectList OpportunityNumberList { get; set; }
         public int? WarehouseID { get; set; }
         public SelectList WarehouseNameList { get; set; }
+        [Required(ErrorMessage = "Activity selection is Mandatory")]
         public int? ServiceActivityID { get; set; }
         public string Activity { get; set; }
         public string Colour { get; set; }
@@ -53,21 +57,27 @@ namespace TimeSheet.Models
         public List<int?> ResourceIDs { get; set; }
         public string CandidateName { get; set; }
         public SelectList CandidateNameList { get; set; }
+        public SelectList ProjectManagerNameList { get; set; }
         public SelectList StatusList { get; set; }
         public int? StatusID { get; set; }
         public string Status { get; set; }
         public SelectList Projectlist { get; set; }
+        [Required(ErrorMessage = "Project Is Mandatory")]
         public int? ProjectID { get; set; }
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }
         public SelectList EmploymentList { get; set; }
         public virtual TimeSheetRegisterModel TimeSheetRegisterModel { get;set;}
+        public virtual PMRegisterViewModel PMRegisterViewModel { get; set; }
         public string jsonResources { get; set; }
         public string jsonEvents { get; set; }
         public string StartTimeString { get { return Convert.ToDateTime(this.StartTime).ToString("yyyy-MM-ddTHH:mm:ss"); }  }
         public string EndTimeString { get { return Convert.ToDateTime(this.EndTime).ToString("yyyy-MM-ddTHH:mm:ss"); } }
-        
-
+        public bool HasUserPermissionsToEdit { get; set; }
+        public string AdditionalActivities { get; set; }
+        public string Vechicles { get; set; }
+        public int BreakHours { get; set; }
+        public string BreakTime { get; set; }
     }   
 }

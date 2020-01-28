@@ -17,11 +17,11 @@ namespace TimeSheet.Models
         public int Id { get; set; }
         [Required]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:HH:mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? StartTime { get; set; }
         [Required]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:HH:mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? EndTime { get; set; }
         [Required]
         public string JobNo { get; set; }
@@ -60,13 +60,27 @@ namespace TimeSheet.Models
         public string Status { get; set; }
         public SelectList Projectlist { get; set; }
         public int? ProjectID { get; set; }
+        public int projectManagerID { get; set; }
         public string ProjectName { get; set; }
+        public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }
+        public string EmployeementType { get; set; }
         public SelectList EmploymentList { get; set; }
         public virtual TimeSheetRegisterModel TimeSheetRegisterModel { get; set; }
         public string jsonResources { get; set; }
         public string jsonEvents { get; set; }
         public string StartTimeString { get { return Convert.ToDateTime(this.StartTime).ToString("yyyy-MM-ddTHH:mm:ss"); } }
         public string EndTimeString { get { return Convert.ToDateTime(this.EndTime).ToString("yyyy-MM-ddTHH:mm:ss"); } }
+        public bool HasUserPermissionsToEdit { get; set; }
+        public List<AggregatedCompletedTimesheetModel> AggregaredTimesheetModel { get; set; }
+        public int? AdpEmployeeID { get; set; }
+        public string PayFrequency { get; set; }
+        public int BreakHours { get; set; }
+        public string BookedBy { get; set; }
+        public string ApprovedBy { get; set; }
+        public string BreakTime { get; set; }
+        public double TotalHours { get { return (EndTime.Value.Subtract(StartTime.Value).TotalMinutes / 60); } set { } }
+        public double TotalWorkedHours { get { return ((EndTime.Value.Subtract(StartTime.Value).TotalMinutes - BreakHours)/ 60); } set { } }
+
     }
 }

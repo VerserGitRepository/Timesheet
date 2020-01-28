@@ -9,13 +9,18 @@
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
-                    <th>CandidateName</th>
+                    <th>Candidate</th>
                     <th>Activity</th>
-                    <th style="width:50px">StartDate </th>
+                    <th>PM</th>
+                    <th>Project</th>
+                    <th style="width:50px">Date </th>
                     <th>StartTime</th>
                     <th style="width:50px">EndTime </th>
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
+                    <th>Break (Minutes)</th>
+                    <th>BreakTime</th>
+
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
@@ -24,64 +29,90 @@
             <tbody class="table">
                 @foreach (var item in Model.CompletedTimeSheetList)
                 {
-                    <tr>
-                        <td class="Id"> <span>@item.Id</span> </td>
-                        <td class="CandidateName">
-                            @Html.DisplayFor(modelItem => item.CandidateName)
-                        </td>
-                        <td class="Activity">
-                            @Html.DisplayFor(modelItem => item.Activity)
-                        </td>
+                <tr>
+                    <td class="Id"> <span>@item.Id</span> </td>
+                    <td class="CandidateName">
+                        <span id="txtCandidateName">@item.CandidateName</span>
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Activity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectManager)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                    <td class="Day" width="7%">
+                        <span>@item.Day.Value.ToShortDateString()</span>
+                        @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
-                        <td class="Day" width="7%">
-                            <span>@item.Day.Value.ToShortDateString()</span>
-                            <input type="date" id="Day" value="@item.Day.Value.ToString("dd/MM/yyyy")" style="display:none" />
+                    </td>
+                    <td class="StartTime">
+                        <span>@item.StartTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                    </td>
 
-                        </td>
-                        <td class="StartTime">
-                            <span>@item.StartTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                        </td>
-                     
 
-                        <td class="EndTime" width="8%">
-                            <span>@item.EndTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                        </td>
+                    <td class="EndTime" width="8%">
+                        <span>@item.EndTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                    </td>
 
-                        <td class="OLATarget">
-                            @Html.DisplayFor(modelItem => item.OLATarget)
-                        </td>
-                        <td class="ActualQuantity">
-                            <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" value="@item.ActualQuantity" style="display:none;width:30px" />
-                        </td>
-                        <td class="Status">
-                            <span text="Status" span />
-                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status")
-                        </td>
-                        <td class="TimeSheetComments">
-                            <span>@item.TimeSheetComments</span>
-                            <input type="text" value="@item.TimeSheetComments" style="display:none" />
-                        </td>
-                        <td width="5%">
-                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Edit</strong></span>
-                            </a>
+                    <td class="OLATarget">
+                        @Html.DisplayFor(modelItem => item.OLATarget)
+                    </td>
+                    <td class="ActualQuantity">
+                        <span style="width:2px">@item.ActualQuantity</span>
+                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                    </td>
+                    <td class="breakHrs">
 
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Update</strong></span>
-                            </a>
+                        @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                        {
+                            new SelectListItem{ Text="No Break", Value = "0" },
+                            new SelectListItem{ Text="15 Mins", Value = "15" },
+                            new SelectListItem{ Text="30 Mins", Value = "30" },
+                            new SelectListItem{ Text="45 Mins", Value = "45" },
+                            new SelectListItem{ Text="60 Mins", Value = "60" },
+                         } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                        <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
 
-                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                <span><strong>Cancel</strong></span>
-                            </a>
+                    </td>
+                    <td>
 
-                        </td>
-                    </tr>
+                        <span id="spanbreakStartTime">@item.BreakTime</span>
+
+
+                    </td>
+                    <td class="ActivityStatus">
+                        <span text="Status" span />
+                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
+                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                        <input id="username" type="hidden" value="@User.Identity.Name" />
+                    </td>
+                    <td class="TimeSheetComments">
+                        <span>@item.TimeSheetComments</span>
+                        <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
+                    </td>
+                    <td width="5%">
+                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
+
+                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span><strong>Cancel</strong></span>
+                        </a>
+
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -89,7 +120,143 @@
 </div>
 
 <script type="text/javascript">
+    SetDDLValue();
+    function ShowOTMessage(therowid) {
+        var rowid = $(therowid).closest("tr");
+        var date1 = new Date("May 26, 2016 " + rowid.find("#startTime").val());
+        var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
+        var origVal = rowid.find("#hdnddlLidt").val();
+        var msec = (date2 - date1);
 
+
+        var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
+        if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
+
+            $.confirm({
+                title: 'Alert!!!',
+                content: 'The activity has Over Time work hours. Are you sure you want to approve?',
+                boxWidth: '370px',
+                useBootstrap: false,
+                buttons: {
+                    OK: function () {
+                        rowid.find("#txtComments").val("Approved Overtime by consent by ." + rowid.find("#username").val());
+                        return true;
+                    },
+                    cancel: function () {
+
+                        rowid.find("#ddlStatus").val(origVal);
+                        return;
+                    }
+                }
+            });
+        }
+    }
+    function ShowSliderModal(rowid)
+    {
+
+        var row = $(rowid).closest("tr");
+        var ddlValue = row.find("#hdnddlbrkhrs").val();
+        var sliderURL = '@Url.Action("ReturnSlider", "Home")'
+        var timetext = row.find("#spanbreakStartTime").html();
+        $.ajax({
+            type: "GET",
+            url: sliderURL,
+            data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
+            success: function (data) {
+              $.confirm({
+                  title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<font size="3">Set Break Timimgs</font>',
+                  content: data,
+                  boxWidth: '370px',
+                  useBootstrap: false,
+                  buttons: {
+                             
+                             Set: function () {
+                                 $(".slider-time2").text();
+                                 var twoDates = timetext.split(";");
+
+                                 var msec = 0;
+                                 for (var i = 1; i < twoDates.length; i += 2) {
+                                     var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
+                                     var chkDate2 = new Date("May 26, 2016 " + twoDates[twoDates.length - i - 1]);
+                                     msec += (chkDate1 - chkDate2)
+                                 }
+                                 var date1 = new Date("May 26, 2016 " + $('.slider-time').text());
+                                 var date2 = new Date("May 26, 2016 " + $('.slider-time2').text());
+                                 // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
+
+                                 //if (!(Number.isNaN(chkDate2 - chkDate1))) {
+                                 //     msec   = (chkDate2 - chkDate1) + (date2 - date1);
+                                 //}
+                                 //else {
+                                 msec += (date2 - date1);
+                                 //}
+                                 var mins = Math.floor(msec / 60000);
+                                 if (mins > 60) {
+                                     $.alert("<h4>Break time cannot exceed 60 mins.</h4> <br/> This includes the combined time for all breaks.");
+                                     return false;
+                                 }
+                                 timetext += ';' + $(".slider-time").text() + ';' + $(".slider-time2").text();
+                                 row.find("#spanbreakStartTime").html(timetext);
+                                 // row.find("#spanbreakStartTime").html(timetext);
+                                 //  alert($('#rating-input').val());
+
+                                 $(row).find("#ddlBreak option").each(function (i) {
+                                     //alert($(ratingTdText).find("#hdnddlLidt").val());
+                                     if (($(this).val() == mins)) {
+                                         $(this).attr('selected', 'selected')
+                                     }
+                                 });
+                               //  alert($('#rating-input').val());
+                            @*$.ajax({
+                                data: model,
+                                url: '@Url.Action("ReturnSlider", "Home")',
+                                type: "POST",
+                                success: function (data) {
+
+
+
+                                        $("td", row).each(function () {
+                                            if ($(this).find("input").length > 0) {
+                                                $(this).find("input").hide();
+                                                $(this).find("span").show();
+                                                $(this).toggleClass('selected');
+
+                                            }
+                                        });
+                                        row.find(".Update").hide();
+                                        row.find(".Cancel").hide();
+                                        row.find("#Rate").hide();
+
+                                        $(".Edit").show();
+                                    // return;
+
+                                }
+                        });*@
+                        return;
+                             },
+                             cancel: function () {
+
+                                 $("#ddlBreak option").each(function (i) {
+
+                                     if ($(this).val() == ddlValue) {
+                                         $(this).attr('selected', 'selected')
+                                     }
+
+                                     return;
+                                 });
+                             }
+
+
+
+                  }, align: 'center'
+
+                     });
+            },
+            error: function (errorData) { alert(errorData);}
+        });
+
+
+    }
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
@@ -126,14 +293,47 @@
         $("#tblCustomers").append(row);
     };
 
+    function SetDDLValue() {
+        //alert('before document ready');
+       
+        $("tbody tr td.ActivityStatus").each(function LoopTR() {
+            var ratingTdText = $(this);
+            if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                $(ratingTdText).find("#ddlStatus option").each(function (i) {
+                    //alert($(ratingTdText).find("#hdnddlLidt").val());
+                    if (($(this).val() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                        $(this).attr('selected', 'selected')
+                    }
+                });
+            }
+       
+
+        });
+
+        $("tbody tr td.breakHrs").each(function LoopTR() {
+            var brkTdText = $(this);
+            if ($(brkTdText).find("#hdnddlbrkhrs").val() != "") {
+                $(brkTdText).find("#ddlBreak option").each(function (i) {
+                    //alert($(ratingTdText).find("#hdnddlLidt").val());
+                    if (($(this).val() == $(brkTdText).find("#hdnddlbrkhrs").val())) {
+                        $(this).attr('selected', 'selected')
+                    }
+                });
+            }
+
+
+        });
+    }
+
     //Edit event handler.
     $("body").on("click", "#tblCustomers .Edit", function () {
       // debugger;
         var row = $(this).closest("tr");
         $("td", row).each(function () {
-            if ($(this).find("input").length > 0) {
+            if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
                 $(this).find("input").show();
                 $(this).find("span").hide();
+                $(this).find("#txtComments").show();
                 $(this).toggleClass('selected');
 
             }
@@ -151,26 +351,45 @@
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
                 var input = $(this).find("input");
-                span.html(input.val());
+                var textArea = $(this).find("#txtComments");
+                //span.html(input.val());
                 span.show();
                 input.hide();
+                textArea.hide();
                 $(this).removeClass('selected');
             }
         });
         row.find(".Edit").show();
         row.find(".Cancel").hide();
         $(this).hide();
-
+       
         var CandidateEdit = {};
-
         CandidateEdit.Id = row.find(".Id").find("span").html();
-        CandidateEdit.ActualQuantity = row.find(".ActualQuantity").find("span").html();
-        CandidateEdit.TimeSheetComments = row.find(".TimeSheetComments").find("span").html();
-        CandidateEdit.StartTime = row.find(".StartTime").find("span").html();
-        CandidateEdit.EndTime = row.find(".EndTime").find("span").html();
+        CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
+        CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
+        CandidateEdit.StartTime = row.find("#startTime").val();
+        CandidateEdit.EndTime = row.find("#endTime").val();
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
         CandidateEdit.Day = row.find(".Day").find("span").html();
+        CandidateEdit.StatusID = row.find("#ddlStatus").val();
+        var timetext = row.find("#spanbreakStartTime").html();
+        var twoDates = timetext.split(";");
 
+        var msec = 0;
+        for (var i = 1; i < twoDates.length; i += 2) {
+            var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
+            var chkDate2 = new Date("May 26, 2016 " + twoDates[twoDates.length - i - 1]);
+            msec += (chkDate1 - chkDate2)
+        }
+        var mins = Math.floor(msec / 60000);
+        CandidateEdit.BreakHours = mins;
+        CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text();
+        var start = new Date("May 26, 2016 " + CandidateEdit.StartTime);
+        var end = new Date("May 26, 2016 " + CandidateEdit.EndTime);
+        if (start >= end) {
+            $.alert('start time should be prior to endtime');
+            return;
+        }
         $.ajax({
             type: "POST",
             url: "./UpdateCandidate",
@@ -178,12 +397,36 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         });
+
+      
+
+        $.ajax({
+            type: "GET",
+            url: './CandidateDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "CandidateName": row.find("#txtCandidateName").text() },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
     });
 
     $("#myModal").draggable({
         handle: ".modal-header"
     });
-
+    $('#myModal').on('hidden.bs.modal', function (e) {
+        location.reload();
+    });
 
     $(".Edit").on("click", function () {
         $(".popup-overlay, .popup-content").addClass("active");
@@ -198,13 +441,15 @@
     $("body").on("click", "#tblCustomers .Cancel", function () {
         var row = $(this).closest("tr");
         $("td", row).each(function () {
-            if ($(this).find("input").length > 0) {
+            if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
                 var span = $(this).find("span");
                 var input = $(this).find("input");
                 $(this).removeClass('selected');
-                input.val(span.html());
+                var textArea = $(this).find("#txtComments");
+                //input.val(span.html());
                 span.show();
                 input.hide();
+                textArea.hide();
             }
         });
         row.find(".Edit").show();
@@ -219,17 +464,14 @@
         margin: 30px auto;
         margin-bottom: 10px;
     }
-
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
     }
-
     .selected {
         color: black;
         background-color: lightgray;
     }
-
     .btn {
         font-size: 10px;
     }
@@ -237,7 +479,6 @@
     table tr.active {
         background: red;
     }
-
     a.btn {
         -webkit-transform: scale(0.9);
         -moz-transform: scale(0.6);

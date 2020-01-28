@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+
 </head>
 <body>
     <div class="navbar navbar-inverse fixed-top" style="margin-left:0px;">
@@ -33,10 +34,13 @@
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
                             <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                            <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
                             <li>@Html.ActionLink("COMPLETED BOOKINGS", "Index", "CompletedBooking")</li>
-                            
+                            <li>@Html.ActionLink("COMPLETED PM BOOKINGS", "Index", "ProjectManager")</li>
+                            <li>@Html.ActionLink("REJECTED BOOKINGS", "RejectedBooking", "RejectedBooking")</li>
+                            <li>@Html.ActionLink("ALL BOOKING ENTRIES", "AllBookingEntries", "Home")</li>
+
                         </ul>
                     </li>
 
@@ -45,7 +49,8 @@
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("RESOURCE CALENDAR", "Index", "ManageCalender")</li>
                             <li>@Html.ActionLink("RESOURCE TIMELINE", "Index", "ResourceTimeline")</li>
-                            <li>@Html.ActionLink("RESOURCE SPECIFICS", "Index", "Resource")</li>
+                            <li>@Html.ActionLink("VEHICLE TIMELINE", "VehicleTimeline", "ResourceTimeline")</li>
+                            <li>@Html.ActionLink("PM TIMELINE", "PMTimeline", "ResourceTimeline")</li>
                         </ul>
                     </li>
                     @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>*@
@@ -57,6 +62,7 @@
                                 <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
                                 <li>@Html.ActionLink("TIMESHEET APPROVAL", "ApproveProjectTimesheet", "Projection")</li>
                                 <li>@Html.ActionLink("PROFIT AND LOSS", "Index", "ProfitLoss")</li>
+                                <li>@Html.ActionLink("RESOURCE SPECIFICS", "Index", "Resource")</li>
                             </ul>
                         </li>
                     }
@@ -66,10 +72,10 @@
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
                             <ul class="dropdown-menu">
-               
-                                <li>@Html.ActionLink("WEEKLY REPORT", "WeeklyReport", "Finanace")</li>
-                                <li>@Html.ActionLink("MONTHLY REPORT", "monthlyReport", "Finanace")</li>
-                                <li>@Html.ActionLink("OVERTIME REPORT", "OvertimeReport", "Finanace")</li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Unpaid Timesheet Report">@Html.ActionLink("UNPAID", "WeeklyReport", "Finanace")</li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Approved Overtime Timesheet Report">@Html.ActionLink("OVERTIME", "OvertimeReport", "Finanace")</li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Paid Timesheet Report">@Html.ActionLink("PAID", "monthlyReport", "Finanace")</li>
+                                
                             </ul>
                         </li>
                     }
@@ -80,10 +86,15 @@
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("HELP", "Help", "Help")</li>
-                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TIMESHEET</a></li>
+
+                            <li><a href="http://dc-sqldev/Reports/Pages/Report.aspx?ItemPath=%2fJMS+Reports%2fCandidateTimesheetReport" target="_blank">TIMESHEET REPORT</a></li>
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TIMESHEET BI</a></li>
+
                             @*<li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">RESOURCE Available</a></li>*@
                             <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">PROJECTION</a></li>
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYjg2Njc5YmQtMzA0Zi00NmI5LWIyNzAtMjQ5YjlmMzBlZGVhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9
+" target="_blank">ON GOING PROJECTION</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -102,16 +113,23 @@
     </div>
     @*container-fluid body-content*@
 
-    <div class="container body-content" >
+    <div class="container body-content">
         @if (HttpContext.Current.Session["ResultMessage"] != null)
         {
-            <div class="alert alert-info text-center  alert-dismissible" role="alert" style="margin-left:0px">
+            <div class="alert alert-success text-center  alert-dismissible" role="alert" style="margin-left:0px">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 @HttpContext.Current.Session["ResultMessage"]
             </div>
             HttpContext.Current.Session["ResultMessage"] = null;
         }
-
+        @if (HttpContext.Current.Session["InfoMessage"] != null)
+        {
+            <div class="alert alert-info text-center  alert-dismissible" role="alert" style="margin-left:0px">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @HttpContext.Current.Session["InfoMessage"]
+            </div>
+            HttpContext.Current.Session["InfoMessage"] = null;
+        }
         @if (HttpContext.Current.Session["ErrorMessage"] != null)
         {
             <div class="alert alert-danger text-center  alert-dismissible" role="alert" style="margin-left:0px">
@@ -139,6 +157,12 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    </script>
 <style>
     
 #navbar {
@@ -204,12 +228,15 @@
         background-color: #FFA500;
     }
 
-    .nav {
-
-    }
     .navbar .navbar-toggle {
         padding: 4px 10px;
     }
 
+    .tooltip-inner {
+        /*max-width: 350px;*/
+        height:20px;
+        /* If max-width does not work, try using width instead */
+        width: 250px;
+    }
 </style>
 

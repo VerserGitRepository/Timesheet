@@ -107,7 +107,26 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
+                }
+
+            }
+        }
+
+        public static async Task UpdateActivity(int ServiceActivityID, bool isActive)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("Administration/{0}/{1}/ManageServiceActivity", ServiceActivityID, isActive)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var ReturnResult = await response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Activity Updated Successfully";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
                 }
 
             }
@@ -125,7 +144,7 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
                 }
 
             }
@@ -143,11 +162,29 @@ namespace TimeSheet.ServiceHelper
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Opportunity Update UN-Successfully!";
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
+                }
+
+            }
+        }
+        public static async Task UpdateOpportunityModel(OpportunityListUpdateModel OpportunityUpdateModel)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response =
+                client.PostAsJsonAsync(string.Format("Administration/UpdateOpportunities"), OpportunityUpdateModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var ReturnResult = await response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Opportunity Updated Successfully";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "An error has occurred during the operation.";
                 }
 
             }
         }
     }
 }
-

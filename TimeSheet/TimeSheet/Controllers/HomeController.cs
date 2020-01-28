@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -13,11 +14,13 @@ using TimeSheet.ServiceHelper;
 
 namespace TimeSheet.Controllers
 {
+    
     public class HomeController : Controller
     {
-        [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]
+        [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]       
         public ActionResult Index()
         {
+            Session["Accounts"] = "";
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -25,23 +28,23 @@ namespace TimeSheet.Controllers
             else
             {
                 TimeSheetViewModel model = new TimeSheetViewModel();                            
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");                
-             //   model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");            
+                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");  
                 model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
                 model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                 model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
+                model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
+                Session["HasUserPermissionsToEdit"] = UserRoles.UserCanEditTimesheet();
                 Session["HomeIndex"] = model;
                 return View(model);
             }                 
         }
-
         [HttpPost]
         public ActionResult Index(TimeSheetViewModel SearchModel)
-        {
-            if (Session["Username"] == null)
+        {           
+            if (UserRoles.UserCanEditTimesheet() != true)
             {
-                return RedirectToAction("Login", "Login");
+                    return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -132,14 +135,13 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-           // TempData["EditID"] = id;
-            if (Session["Username"] == null)
+            if (UserRoles.UserCanEditTimesheet()!=true)
             {
-                return RedirectToAction("Login", "Login");
+
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-               // TimeSheetViewModel model = new TimeSheetViewModel();
                 var ModelReturnData = TimeSheetAPIHelperService.TimeSheetSearchById(id).Result;
                 ModelReturnData.Id = id;
                 ModelReturnData.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
@@ -149,13 +151,12 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult Edit(UpdateTimeSheetModel EditModel)
         {
-             if (Session["Username"] == null)
+            if (UserRoles.UserCanEditTimesheet() != true)
             {
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-             //   int EditId = Convert.ToInt32( TempData["EditID"].ToString());
                 if (EditModel== null)
                 {
                     Session["ErrorMessage"] = "Please Update With Valid Details!";
@@ -171,30 +172,32 @@ namespace TimeSheet.Controllers
                     var EnddateTime = Convert.ToDateTime(dtEn);
                     EditModel.StartTime = StartdateTime;
                     EditModel.EndTime = EnddateTime;
+                    EditModel.FullName = Session["FullName"].ToString();
                 }  
                 var ReturnValue = RegisterTimesheetService.EditTimesheetModel(EditModel);
             }
             return RedirectToAction("Index", "Home");
         }
-
         [HttpPost]
         public ActionResult UpdateCandidate(UpdateTimeSheetModel CandidateEdit)
         {
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
+            if (UserRoles.UserCanEditTimesheet() == true && CandidateEdit != null && CandidateEdit.Id > 0)
+            {            
+                    string dateString = String.Format("{0:dd/MM/yyyy}", CandidateEdit.Day);
+                    string StartTimeString = String.Format("{0:HH:mm}", CandidateEdit.StartTime);
+                    string EndTimeString = String.Format("{0:HH:mm}", CandidateEdit.EndTime);
+                    string dtSt = dateString + " " + StartTimeString;
+                    string dtEn = dateString + " " + EndTimeString;
+                    var StartdateTime = Convert.ToDateTime(dtSt);
+                    var EnddateTime = Convert.ToDateTime(dtEn);
+                    CandidateEdit.StartTime = StartdateTime;
+                    CandidateEdit.EndTime = EnddateTime;
+                    CandidateEdit.FullName= Session["FullName"].ToString();
+                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);                                  
             }
             else
             {
-                //   int EditId = Convert.ToInt32( TempData["EditID"].ToString());
-                if (CandidateEdit == null)
-                {
-                    Session["ErrorMessage"] = "Please Update With Valid Details!";
-                }
-                if (CandidateEdit != null)
-                {
-                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);
-                }                
+                Session["ErrorMessage"] = "Update Details Not Valid!";
             }
             return RedirectToAction("Index", "Home");
         }
@@ -222,7 +225,6 @@ namespace TimeSheet.Controllers
                 Session["HomeSearchIndex"] = newModel;
             }
             var redirectUrl = new UrlHelper(Request.RequestContext).Action("ViewIndex", "Home", new { });
-
             try
             {
                 // perform some action
@@ -234,8 +236,6 @@ namespace TimeSheet.Controllers
 
             return Json(new { Url = redirectUrl, status = "OK" });
             //ModelState.Clear();
-
-
         }
         public ActionResult ViewIndex()
         {
@@ -247,8 +247,144 @@ namespace TimeSheet.Controllers
         }
         public ActionResult Rating()
         {
-           
-            return PartialView("RatingDetails");
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {                
+                return PartialView("RatingDetails");
+            }
+        }
+        public ActionResult AllBookingEntries()
+        {
+            Session["Accounts"] = "";
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+               CompletedTimesheetModel model = new CompletedTimesheetModel();
+               model.CompletedTimeSheetList =  TimeSheetAPIHelperService.AllBookingEntries().Result;              
+                
+                Session["HasUserPermissionsToEdit"] = UserRoles.UserCanEditTimesheet();
+                Session["HomeIndex"] = model;
+                return View("AllBookingEntries",model);
+            }
+        }
+        [HttpPost]
+        public ActionResult ExportCompleteBookingSchedule()
+        {
+            var TimeSheetExportData = new List<CompletedtimesheetExcelExportModel>();
+            var TimeSheetmodel = TimeSheetAPIHelperService.AllBookingEntries().Result;
+            string otHours = (string)ConfigurationManager.AppSettings["OTHours"];
+            List<string> otvalues = new List<string>();
+            otvalues = otHours.Split(';').ToList();
+            string OTWeekEndSatDay = (string)ConfigurationManager.AppSettings["OTWeekEndSatDay"];
+            string OTWeekEndSatDayException = (string)ConfigurationManager.AppSettings["OTWeekEndSatDayException"];
+            string OTWeekEndSunDay = (string)ConfigurationManager.AppSettings["OTWeekEndSunDay"];
+            string OTHoursVal = string.Empty;                                                                             //TimeSheet
+            foreach (var item in TimeSheetmodel)
+            {
+                int otEnd = 0;
+                int otStart = 0;
+                if (((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60) >= double.Parse(otvalues[0].Replace("GT", "")))//&& item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60) >= int.Parse(otvalues[0].Replace("GT", "")))
+                {
+
+                    OTHoursVal = Convert.ToString(((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60 - double.Parse(otvalues[0].Replace("GT", ""))));
+                }
+                else
+                {
+                    OTHoursVal = "0";
+                }
+                if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) > 18)
+                {
+                    otEnd = Convert.ToInt32(item.EndTime.Value.ToString("HH")) - 18;
+                    if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) >= 23 && Convert.ToInt32(item.EndTime.Value.ToString("mm")) >= 30)
+                    {
+                        otEnd = otEnd + 1;
+                    }
+                }
+                if (Convert.ToInt32(item.StartTime.Value.ToString("HH")) < 6)
+                {
+                    otStart = 6 - Convert.ToInt32(item.StartTime.Value.ToString("HH"));
+                }
+                TimeSheetExportData.Add(new CompletedtimesheetExcelExportModel
+                {
+
+                    ADPEmployeeId = item.AdpEmployeeID.ToString(),
+                    ProjectName = item.ProjectName,
+                    ProjectManager = item.ProjectManager,
+                    BookedBy = item.BookedBy,
+                    ApprovedBy = item.ApprovedBy,
+                    CandidateName = item.CandidateName,
+                    OpportunityNumber = item.OpportunityNumber,
+                    Activity = item.Activity,
+                    WarehouseName = item.WarehouseName,
+                    //Monday
+                    StartTime = item.StartTime.Value.ToString("HH:mm"),
+                    EndTime = item.EndTime.Value.ToString("HH:mm"),
+                    JobNo = item.JobNo,
+                    OLATarget = item.OLATarget,
+                    ActualQuantity = item.ActualQuantity,
+                    Day = item.Day.Value.Date.ToShortDateString(),
+                    Status = item.Status,
+                    TimeSheetComments = item.TimeSheetComments,
+                    TotalHours = Math.Round((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60), 1, MidpointRounding.ToEven),
+                    BreakHours = item.BreakHours,
+                    WorkedHours = Math.Round(((item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60), 1, MidpointRounding.ToEven),
+                    OutsideWorkHours = otStart + otEnd,
+                    OTHours = OTHoursVal,
+                    PayFrequency = item.PayFrequency,
+                    PayCycle = Convert.ToString((DateTime.Now.Date.Subtract(item.Day.Value).Days / 5) + 1)
+
+
+                });
+            }
+
+            GridView gv = new GridView();
+            gv.DataSource = TimeSheetExportData;
+
+            gv.DataBind();
+            foreach (GridViewRow row in gv.Rows)
+            {
+                for (int i = 0; i < row.Cells.Count; i++)
+                {
+                    if (row.RowType == DataControlRowType.DataRow)
+                    {
+                        row.Cells[i].Attributes.Add("class", "text");
+                    }
+                }
+            }
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=CompleteTimeEntrySchedule.xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            gv.RenderControl(htw);
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+            return RedirectToAction("AllBookingEntries", "Home");
+        }
+        [HttpGet]
+        public ActionResult ReturnSlider(string StartTime, string EndTime)
+        {
+            if (UserRoles.UserCanEditTimesheet() != true)
+            {
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                BreakTimeModel model = new BreakTimeModel();
+                model.BreakStartTime = Convert.ToDateTime(StartTime).ToString("hh:mm tt");
+                model.BreakEndTime = Convert.ToDateTime(EndTime).ToString("hh:mm tt");
+                return PartialView("_BreakTimeSlider",model);
+            }
         }
     }
 }

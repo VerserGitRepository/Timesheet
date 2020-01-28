@@ -25,12 +25,12 @@ namespace TimeSheet.Controllers
         public ActionResult Login(LoginModel login)
         {
             if (string.IsNullOrEmpty(login.UserName) || string.IsNullOrEmpty(login.Password))
-            {
-                Session["Username"] = null;
-                Session["Administrator"] = null;
-                Session["Accounts"] = null;
-                Session["ProjectManager"] = null;
+            {               
+                Session.Clear();
+                Session.RemoveAll();
+                Session.Abandon();
                 Session["ErrorMessage"] = "Username Or Password Is Empty!";
+
                 return View("Login");
             }
             LoginModel user = new LoginModel { UserName = login.UserName, Password = login.Password };
@@ -38,7 +38,9 @@ namespace TimeSheet.Controllers
             if (userReturn.Result.IsLoggedIn == true)
             {
                 Session["Username"] = login.UserName;
+                Session["FullName"] = userReturn.Result.FullName;
                 Session["ErrorMessage"] = null;
+
                var _roles = LoginService.UserRoleList(login.UserName).Result;
                 if (_roles.Count() > 0 )
                 {
@@ -52,10 +54,14 @@ namespace TimeSheet.Controllers
                         {
                             Session["Accounts"] = true;
                         }
-                        if (r.Value == "Project Manager")
+                        if (r.Value == "ProjectmanagerAdmin")
                         {
                             Session["ProjectManager"] = true;
-                        }                       
+                        }
+                        if (r.Value == "WarehouseManager")
+                        {
+                            Session["WarehouseManager"] = true;
+                        }
                     }                  
                 }
                 return RedirectToAction("Index", "Home");
@@ -63,7 +69,7 @@ namespace TimeSheet.Controllers
             else
             {
                 Session["FullUserName"] = null;
-                Session["ErrorMessage"] = "Invalid UserName Or Password";
+                Session["ErrorMessage"] = "Invalid UserName Or Password";             
                 return View("Login");
             }
         }
@@ -73,7 +79,6 @@ namespace TimeSheet.Controllers
             Session.RemoveAll();
             Session.Abandon();
             return RedirectToAction("Login", "Login");
-        }
-
+        }       
     }
 }

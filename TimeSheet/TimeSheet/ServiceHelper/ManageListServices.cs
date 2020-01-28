@@ -15,6 +15,10 @@ namespace TimeSheet.ServiceHelper
             model.ResourceList = AdminHelperService.ResourceListItems().Result;
             model.ProjectDetailsList = AdminHelperService.ProjectListItems().Result;
             model.ActivityList = AdminHelperService.ActivityListItem().Result;
+            model.ProjectManagerList = ListItemService.ProjectManagerList().Result;
+            model.SalesManagerList = ListItemService.SalesManagerList().Result;
+            model.OpportunitesList = ListItemService.ManageOpportunityModelList().Result;
+
             return model;
         }
 

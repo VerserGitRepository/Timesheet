@@ -28,24 +28,23 @@ namespace TimeSheet.Models
         public int WarehouseID { get; set; }
         public string WarehouseName { get; set; }
         public int OpportunityID { get; set; }    
-        public int ProjectManagerID { get; set; }      
-        public int Quantity { get; set; }
-
+        public int ProjectManagerID { get; set; }
+        public decimal ProjectionQuantity { get; set; }
+        public decimal CostModelQuantity { get; set; }
+        public int ProjectionId { get; set; }
+        public decimal Quantity { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Created { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateInvoiced { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateModified { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateAllocated { get; set; }
-
         public SelectList WarehouseList { get; set; }
         public SelectList SalesManagerList { get; set; }
         public SelectList ActivityList { get; set; }
@@ -63,6 +62,7 @@ namespace TimeSheet.Models
         public double PriceperUnitTotal => Convert.ToDouble(Quantity) * Convert.ToDouble(PriceperUnit);
         public List<OpportunityListModel> OpportunityList { get; set; }
         public bool IsAdd { get; set; }
+        public int ServiceRevenueId { get; set; }
 
     }
 }

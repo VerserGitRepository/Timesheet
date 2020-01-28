@@ -27,6 +27,13 @@ namespace TimeSheet.Models
         public DateTime? Day { get; set; }       
         public string Status { get; set; }
         public string TimeSheetComments { get; set; }
+        public double TotalHours { get; set; }
+        public int BreakHours { get; set; }
+        public double WorkedHours { get; set; }
+        public double OutsideWorkHours { get; set; }
+        public string ProjectManager { get; set; }
+        public string BookedBy { get; set; }
+        public string ApprovedBy { get; set; }
 
     }
 }

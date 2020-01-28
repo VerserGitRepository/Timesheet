@@ -79,6 +79,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -161,10 +164,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUpdateController.cs" />
+    <Compile Include="Controllers\RejectedBookingController.cs" />
     <Compile Include="Controllers\CompletedBookingController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
+    <Compile Include="Controllers\ExcelUtils.cs" />
     <Compile Include="Controllers\FinanaceController.cs" />
     <Compile Include="Controllers\ProfitLossController.cs" />
+    <Compile Include="Controllers\ProjectManagerController.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
     <Compile Include="Controllers\CostModelListItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -179,25 +185,37 @@
     </Compile>
     <Compile Include="Models\ActivityListModel.cs" />
     <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Models\ApprovedTimesheetDetailedModel.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
+    <Compile Include="Models\BreakTimeModel.cs" />
     <Compile Include="Models\CandidateTimeSheetsModel.cs" />
+    <Compile Include="Models\CompletedtimesheetExcelExportModel.cs" />
     <Compile Include="Models\CompletedtimesheetExportModel.cs" />
+    <Compile Include="Models\AggregatedCompletedTimesheetModel.cs" />
     <Compile Include="Models\CompletedTimesheetModel.cs" />
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
     <Compile Include="Models\ListItems.cs" />
+    <Compile Include="Models\OpportunityListUpdateModel.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
+    <Compile Include="Models\PMRegisterViewModel.cs" />
+    <Compile Include="Models\ProfitLossModel.cs" />
     <Compile Include="Models\ProjectionEntryModel.cs" />
+    <Compile Include="Models\OpportunityListItem.cs" />
     <Compile Include="Models\ProjectionModel.cs" />
+    <Compile Include="Models\ProjectionOppurtunityExportModel.cs" />
     <Compile Include="Models\ProjectionOppurtunityModel.cs" />
     <Compile Include="Models\ProjectionUpdate.cs" />
     <Compile Include="Models\ProjectListModel.cs" />
+    <Compile Include="Models\ProjectManagerTimesheet.cs" />
     <Compile Include="Models\ResourceAvailable.cs" />
     <Compile Include="Models\ResourceEventsModel.cs" />
     <Compile Include="Models\ResourceListModel.cs" />
+    <Compile Include="Models\ResourceRatingModel.cs" />
     <Compile Include="Models\ResourceTimelineModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\TimesheetEditModel.cs" />
+    <Compile Include="Models\TimeSheetRegisterPMModel.cs" />
     <Compile Include="Models\TimeSheetViewModel.cs" />
     <Compile Include="Models\CostModelViewModel.cs" />
     <Compile Include="Models\JMSProjectsViewModel.cs" />
@@ -210,6 +228,7 @@
     <Compile Include="Models\ResourcesViewModel.cs" />
     <Compile Include="Models\ReturnModel.cs" />
     <Compile Include="Models\UpdateOpportunityList.cs" />
+    <Compile Include="Models\UpdateProjectManagerModel.cs" />
     <Compile Include="Models\UpdateTimeSheetModel.cs" />
     <Compile Include="Models\WarehousesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -223,6 +242,8 @@
     <Compile Include="ServiceHelper\ResourceHelperService.cs" />
     <Compile Include="ServiceHelper\SearchFilterService.cs" />
     <Compile Include="ServiceHelper\TimeSheetAPIHelperService.cs" />
+    <Compile Include="ServiceHelper\UserRoles.cs" />
+    <Compile Include="Utils\ReflectionUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
@@ -330,6 +351,7 @@
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <Content Include="Scripts\Datepair.js" />
+    <None Include="Properties\PublishProfiles\TimeSheet20191011 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\FullCalender\core\main.css" />
     <Content Include="Scripts\FullCalender\core\main.js" />
@@ -419,6 +441,23 @@
     <Content Include="Views\CompletedBooking\ProjectDetail.cshtml" />
     <Content Include="Views\CompletedBooking\CandidateDetails.cshtml" />
     <Content Include="Views\Home\RatingDetails.cshtml" />
+    <Content Include="Views\Projection\ResourceDetails.cshtml" />
+    <Content Include="Views\Finanace\ApprovedResourceDetails.cshtml" />
+    <Content Include="Views\Resource\PMRegister.cshtml" />
+    <Content Include="Views\ProjectManager\Index.cshtml" />
+    <Content Include="Views\Projection\AddProjection.cshtml" />
+    <Content Include="Views\ResourceTimeline\VehicleTimeline.cshtml" />
+    <Content Include="Views\ProjectManager\ProjectDetails.cshtml" />
+    <Content Include="Views\ProjectManager\TimesheetPMDetails.cshtml" />
+    <Content Include="Views\Finanace\PaidResourceDetails.cshtml" />
+    <Content Include="Views\ResourceTimeline\PMTimeline.cshtml" />
+    <Content Include="Views\Home\AllBookingEntries.cshtml" />
+    <Content Include="Views\Projection\ProjectionsFilter.cshtml" />
+    <Content Include="Views\ProfitLoss\CostDetails.cshtml" />
+    <Content Include="Views\Shared\_BreakTimeSlider.cshtml" />
+    <Content Include="Views\RejectedBooking\RejectedBooking.cshtml" />
+    <Content Include="Views\RejectedBooking\ProjectDetail.cshtml" />
+    <Content Include="Views\RejectedBooking\CandidateDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -438,6 +477,7 @@
     <Folder Include="Scripts\FullCalender\rrule\" />
     <Folder Include="Scripts\FullCalender\timegrid\" />
     <Folder Include="Scripts\FullCalender\timeline\src\util\" />
+    <Folder Include="Templates\" />
     <Folder Include="Views\AdminUpdate\" />
     <Folder Include="Views\Partial\" />
   </ItemGroup>
