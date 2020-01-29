@@ -23,8 +23,7 @@
             <ul class="nav nav-tabs" style="padding-top:15px" id="myTab" role="tablist">
                 <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">BOOK RESOURCES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">BOOK PROJECT MANAGERS</a></li>
-                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERECRUITER">BOOK RECRUITER </a></li>
-
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">BOOK RECRUITER</a></li>
             </ul>
         </nav>
         <div class="tab-content" style="border-width:thin;border-style:solid;border-color:lightgray;width:70%;padding-top:10px;margin-right:0px">
@@ -249,8 +248,7 @@
 
                 </div>
             </div>
-
-            <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
+            <div id="MANAGERECRUITER" class="tab-pane fade" role="tabpanel">
 
                 <div class="table table-responsive" id="MANAGERECRUITER" style="padding-left:50px;padding-bottom:30px;border-color:lightgray">
                     <div class="form-group">
@@ -353,7 +351,7 @@
             </div>
         </div>
 
-       
+
     </div>
 </section>
 
@@ -361,6 +359,7 @@
     .form-control-100 {
         max-width: 100%;
     }
+
     .form-control-75 {
         max-width: 75%;
     }
@@ -424,6 +423,7 @@
         color: red;
         padding-bottom: 15px;
     }
+
     #time-range p {
         font-family: "Arial", sans-serif;
         font-size: 14px;
@@ -540,6 +540,7 @@
     #time-range {
         width: 400px;
     }
+
     .glyphicon-refresh {
         font-size: 20px;
         color: lightgray;
@@ -550,7 +551,7 @@
 
     $(document).ready(function () {
         $('#ddlregCustomerID').removeAttr('multiple')
-        $('#ddlregCustomerID').multiselect('rebuild'); 
+        $('#ddlregCustomerID').multiselect('rebuild');
         $('#ServiceActivityID').removeAttr('multiple')
         $('#ServiceActivityID').multiselect('rebuild');
         var iCnt = 0;
@@ -894,7 +895,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                                 $('#JobID').append($('<option></option>').text("Select Job").val(null));
                             $.each(response, function (index, item) {
                                 $('#JobID').append($('<option></option>').text(item.Value).val(item.Id));
-                               
+
                                 });
                                 $('#JobID').removeAttr('multiple')
                                 $('#JobID').multiselect('rebuild');
@@ -942,7 +943,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
         var start_time = $(".slider-time").text();
 
         var startTime = new Date("May 26, 2016 " + start_time);//arbitary
-        
+
 
         var endTime = new Date("May 26, 2016 " + end_time);//arbitary
         var totalMins = Math.floor(endTime - startTime) / 60000;
@@ -960,11 +961,11 @@ $('#ddlRegOpportunityNumberID').change(function () {
         });
     }
     function PostData(id) {
-       
+
         var textMessage = "";
-       
-            
-        
+
+
+
         var data = null;
        // alert(this.id);
         if (id.id == "btnregister") {
@@ -1019,7 +1020,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
             for (var i = 1; i < childrenCount + 1; i++) {
                 textMessage += $("#tb" + i).val() + "    -     " + $(".slider-time2" + i).text() + ";";
             }
-           
+
         }
                     @if (!ViewData.ModelState.IsValid)
                     {
@@ -1060,7 +1061,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 'Colour': $('#ddlColourPM').val(),
                 'TimeSheetComments': $('#txtComments').val(),
                 'AdditionalActivities': textMessage
-                
+
 
             };
 
@@ -1099,7 +1100,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
         buttonWidth: '280px',
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true
-    }); 
+    });
     $('#ddlregCustomerID').multiselect({
         includeSelectAllOption: false,
         maxHeight: 250,
