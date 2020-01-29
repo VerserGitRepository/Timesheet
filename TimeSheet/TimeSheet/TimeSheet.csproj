@@ -164,6 +164,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUpdateController.cs" />
+    <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\RejectedBookingController.cs" />
     <Compile Include="Controllers\CompletedBookingController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
@@ -185,6 +186,7 @@
     </Compile>
     <Compile Include="Models\ActivityListModel.cs" />
     <Compile Include="Models\AdminModel.cs" />
+    <Compile Include="Models\AggregatedProfitLossModel.cs" />
     <Compile Include="Models\ApprovedTimesheetDetailedModel.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
@@ -195,6 +197,7 @@
     <Compile Include="Models\AggregatedCompletedTimesheetModel.cs" />
     <Compile Include="Models\CompletedTimesheetModel.cs" />
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
+    <Compile Include="Models\JMSEntities\JMSModelEntities.cs" />
     <Compile Include="Models\ListItems.cs" />
     <Compile Include="Models\OpportunityListUpdateModel.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
@@ -230,6 +233,9 @@
     <Compile Include="Models\UpdateOpportunityList.cs" />
     <Compile Include="Models\UpdateProjectManagerModel.cs" />
     <Compile Include="Models\UpdateTimeSheetModel.cs" />
+    <Compile Include="Models\VehicleBookedModel.cs" />
+    <Compile Include="Models\VehicleListModel.cs" />
+    <Compile Include="Models\VehicleModel.cs" />
     <Compile Include="Models\WarehousesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceHelper\AdminHelperService.cs" />
@@ -458,6 +464,18 @@
     <Content Include="Views\RejectedBooking\RejectedBooking.cshtml" />
     <Content Include="Views\RejectedBooking\ProjectDetail.cshtml" />
     <Content Include="Views\RejectedBooking\CandidateDetails.cshtml" />
+    <Content Include="Views\HR\Index.cshtml" />
+    <Content Include="Views\HR\ProjectDetails.cshtml" />
+    <Content Include="Views\HR\TimesheetHRDetails.cshtml" />
+    <Content Include="Views\ManageCalender\RegisterTimesheet.cshtml" />
+    <Content Include="Views\ProjectManager\Register.cshtml" />
+    <Content Include="Views\Resource\ResourceRegister.cshtml" />
+    <Content Include="Views\ResourceTimeline\UpdateResourceTimeline.cshtml" />
+    <Content Include="Views\Home\ManageTimeSheet.cshtml" />
+    <Content Include="Views\Home\TimeSheet.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\CostModel.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
