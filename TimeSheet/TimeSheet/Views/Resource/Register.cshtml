@@ -23,7 +23,7 @@
             <ul class="nav nav-tabs" style="padding-top:15px" id="myTab" role="tablist">
                 <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">BOOK RESOURCES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">BOOK PROJECT MANAGERS</a></li>
-
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERECRUITER">BOOK RECRUITER</a></li>
             </ul>
         </nav>
         <div class="tab-content" style="border-width:thin;border-style:solid;border-color:lightgray;width:70%;padding-top:10px;margin-right:0px">
@@ -42,7 +42,7 @@
                                 <label class="control-label">Facility</label>
 
                                 @Html.DropDownListFor(model => model.TimeSheetRegisterModel.WarehouseNameId, Model.WarehouseNameList, "Warehouse", new { @class = "form-control ", id = "ddlregWarehouseNameId" })
-                                
+
                             </div>
                             <div class="form-group  required col-md-6" tabindex=2>
                                 <label class="control-label">Project</label>
@@ -83,22 +83,22 @@
 
                         <div class="row" style="padding-top:10px">
                             <div class="form-group col-md-6" tabindex=7>
-                                
+
                                 @*<div style="width: 100px; float:left; height:100px; margin:10px">*@
-                                    <label>OLA Target</label>
-                                    @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA"} })
-                                    @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
+                                <label>OLA Target</label>
+                                @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
                                 @*</div>*@
                                 @*<div style="width: 100px; float:left; height:100px; margin:10px">
-                                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                    <button onclick="FetchOLA();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-                                </div>*@
+                                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <button onclick="FetchOLA();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+                                    </div>*@
 
                             </div>
                             <div class="form-group  required col-md-6" tabindex=8>
                                 <label class="control-label">Activity</label>
                                 <br />
-                                @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityID", @multiple = "multiple",@onchange="FetchOLA();" })
+                                @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityID", @multiple = "multiple", @onchange = "FetchOLA();" })
                                 @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -243,14 +243,110 @@
                         }
 
 
-                        </div>
+                    </div>
 
 
-                        </div>
+                </div>
+            </div>
+            <div id="MANAGERECRUITER" class="tab-pane fade" role="tabpanel">
+
+                <div class="table table-responsive" id="MANAGERECRUITER" style="padding-left:50px;padding-bottom:30px;border-color:lightgray">
+                    <div class="form-group">
+                        @using (Html.BeginForm("Register", "Resource", FormMethod.Post))
+                        {
+                            if (TempData["BookedResourceMessage"] != null)
+                            {
+                                <script>alert(TempData["BookedResourceMessage"].ToString());</script>
+                            }
+
+                            <div class="row" style="padding-top:10px">
+
+                                <div class="form-group  required col-md-6" tabindex=1>
+                                    <label class="control-label">Project</label>
+                                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerIDRC" })
+                                    @Html.ValidationMessageFor(model => model.PMRegisterViewModel.ProjectID, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="form-group required col-md-6" tabindex=2>
+                                    <label class="control-label">Resource</label><br />
+                                    @Html.DropDownListFor(model => Model.ResourceID, Model.ProjectManagerNameList, new { @id = "CandidateNameIdRC", @style = "height:10px; width:10px;", @multiple = "multiple" })
+                                    @Html.ValidationMessageFor(model => Model.ResourceID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="form-group  required col-md-6" tabindex=3>
+                                    <label class="control-label">Opportunity Number</label>
+                                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberIDRC" })
+                                    @Html.ValidationMessageFor(model => model.PMRegisterViewModel.OpportunityID, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group col-md-6" tabindex=4>
+                                    <label>Theme Colour</label>
+                                    @Html.DropDownListFor(model => model.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColourRC" })
+                                </div>
+
+                            </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="form-group  required col-md-6" tabindex=5>
+                                    <label class="control-label">Activity</label>
+
+                                    @Html.DropDownListFor(model => model.ServiceActivityID, @Model.HRActivityList, "Select a Service", new { @class = "form-control", id = "ServiceActivityIDRC" })
+                                    @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
+
+                                </div>
+                                <div class="form-group required col-md-6" tabindex=6>
+                                    <label class="control-label">Start Date</label>
+
+                                    @Html.EditorFor(model => model.Day, DateTime.Now.Date.ToShortDateString(), new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickIdRC" } })
+                                    @Html.ValidationMessageFor(model => model.PMRegisterViewModel.Day, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="row" style="padding-top:10px">
+                                <div class="form-group  required col-md-6" tabindex=7>
+                                    <div id="main">
+                                        <input type="button" id="btAdd" value="Add Activity" class="bt" />
+                                        <input type="button" id="btRemove" value="Remove Activity" class="bt" />
+                                        <input type="button" id="btRemoveAll" value="Remove All" class="bt" /><br />
+                                    </div>
+
+                                </div>
+                                <div id="PMActivity" class="form-group required col-md-6" tabindex=8>
+                                    <div id="time-rangeRC" style="padding-top:10px;width:270px" tabindex=7>
+                                        <p>
+                                            Start Time <b><span class="slider-timePM">08:30 AM</span></b>&nbsp;&nbsp;&nbsp;End Time <b><span class="slider-time2RC">5:00 PM</span></b>
+
+                                        </p>
+                                        <div class="sliders_step1">
+                                            <div id="slider-rangeRC"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+
+                            <br>
+                            <div class="row" style="width:670px;padding-left:20px">
+                                <label>Comments</label>
+                                @Html.TextAreaFor(model => model.PMRegisterViewModel.TimeSheetComments, new { @id = "txtCommentsRC", placeholder = "Comments here...", @class = "form-control-100 textarea", style = "border:solid 1px lightgray;" })
+                                @Html.ValidationMessageFor(model => model.PMRegisterViewModel.TimeSheetComments, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class=" col-md-offset-5" style="padding-top:20px">
+                                <button type="submit" class="btn btn-warning btn-md" id="btnregisterRC" onclick="PostData(this);">
+                                    <span class="glyphicon glyphicon-ok-sign"></span> Register
+                                </button>
+                            </div>
+
+                        }
+
+
+                    </div>
+
+
+                </div>
             </div>
         </div>
 
-       
+
     </div>
 </section>
 
@@ -258,6 +354,7 @@
     .form-control-100 {
         max-width: 100%;
     }
+
     .form-control-75 {
         max-width: 75%;
     }
@@ -321,6 +418,7 @@
         color: red;
         padding-bottom: 15px;
     }
+
     #time-range p {
         font-family: "Arial", sans-serif;
         font-size: 14px;
@@ -437,6 +535,7 @@
     #time-range {
         width: 400px;
     }
+
     .glyphicon-refresh {
         font-size: 20px;
         color: lightgray;
@@ -447,7 +546,7 @@
 
     $(document).ready(function () {
         $('#ddlregCustomerID').removeAttr('multiple')
-        $('#ddlregCustomerID').multiselect('rebuild'); 
+        $('#ddlregCustomerID').multiselect('rebuild');
         $('#ServiceActivityID').removeAttr('multiple')
         $('#ServiceActivityID').multiselect('rebuild');
         var iCnt = 0;
@@ -703,6 +802,65 @@
             $('.slider-time2PM').html(hours2 + ':' + minutes2);
         }
     });
+    $("#slider-rangeRC").slider({
+        range: true,
+        min: 0,
+        max: 1440,
+        step: 15,
+        values: [540, 1020],
+        slide: function (e, ui) {
+            var hours1 = Math.floor(ui.values[0] / 60);
+            var minutes1 = ui.values[0] - (hours1 * 60);
+
+            if (hours1.length == 1) hours1 = '0' + hours1;
+            if (minutes1.length == 1) minutes1 = '0' + minutes1;
+            if (minutes1 == 0) minutes1 = '00';
+            if (hours1 >= 12) {
+                if (hours1 == 12) {
+                    hours1 = hours1;
+                    minutes1 = minutes1 + " PM";
+                } else {
+                    hours1 = hours1 - 12;
+                    minutes1 = minutes1 + " PM";
+                }
+            } else {
+                hours1 = hours1;
+                minutes1 = minutes1 + " AM";
+            }
+            if (hours1 == 0) {
+                hours1 = 12;
+                minutes1 = minutes1;
+            }
+
+
+
+            $('.slider-timeRC').html(hours1 + ':' + minutes1);
+
+            var hours2 = Math.floor(ui.values[1] / 60);
+            var minutes2 = ui.values[1] - (hours2 * 60);
+
+            if (hours2.length == 1) hours2 = '0' + hours2;
+            if (minutes2.length == 1) minutes2 = '0' + minutes2;
+            if (minutes2 == 0) minutes2 = '00';
+            if (hours2 >= 12) {
+                if (hours2 == 12) {
+                    hours2 = hours2;
+                    minutes2 = minutes2 + " PM";
+                } else if (hours2 == 24) {
+                    hours2 = 11;
+                    minutes2 = "59 PM";
+                } else {
+                    hours2 = hours2 - 12;
+                    minutes2 = minutes2 + " PM";
+                }
+            } else {
+                hours2 = hours2;
+                minutes2 = minutes2 + " AM";
+            }
+
+            $('.slider-time2RC').html(hours2 + ':' + minutes2);
+        }
+    });
 
     $('#ddlregWarehouseNameId, #ddlEmploymentId').change(function () {
 
@@ -791,7 +949,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                                 $('#JobID').append($('<option></option>').text("Select Job").val(null));
                             $.each(response, function (index, item) {
                                 $('#JobID').append($('<option></option>').text(item.Value).val(item.Id));
-                               
+
                                 });
                                 $('#JobID').removeAttr('multiple')
                                 $('#JobID').multiselect('rebuild');
@@ -827,6 +985,19 @@ $('#ddlRegOpportunityNumberID').change(function () {
                             });
                         });
     });
+
+    $('#ddlregCustomerIDRC').change(function () {
+                        var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
+                    var loads = $('#ddlRegOpportunityNumberIDRC');
+                        var id = $(this).val();
+                        $.getJSON(loadUrl, { projectid: id }, function (response) {
+                            loads.empty(); // remove any existing options
+                            loads.append($('<option></option>').text("Select Opportunity").val(null));
+                            $.each(response, function (index, item) {
+                                loads.append($('<option></option>').text(item.Value).val(item.Id));
+                            });
+                        });
+                });
     function FetchOLA() {
 
         var OLAUrl = '@Url.Action("FetchOLA", "Resource")';
@@ -839,7 +1010,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
         var start_time = $(".slider-time").text();
 
         var startTime = new Date("May 26, 2016 " + start_time);//arbitary
-        
+
 
         var endTime = new Date("May 26, 2016 " + end_time);//arbitary
         var totalMins = Math.floor(endTime - startTime) / 60000;
@@ -856,21 +1027,16 @@ $('#ddlRegOpportunityNumberID').change(function () {
             },
         });
     }
-    function PostData(id) {
-       
+    function PostData(id)
+    {
         var textMessage = "";
-       
-            
-        
         var data = null;
        // alert(this.id);
         if (id.id == "btnregister") {
             var end_time = $(".slider-time2").text();
             var start_time = $(".slider-time").text();
-
             var stt = new Date("May 26, 2016 " + start_time);//arbitary
             stt = stt.getTime();
-
             var endt = new Date("May 26, 2016 " + end_time);//arbitary
             endt = endt.getTime();
             var diff = (endt - stt) / 1000;
@@ -894,7 +1060,6 @@ $('#ddlRegOpportunityNumberID').change(function () {
 
             var stt = new Date("May 26, 2016 " + start_time);//arbitary
             stt = stt.getTime();
-
             var endt = new Date("May 26, 2016 " + end_time);//arbitary
             endt = endt.getTime();
             var diff = (endt - stt) / 1000;
@@ -908,7 +1073,6 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 alert("Minimum booking time shold not be less than 15 mins.");
                 return;
             }
-
             if ($('#ddlregCustomerIDPM').val() == "" || $('#ddlRegOpportunityNumberIDPM').val() == "" || $('#ServiceActivityIDPM').val() == "") {
                 return;
             }
@@ -916,52 +1080,45 @@ $('#ddlRegOpportunityNumberID').change(function () {
             for (var i = 1; i < childrenCount + 1; i++) {
                 textMessage += $("#tb" + i).val() + "    -     " + $(".slider-time2" + i).text() + ";";
             }
-           
-        }
-                    @if (!ViewData.ModelState.IsValid)
-                    {
+            }
+            @if (!ViewData.ModelState.IsValid)
+            {
 
-                    }
-                var loadUrl = '@Url.Action("PostResourceData", "Resource")';
-                var loads = $('#ddlRegOpportunityNumberID');
-        var test = $('#CandidateNameId').val();
-        if (id.id == "btnregister") {
+            }
+            var loadUrl = '@Url.Action("PostResourceData", "Resource")';
+            var loads = $('#ddlRegOpportunityNumberID');
+            var test = $('#CandidateNameId').val();
+            if (id.id == "btnregister") {
             data = {
-                'Day': $('#DatePickId').val(),
-                'ProjectID': $('#ddlregCustomerID').val(),
-                'WarehouseID': $('#ddlregWarehouseNameId').val(),
-                'OpportunityID': $('#ddlRegOpportunityNumberID').val(),
-                'JobID': $('#JobID').val(),
-                'ResourceIds': $('#CandidateNameId').val(),
-                'ServiceActivityID': $('#ServiceActivityID').val(),
-                'StartTime': $(".slider-time").text(),
-                'EndTime': $(".slider-time2").text(),
-                //'EndDate': $('#EndDateId').val(),
-                'Colour': $('#ddlColour').val(),
-                'OLATarget': $('#txtOLA').val(),
-                'Vechicles': $("#ddlVan option:selected").text()
+            'Day': $('#DatePickId').val(),
+            'ProjectID': $('#ddlregCustomerID').val(),
+            'WarehouseID': $('#ddlregWarehouseNameId').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberID').val(),
+            'JobID': $('#JobID').val(),
+            'ResourceIds': $('#CandidateNameId').val(),
+            'ServiceActivityID': $('#ServiceActivityID').val(),
+            'StartTime': $(".slider-time").text(),
+            'EndTime': $(".slider-time2").text(),
+            //'EndDate': $('#EndDateId').val(),
+            'Colour': $('#ddlColour').val(),
+            'OLATarget': $('#txtOLA').val(),
+            'Vechicles': $("#ddlVan option:selected").text()
             };
-        }
-        else {
+            }
+            else {
             data = {
-                'Day': $('#DatePickIdPM').val(),
-                'ProjectID': $('#ddlregCustomerIDPM').val(),
-
-                'OpportunityID': $('#ddlRegOpportunityNumberIDPM').val(),
-
-                'ResourceIds': $('#CandidateNameIdPM').val(),
-                'ServiceActivityID': $('#ServiceActivityIDPM').val(),
-                'StartTime': $(".slider-timePM").text(),
-                'EndTime': $(".slider-time2PM").text(),
-
-                'Colour': $('#ddlColourPM').val(),
-                'TimeSheetComments': $('#txtComments').val(),
-                'AdditionalActivities': textMessage
-                
-
+            'Day': $('#DatePickIdPM').val(),
+            'ProjectID': $('#ddlregCustomerIDPM').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberIDPM').val(),
+            'ResourceIds': $('#CandidateNameIdPM').val(),
+            'ServiceActivityID': $('#ServiceActivityIDPM').val(),
+            'StartTime': $(".slider-timePM").text(),
+            'EndTime': $(".slider-time2PM").text(),
+            'Colour': $('#ddlColourPM').val(),
+            'TimeSheetComments': $('#txtComments').val(),
+            'AdditionalActivities': textMessage
             };
-
-        }
+            }
         $.ajax({
             url: loadUrl,
             type: 'POST',
@@ -974,7 +1131,113 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 alert("error");
             }
         });
+    }
+
+    function RegisterHRTimesheet(id)
+    {
+        var textMessage = "";
+        var data = null;
+       // alert(this.id);
+        if (id.id == "btnregister") {
+            var end_time = $(".slider-time2").text();
+            var start_time = $(".slider-time").text();
+            var stt = new Date("May 26, 2016 " + start_time);//arbitary
+            stt = stt.getTime();
+            var endt = new Date("May 26, 2016 " + end_time);//arbitary
+            endt = endt.getTime();
+            var diff = (endt - stt) / 1000;
+            diff /= (60);
+            diff = Math.abs(Math.round(diff));
+            if (stt >= endt) {
+                alert('start time should be prior to endtime');
+                return;
             }
+            if (diff <= 14) {
+                alert("Minimum booking time shold not be less than 15 mins.");
+                return;
+            }
+            if ($('#ddlregCustomerID').val() == "" || $('#ddlRegOpportunityNumberID').val() == "" || $('#JobID').val() == "" || $('#ServiceActivityID').val() == "") {
+                return;
+            }
+        }
+        if (id.id == "btnregisterPM") {
+            var end_time = $(".slider-time2PM").text();
+            var start_time = $(".slider-timePM").text();
+
+            var stt = new Date("May 26, 2016 " + start_time);//arbitary
+            stt = stt.getTime();
+            var endt = new Date("May 26, 2016 " + end_time);//arbitary
+            endt = endt.getTime();
+            var diff = (endt - stt) / 1000;
+            diff /= (60);
+            diff = Math.abs(Math.round(diff));
+            if (stt >= endt) {
+                alert('start time should be prior to endtime');
+                return;
+            }
+            if (diff <= 14) {
+                alert("Minimum booking time shold not be less than 15 mins.");
+                return;
+            }
+            if ($('#ddlregCustomerIDPM').val() == "" || $('#ddlRegOpportunityNumberIDPM').val() == "" || $('#ServiceActivityIDPM').val() == "") {
+                return;
+            }
+            var childrenCount = $("#pmaddlActivities").children().length / 3;
+            for (var i = 1; i < childrenCount + 1; i++) {
+                textMessage += $("#tb" + i).val() + "    -     " + $(".slider-time2" + i).text() + ";";
+            }
+            }
+            @if (!ViewData.ModelState.IsValid)
+            {
+
+            }
+            var loadUrl = '@Url.Action("PostRecruitmentTimesheet", "Resource")';
+            var loads = $('#ddlRegOpportunityNumberID');
+            var test = $('#CandidateNameId').val();
+            if (id.id == "btnregister") {
+            data = {
+            'Day': $('#DatePickId').val(),
+            'ProjectID': $('#ddlregCustomerID').val(),
+            'WarehouseID': $('#ddlregWarehouseNameId').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberID').val(),
+            'JobID': $('#JobID').val(),
+            'ResourceIds': $('#CandidateNameId').val(),
+            'ServiceActivityID': $('#ServiceActivityID').val(),
+            'StartTime': $(".slider-time").text(),
+            'EndTime': $(".slider-time2").text(),
+            //'EndDate': $('#EndDateId').val(),
+            'Colour': $('#ddlColour').val(),
+            'OLATarget': $('#txtOLA').val(),
+            'Vechicles': $("#ddlVan option:selected").text()
+            };
+            }
+            else {
+            data = {
+            'Day': $('#DatePickIdPM').val(),
+            'ProjectID': $('#ddlregCustomerIDPM').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberIDPM').val(),
+            'ResourceIds': $('#CandidateNameIdPM').val(),
+            'ServiceActivityID': $('#ServiceActivityIDPM').val(),
+            'StartTime': $(".slider-timePM").text(),
+            'EndTime': $(".slider-time2PM").text(),
+            'Colour': $('#ddlColourPM').val(),
+            'TimeSheetComments': $('#txtComments').val(),
+            'AdditionalActivities': textMessage
+            };
+            }
+        $.ajax({
+            url: loadUrl,
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                window.location.href = data.newUrl;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+}
 
     $('#CandidateNameId').multiselect({
         includeSelectAllOption: true,
@@ -990,13 +1253,20 @@ $('#ddlRegOpportunityNumberID').change(function () {
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true
     });
+    $('#CandidateNameIdRC').multiselect({
+        includeSelectAllOption: true,
+        maxHeight: 250,
+        buttonWidth: '280px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
     $('#JobID').multiselect({
         includeSelectAllOption: false,
         maxHeight: 250,
         buttonWidth: '280px',
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true
-    }); 
+    });
     $('#ddlregCustomerID').multiselect({
         includeSelectAllOption: false,
         maxHeight: 250,
