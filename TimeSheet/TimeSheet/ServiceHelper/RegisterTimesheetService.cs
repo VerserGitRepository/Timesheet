@@ -156,5 +156,46 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
+        public static async Task<ReturnModel> RegisterHRBooking(TimeSheetRegisterPMModel RegisterModel)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(TimeSheetAPIURl);
+                    HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ProjectMangersTimeSheet/RegisterPMBooking"), RegisterModel).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                        if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
+                        {
+                            ReturnResult.Message = "PM Timesheet has been registered successfully.";
+                            HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                        }
+                        else if (ReturnResult.Message.Contains("Is Already Booked"))
+                        {
+                            // ReturnResult.Message = "Candidate Timesheet has been registered successfully.";
+                            HttpContext.Current.Session["InfoMessage"] = ReturnResult.Message;
+                        }
+                        else
+                        {
+                            HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                        }
+                    }
+                    else
+                    {
+                        ReturnResult.Message = "There is an issue with the booking. The detail are " + response.ReasonPhrase;
+                        HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "There is an issue with the booking. The detail are " + ex.Message;
+                }
+            }
+            return ReturnResult;
+        }
+
     }
 }

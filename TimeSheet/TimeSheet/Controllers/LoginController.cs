@@ -62,6 +62,11 @@ namespace TimeSheet.Controllers
                         {
                             Session["WarehouseManager"] = true;
                         }
+                        if (r.Value == "HRAdmin")
+                        {
+                            Session["HR"] = true;
+                        }
+
                     }                  
                 }
                 return RedirectToAction("Index", "Home");

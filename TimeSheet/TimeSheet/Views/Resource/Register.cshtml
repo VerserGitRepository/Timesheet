@@ -23,7 +23,7 @@
             <ul class="nav nav-tabs" style="padding-top:15px" id="myTab" role="tablist">
                 <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">BOOK RESOURCES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">BOOK PROJECT MANAGERS</a></li>
-                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">BOOK RECRUITER</a></li>
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERECRUITER">BOOK RECRUITER</a></li>
             </ul>
         </nav>
         <div class="tab-content" style="border-width:thin;border-style:solid;border-color:lightgray;width:70%;padding-top:10px;margin-right:0px">
@@ -90,9 +90,9 @@
                                 @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
                                 @*</div>*@
                                 @*<div style="width: 100px; float:left; height:100px; margin:10px">
-                                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                <button onclick="FetchOLA();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-                            </div>*@
+                                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <button onclick="FetchOLA();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+                                    </div>*@
 
                             </div>
                             <div class="form-group  required col-md-6" tabindex=8>
@@ -300,7 +300,6 @@
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.Day, "", new { @class = "text-danger" })
                                 </div>
 
-
                             </div>
                             <div class="row" style="padding-top:10px">
                                 <div class="form-group  required col-md-6" tabindex=7>
@@ -322,11 +321,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-                            </div>
-
-
+                              </div>
 
                             <br>
                             <div class="row" style="width:670px;padding-left:20px">
@@ -960,21 +955,16 @@ $('#ddlRegOpportunityNumberID').change(function () {
             },
         });
     }
-    function PostData(id) {
-
+    function PostData(id)
+    {
         var textMessage = "";
-
-
-
         var data = null;
        // alert(this.id);
         if (id.id == "btnregister") {
             var end_time = $(".slider-time2").text();
             var start_time = $(".slider-time").text();
-
             var stt = new Date("May 26, 2016 " + start_time);//arbitary
             stt = stt.getTime();
-
             var endt = new Date("May 26, 2016 " + end_time);//arbitary
             endt = endt.getTime();
             var diff = (endt - stt) / 1000;
@@ -998,7 +988,6 @@ $('#ddlRegOpportunityNumberID').change(function () {
 
             var stt = new Date("May 26, 2016 " + start_time);//arbitary
             stt = stt.getTime();
-
             var endt = new Date("May 26, 2016 " + end_time);//arbitary
             endt = endt.getTime();
             var diff = (endt - stt) / 1000;
@@ -1012,7 +1001,6 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 alert("Minimum booking time shold not be less than 15 mins.");
                 return;
             }
-
             if ($('#ddlregCustomerIDPM').val() == "" || $('#ddlRegOpportunityNumberIDPM').val() == "" || $('#ServiceActivityIDPM').val() == "") {
                 return;
             }
@@ -1020,52 +1008,45 @@ $('#ddlRegOpportunityNumberID').change(function () {
             for (var i = 1; i < childrenCount + 1; i++) {
                 textMessage += $("#tb" + i).val() + "    -     " + $(".slider-time2" + i).text() + ";";
             }
+            }
+            @if (!ViewData.ModelState.IsValid)
+            {
 
-        }
-                    @if (!ViewData.ModelState.IsValid)
-                    {
-
-                    }
-                var loadUrl = '@Url.Action("PostResourceData", "Resource")';
-                var loads = $('#ddlRegOpportunityNumberID');
-        var test = $('#CandidateNameId').val();
-        if (id.id == "btnregister") {
+            }
+            var loadUrl = '@Url.Action("PostResourceData", "Resource")';
+            var loads = $('#ddlRegOpportunityNumberID');
+            var test = $('#CandidateNameId').val();
+            if (id.id == "btnregister") {
             data = {
-                'Day': $('#DatePickId').val(),
-                'ProjectID': $('#ddlregCustomerID').val(),
-                'WarehouseID': $('#ddlregWarehouseNameId').val(),
-                'OpportunityID': $('#ddlRegOpportunityNumberID').val(),
-                'JobID': $('#JobID').val(),
-                'ResourceIds': $('#CandidateNameId').val(),
-                'ServiceActivityID': $('#ServiceActivityID').val(),
-                'StartTime': $(".slider-time").text(),
-                'EndTime': $(".slider-time2").text(),
-                //'EndDate': $('#EndDateId').val(),
-                'Colour': $('#ddlColour').val(),
-                'OLATarget': $('#txtOLA').val(),
-                'Vechicles': $("#ddlVan option:selected").text()
+            'Day': $('#DatePickId').val(),
+            'ProjectID': $('#ddlregCustomerID').val(),
+            'WarehouseID': $('#ddlregWarehouseNameId').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberID').val(),
+            'JobID': $('#JobID').val(),
+            'ResourceIds': $('#CandidateNameId').val(),
+            'ServiceActivityID': $('#ServiceActivityID').val(),
+            'StartTime': $(".slider-time").text(),
+            'EndTime': $(".slider-time2").text(),
+            //'EndDate': $('#EndDateId').val(),
+            'Colour': $('#ddlColour').val(),
+            'OLATarget': $('#txtOLA').val(),
+            'Vechicles': $("#ddlVan option:selected").text()
             };
-        }
-        else {
+            }
+            else {
             data = {
-                'Day': $('#DatePickIdPM').val(),
-                'ProjectID': $('#ddlregCustomerIDPM').val(),
-
-                'OpportunityID': $('#ddlRegOpportunityNumberIDPM').val(),
-
-                'ResourceIds': $('#CandidateNameIdPM').val(),
-                'ServiceActivityID': $('#ServiceActivityIDPM').val(),
-                'StartTime': $(".slider-timePM").text(),
-                'EndTime': $(".slider-time2PM").text(),
-
-                'Colour': $('#ddlColourPM').val(),
-                'TimeSheetComments': $('#txtComments').val(),
-                'AdditionalActivities': textMessage
-
-
+            'Day': $('#DatePickIdPM').val(),
+            'ProjectID': $('#ddlregCustomerIDPM').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberIDPM').val(),
+            'ResourceIds': $('#CandidateNameIdPM').val(),
+            'ServiceActivityID': $('#ServiceActivityIDPM').val(),
+            'StartTime': $(".slider-timePM").text(),
+            'EndTime': $(".slider-time2PM").text(),
+            'Colour': $('#ddlColourPM').val(),
+            'TimeSheetComments': $('#txtComments').val(),
+            'AdditionalActivities': textMessage
             };
-
-        }
+            }
         $.ajax({
             url: loadUrl,
             type: 'POST',
@@ -1078,7 +1059,113 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 alert("error");
             }
         });
+    }
+
+    function RegisterHRTimesheet(id)
+    {
+        var textMessage = "";
+        var data = null;
+       // alert(this.id);
+        if (id.id == "btnregister") {
+            var end_time = $(".slider-time2").text();
+            var start_time = $(".slider-time").text();
+            var stt = new Date("May 26, 2016 " + start_time);//arbitary
+            stt = stt.getTime();
+            var endt = new Date("May 26, 2016 " + end_time);//arbitary
+            endt = endt.getTime();
+            var diff = (endt - stt) / 1000;
+            diff /= (60);
+            diff = Math.abs(Math.round(diff));
+            if (stt >= endt) {
+                alert('start time should be prior to endtime');
+                return;
             }
+            if (diff <= 14) {
+                alert("Minimum booking time shold not be less than 15 mins.");
+                return;
+            }
+            if ($('#ddlregCustomerID').val() == "" || $('#ddlRegOpportunityNumberID').val() == "" || $('#JobID').val() == "" || $('#ServiceActivityID').val() == "") {
+                return;
+            }
+        }
+        if (id.id == "btnregisterPM") {
+            var end_time = $(".slider-time2PM").text();
+            var start_time = $(".slider-timePM").text();
+
+            var stt = new Date("May 26, 2016 " + start_time);//arbitary
+            stt = stt.getTime();
+            var endt = new Date("May 26, 2016 " + end_time);//arbitary
+            endt = endt.getTime();
+            var diff = (endt - stt) / 1000;
+            diff /= (60);
+            diff = Math.abs(Math.round(diff));
+            if (stt >= endt) {
+                alert('start time should be prior to endtime');
+                return;
+            }
+            if (diff <= 14) {
+                alert("Minimum booking time shold not be less than 15 mins.");
+                return;
+            }
+            if ($('#ddlregCustomerIDPM').val() == "" || $('#ddlRegOpportunityNumberIDPM').val() == "" || $('#ServiceActivityIDPM').val() == "") {
+                return;
+            }
+            var childrenCount = $("#pmaddlActivities").children().length / 3;
+            for (var i = 1; i < childrenCount + 1; i++) {
+                textMessage += $("#tb" + i).val() + "    -     " + $(".slider-time2" + i).text() + ";";
+            }
+            }
+            @if (!ViewData.ModelState.IsValid)
+            {
+
+            }
+            var loadUrl = '@Url.Action("PostRecruitmentTimesheet", "Resource")';
+            var loads = $('#ddlRegOpportunityNumberID');
+            var test = $('#CandidateNameId').val();
+            if (id.id == "btnregister") {
+            data = {
+            'Day': $('#DatePickId').val(),
+            'ProjectID': $('#ddlregCustomerID').val(),
+            'WarehouseID': $('#ddlregWarehouseNameId').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberID').val(),
+            'JobID': $('#JobID').val(),
+            'ResourceIds': $('#CandidateNameId').val(),
+            'ServiceActivityID': $('#ServiceActivityID').val(),
+            'StartTime': $(".slider-time").text(),
+            'EndTime': $(".slider-time2").text(),
+            //'EndDate': $('#EndDateId').val(),
+            'Colour': $('#ddlColour').val(),
+            'OLATarget': $('#txtOLA').val(),
+            'Vechicles': $("#ddlVan option:selected").text()
+            };
+            }
+            else {
+            data = {
+            'Day': $('#DatePickIdPM').val(),
+            'ProjectID': $('#ddlregCustomerIDPM').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberIDPM').val(),
+            'ResourceIds': $('#CandidateNameIdPM').val(),
+            'ServiceActivityID': $('#ServiceActivityIDPM').val(),
+            'StartTime': $(".slider-timePM").text(),
+            'EndTime': $(".slider-time2PM").text(),
+            'Colour': $('#ddlColourPM').val(),
+            'TimeSheetComments': $('#txtComments').val(),
+            'AdditionalActivities': textMessage
+            };
+            }
+        $.ajax({
+            url: loadUrl,
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                window.location.href = data.newUrl;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+}
 
     $('#CandidateNameId').multiselect({
         includeSelectAllOption: true,

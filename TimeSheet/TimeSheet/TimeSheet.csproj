@@ -197,6 +197,7 @@
     <Compile Include="Models\AggregatedCompletedTimesheetModel.cs" />
     <Compile Include="Models\CompletedTimesheetModel.cs" />
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
+    <Compile Include="Models\HRActivities.cs" />
     <Compile Include="Models\JMSEntities\JMSModelEntities.cs" />
     <Compile Include="Models\ListItems.cs" />
     <Compile Include="Models\OpportunityListUpdateModel.cs" />
