@@ -73,7 +73,8 @@ namespace TimeSheet.Controllers
                 model.ProjectManagerNameList = new SelectList(ListItemService.ProjectManagers().Result, "ID", "Value");
                 model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
-                return View(model);
+                model.HRActivityList = new SelectList(TimeSheetAPIHelperService.HRActivities().Result, "ID", "Value");
+                    return View(model);
                 }
                 Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
                 return RedirectToAction("Index", "Home");

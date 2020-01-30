@@ -263,25 +263,25 @@
 
                                 <div class="form-group  required col-md-6" tabindex=1>
                                     <label class="control-label">Project</label>
-                                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerIDPM" })
+                                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerIDRC" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.ProjectID, "", new { @class = "text-danger" })
 
                                 </div>
                                 <div class="form-group required col-md-6" tabindex=2>
                                     <label class="control-label">Resource</label><br />
-                                    @Html.DropDownListFor(model => Model.ResourceID, Model.ProjectManagerNameList, new { @id = "CandidateNameIdPM", @style = "height:10px; width:10px;", @multiple = "multiple" })
+                                    @Html.DropDownListFor(model => Model.ResourceID, Model.ProjectManagerNameList, new { @id = "CandidateNameIdRC", @style = "height:10px; width:10px;", @multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => Model.ResourceID, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="row" style="padding-top:10px">
                                 <div class="form-group  required col-md-6" tabindex=3>
                                     <label class="control-label">Opportunity Number</label>
-                                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberIDPM" })
+                                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberIDRC" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.OpportunityID, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group col-md-6" tabindex=4>
                                     <label>Theme Colour</label>
-                                    @Html.DropDownListFor(model => model.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColourPM" })
+                                    @Html.DropDownListFor(model => model.Colour, new SelectList(new[] { "Red", "Blue", "Black", "Green", "Pink" }), new { @class = "form-control", id = "ddlColourRC" })
                                 </div>
 
                             </div>
@@ -289,14 +289,14 @@
                                 <div class="form-group  required col-md-6" tabindex=5>
                                     <label class="control-label">Activity</label>
 
-                                    @Html.DropDownListFor(model => model.ServiceActivityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select a Service", new { @class = "form-control", id = "ServiceActivityIDPM" })
+                                    @Html.DropDownListFor(model => model.ServiceActivityID, @Model.HRActivityList, "Select a Service", new { @class = "form-control", id = "ServiceActivityIDRC" })
                                     @Html.ValidationMessageFor(model => model.ServiceActivityID, "", new { @class = "text-danger" })
 
                                 </div>
                                 <div class="form-group required col-md-6" tabindex=6>
                                     <label class="control-label">Start Date</label>
 
-                                    @Html.EditorFor(model => model.Day, DateTime.Now.Date.ToShortDateString(), new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickIdPM" } })
+                                    @Html.EditorFor(model => model.Day, DateTime.Now.Date.ToShortDateString(), new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickIdRC" } })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.Day, "", new { @class = "text-danger" })
                                 </div>
 
@@ -311,13 +311,13 @@
 
                                 </div>
                                 <div id="PMActivity" class="form-group required col-md-6" tabindex=8>
-                                    <div id="time-rangePM" style="padding-top:10px;width:270px" tabindex=7>
+                                    <div id="time-rangeRC" style="padding-top:10px;width:270px" tabindex=7>
                                         <p>
-                                            Start Time <b><span class="slider-timePM">08:30 AM</span></b>&nbsp;&nbsp;&nbsp;End Time <b><span class="slider-time2PM">5:00 PM</span></b>
+                                            Start Time <b><span class="slider-timePM">08:30 AM</span></b>&nbsp;&nbsp;&nbsp;End Time <b><span class="slider-time2RC">5:00 PM</span></b>
 
                                         </p>
                                         <div class="sliders_step1">
-                                            <div id="slider-rangePM"></div>
+                                            <div id="slider-rangeRC"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -326,12 +326,12 @@
                             <br>
                             <div class="row" style="width:670px;padding-left:20px">
                                 <label>Comments</label>
-                                @Html.TextAreaFor(model => model.PMRegisterViewModel.TimeSheetComments, new { @id = "txtComments", placeholder = "Comments here...", @class = "form-control-100 textarea", style = "border:solid 1px lightgray;" })
+                                @Html.TextAreaFor(model => model.PMRegisterViewModel.TimeSheetComments, new { @id = "txtCommentsRC", placeholder = "Comments here...", @class = "form-control-100 textarea", style = "border:solid 1px lightgray;" })
                                 @Html.ValidationMessageFor(model => model.PMRegisterViewModel.TimeSheetComments, "", new { @class = "text-danger" })
                             </div>
 
                             <div class=" col-md-offset-5" style="padding-top:20px">
-                                <button type="submit" class="btn btn-warning btn-md" id="btnregisterPM" onclick="PostData(this);">
+                                <button type="submit" class="btn btn-warning btn-md" id="btnregisterRC" onclick="PostData(this);">
                                     <span class="glyphicon glyphicon-ok-sign"></span> Register
                                 </button>
                             </div>
@@ -802,6 +802,65 @@
             $('.slider-time2PM').html(hours2 + ':' + minutes2);
         }
     });
+    $("#slider-rangeRC").slider({
+        range: true,
+        min: 0,
+        max: 1440,
+        step: 15,
+        values: [540, 1020],
+        slide: function (e, ui) {
+            var hours1 = Math.floor(ui.values[0] / 60);
+            var minutes1 = ui.values[0] - (hours1 * 60);
+
+            if (hours1.length == 1) hours1 = '0' + hours1;
+            if (minutes1.length == 1) minutes1 = '0' + minutes1;
+            if (minutes1 == 0) minutes1 = '00';
+            if (hours1 >= 12) {
+                if (hours1 == 12) {
+                    hours1 = hours1;
+                    minutes1 = minutes1 + " PM";
+                } else {
+                    hours1 = hours1 - 12;
+                    minutes1 = minutes1 + " PM";
+                }
+            } else {
+                hours1 = hours1;
+                minutes1 = minutes1 + " AM";
+            }
+            if (hours1 == 0) {
+                hours1 = 12;
+                minutes1 = minutes1;
+            }
+
+
+
+            $('.slider-timeRC').html(hours1 + ':' + minutes1);
+
+            var hours2 = Math.floor(ui.values[1] / 60);
+            var minutes2 = ui.values[1] - (hours2 * 60);
+
+            if (hours2.length == 1) hours2 = '0' + hours2;
+            if (minutes2.length == 1) minutes2 = '0' + minutes2;
+            if (minutes2 == 0) minutes2 = '00';
+            if (hours2 >= 12) {
+                if (hours2 == 12) {
+                    hours2 = hours2;
+                    minutes2 = minutes2 + " PM";
+                } else if (hours2 == 24) {
+                    hours2 = 11;
+                    minutes2 = "59 PM";
+                } else {
+                    hours2 = hours2 - 12;
+                    minutes2 = minutes2 + " PM";
+                }
+            } else {
+                hours2 = hours2;
+                minutes2 = minutes2 + " AM";
+            }
+
+            $('.slider-time2RC').html(hours2 + ':' + minutes2);
+        }
+    });
 
     $('#ddlregWarehouseNameId, #ddlEmploymentId').change(function () {
 
@@ -926,6 +985,19 @@ $('#ddlRegOpportunityNumberID').change(function () {
                             });
                         });
     });
+
+    $('#ddlregCustomerIDRC').change(function () {
+                        var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
+                    var loads = $('#ddlRegOpportunityNumberIDRC');
+                        var id = $(this).val();
+                        $.getJSON(loadUrl, { projectid: id }, function (response) {
+                            loads.empty(); // remove any existing options
+                            loads.append($('<option></option>').text("Select Opportunity").val(null));
+                            $.each(response, function (index, item) {
+                                loads.append($('<option></option>').text(item.Value).val(item.Id));
+                            });
+                        });
+                });
     function FetchOLA() {
 
         var OLAUrl = '@Url.Action("FetchOLA", "Resource")';
@@ -1175,6 +1247,13 @@ $('#ddlRegOpportunityNumberID').change(function () {
         enableCaseInsensitiveFiltering: true
     });
     $('#CandidateNameIdPM').multiselect({
+        includeSelectAllOption: true,
+        maxHeight: 250,
+        buttonWidth: '280px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
+    $('#CandidateNameIdRC').multiselect({
         includeSelectAllOption: true,
         maxHeight: 250,
         buttonWidth: '280px',
