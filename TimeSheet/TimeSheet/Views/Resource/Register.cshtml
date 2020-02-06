@@ -61,7 +61,7 @@
                             <div class="form-group  required col-md-6" tabindex=4>
                                 <label class="control-label">Opportunity Number</label>
 
-                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberID" })
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @style = "height:10px; width:10px;", @id = "ddlRegOpportunityNumberID", @multiple = "multiple" })
                                 @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OpportunityNumberID, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -162,7 +162,8 @@
 
                                 <div class="form-group  required col-md-6" tabindex=1>
                                     <label class="control-label">Project</label>
-                                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerIDPM" })
+                                    <br />
+                                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control", id = "ddlregCustomerIDPM", @multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.ProjectID, "", new { @class = "text-danger" })
 
                                 </div>
@@ -175,7 +176,7 @@
                             <div class="row" style="padding-top:10px">
                                 <div class="form-group  required col-md-6" tabindex=3>
                                     <label class="control-label">Opportunity Number</label>
-                                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberIDPM" })
+                                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @style = "height:10px; width:10px;", id = "ddlRegOpportunityNumberIDPM", @multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.OpportunityID, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group col-md-6" tabindex=4>
@@ -259,7 +260,8 @@
 
                                 <div class="form-group  required col-md-6" tabindex=1>
                                     <label class="control-label">Project</label>
-                                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "Select a Project", new { @class = "form-control ddlregCustomerID", id = "ddlregCustomerIDRC" })
+                                    <br />
+                                    @Html.DropDownListFor(model => model.ProjectID, Model.SalesForceProjectlist, "Select a Project", new { @class = "form-control", id = "ddlregCustomerIDRC", @multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.ProjectID, "", new { @class = "text-danger" })
 
                                 </div>
@@ -272,7 +274,7 @@
                             <div class="row" style="padding-top:10px">
                                 <div class="form-group  required col-md-6" tabindex=3>
                                     <label class="control-label">Opportunity Number</label>
-                                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberIDRC" })
+                                    @Html.DropDownListFor(model => model.OpportunityID, Model.SalesForceOpportunityNumberList, "Select Opportunity Number", new { @class = "form-control", id = "ddlRegOpportunityNumberIDRC", @multiple = "multiple" })
                                     @Html.ValidationMessageFor(model => model.PMRegisterViewModel.OpportunityID, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group col-md-6" tabindex=4>
@@ -543,8 +545,24 @@
     $(document).ready(function () {
         $('#ddlregCustomerID').removeAttr('multiple')
         $('#ddlregCustomerID').multiselect('rebuild');
+
+        $('#ddlRegOpportunityNumberID').removeAttr('multiple')
+        $('#ddlRegOpportunityNumberID').multiselect('rebuild');
+
+        $('#ddlRegOpportunityNumberIDPM').removeAttr('multiple')
+        $('#ddlRegOpportunityNumberIDPM').multiselect('rebuild');
+
+        $('#ddlRegOpportunityNumberIDRC').removeAttr('multiple')
+        $('#ddlRegOpportunityNumberIDRC').multiselect('rebuild');
+
         $('#ServiceActivityID').removeAttr('multiple')
         $('#ServiceActivityID').multiselect('rebuild');
+
+        $('#ddlregCustomerIDRC').removeAttr('multiple')
+        $('#ddlregCustomerIDRC').multiselect('rebuild');
+
+        $('#ddlregCustomerIDPM').removeAttr('multiple')
+        $('#ddlregCustomerIDPM').multiselect('rebuild');
         var iCnt = 0;
         // CREATE A "DIV" ELEMENT AND DESIGN IT USING jQuery ".css()" CLASS.
         var container = $(document.createElement('div')).css({
@@ -907,6 +925,7 @@
                 $('#ddlregCustomerID').change(function () {
                         var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
                     var loads = $('#ddlRegOpportunityNumberID');
+                    $('#ddlRegOpportunityNumberID').empty().multiselect('refresh')
                         var id = $(this).val();
                         $.getJSON(loadUrl, { projectid: id }, function (response) {
                             loads.empty(); // remove any existing options
@@ -914,6 +933,8 @@
                             $.each(response, function (index, item) {
                                 loads.append($('<option></option>').text(item.Value).val(item.Id));
                             });
+                            $('#ddlRegOpportunityNumberID').removeAttr('multiple');
+                            $('#ddlRegOpportunityNumberID').multiselect('rebuild');
                         });
                 });
                 $('#ddlRegOpportunityNumberID').change(function () {
@@ -957,7 +978,8 @@ $('#ddlRegOpportunityNumberID').change(function () {
 
     $('#ddlregCustomerIDPM').change(function () {
                         var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
-                    var loads = $('#ddlRegOpportunityNumberIDPM');
+        var loads = $('#ddlRegOpportunityNumberIDPM');
+        $('#ddlRegOpportunityNumberIDPM').empty().multiselect('refresh');
                         var id = $(this).val();
                         $.getJSON(loadUrl, { projectid: id }, function (response) {
                             loads.empty(); // remove any existing options
@@ -965,6 +987,8 @@ $('#ddlRegOpportunityNumberID').change(function () {
                             $.each(response, function (index, item) {
                                 loads.append($('<option></option>').text(item.Value).val(item.Id));
                             });
+                            $('#ddlRegOpportunityNumberIDPM').removeAttr('multiple')
+                            $('#ddlRegOpportunityNumberIDPM').multiselect('rebuild');
                         });
                 });
     $('#ddlRegOpportunityNumberIDPM').change(function () {
@@ -1207,7 +1231,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
             'Vechicles': $("#ddlVan option:selected").text()
             };
             }
-            else {
+            else if (id.id == "btnregisterPM") {
             data = {
             'Day': $('#DatePickIdPM').val(),
             'ProjectID': $('#ddlregCustomerIDPM').val(),
@@ -1218,8 +1242,22 @@ $('#ddlRegOpportunityNumberID').change(function () {
             'EndTime': $(".slider-time2PM").text(),
             'Colour': $('#ddlColourPM').val(),
             'TimeSheetComments': $('#txtComments').val(),
-            'AdditionalActivities': textMessage
+           // 'AdditionalActivities': textMessage
             };
+        }
+            else {
+                data = {
+                    'Day': $('#DatePickIdRC').val(),
+                    'ProjectID': $('#ddlregCustomerIDRC').val(),
+                    'OpportunityID': $('#ddlRegOpportunityNumberIDRC').val(),
+                    'ResourceIds': $('#CandidateNameIdRC').val(),
+                    'ServiceActivityID': $('#ServiceActivityIDRC').val(),
+                    'StartTime': $(".slider-timeRC").text(),
+                    'EndTime': $(".slider-time2RC").text(),
+                    'Colour': $('#ddlColourRC').val(),
+                    'TimeSheetComments': $('#txtCommentsRC').val()
+              
+                };
             }
         $.ajax({
             url: loadUrl,
@@ -1271,6 +1309,42 @@ $('#ddlRegOpportunityNumberID').change(function () {
         enableCaseInsensitiveFiltering: true
     });
     $('#ServiceActivityID').multiselect({
+        includeSelectAllOption: false,
+        maxHeight: 250,
+        buttonWidth: '280px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
+
+   $('#ddlRegOpportunityNumberID').multiselect({
+        includeSelectAllOption: false,
+        maxHeight: 250,
+        buttonWidth: '280px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
+    $('#ddlRegOpportunityNumberIDPM').multiselect({
+        includeSelectAllOption: false,
+        maxHeight: 250,
+        buttonWidth: '280px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
+    $('#ddlRegOpportunityNumberIDRC').multiselect({
+        includeSelectAllOption: false,
+        maxHeight: 250,
+        buttonWidth: '280px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
+    $('#ddlregCustomerIDPM').multiselect({
+        includeSelectAllOption: false,
+        maxHeight: 250,
+        buttonWidth: '280px',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true
+    });
+    $('#ddlregCustomerIDRC').multiselect({
         includeSelectAllOption: false,
         maxHeight: 250,
         buttonWidth: '280px',

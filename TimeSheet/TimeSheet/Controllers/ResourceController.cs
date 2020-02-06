@@ -58,10 +58,14 @@ namespace TimeSheet.Controllers
             {
                 if (UserRoles.UserCanRegisterTimesheet() == true)
                 {
-                    TimeSheetViewModel model = new TimeSheetViewModel();
+                TimeSheetViewModel model = new TimeSheetViewModel();
+                    List<ListItemViewModel> salesForceOpp = new List<ListItemViewModel>();
                 model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
                 model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
-                var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
+                model.SalesForceProjectlist = new SelectList(TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp),"Value", "OpportunityNumber");
+                model.SalesForceOpportunityNumberList = new SelectList(salesForceOpp, "Value", "OpportunityNumber");
+
+                    var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
                 {
                     Id = x.Id,
                     Value = x.Value
