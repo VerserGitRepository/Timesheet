@@ -30,7 +30,6 @@ namespace TimeSheet.Controllers
                 Session.RemoveAll();
                 Session.Abandon();
                 Session["ErrorMessage"] = "Username Or Password Is Empty!";
-
                 return View("Login");
             }
             LoginModel user = new LoginModel { UserName = login.UserName, Password = login.Password };
@@ -40,7 +39,7 @@ namespace TimeSheet.Controllers
                 Session["Username"] = login.UserName;
                 Session["FullName"] = userReturn.Result.FullName;
                 Session["ErrorMessage"] = null;
-
+                Session["HR"] = null;
                var _roles = LoginService.UserRoleList(login.UserName).Result;
                 if (_roles.Count() > 0 )
                 {
@@ -49,10 +48,12 @@ namespace TimeSheet.Controllers
                         if (r.Value == "Administrator")
                         {
                             Session["Administrator"] = true;
+                            Session["HR"] = true;
                         }
                         if (r.Value == "Accounts")
                         {
                             Session["Accounts"] = true;
+                            Session["HR"] = true;
                         }
                         if (r.Value == "ProjectmanagerAdmin")
                         {
@@ -66,7 +67,6 @@ namespace TimeSheet.Controllers
                         {
                             Session["HR"] = true;
                         }
-
                     }                  
                 }
                 return RedirectToAction("Index", "Home");
