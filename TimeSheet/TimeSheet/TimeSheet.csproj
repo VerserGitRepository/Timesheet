@@ -215,6 +215,7 @@
     <Compile Include="Models\ListItems.cs" />
     <Compile Include="Models\OpportunityListUpdateModel.cs" />
     <Compile Include="Models\OpportunityListModel.cs" />
+    <Compile Include="Models\HRRegisterViewModel.cs" />
     <Compile Include="Models\PMRegisterViewModel.cs" />
     <Compile Include="Models\ProfitLossModel.cs" />
     <Compile Include="Models\ProjectionEntryModel.cs" />
