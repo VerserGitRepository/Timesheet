@@ -46,18 +46,13 @@
                     </td>
                     <td class="Day" width="7%">
                         <span>@item.Day.Value.ToShortDateString()</span>
-                        @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
-
+                    
                     </td>
                     <td class="StartTime">
                         <span>@item.StartTime.Value.ToShortTimeString()</span>
                         <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
                     </td>
-                    @*<td class="EndDate" width="8%">
-            @Html.DisplayFor(modelItem => item.EndDate)
-
-        </td>*@
-
+  
                     <td class="EndTime" width="8%">
                         <span>@item.EndTime.Value.ToShortTimeString()</span>
                         <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using TimeSheet.Models;
+using TimeSheet.VerserSalesforce;
 
 namespace TimeSheet.ServiceHelper
 {
@@ -641,5 +644,44 @@ namespace TimeSheet.ServiceHelper
         //    }
         //    return CostModelLists;
         //}
+
+        public static List<ListItemViewModel> SalesForceEntities(out List<ListItemViewModel> opportunityList)
+        {
+            opportunityList = new List<ListItemViewModel>();
+            List<ListItemViewModel> projectList = new List<ListItemViewModel>();
+            var SfdcBinding = new SforceService();
+            LoginResult CurrentLoginResult = null;
+            var dat = System.DateTime.Now;
+            dat = dat.AddDays(-180);
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            CurrentLoginResult = SfdcBinding.login("basanagouda.patil@verser.com.au", "Verser2020QSfDyeaEEHZKjOL4OHizt4Iu");
+            SfdcBinding.Url = CurrentLoginResult.serverUrl;
+            SfdcBinding.SessionHeaderValue = new SessionHeader();
+            SfdcBinding.SessionHeaderValue.sessionId = CurrentLoginResult.sessionId;
+            QueryResult queryResult = null;
+            String SOQL = "";
+            SOQL = "select OwnerId,Name,Opportunity_Number__c from Opportunity where Date_Requested__c >" + dat.ToString("yyyy-MM-dd");
+            queryResult = SfdcBinding.query(SOQL);
+           // StreamWriter info = new StreamWriter("C:\\temp\\salesforce.txt");
+            if (queryResult.size > 0)
+            {
+                for (int i = 0; i < queryResult.records.Length; i++)
+                {
+
+                    Opportunity lead = (Opportunity)queryResult.records[i];
+                    string firstName = lead.OwnerId;
+                    string lastName = lead.Name;
+                    string businessPhone = lead.Opportunity_Number__c;
+
+                    //info.WriteLine("ownerId:" + firstName);
+                    //info.WriteLine("Name:" + lastName);
+                    //info.WriteLine("opportunity:" + businessPhone);
+                    //info.WriteLine("Manager:" + lead.Opportunity_Manager__c);
+                    opportunityList.Add(new ListItemViewModel() { Value = lead.Opportunity_Number__c, OpportunityNumber = lead.Opportunity_Number__c });
+                    projectList.Add(new ListItemViewModel() { Value = lead.Name, OpportunityNumber = lead.Name });
+                }
+            }
+            return projectList;
+        }
     }
 }
