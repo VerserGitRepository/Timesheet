@@ -23,5 +23,6 @@ namespace TimeSheet.Models
         public SelectList ProjectManagerNameList { get; set; }
         public SelectList StatusList { get; set; }
         public SelectList EmploymentList { get; set; }
+        public string AdditionalActivities { get; set; }
     }
 }

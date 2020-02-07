@@ -254,16 +254,10 @@ namespace TimeSheet.Controllers
 
 
         }
-            
-               
-          
-
-            // return View("~ManageCalender/Index");
-        
+                   
         [HttpPost]
         public ActionResult PostRecruitmentTimesheet(TimeSheetViewModel theModel)
         {
-            
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -279,50 +273,26 @@ namespace TimeSheet.Controllers
             }
             for (int i = 0; i < theModel.ResourceIDs.Count; i++)
             {
-                TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
-                string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
-                string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
-                string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
-                string dtSt = dateString + " " + StartTimeString;
-                string dtEn = dateString + " " + EndTimeString;
-                var StartdateTime = Convert.ToDateTime(dtSt);
-                var EnddateTime = Convert.ToDateTime(dtEn);
-                regModel.CandidateNameId = theModel.ResourceIDs[i];
-                regModel.ResourceID = theModel.ResourceIDs[i];
-                regModel.Colour = theModel.Colour;
-                regModel.Day = theModel.Day;
-                regModel.EndTime = EnddateTime;
-                regModel.Id = theModel.Id;
-                regModel.OLATarget = theModel.OLATarget;
-                regModel.OpportunityNumberID = theModel.OpportunityID;
-                regModel.OpportunityID = theModel.OpportunityID;
-                regModel.ProjectID = theModel.ProjectID;
-                regModel.ServiceActivityId = theModel.ServiceActivityID;
-                regModel.StartTime = StartdateTime;
-                regModel.StatusID = theModel.StatusID;
-                regModel.WarehouseNameId = theModel.WarehouseID;
-                //regModel.JobID = theModel.JobID;
-                regModel.FullName = Session["FullName"].ToString();
-                regModel.TimeSheetComments = theModel.TimeSheetComments;
+                
                 string addlActvty = "";
-                    if (theModel.AdditionalActivities != null)
-                    {
-                        addlActvty = theModel.AdditionalActivities.Replace(";undefined", "");
-                    }
-                    TimeSheetRegisterPMModel regPMModel = new TimeSheetRegisterPMModel
-                    {
-                        Day = regModel.Day,
-                        StartTime = regModel.StartTime,
-                        EndTime = regModel.EndTime,
-                        ServiceActivityID = regModel.ServiceActivityId,
-                        ResourceID = theModel.ResourceIDs[i],
-                        ProjectID = regModel.ProjectID,
-                        OpportunityID = regModel.OpportunityNumberID,
-                        Colour = regModel.Colour,
-                        TimeSheetComments = regModel.TimeSheetComments,
-                        AdditionalActivities = addlActvty
-                    };
-                    var a = RegisterTimesheetService.RegisterHRBooking(regPMModel);               
+                if (theModel.AdditionalActivities != null)
+                {
+                    addlActvty = theModel.AdditionalActivities.Replace(";undefined", "");
+                }
+                HRRegisterViewModel regHRModel = new HRRegisterViewModel
+                {
+                    Day = Convert.ToDateTime(theModel.Day),
+                    StartTime = Convert.ToDateTime(theModel.StartTime),
+                    EndTime = Convert.ToDateTime(theModel.EndTime),
+                    ServiceActivityID = Convert.ToInt32(theModel.ServiceActivityID),
+                    ResourceID = Convert.ToInt32(theModel.ResourceIDs[i]),
+                    ProjectID = Convert.ToInt32(theModel.ProjectID),
+                    OpportunityID = Convert.ToInt32(theModel.OpportunityID),
+                    Colour = theModel.Colour,
+                    TimeSheetComments = theModel.TimeSheetComments,
+                    AdditionalActivities = addlActvty
+                };
+                var a = RegisterTimesheetService.RegisterHRBooking(regHRModel);               
             }           
                 return Json(new { newUrl = Url.Action("Register", "Resource") });       
         }
