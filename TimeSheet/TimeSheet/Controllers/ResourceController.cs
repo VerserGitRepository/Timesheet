@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
-using System.Reflection;
-using TimeSheet.Utils;
 
 namespace TimeSheet.Controllers
 {
     public class ResourceController : Controller
-    {               
-    public ActionResult Index()
+    {
+        public ActionResult Index()
         {
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
-            else 
+            else
             {
                 if (UserRoles.UserCanRegisterTimesheet() == true)
                 {
@@ -32,8 +28,8 @@ namespace TimeSheet.Controllers
                 Session["ErrorMessage"] = "Resource Specifics Pemission Is Restricted!";
                 return RedirectToAction("Index", "Home");
             }
-
         }
+
         public ActionResult _ResourceBooked(string ResourceName)
         {
             if (Session["Username"] == null)
@@ -48,6 +44,7 @@ namespace TimeSheet.Controllers
                 return PartialView("_ResourceBooked", model);
             }
         }
+
         public ActionResult Register()
         {
             if (Session["Username"] == null)
@@ -58,36 +55,36 @@ namespace TimeSheet.Controllers
             {
                 if (UserRoles.UserCanRegisterTimesheet() == true)
                 {
-                TimeSheetViewModel model = new TimeSheetViewModel();
+                    TimeSheetViewModel model = new TimeSheetViewModel();
                     List<ListItemViewModel> salesForceOpp = new List<ListItemViewModel>();
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
-                model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
-                model.SalesForceProjectlist = new SelectList(TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp),"Value", "OpportunityNumber");
-                model.SalesForceOpportunityNumberList = new SelectList(salesForceOpp, "Value", "OpportunityNumber");
+                    model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
+                    model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
+                    model.SalesForceProjectlist = new SelectList(TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp), "Value", "OpportunityNumber");
+                    model.SalesForceOpportunityNumberList = new SelectList(salesForceOpp, "Value", "OpportunityNumber");
 
                     var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
-                {
-                    Id = x.Id,
-                    Value = x.Value
-                });
-                int opportunityId = listitem.FirstOrDefault().Id;
-                model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
-                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
-                model.HRBookingResourceList = new SelectList(ListItemService.HRBookingResources().Result, "ID", "Value");
-                model.ProjectManagerNameList = new SelectList(ListItemService.ProjectManagers().Result, "ID", "Value");
-                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
-                model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
-                model.HRActivityList = new SelectList(TimeSheetAPIHelperService.HRActivities().Result, "ID", "Value");
+                    {
+                        Id = x.Id,
+                        Value = x.Value
+                    });
+                    int opportunityId = listitem.FirstOrDefault().Id;
+                    model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
+                    model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
+                    model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+                    model.HRBookingResourceList = new SelectList(ListItemService.HRBookingResources().Result, "ID", "Value");
+                    model.ProjectManagerNameList = new SelectList(ListItemService.ProjectManagers().Result, "ID", "Value");
+                    model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
+                    model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
+                    model.HRActivityList = new SelectList(TimeSheetAPIHelperService.HRActivities().Result, "ID", "Value");
                     return View(model);
                 }
                 Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
                 return RedirectToAction("Index", "Home");
             }
         }
+
         public ActionResult ResourceRegister(string day)
         {
-
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -127,7 +124,7 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Login", "Login");
             }
             if (UserRoles.UserCanRegisterTimesheet() != true)
-            { 
+            {
                 Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
                 return RedirectToAction("Index", "Home");
             }
@@ -160,9 +157,9 @@ namespace TimeSheet.Controllers
                 regModel.StatusID = theModel.StatusID;
                 regModel.WarehouseNameId = theModel.WarehouseID;
                 regModel.JobID = theModel.JobID;
-                regModel.FullName = Session["FullName"].ToString();                     
+                regModel.FullName = Session["FullName"].ToString();
                 regModel.TimeSheetComments = theModel.TimeSheetComments;
-                regModel.Vechicles = theModel.Vechicles;          
+                regModel.Vechicles = theModel.Vechicles;
                 if (regModel.JobID == null || regModel.JobID == 0)
                 {
                     isPMBooking = true;
@@ -171,7 +168,7 @@ namespace TimeSheet.Controllers
                     {
                         addlActvty = theModel.AdditionalActivities.Replace(";undefined", "");
                     }
-                   
+
                     TimeSheetRegisterPMModel regPMModel = new TimeSheetRegisterPMModel
                     {
                         Day = regModel.Day,
@@ -187,7 +184,7 @@ namespace TimeSheet.Controllers
                     };
 
                     var a = RegisterTimesheetService.RegisterPMBooking(regPMModel);
-                    
+
                 }
                 else
                 {
@@ -204,14 +201,11 @@ namespace TimeSheet.Controllers
             {
                 return Json(new { newUrl = Url.Action("Register", "Resource") });
             }
-            
-            // return View("~ManageCalender/Index");
         }
 
         [HttpPost]
         public ActionResult PostHRData(HRRegisterViewModel theModel)
         {
-          
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -225,36 +219,28 @@ namespace TimeSheet.Controllers
             {
                 return RedirectToAction("Register", "Timesheet");
             }
-            //for (int i = 0; i < theModel.ca.Count; i++)
-            //{
-                TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
-                string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
-                string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
-                string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
-                string dtSt = dateString + " " + StartTimeString;
-                string dtEn = dateString + " " + EndTimeString;
-                var StartdateTime = Convert.ToDateTime(dtSt);
-                var EnddateTime = Convert.ToDateTime(dtEn);
-              
-                regModel.Colour = theModel.Colour;
-                regModel.Day = theModel.Day;
-                regModel.EndTime = EnddateTime;
-               
-                regModel.OpportunityNumberID = theModel.OpportunityID;
-                regModel.OpportunityID = theModel.OpportunityID;
-                regModel.ProjectID = theModel.ProjectID;
-                regModel.ServiceActivityId = theModel.ServiceActivityID;
-                regModel.StartTime = StartdateTime;
-              
-                regModel.WarehouseNameId = theModel.WarehouseID;
-               
-                regModel.FullName = Session["FullName"].ToString();
-                regModel.TimeSheetComments = theModel.TimeSheetComments;
-            return Json(new { newUrl = Url.Action("Register", "Resource") });
+            TimeSheetRegisterModel regModel = new TimeSheetRegisterModel();
+            string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
+            string StartTimeString = String.Format("{0:HH:mm}", theModel.StartTime);
+            string EndTimeString = String.Format("{0:HH:mm}", theModel.EndTime);
+            string dtSt = dateString + " " + StartTimeString;
+            string dtEn = dateString + " " + EndTimeString;
+            var StartdateTime = Convert.ToDateTime(dtSt);
+            var EnddateTime = Convert.ToDateTime(dtEn);
+            regModel.Colour = theModel.Colour;
+            regModel.Day = theModel.Day;
+            regModel.EndTime = EnddateTime;
+            regModel.OpportunityNumberID = theModel.OpportunityID;
+            regModel.OpportunityID = theModel.OpportunityID;
+            regModel.ProjectID = theModel.ProjectID;
+            regModel.ServiceActivityId = theModel.ServiceActivityID;
+            regModel.StartTime = StartdateTime;
+            regModel.WarehouseNameId = theModel.WarehouseID;
+            regModel.FullName = Session["FullName"].ToString();
+            regModel.TimeSheetComments = theModel.TimeSheetComments;
 
-
+            return Json(new { newUrl = Url.Action("Register", "Resource") });            
         }
-                   
         [HttpPost]
         public ActionResult PostRecruitmentTimesheet(TimeSheetViewModel theModel)
         {
@@ -273,7 +259,7 @@ namespace TimeSheet.Controllers
             }
             for (int i = 0; i < theModel.ResourceIDs.Count; i++)
             {
-                
+
                 string addlActvty = "";
                 if (theModel.AdditionalActivities != null)
                 {
@@ -292,9 +278,9 @@ namespace TimeSheet.Controllers
                     TimeSheetComments = theModel.TimeSheetComments,
                     AdditionalActivities = addlActvty
                 };
-                var a = RegisterTimesheetService.RegisterHRBooking(regHRModel);               
-            }           
-                return Json(new { newUrl = Url.Action("Register", "Resource") });       
+                var a = RegisterTimesheetService.RegisterHRBooking(regHRModel);
+            }
+            return Json(new { newUrl = Url.Action("Register", "Resource") });
         }
 
         [HttpPost]
@@ -322,8 +308,8 @@ namespace TimeSheet.Controllers
                         Id = x.Id,
                         Value = x.Value
                     });
-                 //   int opportunityId = listitem.FirstOrDefault().Id;
-                 //  model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
+                    //   int opportunityId = listitem.FirstOrDefault().Id;
+                    //  model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
                     model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
                     model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                     model.ProjectManagerNameList = new SelectList(ListItemService.ProjectManagers().Result, "ID", "Value");
@@ -335,12 +321,12 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
         [HttpGet]
         public ActionResult FetchOLA(int serviceActivityId, int opportunityId, int totalMins)
         {
-            var result = ResourceHelperService.FetchOLA(serviceActivityId,opportunityId,totalMins);
+            var result = ResourceHelperService.FetchOLA(serviceActivityId, opportunityId, totalMins);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
     }
 }
