@@ -660,7 +660,7 @@ namespace TimeSheet.ServiceHelper
             SfdcBinding.SessionHeaderValue.sessionId = CurrentLoginResult.sessionId;
             QueryResult queryResult = null;
             String SOQL = "";
-            SOQL = "select OwnerId,Name,Opportunity_Number__c from Opportunity where Date_Requested__c >" + dat.ToString("yyyy-MM-dd");
+            SOQL = "select OwnerId,Name,Opportunity_Number__c from Opportunity where stageName = 'Approved - Pending to be sent to customer' or stageName ='Pending Customer Decision' or stageName = 'Pending PM Allocation' or stageName ='Closed' ";
             queryResult = SfdcBinding.query(SOQL);
            // StreamWriter info = new StreamWriter("C:\\temp\\salesforce.txt");
             if (queryResult.size > 0)
@@ -672,7 +672,7 @@ namespace TimeSheet.ServiceHelper
                     string firstName = lead.OwnerId;
                     string lastName = lead.Name;
                     string businessPhone = lead.Opportunity_Number__c;
-
+                    string statusofApproval = lead.Status_of_Approval__c;
                     //info.WriteLine("ownerId:" + firstName);
                     //info.WriteLine("Name:" + lastName);
                     //info.WriteLine("opportunity:" + businessPhone);
