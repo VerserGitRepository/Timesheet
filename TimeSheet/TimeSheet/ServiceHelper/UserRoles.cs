@@ -84,24 +84,20 @@ namespace TimeSheet.ServiceHelper
                 {
                     return true;
                 }
-
             }
             return false;
         }
-
         public static bool HRUser()
         {
             if (HttpContext.Current.Session["Username"] != null)
             {
-                if (HttpContext.Current.Session["HR"] != null || HttpContext.Current.Session["Accounts"] != null || HttpContext.Current.Session["Administrator"] != null)
-                {
-                    return true;
+                if (HttpContext.Current.Session["HR"] != null && HttpContext.Current.Session["HR"].ToString()=="true")
+                {                    
+                   return true;                   
                 }
-
             }
             return false;
         }
-
         public static bool UserCanAddOrUpdateProjection()
         {
             if (HttpContext.Current.Session["Username"] != null)
