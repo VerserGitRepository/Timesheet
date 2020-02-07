@@ -290,7 +290,7 @@ namespace TimeSheet.Controllers
                     OpportunityID = Convert.ToInt32(theModel.OpportunityID),
                     Colour = theModel.Colour,
                     TimeSheetComments = theModel.TimeSheetComments,
-                    HRAdditionalActivities = addlActvty
+                    AdditionalActivities = addlActvty
                 };
                 var a = RegisterTimesheetService.RegisterHRBooking(regHRModel);               
             }           
