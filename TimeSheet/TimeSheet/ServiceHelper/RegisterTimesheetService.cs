@@ -156,7 +156,7 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
-        public static async Task<ReturnModel> RegisterHRBooking(TimeSheetRegisterPMModel RegisterModel)
+        public static async Task<ReturnModel> RegisterHRBooking(HRRegisterViewModel RegisterModel)
         {
             ReturnModel ReturnResult = new ReturnModel();
             using (HttpClient client = new HttpClient())
@@ -164,13 +164,13 @@ namespace TimeSheet.ServiceHelper
                 try
                 {
                     client.BaseAddress = new Uri(TimeSheetAPIURl);
-                    HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ProjectMangersTimeSheet/RegisterPMBooking"), RegisterModel).Result;
+                    HttpResponseMessage response = client.PostAsJsonAsync(string.Format("RecruiterTimesheet/RegisterHRTimeSheet"), RegisterModel).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
                         if (ReturnResult.Message == null || ReturnResult.Message == string.Empty)
                         {
-                            ReturnResult.Message = "PM Timesheet has been registered successfully.";
+                            ReturnResult.Message = "HR Timesheet has been registered successfully.";
                             HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
                         }
                         else if (ReturnResult.Message.Contains("Is Already Booked"))

@@ -300,17 +300,17 @@
                             </div>
                             <div class="row" style="padding-top:10px">
                                 <div class="form-group  required col-md-6" tabindex=7>
-                                    <div id="main">
-                                        <input type="button" id="btAdd" value="Add Activity" class="bt" />
-                                        <input type="button" id="btRemove" value="Remove Activity" class="bt" />
-                                        <input type="button" id="btRemoveAll" value="Remove All" class="bt" /><br />
+                                    <div id="mainhr">
+                                        <input type="button" id="btAddhr" value="Add Activity" class="bt" />
+                                        <input type="button" id="btRemovehr" value="Remove Activity" class="bt" />
+                                        <input type="button" id="btRemoveAllhr" value="Remove All" class="bt" /><br />
                                     </div>
 
                                 </div>
                                 <div id="PMActivity" class="form-group required col-md-6" tabindex=8>
                                     <div id="time-rangeRC" style="padding-top:10px;width:270px" tabindex=7>
                                         <p>
-                                            Start Time <b><span class="slider-timePM">08:30 AM</span></b>&nbsp;&nbsp;&nbsp;End Time <b><span class="slider-time2RC">5:00 PM</span></b>
+                                            Start Time <b><span class="slider-timeRC">08:30 AM</span></b>&nbsp;&nbsp;&nbsp;End Time <b><span class="slider-time2RC">5:00 PM</span></b>
 
                                         </p>
                                         <div class="sliders_step1">
@@ -328,7 +328,7 @@
                             </div>
 
                             <div class=" col-md-offset-5" style="padding-top:20px">
-                                <button type="submit" class="btn btn-warning btn-md" id="btnregisterRC" onclick="PostData(this);">
+                                <button type="submit" class="btn btn-warning btn-md" id="btnregisterRC" onclick="RegisterHRTimesheet(this);">
                                     <span class="glyphicon glyphicon-ok-sign"></span> Register
                                 </button>
                             </div>
@@ -640,7 +640,90 @@
                 .removeAttr('disabled')
                 .attr('class', 'bt');
         });
+
+
+        var containerHR = $(document.createElement('div')).css({
+            padding: '5px', margin: '10px', width: '300px', border: '1px solid',
+            borderTopColor: '#999', borderBottomColor: '#999',
+            borderLeftColor: '#999', borderRightColor: '#999'
+        }); $
+        $(containerHR).attr('id', 'hraddlActivities')
+        $('#btAddhr').click(function () {
+            var html = "";
+            if (iCnt <= 4) {
+
+                iCnt = iCnt + 1;
+
+                // ADD TEXTBOX.
+                $(containerHR).append('<br><input type=text  style = "border:solid 1.5px lightgray;width:300px;height:35px" class="input" id=tb' + iCnt + ' ' +
+                    'value="Activity ' + iCnt + '" /> <div id="time-range' + iCnt + '"> <p>Time : <span class="slider-time' + iCnt + '"></span> - <span class="slider-time2' + iCnt + '">0:15</span></p><div class="sliders_step1' + iCnt + '"><div id="slider-range' + iCnt + '"></div></div></div>');
+
+                // SHOW SUBMIT BUTTON IF ATLEAST "1" ELEMENT HAS BEEN CREATED.
+                //if (iCnt == 1) {
+                //    var divSubmit = $(document.createElement('div'));
+                //    $(divSubmit).append('<input type=button class="bt"' +
+                //        'onclick="GetTextValue()"' +
+                //        'id=btSubmit value=Submit />');
+                //}
+
+
+
+                html += '<script>';
+                html += '$("#slider-range' + iCnt + '").slider({range: true,min: 0,max: 120,step: 15,values: [0, 15],slide: function (e, ui) { var minutes1 = ui.values[0] ;';
+                html += 'if (minutes1.length == 1) minutes1 = "0" + minutes1;if (minutes1 == 0) minutes1 = "";minutes1 = minutes1;$(".slider-time' + iCnt + '").html(minutes1);';
+                html += 'var hours2 = Math.floor(ui.values[1] / 60);var minutes2 = ui.values[1] - (hours2 * 60);$(".slider-time2' + iCnt + '").html(hours2 + ":" + minutes2);}});';
+                //html+='//script>';
+
+                // ADD BOTH THE DIV ELEMENTS TO THE "main" CONTAINER.
+                $('#mainhr').after(containerHR);
+
+
+            }
+            // AFTER REACHING THE SPECIFIED LIMIT, DISABLE THE "ADD" BUTTON.
+            // (20 IS THE LIMIT WE HAVE SET)
+            else {
+                $(containerHR).append('<label>Max. No. of Activities limit reached.</label>');
+                $('#btAddhr').attr('class', 'bt-disable');
+                $('#btAddhr').attr('disabled', 'disabled');
+            }
+            $("head").append(html);
+        });
+
+        // REMOVE ONE ELEMENT PER CLICK.
+        $('#btRemovehr').click(function () {
+            if (iCnt != 0) { $('#tb' + iCnt).remove(); $('#time-range' + iCnt).remove(); iCnt = iCnt - 1; }
+
+            if (iCnt == 0) {
+                $(containerHR)
+                    .empty()
+                    .remove();
+
+                $('#btSubmithr').remove();
+                $('#btAddhr')
+                    .removeAttr('disabled')
+                    .attr('class', 'bt');
+            }
+        });
+
+        // REMOVE ALL THE ELEMENTS IN THE CONTAINER.
+        $('#btRemoveAllhr').click(function () {
+            $(containerHR)
+                .empty()
+                .remove();
+
+            $('#btSubmithr').remove();
+            iCnt = 0;
+
+            $('#btAddhr')
+                .removeAttr('disabled')
+                .attr('class', 'bt');
+        });
+
     });
+
+
+
+
 
     // PICK THE VALUES FROM EACH TEXTBOX WHEN "SUBMIT" BUTTON IS CLICKED.
     var divValue, values = '';
@@ -1152,112 +1235,28 @@ $('#ddlRegOpportunityNumberID').change(function () {
         });
     }
 
-    function RegisterHRTimesheet(id)
-    {
+    function RegisterHRTimesheet(id) {
         var textMessage = "";
-        var data = null;
-       // alert(this.id);
-        if (id.id == "btnregister") {
-            var end_time = $(".slider-time2").text();
-            var start_time = $(".slider-time").text();
-            var stt = new Date("May 26, 2016 " + start_time);//arbitary
-            stt = stt.getTime();
-            var endt = new Date("May 26, 2016 " + end_time);//arbitary
-            endt = endt.getTime();
-            var diff = (endt - stt) / 1000;
-            diff /= (60);
-            diff = Math.abs(Math.round(diff));
-            if (stt >= endt) {
-                alert('start time should be prior to endtime');
-                return;
-            }
-            if (diff <= 14) {
-                alert("Minimum booking time shold not be less than 15 mins.");
-                return;
-            }
-            if ($('#ddlregCustomerID').val() == "" || $('#ddlRegOpportunityNumberID').val() == "" || $('#JobID').val() == "" || $('#ServiceActivityID').val() == "") {
-                return;
-            }
+        var childrenCount = $("#hraddlActivities").children().length / 3;
+        for (var i = 1; i < childrenCount + 1; i++) {
+            textMessage += $("#tb" + i).val() + "    -     " + $(".slider-time2" + i).text() + ";";
         }
-        if (id.id == "btnregisterPM") {
-            var end_time = $(".slider-time2PM").text();
-            var start_time = $(".slider-timePM").text();
+         var loadUrl = '@Url.Action("PostRecruitmentTimesheet", "Resource")';
+        var data = {
+            'Day': $('#DatePickIdRC').val(),
+            'ProjectID': $('#ddlregCustomerIDRC').val(),
+            'OpportunityID': $('#ddlRegOpportunityNumberIDRC').val(),
+            'ResourceIds': $('#CandidateNameIdRC').val(),
+            'ServiceActivityID': $('#ServiceActivityIDRC').val(),
+            'StartTime': $(".slider-timeRC").text(),
+            'EndTime': $(".slider-time2RC").text(),
+            'Colour': $('#ddlColourRC').val(),
+            'TimeSheetComments': $('#txtCommentsRC').val(),
+            'AdditionalActivities': textMessage
+        };
 
-            var stt = new Date("May 26, 2016 " + start_time);//arbitary
-            stt = stt.getTime();
-            var endt = new Date("May 26, 2016 " + end_time);//arbitary
-            endt = endt.getTime();
-            var diff = (endt - stt) / 1000;
-            diff /= (60);
-            diff = Math.abs(Math.round(diff));
-            if (stt >= endt) {
-                alert('start time should be prior to endtime');
-                return;
-            }
-            if (diff <= 14) {
-                alert("Minimum booking time shold not be less than 15 mins.");
-                return;
-            }
-            if ($('#ddlregCustomerIDPM').val() == "" || $('#ddlRegOpportunityNumberIDPM').val() == "" || $('#ServiceActivityIDPM').val() == "") {
-                return;
-            }
-            var childrenCount = $("#pmaddlActivities").children().length / 3;
-            for (var i = 1; i < childrenCount + 1; i++) {
-                textMessage += $("#tb" + i).val() + "    -     " + $(".slider-time2" + i).text() + ";";
-            }
-            }
-            @if (!ViewData.ModelState.IsValid)
-            {
+       
 
-            }
-            var loadUrl = '@Url.Action("PostRecruitmentTimesheet", "Resource")';
-            var loads = $('#ddlRegOpportunityNumberID');
-            var test = $('#CandidateNameId').val();
-            if (id.id == "btnregister") {
-            data = {
-            'Day': $('#DatePickId').val(),
-            'ProjectID': $('#ddlregCustomerID').val(),
-            'WarehouseID': $('#ddlregWarehouseNameId').val(),
-            'OpportunityID': $('#ddlRegOpportunityNumberID').val(),
-            'JobID': $('#JobID').val(),
-            'ResourceIds': $('#CandidateNameId').val(),
-            'ServiceActivityID': $('#ServiceActivityID').val(),
-            'StartTime': $(".slider-time").text(),
-            'EndTime': $(".slider-time2").text(),
-            //'EndDate': $('#EndDateId').val(),
-            'Colour': $('#ddlColour').val(),
-            'OLATarget': $('#txtOLA').val(),
-            'Vechicles': $("#ddlVan option:selected").text()
-            };
-            }
-            else if (id.id == "btnregisterPM") {
-            data = {
-            'Day': $('#DatePickIdPM').val(),
-            'ProjectID': $('#ddlregCustomerIDPM').val(),
-            'OpportunityID': $('#ddlRegOpportunityNumberIDPM').val(),
-            'ResourceIds': $('#CandidateNameIdPM').val(),
-            'ServiceActivityID': $('#ServiceActivityIDPM').val(),
-            'StartTime': $(".slider-timePM").text(),
-            'EndTime': $(".slider-time2PM").text(),
-            'Colour': $('#ddlColourPM').val(),
-            'TimeSheetComments': $('#txtComments').val(),
-           // 'AdditionalActivities': textMessage
-            };
-        }
-            else {
-                data = {
-                    'Day': $('#DatePickIdRC').val(),
-                    'ProjectID': $('#ddlregCustomerIDRC').val(),
-                    'OpportunityID': $('#ddlRegOpportunityNumberIDRC').val(),
-                    'ResourceIds': $('#CandidateNameIdRC').val(),
-                    'ServiceActivityID': $('#ServiceActivityIDRC').val(),
-                    'StartTime': $(".slider-timeRC").text(),
-                    'EndTime': $(".slider-time2RC").text(),
-                    'Colour': $('#ddlColourRC').val(),
-                    'TimeSheetComments': $('#txtCommentsRC').val()
-
-                };
-            }
         $.ajax({
             url: loadUrl,
             type: 'POST',
@@ -1270,7 +1269,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 alert("error");
             }
         });
-}
+    }
 
     $('#CandidateNameId').multiselect({
         includeSelectAllOption: true,
