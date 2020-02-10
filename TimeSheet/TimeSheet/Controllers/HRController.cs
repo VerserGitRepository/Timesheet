@@ -22,27 +22,21 @@ namespace TimeSheet.Controllers
             }
             else
             {
-
-                ProjectManagerTimesheet model = new ProjectManagerTimesheet();
-                model.PMTimeSheetList = TimeSheetAPIHelperService.PMTimeSheetList().Result;
-
-
-                //  Modifystring.Split("")
+                var model = new HRTimeSheetList();
+                model.HRTimeSheets = TimeSheetAPIHelperService.HRTimeSheetList().Result;                
                 return View(model);
             }
-
         }
 
         [HttpGet]
         public ActionResult TimesheetPMDetails(string CandidateName)
         {
-            ProjectManagerTimesheet model = new ProjectManagerTimesheet();
-            var AlltimesheetRecords = TimeSheetAPIHelperService.PMTimeSheetList().Result;
-            model.PMTimeSheetList = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
+            var model = new HRTimeSheetList();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.HRTimeSheetList().Result;
+            model.HRTimeSheets = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("TimesheetPMDetails", model);
         }
-
 
         [HttpGet]
         public ActionResult ProjectDetails(string ProjectName)
@@ -121,18 +115,16 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ExportPMBookingSchedule()
         {
-            var TimeSheetExportData = new List<CompletedtimesheetExportModel>();
-
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
             else
             {
-                ProjectManagerTimesheet model = new ProjectManagerTimesheet();
-                model.PMTimeSheetList = TimeSheetAPIHelperService.PMTimeSheetList().Result;
+                var model = new HRTimeSheetList();
+                model.HRTimeSheets = TimeSheetAPIHelperService.HRTimeSheetList().Result;
                 GridView gv = new GridView();
-                gv.DataSource = model.PMTimeSheetList;
+                gv.DataSource = model.HRTimeSheets;
                 gv.DataBind();
                 Response.ClearContent();
                 Response.Buffer = true;

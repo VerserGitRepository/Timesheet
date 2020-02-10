@@ -22,8 +22,7 @@ namespace TimeSheet.Controllers
                     return RedirectToAction("Login", "Home");
                 }
             }
-        }                   
-
+        }  
         public ActionResult TimeSheet()
         {            
             TimeSheetViewModel model = new TimeSheetViewModel();
@@ -66,8 +65,6 @@ namespace TimeSheet.Controllers
                 return View(model);
             }
         }
-
-
         [HttpPost]
         public ActionResult Register(TimeSheetViewModel RegisterModel)
         {
@@ -138,8 +135,6 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Index", "ManageCalender");
             }
         }
-
-
         [HttpGet]
         public JsonResult OpportunityActivities(int OpportunityID)
         {

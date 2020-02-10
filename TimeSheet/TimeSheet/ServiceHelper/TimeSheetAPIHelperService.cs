@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ namespace TimeSheet.ServiceHelper
 {
     public class TimeSheetAPIHelperService
     {
-       private static readonly string TimeSheetAPIURl = ConfigurationManager.AppSettings["TimeSheetBaseURL"] + ConfigurationManager.AppSettings["TimeSheetRootDirectory"];
+        private static readonly string TimeSheetAPIURl = ConfigurationManager.AppSettings["TimeSheetBaseURL"] + ConfigurationManager.AppSettings["TimeSheetRootDirectory"];
 
         public static async Task<List<ListItemViewModel>> CostModelProject()
         {
@@ -28,8 +27,8 @@ namespace TimeSheet.ServiceHelper
 
                     foreach (var p in projects)
                     {
-                        projectsList.Add(new ListItemViewModel() { Id = p.Id, Value = p.ProjectName});
-                    }                   
+                        projectsList.Add(new ListItemViewModel() { Id = p.Id, Value = p.ProjectName });
+                    }
                 }
             }
             return projectsList;
@@ -47,8 +46,17 @@ namespace TimeSheet.ServiceHelper
 
                     foreach (var p in projects)
                     {
-                        projectsList.Add(new ProjectDetailsModel() { Id = p.Id, Project = p.Project, OpportunityNumber = p.OpportunityNumber,ProjectManager=p.ProjectManager
-                        ,SiteAddress=p.SiteAddress,CustomerContactName=p.CustomerContactName,VerserBranch=p.VerserBranch});
+                        projectsList.Add(new ProjectDetailsModel()
+                        {
+                            Id = p.Id,
+                            Project = p.Project,
+                            OpportunityNumber = p.OpportunityNumber,
+                            ProjectManager = p.ProjectManager
+                        ,
+                            SiteAddress = p.SiteAddress,
+                            CustomerContactName = p.CustomerContactName,
+                            VerserBranch = p.VerserBranch
+                        });
                     }
                 }
             }
@@ -113,7 +121,7 @@ namespace TimeSheet.ServiceHelper
             return projectsList;
         }
 
-	  public static async Task<List<ListItemViewModel>> JobNo(int OpportunityID)
+        public static async Task<List<ListItemViewModel>> JobNo(int OpportunityID)
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
             using (HttpClient client = new HttpClient())
@@ -129,7 +137,7 @@ namespace TimeSheet.ServiceHelper
                     }
                 }
             }
-    
+
             return projectsList;
         }
         public static async Task<List<ListItemViewModel>> ProjectActivities(int OpportunityID)
@@ -191,7 +199,6 @@ namespace TimeSheet.ServiceHelper
             }
             return ResourceList;
         }
-
 
         public static async Task<List<ListItemViewModel>> Activities()
         {
@@ -448,15 +455,15 @@ namespace TimeSheet.ServiceHelper
 
         public static async Task<TimeSheetViewModel> TimeSheetSearchById(int id)
         {
-           var CostModelLists = new TimeSheetViewModel();
+            var CostModelLists = new TimeSheetViewModel();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/{0}/TimeSheetSearchById",id)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/{0}/TimeSheetSearchById", id)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var projectactivities = await response.Content.ReadAsAsync<TimeSheetViewModel>();
-                        CostModelLists = projectactivities;
+                    CostModelLists = projectactivities;
                     //foreach (var a in projectactivities)
                     //{
                     //    CostModelLists.Add(a);
@@ -472,7 +479,7 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/{0}/ServiceCostList",OpportunityID)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("ListItems/{0}/ServiceCostList", OpportunityID)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var projectactivities = await response.Content.ReadAsAsync<List<ProjectDetailsModel>>();
@@ -510,7 +517,7 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveBulkTimesheet/{0}/{1}/{2}", resourceId, PMId,projectId)).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApproveBulkTimesheet/{0}/{1}/{2}", resourceId, PMId, projectId)).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
@@ -555,7 +562,7 @@ namespace TimeSheet.ServiceHelper
                 HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/UpdateTimesheetPaid/{0}", activityId)).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult  = await response.Content.ReadAsAsync<ReturnModel>();
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
                     HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
                 }
                 else
@@ -662,7 +669,7 @@ namespace TimeSheet.ServiceHelper
             String SOQL = "";
             SOQL = "select OwnerId,Name,Opportunity_Number__c from Opportunity where stageName = 'Approved - Pending to be sent to customer' or stageName ='Pending Customer Decision' or stageName = 'Pending PM Allocation' or stageName ='Closed' ";
             queryResult = SfdcBinding.query(SOQL);
-           // StreamWriter info = new StreamWriter("C:\\temp\\salesforce.txt");
+            // StreamWriter info = new StreamWriter("C:\\temp\\salesforce.txt");
             if (queryResult.size > 0)
             {
                 for (int i = 0; i < queryResult.records.Length; i++)
@@ -682,6 +689,26 @@ namespace TimeSheet.ServiceHelper
                 }
             }
             return projectList;
+        }
+
+        public static async Task<List<HRTimeSheetList>> HRTimeSheetList()
+        {
+            var CostModelLists = new List<HRTimeSheetList>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("RecruiterTimesheet/HRTimeSheetList")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<HRTimeSheetList>>();
+
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
         }
     }
 }
