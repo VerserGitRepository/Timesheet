@@ -265,7 +265,7 @@ namespace TimeSheet.Controllers
             if (UserRoles.HRUser() != true)
             {
                 Session["ErrorMessage"] = "Resource Book Pemission IS Restricted !";
-                return RedirectToAction("Index", "Home");
+                return Json(new { newUrl = Url.Action("Register", "Resource") });
             }
             if (theModel == null)
             {
