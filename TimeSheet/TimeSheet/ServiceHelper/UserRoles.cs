@@ -91,7 +91,7 @@ namespace TimeSheet.ServiceHelper
         {
             if (HttpContext.Current.Session["Username"] != null)
             {
-                if (HttpContext.Current.Session["HR"] != null && HttpContext.Current.Session["HR"].ToString()=="true")
+                if (HttpContext.Current.Session["HR"] != null && HttpContext.Current.Session["HR"].ToString().ToLower()=="true")
                 {                    
                    return true;                   
                 }
