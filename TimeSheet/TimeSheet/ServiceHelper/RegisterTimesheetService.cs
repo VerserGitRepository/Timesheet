@@ -114,7 +114,26 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
+        public static async Task<ReturnModel> EditHRModel(UpdateHRModel UpdateModel)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
 
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("RecruiterTimesheet/UpdateHRTimeSheet"), UpdateModel).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
         public static async Task<ReturnModel> RegisterPMBooking(TimeSheetRegisterPMModel RegisterModel)
         {
             ReturnModel ReturnResult = new ReturnModel();

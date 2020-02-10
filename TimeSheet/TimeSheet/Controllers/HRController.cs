@@ -29,13 +29,13 @@ namespace TimeSheet.Controllers
         }
 
         [HttpGet]
-        public ActionResult TimesheetPMDetails(string CandidateName)
+        public ActionResult TimesheetHRDetails(string CandidateName)
         {
             var model = new HRTimeSheetList();
             var AlltimesheetRecords = TimeSheetAPIHelperService.HRTimeSheetList().Result;
             model.HRTimeSheets = AlltimesheetRecords.Where(c => c.CandidateName == CandidateName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
-            return PartialView("TimesheetPMDetails", model);
+            return PartialView("TimesheetHRDetails", model);
         }
 
         [HttpGet]
@@ -48,8 +48,9 @@ namespace TimeSheet.Controllers
             return PartialView("ProjectDetails", model);
         }
         [HttpPost]
-        public ActionResult Edit(UpdateProjectManagerModel EditModel)
+        public ActionResult UpdateHRTimesheet(UpdateHRModel EditModel)
         {
+            ReturnModel ReturnValue = new ReturnModel();
             if (UserRoles.UserCanEditTimesheet() != true)
             {
                 return RedirectToAction("Index", "Home");
@@ -73,12 +74,13 @@ namespace TimeSheet.Controllers
                     EditModel.EndTime = EnddateTime;
                     EditModel.FullName = Session["FullName"].ToString();
                 }
-                var ReturnValue = RegisterTimesheetService.EditPMModel(EditModel);
+               var ReturnModel = RegisterTimesheetService.EditHRModel(EditModel);
+               return new JsonResult { Data = ReturnModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
-            return RedirectToAction("Index", "Home");
+           
         }
         [HttpPost]
-        public ActionResult UpdateCandidate(UpdateProjectManagerModel CandidateEdit)
+        public ActionResult UpdateCandidate(UpdateHRModel CandidateEdit)
         {
             if (Session["Username"] == null)
             {
@@ -107,7 +109,7 @@ namespace TimeSheet.Controllers
                         CandidateEdit.FullName = Session["FullName"].ToString();
                     }
 
-                    var ReturnValue = RegisterTimesheetService.EditPMModel(CandidateEdit);
+                    var ReturnValue = RegisterTimesheetService.EditHRModel(CandidateEdit);
                 }
             }
             return RedirectToAction("Index", "Home");

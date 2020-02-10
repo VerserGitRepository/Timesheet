@@ -247,6 +247,7 @@
     <Compile Include="Models\ResourcesViewModel.cs" />
     <Compile Include="Models\ReturnModel.cs" />
     <Compile Include="Models\UpdateOpportunityList.cs" />
+    <Compile Include="Models\UpdateHRModel.cs" />
     <Compile Include="Models\UpdateProjectManagerModel.cs" />
     <Compile Include="Models\UpdateTimeSheetModel.cs" />
     <Compile Include="Models\VehicleBookedModel.cs" />
