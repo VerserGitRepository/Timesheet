@@ -13,6 +13,7 @@ namespace TimeSheet.ServiceHelper
     public class TimeSheetAPIHelperService
     {
         private static readonly string TimeSheetAPIURl = ConfigurationManager.AppSettings["TimeSheetBaseURL"] + ConfigurationManager.AppSettings["TimeSheetRootDirectory"];
+        private static readonly string salesForceQuery = ConfigurationManager.AppSettings["salesForceQuery"] ;
 
         public static async Task<List<ListItemViewModel>> CostModelProject()
         {
@@ -661,13 +662,23 @@ namespace TimeSheet.ServiceHelper
             var dat = System.DateTime.Now;
             dat = dat.AddDays(-180);
             System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
             CurrentLoginResult = SfdcBinding.login("basanagouda.patil@verser.com.au", "Verser2020QSfDyeaEEHZKjOL4OHizt4Iu");
+
+
             SfdcBinding.Url = CurrentLoginResult.serverUrl;
             SfdcBinding.SessionHeaderValue = new SessionHeader();
             SfdcBinding.SessionHeaderValue.sessionId = CurrentLoginResult.sessionId;
             QueryResult queryResult = null;
             String SOQL = "";
-            SOQL = "select OwnerId,Name,Opportunity_Number__c from Opportunity where stageName = 'Approved - Pending to be sent to customer' or stageName ='Pending Customer Decision' or stageName = 'Pending PM Allocation' or stageName ='Closed' ";
+
+            //salesForceQuery
+            //SOQL = "select OwnerId,Name,Opportunity_Number__c from Opportunity where stageName = 'Approved - Pending to be sent to customer' or stageName ='Pending Customer Decision' or stageName = 'Pending PM Allocation' or stageName ='Closed' stageName ='Closed Won' ";
+
+            SOQL = salesForceQuery;
+
+            // "select OwnerId,Name,Opportunity_Number__c from Opportunity where closedate > 2019-01-01 and stageName in('Approved - Pending to be sent to customer', 'Pending Customer Decision', 'Pending PM Allocation', 'Closed', 'Closed Won')";
+
             queryResult = SfdcBinding.query(SOQL);
             // StreamWriter info = new StreamWriter("C:\\temp\\salesforce.txt");
             if (queryResult.size > 0)
