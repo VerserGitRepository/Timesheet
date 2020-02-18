@@ -24,5 +24,6 @@ namespace TimeSheet.Models
         public SelectList StatusList { get; set; }
         public SelectList EmploymentList { get; set; }
         public string AdditionalActivities { get; set; }
+        public string OpportunityName { get; set; }
     }
 }

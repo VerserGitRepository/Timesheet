@@ -55,11 +55,30 @@ namespace TimeSheet.Controllers
             {
                 if (UserRoles.UserCanRegisterTimesheet() == true)
                 {
+
                     TimeSheetViewModel model = new TimeSheetViewModel();
                     List<ListItemViewModel> salesForceOpp = new List<ListItemViewModel>();
-                    model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
+                   // model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
+                    var projectList = TimeSheetAPIHelperService.CostModelProject().Result;
+                    model.Projectlist = new SelectList(projectList, "ID", "Value");
+
                     model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
-                    model.SalesForceProjectlist = new SelectList(TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp), "Value", "OpportunityNumber");
+                    var salesForceProjectList = TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp);
+
+                    var newProjectList = projectList.Where(item => item.Value == "Verser");
+                    salesForceProjectList.Add(newProjectList.FirstOrDefault());
+
+                    model.SalesForceProjectlist = new SelectList(salesForceProjectList, "Value", "OpportunityNumber");
+
+
+                    List<ListItemViewModel> load = new List<ListItemViewModel>();
+                    load = TimeSheetAPIHelperService.ProjectOpportunities(newProjectList.FirstOrDefault().Id).Result.Select(x => new ListItemViewModel()
+                    {
+                        Value = x.Value,                       
+                        OpportunityNumber = x.Value
+                    }).ToList();
+                    salesForceOpp.Add(load.FirstOrDefault());
+
                     model.SalesForceOpportunityNumberList = new SelectList(salesForceOpp, "Value", "OpportunityNumber");
 
                     var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
@@ -276,7 +295,8 @@ namespace TimeSheet.Controllers
                     OpportunityID = Convert.ToInt32(theModel.OpportunityID),
                     Colour = theModel.Colour,
                     TimeSheetComments = theModel.TimeSheetComments,
-                    AdditionalActivities = addlActvty
+                    AdditionalActivities = addlActvty,
+                    OpportunityName = theModel.ProjectName
                 };
                 var a = RegisterTimesheetService.RegisterHRBooking(regHRModel);
             }

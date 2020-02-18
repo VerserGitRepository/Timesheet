@@ -1091,7 +1091,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                         });
     });
 
-    $('#ddlregCustomerIDRC').change(function () {
+    @*$('#ddlregCustomerIDRC').change(function () {
                         var loadUrl = '@Url.Action("ProjectOpportunities", "ManageCalender")';
                     var loads = $('#ddlRegOpportunityNumberIDRC');
                         var id = $(this).val();
@@ -1102,7 +1102,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                                 loads.append($('<option></option>').text(item.Value).val(item.Id));
                             });
                         });
-                });
+                });*@
     function FetchOLA() {
 
         var OLAUrl = '@Url.Action("FetchOLA", "Resource")';
@@ -1247,7 +1247,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
          var loadUrl = '@Url.Action("PostRecruitmentTimesheet", "Resource")';
         var data = {
             'Day': $('#DatePickIdRC').val(),
-            'ProjectID': $('#ddlregCustomerIDRC').val(),
+            'ProjectName': $('#ddlregCustomerIDRC').val(),
             'OpportunityID': $('#ddlRegOpportunityNumberIDRC').val(),
             'ResourceIds': $('#CandidateNameIdRC').val(),
             'ServiceActivityID': $('#ServiceActivityIDRC').val(),
