@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using TimeSheet.Models;
@@ -7,8 +8,10 @@ using TimeSheet.ServiceHelper;
 
 namespace TimeSheet.Controllers
 {
+    
     public class ResourceController : Controller
     {
+        private static readonly string RecruitmentProjectName = ConfigurationManager.AppSettings["RecruitmentProjectName"];         
         public ActionResult Index()
         {
             if (Session["Username"] == null)
@@ -65,7 +68,7 @@ namespace TimeSheet.Controllers
                     model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
                     var salesForceProjectList = TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp);
 
-                    var newProjectList = projectList.Where(item => item.Value == "Verser");
+                    var newProjectList = projectList.Where(item => item.Value == RecruitmentProjectName);
                     salesForceProjectList.Add(newProjectList.FirstOrDefault());
 
                     model.SalesForceProjectlist = new SelectList(salesForceProjectList, "Value", "OpportunityNumber");
