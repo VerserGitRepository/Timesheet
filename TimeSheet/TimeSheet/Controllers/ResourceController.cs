@@ -47,10 +47,9 @@ namespace TimeSheet.Controllers
                 return PartialView("_ResourceBooked", model);
             }
         }
-
         public ActionResult Register()
         {
-            if (Session["Username"] == null)
+           if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
@@ -58,24 +57,19 @@ namespace TimeSheet.Controllers
             {
                 if (UserRoles.UserCanRegisterTimesheet() == true)
                 {
-
                     TimeSheetViewModel model = new TimeSheetViewModel();
-                    List<ListItemViewModel> salesForceOpp = new List<ListItemViewModel>();
-                   // model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
+                    List<ListItemViewModel> salesForceOpp = new List<ListItemViewModel>();                
                     var projectList = TimeSheetAPIHelperService.CostModelProject().Result;
-                    model.Projectlist = new SelectList(projectList, "ID", "Value");
-
+                    model.Projectlist = new SelectList(projectList.Where(i => i.Value != RecruitmentProjectName), "ID", "Value");
                     model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
                     var salesForceProjectList = TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp);
-
-                    var newProjectList = projectList.Where(item => item.Value == RecruitmentProjectName);
+                    var newProjectList = projectList.Where(item => item.Value == RecruitmentProjectName);            
+                    int verserProjectId = newProjectList.FirstOrDefault().Id;
+                    newProjectList.FirstOrDefault().Id = salesForceProjectList.Count();
                     salesForceProjectList.Add(newProjectList.FirstOrDefault());
-
-                    model.SalesForceProjectlist = new SelectList(salesForceProjectList, "Value", "OpportunityNumber");
-
-
+                    model.SalesForceProjectlist = new SelectList(salesForceProjectList, "ID", "Value");
                     List<ListItemViewModel> load = new List<ListItemViewModel>();
-                    load = TimeSheetAPIHelperService.ProjectOpportunities(newProjectList.FirstOrDefault().Id).Result.Select(x => new ListItemViewModel()
+                    load = TimeSheetAPIHelperService.ProjectOpportunities(verserProjectId).Result.Select(x => new ListItemViewModel()
                     {
                         Value = x.Value,                       
                         OpportunityNumber = x.Value

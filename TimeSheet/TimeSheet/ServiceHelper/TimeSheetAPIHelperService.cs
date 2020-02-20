@@ -656,9 +656,9 @@ namespace TimeSheet.ServiceHelper
                     string firstName = lead.OwnerId;
                     string lastName = lead.Name;
                     string businessPhone = lead.Opportunity_Number__c;
-                    string statusofApproval = lead.Status_of_Approval__c;                 
-                    opportunityList.Add(new ListItemViewModel() { Value = lead.Opportunity_Number__c, OpportunityNumber = lead.Opportunity_Number__c });
-                    projectList.Add(new ListItemViewModel() { Value = lead.Name, OpportunityNumber = lead.Name });
+                    string statusofApproval = lead.Status_of_Approval__c;               
+                    opportunityList.Add(new ListItemViewModel() {Value = lead.Opportunity_Number__c, OpportunityNumber = lead.Opportunity_Number__c });
+                    projectList.Add(new ListItemViewModel() { Id=i, Value = lead.Name, OpportunityNumber = lead.Name });
                 }
             }
             return projectList;
