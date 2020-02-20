@@ -48,7 +48,7 @@ namespace TimeSheet.Controllers
 
         public ActionResult Register()
         {
-           string verserRecruitment = ConfigurationManager.AppSettings["VerserProjectRecruitment"];
+           string verserRecruitment = ConfigurationManager.AppSettings["RecruitmentProjectName"];
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
