@@ -695,8 +695,8 @@ namespace TimeSheet.ServiceHelper
                     //info.WriteLine("Name:" + lastName);
                     //info.WriteLine("opportunity:" + businessPhone);
                     //info.WriteLine("Manager:" + lead.Opportunity_Manager__c);
-                    opportunityList.Add(new ListItemViewModel() { Value = lead.Opportunity_Number__c, OpportunityNumber = lead.Opportunity_Number__c });
-                    projectList.Add(new ListItemViewModel() { Value = lead.Name, OpportunityNumber = lead.Name });
+                    opportunityList.Add(new ListItemViewModel() {Value = lead.Opportunity_Number__c, OpportunityNumber = lead.Opportunity_Number__c });
+                    projectList.Add(new ListItemViewModel() { Id=i, Value = lead.Name, OpportunityNumber = lead.Name });
                 }
             }
             return projectList;

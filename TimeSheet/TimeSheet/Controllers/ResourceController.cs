@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using TimeSheet.Models;
@@ -47,6 +48,7 @@ namespace TimeSheet.Controllers
 
         public ActionResult Register()
         {
+           string verserRecruitment = ConfigurationManager.AppSettings["VerserProjectRecruitment"];
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -60,19 +62,20 @@ namespace TimeSheet.Controllers
                     List<ListItemViewModel> salesForceOpp = new List<ListItemViewModel>();
                    // model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
                     var projectList = TimeSheetAPIHelperService.CostModelProject().Result;
-                    model.Projectlist = new SelectList(projectList, "ID", "Value");
-
+                    model.Projectlist = new SelectList(projectList.Where(i => i.Value != verserRecruitment), "ID", "Value");
                     model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
                     var salesForceProjectList = TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp);
 
-                    var newProjectList = projectList.Where(item => item.Value == "Verser");
+                    var newProjectList = projectList.Where(item => item.Value == verserRecruitment);
+                    int verserProjectId = newProjectList.FirstOrDefault().Id;
+                    newProjectList.FirstOrDefault().Id = salesForceProjectList.Count();
                     salesForceProjectList.Add(newProjectList.FirstOrDefault());
 
-                    model.SalesForceProjectlist = new SelectList(salesForceProjectList, "Value", "OpportunityNumber");
+                    model.SalesForceProjectlist = new SelectList(salesForceProjectList, "ID", "Value");
 
 
                     List<ListItemViewModel> load = new List<ListItemViewModel>();
-                    load = TimeSheetAPIHelperService.ProjectOpportunities(newProjectList.FirstOrDefault().Id).Result.Select(x => new ListItemViewModel()
+                    load = TimeSheetAPIHelperService.ProjectOpportunities(verserProjectId).Result.Select(x => new ListItemViewModel()
                     {
                         Value = x.Value,                       
                         OpportunityNumber = x.Value
