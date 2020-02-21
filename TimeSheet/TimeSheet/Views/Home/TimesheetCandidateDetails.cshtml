@@ -453,9 +453,9 @@
         })
 
     });
-    $('#myModal').on('hidden.bs.modal', function (e) {
-        location.reload();
-    });
+    //$('#myModal').on('hidden.bs.modal', function (e) {
+    //    location.reload();
+    //});
     $("#myModal").draggable({
         handle: ".modal-header"
     });
@@ -496,7 +496,7 @@
     function Rate(rowid) {
 
 
-      //  debugger;
+        debugger;
         var $buttonClicked = $(this);
         var tr = $(rowid).closest("tr");
         var td = tr.find("td:nth-child(1)");
