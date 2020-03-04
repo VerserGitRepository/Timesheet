@@ -69,7 +69,7 @@
 
     </div>
     <div id="main">
-       
+
     </div>
     @*</div>*@
     <div id="myModal" class="modal fade" role="dialog">
@@ -97,6 +97,9 @@
             </div>
         </div>
     </div>
+    <div id="spinner" style="display:none;">
+        <img src="~/Images/ajax-loader.gif" />
+    </div>
 </body>
 
 <script>
@@ -118,7 +121,7 @@
             var sliderURL = '@Url.Action("ResourceRegister", "Resource")'
               var updateTimeURL = '@Url.Action("UpdateTime", "ResourceTimeline")'
             var options = { "backdrop": "static", keyboard: true };
-            
+            var obj = null;
             calendar = new FullCalendar.Calendar(calendarEl, {
                 schedulerLicenseKey: '0286417881-fcs-1567383525',
                 plugins: ['interaction', 'resourceTimeline'],
@@ -145,6 +148,17 @@
                         type: "GET",
                         url: sliderURL,
                         data: { "Day": start.startStr },
+                        beforeSend: function () {
+                            obj = $.alert({
+                                boxWidth: '50px',
+                                useBootstrap: false,
+                                title: '',
+                                content: $("#spinner").html(),
+                                buttons: {
+                                    yes: { isHidden: true }
+                                }
+                            })
+                        },
                         success: function (data) {
                            
                             $.confirm({
@@ -158,7 +172,8 @@
                                     yes: {isHidden:true}
                                 }
                             });
-                           
+                            $("#spinner").hide();
+                            obj.close();
                         }
                         });
                 
@@ -211,6 +226,7 @@
             //var res = $("#hdnJsonString").val();
             //var events = $("#hdnJsonEvents").val();
             //alert(res);
+        var obj = null;
         calendar.destroy();
         calendar = new FullCalendar.Calendar(calendarEl, {
                 schedulerLicenseKey: '0286417881-fcs-1567383525',
@@ -237,6 +253,17 @@
                     type: "GET",
                     url: sliderURL,
                     data: { "Day": start.startStr },
+                    beforeSend: function () {
+                        obj = $.alert({
+                            boxWidth: '50px',
+                            useBootstrap: false,
+                            title: '',
+                            content: $("#spinner").html(),
+                            buttons: {
+                                yes: { isHidden: true }
+                            }
+                        })
+                    },
                     success: function (data) {
 
                         $.confirm({
@@ -250,7 +277,8 @@
                                 yes: { isHidden: true }
                             }
                         });
-
+                        $("#spinner").hide();
+                        obj.close();
                     }
                 });
 
