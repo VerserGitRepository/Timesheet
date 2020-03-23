@@ -1,12 +1,12 @@
 ﻿@model  TimeSheet.Models.TimeSheetViewModel
 
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1500px;font-weight: bold">
-        <h5 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h5>
+    <div class="modal-header" style="background-color:lightgray;width:100%;font-weight:bold ">
+        <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
-    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1300px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1300px">
+    <div style="align-content:center;padding-top:15px;padding-bottom:20px;padding-left:15px;width: 90%">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width: 95%">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -21,10 +21,11 @@
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break</th>
-                    <th>BreakTime</th>
+                    <th>Time</th>
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
-                    <th style="width:10px"></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="table">
@@ -115,13 +116,12 @@
             <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
                         @*<a class="Delete" href="javascript:;">Delete</a>*@
                     </td>
+                    <td><input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm" /></td>
                 </tr>
                 }
             </tbody>
         </table>
-
     </div>
-
 </div>
 <div id="myRatingModal" class="modal fade bs-modal-sm" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -588,7 +588,7 @@
 </script>
 <style>
     .modal-dialog {
-        width: 1600px;
+        width: 90%;
         margin: 30px auto;
         margin-bottom: 10px;
     }

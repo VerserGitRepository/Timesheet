@@ -1,157 +1,155 @@
 ﻿@model  TimeSheet.Models.TimeSheetViewModel
 
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1650px;font-weight: bold">
-        <h5 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h5>
+    <div class="modal-header" style="background-color:lightgray;width:100%;font-weight:bold">
+        <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
-    <div style="align-content:center;padding-bottom:40px;padding-left:20px;width:1300px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1300px">
+    <div style="align-content:flex-start;padding-bottom:20px;padding-left:15px;padding-top:10px;width:90%">
+        <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;width:90%">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th >Id</th>
+                    <th>Id</th>
                     <th>Project</th>
                     <th>Candidate</th>
-                    <th>Activity</th>
-                    <th>PM</th>
-                    <th>Project</th>
-                    <th style="width:30px">Date </th>
-                    <th>StartTime</th>
-                    <th style="width:30px">EndTime </th>
+                    <th style="width:40px">Activity</th>
+                    <th>PM</th>                  
+                    <th style="width:30px">Date</th>
+                    <th>Start</th>
+                    <th style="width:30px">End</th>
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break</th>
-                    <th>BreakTime</th>
-
+                    <th>Time</th>
                     <th>Status</th>
-                    <th style="width:10px">Comments</th>
+                    <th style="width:0px">Comments</th>
                     <th style="width:10px"></th>
+                    <th style="width:5px"></th>
                 </tr>
             </thead>
             <tbody class="table">
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
-                <tr>
-                    <td class="Id"> <span>@item.Id</span> </td>
-                    <td class="CandidateName">
-                        <span id="ProjectName">@item.ProjectName</span>
-                    </td>
-                    <td class="CandidateName">
-                        @Html.DisplayFor(modelItem => item.CandidateName)
-                    </td>
-                    <td class="Activity">
-                        @Html.DisplayFor(modelItem => item.Activity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProjectManager)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProjectName)
-                    </td>
+                    <tr>
+                        <td class="Id"> <span>@item.Id</span> </td>
+                        <td class="CandidateName">
+                            <span id="ProjectName">@item.ProjectName</span>
+                        </td>
+                        <td class="CandidateName">
+                            @Html.DisplayFor(modelItem => item.CandidateName)
+                        </td>
+                        <td class="Activity">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectManager)
+                        </td>    
+                        <td class="Day" width="7%">
+                            <span>@item.Day.Value.ToShortDateString()</span>
 
-                    <td class="Day" width="7%">
-                        <span>@item.Day.Value.ToShortDateString()</span>
+                            @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
-                        @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
+                        </td>
+                        <td class="StartTime">
+                            <span>@item.StartTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
+                        @*<td class="EndDate" width="8%">
+                                @Html.DisplayFor(modelItem => item.EndDate)
 
-                    </td>
-                    <td class="StartTime">
-                        <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
-                    @*<td class="EndDate" width="8%">
-            @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>*@
 
-        </td>*@
+                        <td class="EndTime" width="8%">
+                            <span>@item.EndTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
-                    <td class="EndTime" width="8%">
-                        <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
+                        <td class="OLATarget">
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td class="ActualQuantity">
+                            <span style="width:2px">@item.ActualQuantity</span>
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        </td>
+                        <td class="breakHrs">
 
-                    <td class="OLATarget">
-                        @Html.DisplayFor(modelItem => item.OLATarget)
-                    </td>
-                    <td class="ActualQuantity">
-                        <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                    </td>
-                    <td class="breakHrs">
+                            @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="No Break", Value = "0" },
+                                new SelectListItem{ Text="15 Mins", Value = "15" },
+                                new SelectListItem{ Text="30 Mins", Value = "30" },
+                                new SelectListItem{ Text="45 Mins", Value = "45" },
+                                new SelectListItem{ Text="60 Mins", Value = "60" },
+                             } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                            <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
 
-                        @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
-                        {
-                            new SelectListItem{ Text="No Break", Value = "0" },
-                            new SelectListItem{ Text="15 Mins", Value = "15" },
-                            new SelectListItem{ Text="30 Mins", Value = "30" },
-                            new SelectListItem{ Text="45 Mins", Value = "45" },
-                            new SelectListItem{ Text="60 Mins", Value = "60" },
-                         } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
-                        <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
+                        </td>
+                        <td>
+                            <span id="spanbreakStartTime">@item.BreakTime</span>
 
-                    </td>
-                    <td>
-                        <span id="spanbreakStartTime">@item.BreakTime</span>
+                        </td>
+                        <td class="Status">
+                            <span text="Status" span />
+                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                            <input id="username" type="hidden" value="@User.Identity.Name" />
+                        </td>
+                        <td class="TimeSheetComments">
+                            <span>@item.TimeSheetComments</span>
+                            <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
+                        </td>
+                        <td width="5%">
+                            <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Edit</strong></span>
+                            </a>
+                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span><strong>Rate</strong></span>
+                            </a>
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
 
-                    </td>
-                    <td class="Status">
-                        <span text="Status" span />
-                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
-                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                        <input id="username" type="hidden" value="@User.Identity.Name" />
-                    </td>
-                    <td class="TimeSheetComments">
-                        <span>@item.TimeSheetComments</span>
-                        <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
-                    </td>
-                    <td width="5%">
-                        <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Edit</strong></span>
-                        </a>
-                        <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            <span><strong>Rate</strong></span>
-                        </a>
-                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Update</strong></span>
-                        </a>
+                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
 
-                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            <span><strong>Cancel</strong></span>
-                        </a>
-
-                        @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
-                        @*<a class="Delete" href="javascript:;">Delete</a>*@
-                    </td>
-                </tr>
+                            @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                        <td>
+                            <input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm"/>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
-</div>
-<div id="myRatingModal" class="modal fade bs-modal-sm" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div id="myRatingModalContent"></div>
+    </div>
+    <div id="myRatingModal" class="modal fade bs-modal-sm" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="myRatingModalContent"></div>
+            </div>
         </div>
     </div>
-</div>
-<script type="text/javascript">
+    <script type="text/javascript">
     $('#tblCustomers').dataTable({
         responsive: true
     });
     function ShowOTMessage(therowid) {
-        
+
         var rowid = $(therowid).closest("tr");
         var date1 = new Date("May 26, 2016 " + rowid.find("#startTime").val());
         var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
         var origVal = rowid.find("#hdnddlLidt").val();
         var msec = (date2 - date1);
-       
-        
+
+
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
@@ -178,7 +176,7 @@
     {
 
         var row = $(rowid).closest("tr");
-        
+
         var timetext = row.find("#spanbreakStartTime").html();
         var ddlValue = row.find("#hdnddlbrkhrs").val();
         var sliderURL = '@Url.Action("ReturnSlider", "Home")'
@@ -229,7 +227,7 @@
                                          $(this).attr('selected', 'selected')
                                      }
                                  });
-                           
+
                         return;
                              },
                              cancel: function () {
@@ -243,16 +241,12 @@
                                      return;
                                  });
                              }
-
-
-
                          }
 
                      });
             },
             error: function (errorData) { alert(errorData);}
         });
-
 
     }
     SetDDLValue();
@@ -405,7 +399,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         });
-        
+
         $.ajax({
 
             type: "GET",
@@ -561,38 +555,38 @@
 
 
     }
-</script>
-<style>
-    .modal-dialog {
-        width: 1660px;
-        margin: 30px auto;
-        margin-bottom: 10px;
-    }
+    </script>
+    <style>
+        .modal-dialog {
+            width: 90%;
+            margin: 30px auto;
+            margin-bottom: 10px;
+        }
 
-    .table-hover > tbody > tr:hover > td,
-    .table-hover > tbody > tr:hover > th {
-        background-color: lightgray;
-    }
+        .table-hover > tbody > tr:hover > td,
+        .table-hover > tbody > tr:hover > th {
+            background-color: lightgray;
+        }
 
-    .selected {
-        color: black;
-        background-color: lightgray;
-    }
+        .selected {
+            color: black;
+            background-color: lightgray;
+        }
 
-    .btn {
-        font-size: 10px;
-    }
+        .btn {
+            font-size: 10px;
+        }
 
-    table tr.active {
-        background: red;
-    }
+        table tr.active {
+            background: red;
+        }
 
-    a.btn {
-        -webkit-transform: scale(0.9);
-        -moz-transform: scale(0.6);
-        -o-transform: scale(0.6);
-        -webkit-transition-duration: 0.5s;
-        -moz-transition-duration: 0.5s;
-        -o-transition-duration: 0.5s;
-    }
-</style>
+        a.btn {
+            -webkit-transform: scale(0.9);
+            -moz-transform: scale(0.6);
+            -o-transform: scale(0.6);
+            -webkit-transition-duration: 0.5s;
+            -moz-transition-duration: 0.5s;
+            -o-transition-duration: 0.5s;
+        }
+    </style>
