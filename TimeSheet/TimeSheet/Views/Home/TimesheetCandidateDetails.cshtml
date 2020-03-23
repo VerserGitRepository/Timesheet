@@ -90,21 +90,6 @@
                         <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
                         <input id="username" type="hidden" value="@User.Identity.Name" />
                     </td>
-                    <td class="Confirm">
-                        @if (item.StatusID == 1)
-
-                        {
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" id="Confirm">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Confirm</strong></span>
-                            </a>
-                        }
-                        else
-                        {
-                            <span><strong>Confirmed</strong></span>
-                        }
-
-                    </td>
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
                         <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
@@ -132,7 +117,22 @@
             <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
                         @*<a class="Delete" href="javascript:;">Delete</a>*@
                     </td>
-                    <td><input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm" /></td>
+                    @*<td><input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm" /></td>*@
+                    <td class="Confirm">
+                        @if (item.StatusID == 1)
+
+                        {
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" id="Confirm">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Confirm</strong></span>
+                            </a>
+                        }
+                        else
+                        {
+                            <span><strong>Confirmed</strong></span>
+                        }
+
+                    </td>
                 </tr>
                 }
             </tbody>
