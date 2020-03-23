@@ -9,7 +9,7 @@
         <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1300px">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th >Id</th>
+                    <th>Id</th>
                     <th>Project</th>
                     <th>Candidate</th>
                     <th>Activity</th>
@@ -24,6 +24,7 @@
                     <th>BreakTime</th>
 
                     <th>Status</th>
+                    <th>Confirm</th>
                     <th style="width:10px">Comments</th>
                     <th style="width:10px"></th>
                 </tr>
@@ -98,6 +99,21 @@
                         @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
                         <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
                         <input id="username" type="hidden" value="@User.Identity.Name" />
+                    </td>
+                    <td class="Confirm">
+                        @if (item.StatusID == 1)
+
+                        {
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" id="Confirm">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Confirm</strong></span>
+                            </a>
+                        }
+                        else
+                        {
+                            <span><strong>Confirmed</strong></span>
+                        }
+
                     </td>
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
@@ -464,6 +480,42 @@
         row.find("#Rate").hide();
         $(this).hide();
     });
+
+    $('#Confirm').on('click', function () {
+        var options = { "backdrop": "static", keyboard: true };
+        var row = $(this).closest("tr");
+        var TimeSheetId = row.find(".Id").find("span").html();
+        var loadUrl = '@Url.Action("UpdateConfirmStatus", "Home")';
+
+        var data = {
+            'TimeSheetId': TimeSheetId
+                };
+        $.post(loadUrl, data, function (response) {
+                });
+
+        $.ajax({
+
+            type: "GET",
+            url: './ProjectDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "ProjectName": row.find("#ProjectName").text() },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+
+    });
+
     var CandidateRatingDetailsURL = './Rating';
     function Rate(rowid) {
 
