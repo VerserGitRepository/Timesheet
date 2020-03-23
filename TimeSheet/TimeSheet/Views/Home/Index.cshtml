@@ -162,6 +162,7 @@
                         <th>StartTime</th>
                         <th>EndTime</th>
                         <th>Project</th>
+                        <th>ProjectManager</th>
                         <th>JobNo</th>
                         <th>Activity</th>
                         <th>OLA</th>
@@ -211,6 +212,17 @@
 
                         </td>
                         <td>
+                            @if ((bool)Session["HasUserPermissionsToEdit"])
+                            {
+                                <a href="javascript:void(0);" class="ProjectManagerName" data-id="@item.ProjectManager">@Html.DisplayFor(modelItem => item.ProjectManager)</a>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.ProjectManager)
+                            }
+
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.JobNo)
                         </td>
                         <td>
@@ -229,7 +241,15 @@
                             @Html.DisplayFor(modelItem => item.WarehouseName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Status)
+                            @if ((bool)Session["HasUserPermissionsToEdit"])
+                            {
+                                <a href="javascript:void(0);" class="statusList" data-id="@item.Status">@Html.DisplayFor(modelItem => item.Status)</a>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.Status)
+                            }
+
                         </td>
 
 
@@ -407,6 +427,65 @@ $('#edit').on('shown.bs.modal', function () {
         });
     });
 
+    var BookedDetailsURLPM = './ProjectManagerDetails';
+    $(function () {
+        $("#TimeSheetTable").on("click", ".ProjectManagerName", function () {
+            // debugger;
+            var $buttonClicked = $(this);
+            var ProjectName = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: BookedDetailsURLPM,
+                contentType: "application/json; charset=utf-8",
+                data: { "ProjectManagerName": ProjectName },
+                datatype: "json",
+                success: function (data) {
+                    // debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+    var statusList = './StatusList';
+    $(function () {
+        $("#TimeSheetTable").on("click", ".statusList", function () {
+            // debugger;
+            var $buttonClicked = $(this);
+            var ProjectName = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: statusList,
+                contentType: "application/json; charset=utf-8",
+                data: { "status": ProjectName },
+                datatype: "json",
+                success: function (data) {
+                    // debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
 
     var CandidateDetailsURL = './TimesheetCandidateDetails';
     $(function () {

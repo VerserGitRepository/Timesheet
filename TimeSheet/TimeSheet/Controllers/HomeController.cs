@@ -131,6 +131,24 @@ namespace TimeSheet.Controllers
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("ProjectDetails", model);
         }
+        [HttpGet]
+        public ActionResult StatusList(string status)
+        {
+            TimeSheetViewModel model = new TimeSheetViewModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
+            model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.Status == status).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("ProjectDetails", model);
+        }
+        [HttpGet]
+        public ActionResult ProjectManagerDetails(string ProjectManagerName)
+        {
+            TimeSheetViewModel model = new TimeSheetViewModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
+            model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.ProjectManager == ProjectManagerName).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("ProjectDetails", model);
+        }
 
         [HttpGet]
         public ActionResult Edit(int id)
