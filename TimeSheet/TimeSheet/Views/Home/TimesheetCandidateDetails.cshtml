@@ -1,5 +1,5 @@
 ﻿@model  TimeSheet.Models.TimeSheetViewModel
-
+@using TimeSheet.ServiceHelper
 <div>
     <div class="modal-header" style="background-color:lightgray;width:100%;font-weight:bold ">
         <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
@@ -32,108 +32,110 @@
             <tbody class="table">
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
-                <tr>
-                    <td class="Id"> <span>@item.Id</span> </td>
-                    <td class="CandidateName">
-                        <span id="txtCandidateName">@item.CandidateName</span>
-                    </td>
-                    <td class="Activity">
-                        @Html.DisplayFor(modelItem => item.Activity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProjectManager)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProjectName)
-                    </td>
-                    <td class="Day" width="7%">
-                        <span>@item.Day.Value.ToShortDateString()</span>
+                    <tr>
+                        <td class="Id"> <span>@item.Id</span> </td>
+                        <td class="CandidateName">
+                            <span id="txtCandidateName">@item.CandidateName</span>
+                        </td>
+                        <td class="Activity">
+                            @Html.DisplayFor(modelItem => item.Activity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectManager)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td class="Day" width="7%">
+                            <span>@item.Day.Value.ToShortDateString()</span>
 
-                    </td>
-                    <td class="StartTime">
-                        <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
+                        </td>
+                        <td class="StartTime">
+                            <span>@item.StartTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
-                    <td class="EndTime" width="8%">
-                        <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
-                    </td>
+                        <td class="EndTime" width="8%">
+                            <span>@item.EndTime.Value.ToShortTimeString()</span>
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                        </td>
 
-                    <td class="OLATarget">
-                        @Html.DisplayFor(modelItem => item.OLATarget)
-                    </td>
-                    <td class="ActualQuantity">
-                        <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                    </td>
-                    <td class="breakHrs">
+                        <td class="OLATarget">
+                            @Html.DisplayFor(modelItem => item.OLATarget)
+                        </td>
+                        <td class="ActualQuantity">
+                            <span style="width:2px">@item.ActualQuantity</span>
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        </td>
+                        <td class="breakHrs">
 
-                        @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
-                        {
-                            new SelectListItem{ Text="No Break", Value = "0" },
-                            new SelectListItem{ Text="15 Mins", Value = "15" },
-                            new SelectListItem{ Text="30 Mins", Value = "30" },
-                            new SelectListItem{ Text="45 Mins", Value = "45" },
-                            new SelectListItem{ Text="60 Mins", Value = "60" },
-                         } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
-                        <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
+                            @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text="No Break", Value = "0" },
+                                new SelectListItem{ Text="15 Mins", Value = "15" },
+                                new SelectListItem{ Text="30 Mins", Value = "30" },
+                                new SelectListItem{ Text="45 Mins", Value = "45" },
+                                new SelectListItem{ Text="60 Mins", Value = "60" },
+                             } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                            <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
 
-                    </td>
-                    <td>
-                        <span id="spanbreakStartTime">@item.BreakTime</span>
+                        </td>
+                        <td>
+                            <span id="spanbreakStartTime">@item.BreakTime</span>
 
-                    </td>
-                    <td class="Status">
-                        <span text="Status" span />
-                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
-                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                        <input id="username" type="hidden" value="@User.Identity.Name" />
-                    </td>
-                    <td class="TimeSheetComments">
-                        <span>@item.TimeSheetComments</span>
-                        <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
-                    </td>
-                    <td width="5%">
-                        <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Edit</strong></span>
-                        </a>
-                        <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                            <span><strong>Rate</strong></span>
-                        </a>
-                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            <span><strong>Update</strong></span>
-                        </a>
-
-                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            <span><strong>Cancel</strong></span>
-                        </a>
-
-                        @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
-                        @*<a class="Delete" href="javascript:;">Delete</a>*@
-                    </td>
-                    @*<td><input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm" /></td>*@
-                    <td class="Confirm">
-                        @if (item.StatusID == 1)
-
-                        {
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" id="Confirm">
+                        </td>
+                        <td class="Status">
+                            <span text="Status" span />
+                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
+                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                            <input id="username" type="hidden" value="@User.Identity.Name" />
+                        </td>
+                        <td class="TimeSheetComments">
+                            <span>@item.TimeSheetComments</span>
+                            <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
+                        </td>
+                        <td width="5%">
+                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Confirm</strong></span>
+                                <span><strong>Edit</strong></span>
                             </a>
-                        }
-                        else
-                        {
-                            <span><strong>Confirmed</strong></span>
-                        }
+                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span><strong>Rate</strong></span>
+                            </a>
+                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                <span><strong>Update</strong></span>
+                            </a>
 
-                    </td>
-                </tr>
+                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span><strong>Cancel</strong></span>
+                            </a>
+
+                            @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
+                            @*<a class="Delete" href="javascript:;">Delete</a>*@
+                        </td>
+                        @*<td><input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm" /></td>*@
+                        <td class="Confirm">
+                            @if (UserRoles.SiteAdmin() != true)
+                            {
+                                if (item.StatusID == 1)
+
+                                {
+                                    <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" id="Confirm">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        <span><strong>Confirm</strong></span>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span><strong>Confirmed</strong></span>
+                                }
+                            }
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -152,14 +154,14 @@
     });
     SetDDLValue();
     function ShowOTMessage(therowid) {
-        
+
         var rowid = $(therowid).closest("tr");
         var date1 = new Date("May 26, 2016 " + rowid.find("#startTime").val());
         var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
         var origVal = rowid.find("#hdnddlLidt").val();
         var msec = (date2 - date1);
-       
-        
+
+
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
@@ -182,16 +184,16 @@
                     });
         }
     }
-   
 
-   
+
+
 
 
     function ShowSliderModal(rowid)
     {
 
         var row = $(rowid).closest("tr");
-        
+
         var ddlValue = row.find("#hdnddlbrkhrs").val();
         var sliderURL = '@Url.Action("ReturnSlider", "Home")'
         var timetext = row.find("#spanbreakStartTime").html();
@@ -207,12 +209,12 @@
                   useBootstrap: false,
                          buttons: {
                              Set: function () {
-                                 
+
                                  //row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text());
-                                
+
                                  $(".slider-time2").text();
                                  var twoDates = timetext.split(";");
-                                 
+
                                  var msec = 0;
                             for (var i = 1; i < twoDates.length; i+=2)
                             {
@@ -223,7 +225,7 @@
                                  var date1 = new Date("May 26, 2016 " + $('.slider-time').text());
                                  var date2 = new Date("May 26, 2016 " + $('.slider-time2').text());
                                  // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
-                                
+
                                  //if (!(Number.isNaN(chkDate2 - chkDate1))) {
                                  //     msec   = (chkDate2 - chkDate1) + (date2 - date1);
                                  //}
@@ -333,7 +335,7 @@
     };
     function SetDDLValue() {
         //alert('before document ready');
-         
+
         $("tbody tr td.Status").each(function LoopTR() {
             var ratingTdText = $(this);
             if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
@@ -363,7 +365,7 @@
     }
     //Edit event handler.
     $("body").on("click", "#tblCustomers .Edit", function () {
-         
+
         var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
@@ -400,7 +402,7 @@
         row.find(".Cancel").hide();
         row.find("#Rate").hide();
         $(this).hide();
-        
+
         var CandidateEdit = {};
         var options = { "backdrop": "static", keyboard: true };
         CandidateEdit.Id = row.find(".Id").find("span").html();
@@ -414,8 +416,8 @@
 
         var timetext = row.find("#spanbreakStartTime").html();
         var twoDates = timetext.split(";");
-       
-       
+
+
         var msec = 0;
         for (var i = 1; i < twoDates.length; i += 2) {
             var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
@@ -447,7 +449,7 @@
 
 
         });
-       
+
         $.ajax({
             type: "GET",
             url: './TimesheetCandidateDetails',

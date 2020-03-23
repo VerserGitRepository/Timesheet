@@ -55,8 +55,13 @@ namespace TimeSheet.ServiceHelper
 
         public static async Task<ReturnModel> EditTimesheetModel(UpdateTimeSheetModel UpdateModel)
         {
-            ReturnModel ReturnResult = new ReturnModel();
+            var ReturnResult = new ReturnModel();
 
+            if (UpdateModel.ActualQuantity == null && UpdateModel.BreakHours <= 0 && UpdateModel.StatusID == 1 && UpdateModel.TimeSheetComments == null)
+            {
+                ReturnResult.IsSuccess = false;
+                return ReturnResult;
+            }
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
@@ -80,7 +85,7 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("timesheet/confirmbooking"), bookingId).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format($"timesheet/confirmbooking/{bookingId}")).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();

@@ -30,6 +30,17 @@ namespace TimeSheet.ServiceHelper
             }
             return false;
         }
+        public static bool SiteAdmin()
+        {
+            if (HttpContext.Current.Session["Username"] != null)
+            {
+                if (HttpContext.Current.Session["Accounts"] != null || HttpContext.Current.Session["Administrator"] != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public static bool UserCanEditCompletedTimesheet()
         {
             if (HttpContext.Current.Session["Username"] != null)
