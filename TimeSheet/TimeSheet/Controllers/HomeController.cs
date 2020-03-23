@@ -132,6 +132,15 @@ namespace TimeSheet.Controllers
             return PartialView("ProjectDetails", model);
         }
         [HttpGet]
+        public ActionResult ProjectDetails()
+        {
+            TimeSheetViewModel model = new TimeSheetViewModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
+            model.CandidateTimeSheetList = AlltimesheetRecords.ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            return PartialView("ProjectDetails", model);
+        }
+        [HttpGet]
         public ActionResult StatusList(string status)
         {
             TimeSheetViewModel model = new TimeSheetViewModel();
@@ -149,7 +158,19 @@ namespace TimeSheet.Controllers
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             return PartialView("ProjectDetails", model);
         }
-
+        [HttpPost]
+        public ActionResult UpdateConfirmStatus(string TimeSheetId)
+        {
+            if (UserRoles.UserCanEditTimesheet() != true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                var ReturnValue = RegisterTimesheetService.Confirmbooking(TimeSheetId);
+            }
+            return RedirectToAction("Index", "Home");
+        }
         [HttpGet]
         public ActionResult Edit(int id)
         {

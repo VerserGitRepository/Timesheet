@@ -458,6 +458,42 @@
         row.find("#Rate").hide();
         $(this).hide();
     });
+
+    $('#Confirm').on('click', function () {
+        var options = { "backdrop": "static", keyboard: true };
+        var row = $(this).closest("tr");
+        var TimeSheetId = row.find(".Id").find("span").html();
+        var loadUrl = '@Url.Action("UpdateConfirmStatus", "Home")';
+
+        var data = {
+            'TimeSheetId': TimeSheetId
+                };
+        $.post(loadUrl, data, function (response) {
+                });
+
+        $.ajax({
+
+            type: "GET",
+            url: './ProjectDetails',
+            contentType: "application/json; charset=utf-8",
+            data: { "ProjectName": row.find("#ProjectName").text() },
+            datatype: "json",
+            success: function (data) {
+                // debugger;
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+
+    });
+
     var CandidateRatingDetailsURL = './Rating';
     function Rate(rowid) {
 
