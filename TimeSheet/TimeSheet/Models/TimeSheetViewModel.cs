@@ -84,5 +84,6 @@ namespace TimeSheet.Models
         public string Vechicles { get; set; }
         public int BreakHours { get; set; }
         public string BreakTime { get; set; }
+        public string ScreenName { get; set; }
     }   
 }

@@ -129,17 +129,10 @@ namespace TimeSheet.Controllers
             var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
             model.CandidateTimeSheetList= AlltimesheetRecords.Where(c => c.ProjectName == ProjectName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            model.ScreenName = "ProjectDetails";
             return PartialView("ProjectDetails", model);
         }
-        [HttpGet]
-        public ActionResult ProjectDetails()
-        {
-            TimeSheetViewModel model = new TimeSheetViewModel();
-            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
-            model.CandidateTimeSheetList = AlltimesheetRecords.ToList();
-            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
-            return PartialView("ProjectDetails", model);
-        }
+        
         [HttpGet]
         public ActionResult StatusList(string status)
         {
@@ -147,6 +140,7 @@ namespace TimeSheet.Controllers
             var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
             model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.Status == status).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            model.ScreenName = "StatusList";
             return PartialView("ProjectDetails", model);
         }
         [HttpGet]
@@ -156,6 +150,7 @@ namespace TimeSheet.Controllers
             var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
             model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.ProjectManager == ProjectManagerName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            model.ScreenName = "PMDetails";
             return PartialView("ProjectDetails", model);
         }
         [HttpPost]
