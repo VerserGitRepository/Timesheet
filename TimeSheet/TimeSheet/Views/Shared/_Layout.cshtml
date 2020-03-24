@@ -59,7 +59,7 @@
                             </ul>
                         </li>
                         @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>*@
-                        @if (Session["ProjectManager"] != null || Session["Administrator"] != null)
+                        @if (UserRoles.UserCanRegisterPMTimesheet())
                         {
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")">PROJECTION</a>
@@ -71,9 +71,8 @@
                                 </ul>
                             </li>
                         }
-                        @if (Session["Accounts"] != null || Session["Administrator"] != null)
+                        @if (UserRoles.SiteAdmin())
                         {
-
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
                                 <ul class="dropdown-menu">
@@ -84,7 +83,7 @@
                                 </ul>
                             </li>
                         }
-                        @if (Session["Administrator"] != null)
+                        @if (UserRoles.SiteAdmin())
                         {
                             <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
                         }
@@ -98,7 +97,7 @@
                                 @*<li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">RESOURCE Available</a></li>*@
                                 <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">PROJECTION</a></li>
                                 <li>
-                                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYjg2Njc5YmQtMzA0Zi00NmI5LWIyNzAtMjQ5YjlmMzBlZGVhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9
+                         <a href="https://app.powerbi.com/view?r=eyJrIjoiYjg2Njc5YmQtMzA0Zi00NmI5LWIyNzAtMjQ5YjlmMzBlZGVhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9
 " target="_blank">ON GOING PROJECTION</a>
                                 </li>
                             </ul>
