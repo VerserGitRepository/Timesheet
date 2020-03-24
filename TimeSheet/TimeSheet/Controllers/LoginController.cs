@@ -11,7 +11,6 @@ namespace TimeSheet.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
         public ActionResult Index()
         {
             return View();
@@ -40,7 +39,10 @@ namespace TimeSheet.Controllers
                 Session["FullName"] = userReturn.Result.FullName;
                 Session["ErrorMessage"] = null;
                 Session["HR"] = null;
-               var _roles = LoginService.UserRoleList(login.UserName).Result;
+                Session["Accounts"] = null;
+                Session["Administrator"] = null;
+                Session["ProjectManager"] = null;
+                var _roles = LoginService.UserRoleList(login.UserName).Result;
                 if (_roles.Count() > 0 )
                 {
                     foreach (var r in _roles)

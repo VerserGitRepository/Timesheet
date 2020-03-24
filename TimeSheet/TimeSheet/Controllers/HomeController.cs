@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,7 +11,7 @@ using TimeSheet.ServiceHelper;
 
 namespace TimeSheet.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]       

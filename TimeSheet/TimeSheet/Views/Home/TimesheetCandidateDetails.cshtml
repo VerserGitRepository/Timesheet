@@ -16,14 +16,12 @@
                     <th>Project</th>
                     <th style="width:50px">Date </th>
                     <th>StartTime</th>
-                    <th style="width:50px">EndTime </th>
-                    @*<th>EndTime</th>*@
+                    <th style="width:50px">EndTime </th>                   
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break</th>
                     <th>Time</th>
-                    <th>Status</th>
-                    <th>Confirm</th>
+                    <th>Status</th>                  
                     <th style="width:10px">Comments</th>
                     <th></th>
                     <th></th>
@@ -119,10 +117,9 @@
                         </td>
                         @*<td><input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm" /></td>*@
                         <td class="Confirm">
-                            @if (UserRoles.SiteAdmin() != true)
+                            @if (UserRoles.SiteAdmin() == true)
                             {
                                 if (item.StatusID == 1)
-
                                 {
                                     <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" id="Confirm">
                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
@@ -161,7 +158,6 @@
         var origVal = rowid.find("#hdnddlLidt").val();
         var msec = (date2 - date1);
 
-
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
@@ -181,13 +177,9 @@
                         return ;
                     }
                 }
-                    });
+             });
         }
     }
-
-
-
-
 
     function ShowSliderModal(rowid)
     {
@@ -287,8 +279,6 @@
                                  });
                              }
 
-
-
                          }
 
                      });
@@ -346,7 +336,6 @@
                     }
                 });
             }
-
 
         });
         $("tbody tr td.breakHrs").each(function LoopTR() {
@@ -627,18 +616,13 @@
                                  return;
                              }
                          }
-
                      });
             },
             error: function () {
                 alert("Dynamic content load failed.");
             }
         });
-
-
-
     }
-
 </script>
 <style>
     .modal-dialog {
