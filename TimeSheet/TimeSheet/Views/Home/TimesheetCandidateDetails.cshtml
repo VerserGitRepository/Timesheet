@@ -90,7 +90,7 @@
                         </td>
                         <td class="TimeSheetComments">
                             <span>@item.TimeSheetComments</span>
-                            <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
+                            <textarea rows="3" cols="20" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
                         </td>
                         <td width="5%">
                             <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
@@ -626,7 +626,7 @@
 </script>
 <style>
     .modal-dialog {
-        width: 90%;
+        width: 100%;
         margin: 30px auto;
         margin-bottom: 10px;
     }
@@ -657,7 +657,10 @@
         -moz-transition-duration: 0.5s;
         -o-transition-duration: 0.5s;
     }
-
+    .span {
+  position:absolute;
+  width: 50px;
+}
     #myRatingModal {
         top: 5%;
         right: 50%;
