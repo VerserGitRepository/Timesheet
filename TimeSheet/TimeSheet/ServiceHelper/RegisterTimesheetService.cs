@@ -62,6 +62,15 @@ namespace TimeSheet.ServiceHelper
                 ReturnResult.IsSuccess = false;
                 return ReturnResult;
             }
+            if (UpdateModel.StatusID == 7 || UpdateModel.StatusID == 4)
+            {
+                if (string.IsNullOrEmpty(UpdateModel.ActualQuantity.ToString()))
+                {               
+                ReturnResult.IsSuccess = false;
+                HttpContext.Current.Session["ErrorMessage"] = "Actual Quantity Required To Complete or Approve Booking!";
+                return ReturnResult;
+                }
+            }
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
@@ -98,27 +107,6 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
-        //public static async Task<ReturnModel> UpdateBreakHours(UpdateTimeSheetModel UpdateModel)
-        //{
-        //    ReturnModel ReturnResult = new ReturnModel();
-
-        //    using (HttpClient client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri(TimeSheetAPIURl);
-        //        HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/{0}/{1}/{2}/UpdateResourceBreakTime",UpdateModel.Id,UpdateModel.BreakHours,UpdateModel.BreakTime)).Result;
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-        //            HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
-        //        }
-        //        else
-        //        {
-        //            HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
-        //        }
-        //    }
-        //    return ReturnResult;
-        //}
-
         public static async Task<ReturnModel> EditPMModel(UpdateProjectManagerModel UpdateModel)
         {
             ReturnModel ReturnResult = new ReturnModel();
@@ -199,7 +187,6 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
-
         public static async Task<ReturnModel> RegisterHRBooking(HRRegisterViewModel RegisterModel)
         {
             ReturnModel ReturnResult = new ReturnModel();
