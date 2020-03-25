@@ -121,14 +121,18 @@
                             {
                                 if (item.StatusID == 1)
                                 {
-                                    <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" id="Confirm">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                        <span><strong>Confirm</strong></span>
-                                    </a>
+                            <div id="confirmbtn">
+                                <a class="Update btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Confirm</strong></span>
+                                </a>
+                            </div>
                                 }
                                 else
                                 {
-                                    <span><strong>Confirmed</strong></span>
+                            <div id="confirmSpan">
+                                <span><strong>Confirmed</strong></span>
+                            </div>
                                 }
                             }
                         </td>
@@ -146,10 +150,11 @@
     </div>
 </div>
 <script type="text/javascript">
+    SetDDLValue();
     $('#tblCustomers').dataTable({
         responsive: true
     });
-    SetDDLValue();
+   
     function ShowOTMessage(therowid) {
 
         var rowid = $(therowid).closest("tr");
@@ -160,7 +165,18 @@
        
         if (origVal == "1") {
             if (rowid.find("#ddlStatus").val() == "4" || rowid.find("#ddlStatus").val() == "7") {
-                alert("The status cannot be marked from Requested to either Approved or Completed");
+                $.confirm({
+                    title: 'Alert',
+                    content: 'The status cannot be marked from Requested to either Approved or Completed.',
+                    boxWidth: '370px',
+                    useBootstrap: false,
+                    buttons: {
+                        OK: function () {
+
+                            return;
+                        }
+                    }
+                });
                 rowid.find("#ddlStatus").val(origVal);
                 return;
             }
@@ -332,7 +348,7 @@
     };
     function SetDDLValue() {
         //alert('before document ready');
-
+        debugger;
         $("tbody tr td.Status").each(function LoopTR() {
             var ratingTdText = $(this);
             if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
@@ -485,40 +501,64 @@
     });
 
 
-     $('#Confirm').on('click', function () {
+     function ChangeConfirm(rowId){
+        debugger;
         var options = { "backdrop": "static", keyboard: true };
-        var row = $(this).closest("tr");
+        var row = $(rowId).closest("tr");
         var TimeSheetId = row.find(".Id").find("span").html();
         var loadUrl = '@Url.Action("UpdateConfirmStatus", "Home")';
 
         var data = {
             'TimeSheetId': TimeSheetId
                 };
-        $.post(loadUrl, data, function (response) {
-                });
+         $.ajax({
+             url: loadUrl,
+             type: 'POST',
+             data: JSON.stringify(data),
+             contentType: 'application/json; charset=utf-8',
+             success: function (data) {
+                 row.find("#confirmBtn").hide();
+                 row.find("#confirmSpan").show();
+                 $.confirm({
+                     title: data.status,
+                     content:'The action has been completed successfully.',
+                     boxWidth: '370px',
+                     useBootstrap: false,
+                     buttons: {
+                         OK: function () {
+                            
+                             return true;
+                         }
+                     }
+                 });
+             },
+             error: function () {
+                 alert("error");
+             }
+         });
 
-        $.ajax({
+        //$.ajax({
 
-            type: "GET",
-            url: './ProjectDetails',
-            contentType: "application/json; charset=utf-8",
-            data: { "ProjectName": row.find("#ProjectName").text() },
-            datatype: "json",
-            success: function (data) {
-                // debugger;
-                $('#myModalContent').html(data);
-                $('#myModal').modal(options);
-                $('#myModal').modal('show');
-            },
-            error: function () {
-                alert("Dynamic content load failed.");
-            }
-        });
-        $('#myModal').on('hidden.bs.modal', function (e) {
-            location.reload();
-        })
+        //    type: "GET",
+        //    url: './ProjectDetails',
+        //    contentType: "application/json; charset=utf-8",
+        //    data: { "ProjectName": row.find("#ProjectName").text() },
+        //    datatype: "json",
+        //    success: function (data) {
+        //        // debugger;
+        //        $('#myModalContent').html(data);
+        //        $('#myModal').modal(options);
+        //        $('#myModal').modal('show');
+        //    },
+        //    error: function () {
+        //        alert("Dynamic content load failed.");
+        //    }
+        //});
+        //$('#myModal').on('hidden.bs.modal', function (e) {
+        //    location.reload();
+        //})
 
-    });
+    }
 
     //Cancel event handler.
     $("body").on("click", "#tblCustomers .Cancel", function () {
