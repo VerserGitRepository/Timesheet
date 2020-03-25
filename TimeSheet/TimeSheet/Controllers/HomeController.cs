@@ -162,7 +162,7 @@ namespace TimeSheet.Controllers
             {
                 var ReturnValue = RegisterTimesheetService.Confirmbooking(TimeSheetId);
             }
-            return RedirectToAction("Index", "Home");
+            return Json(new {status = "Success" });
         }
         [HttpGet]
         public ActionResult Edit(int id)
