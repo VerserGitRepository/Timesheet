@@ -73,20 +73,21 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ExportTimesSheetToExcel()
         {
-            List<TimeSheetViewModel> TimeSheetmodel = new List<TimeSheetViewModel>();
+           // var TimeSheetmodel = new List<TimesheetExportViewModel>();
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
             else
             {               
-                TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetList().Result;
+               var  TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetExportList().Result;
                 GridView gv = new GridView();
+               
                 gv.DataSource = TimeSheetmodel;
                 gv.DataBind();
                 Response.ClearContent();
                 Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment; filename=TimeScheduleActivitiesList.xls");
+                Response.AddHeader("content-disposition", "attachment; filename=SchedulerCurrentBookings.xls");
                 Response.ContentType = "application/ms-excel";
                 Response.Charset = "";
                 StringWriter sw = new StringWriter();

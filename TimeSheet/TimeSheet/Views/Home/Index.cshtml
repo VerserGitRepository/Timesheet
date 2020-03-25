@@ -27,7 +27,6 @@
         width: 112%;
     }
 
-
     .body-content {
         padding-left: 0px;
         padding-right: 0px;
@@ -116,8 +115,6 @@
     }
 </style>
 
-
-
 <table class="table pull-right" style="width:50%;margin-right:170px;">
     <thead>
         <tr>
@@ -140,19 +137,20 @@
                 </button>
             </th>
             <th class="col-md-1">
-                <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray;height: 26px;">
-                    <span class="glyphicon glyphicon-export black"></span>
-                </button>
-            </th>
+                @using (Html.BeginForm("ExportTimesSheetToExcel", "Home", FormMethod.Post))
+                {
+                    <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray;height: 26px;">
+                        <span class="glyphicon glyphicon-export black"></span>
+                    </button>
+                }
+                </th>
         </tr>
-    </thead>
-    
+    </thead>    
 </table>
 
 <div class="container" style="margin-left:0px">
     <div class="row">
-        <div class="col-md-11">
-            
+        <div class="col-md-11">            
             <table id="TimeSheetTable" class="table table-striped table-bordered"  cellspacing="0">
                 <thead style="background-color:#FFA500;color:white; ">
                     <tr>
@@ -170,7 +168,6 @@
                         <th>Vechicle</th>
                         <th>Warehouse</th>
                         <th>Status</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -220,7 +217,6 @@
                             {
                                 @Html.DisplayFor(modelItem => item.ProjectManager)
                             }
-
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.JobNo)
@@ -249,10 +245,7 @@
                             {
                                 @Html.DisplayFor(modelItem => item.Status)
                             }
-
                         </td>
-
-
                     </tr>
                     }
                 </tbody>
@@ -260,8 +253,6 @@
         </div>
     </div>
 </div>
-
-
 <div id='myModal' class='modal'>
     <div class="modal-dialog">
         <div class="modal-content">
@@ -276,7 +267,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $('#TimeSheetTable').dataTable({
@@ -581,9 +571,6 @@ $('#edit').on('shown.bs.modal', function () {
                     }
                 }
             });
-
-
             }
-
 </script>
 
