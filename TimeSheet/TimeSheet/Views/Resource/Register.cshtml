@@ -1050,7 +1050,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                        // jobno.empty();
                                 $('#JobID').append($('<option></option>').text("Select Job").val(null));
                             $.each(response, function (index, item) {
-                                $('#JobID').append($('<option></option>').text(item.Value).val(item.Id));
+                                $('#JobID').append($('<option></option>').text(item.Id).val(item.Value));
 
                                 });
                                 $('#JobID').removeAttr('multiple')
