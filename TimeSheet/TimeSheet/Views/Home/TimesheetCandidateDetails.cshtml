@@ -157,7 +157,14 @@
         var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
         var origVal = rowid.find("#hdnddlLidt").val();
         var msec = (date2 - date1);
-
+       
+        if (origVal == "1") {
+            if (rowid.find("#ddlStatus").val() == "4" || rowid.find("#ddlStatus").val() == "7") {
+                alert("The status cannot be marked from Requested to either Approved or Completed");
+                rowid.find("#ddlStatus").val(origVal);
+                return;
+            }
+        }
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
