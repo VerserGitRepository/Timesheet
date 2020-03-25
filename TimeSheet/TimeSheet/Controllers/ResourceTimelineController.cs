@@ -14,6 +14,7 @@ namespace TimeSheet.Controllers
     public class ResourceTimelineController : Controller
     {
         [OutputCache(CacheProfile = "HalfHour", VaryByHeader = "X-Requested-With", Location = OutputCacheLocation.Server)]
+
         public ActionResult Index()
         {
             if (Session["Username"] == null)
