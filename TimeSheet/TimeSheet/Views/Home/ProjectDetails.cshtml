@@ -12,7 +12,6 @@
                     <th>Id</th>
                     <th>Project</th>
                     <th>Candidate</th>
-                    <th>Job</th>
                     <th style="width:40px">Activity</th>
                     <th>PM</th>
                     <th style="width:30px">Date</th>
@@ -23,7 +22,6 @@
                     <th>Break</th>
                     <th>Time</th>
                     <th>Status</th>
-
                     <th style="width:0px">Comments</th>
                     <th style="width:10px"></th>
                     <th style="width:5px"></th>
@@ -40,7 +38,6 @@
                         <td class="CandidateName">
                             @Html.DisplayFor(modelItem => item.CandidateName)
                         </td>
-                        <td>@item.JobNo</td>
                         <td class="Activity">
                             @Html.DisplayFor(modelItem => item.Activity)
                         </td>
@@ -132,12 +129,15 @@
                             {
                                 if (item.StatusID == 1)
                                 {
-                                    <div id="confirmbtn">
+                                    <div id="confirmBtn">
                                         <a class="btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             <span><strong>Confirm</strong></span>
                                         </a>
-                                        </div>
+                                    </div>
+                                    <div id="confirmSpanDiv" style="display:none;">
+                                        <span><strong>Confirmed</strong></span>
+                                    </div>
                                 }
                                 else
                                 {
@@ -146,7 +146,7 @@
                                     </div>
                                 }
                             }
-                                </td>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -504,7 +504,7 @@
     });
 
     function ChangeConfirm(rowId){
-       // debugger;
+        debugger;
         var options = { "backdrop": "static", keyboard: true };
         var row = $(rowId).closest("tr");
         var TimeSheetId = row.find(".Id").find("span").html();
@@ -520,19 +520,20 @@
              contentType: 'application/json; charset=utf-8',
              success: function (data) {
                  row.find("#confirmBtn").hide();
-                 row.find("#confirmSpan").show();
-             //    $.confirm({
-             //        title: data.status,
-             //        content:'The action has been completed successfully.',
-             //        boxWidth: '370px',
-             //        useBootstrap: false,
-             //        buttons: {
-             //            OK: function () {
+                 row.find("#confirmSpanDiv").show();
+                 row.find("#ddlStatus").val(10);
+                 //$.confirm({
+                 //    title: data.status,
+                 //    content:'The action has been completed successfully.',
+                 //    boxWidth: '370px',
+                 //    useBootstrap: false,
+                 //    buttons: {
+                 //        OK: function () {
                             
-             //                return true;
-             //            }
-             //        }
-             //    });
+                 //            return true;
+                 //        }
+                 //    }
+                 //});
              },
              error: function () {
                  alert("error");
