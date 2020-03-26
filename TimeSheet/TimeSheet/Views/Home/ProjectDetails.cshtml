@@ -130,7 +130,7 @@
                                 if (item.StatusID == 1)
                                 {
                                     <div id="confirmbtn">
-                                        <a class="Update btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
+                                        <a class="btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             <span><strong>Confirm</strong></span>
                                         </a>
@@ -160,7 +160,8 @@
 <script type="text/javascript">
     SetDDLValue();
     $('#tblCustomers').dataTable({
-        responsive: true
+        responsive: true,
+        stateSave: true
         });
        
     function ShowOTMessage(therowid) {
@@ -517,18 +518,18 @@
              success: function (data) {
                  row.find("#confirmBtn").hide();
                  row.find("#confirmSpan").show();
-                 $.confirm({
-                     title: data.status,
-                     content:'The action has been completed successfully.',
-                     boxWidth: '370px',
-                     useBootstrap: false,
-                     buttons: {
-                         OK: function () {
+             //    $.confirm({
+             //        title: data.status,
+             //        content:'The action has been completed successfully.',
+             //        boxWidth: '370px',
+             //        useBootstrap: false,
+             //        buttons: {
+             //            OK: function () {
                             
-                             return true;
-                         }
-                     }
-                 });
+             //                return true;
+             //            }
+             //        }
+             //    });
              },
              error: function () {
                  alert("error");
