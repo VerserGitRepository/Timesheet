@@ -12,6 +12,7 @@
                     <th>Id</th>
                     <th>Project</th>
                     <th>Candidate</th>
+                    <th>Job</th>
                     <th style="width:40px">Activity</th>
                     <th>PM</th>
                     <th style="width:30px">Date</th>
@@ -22,6 +23,7 @@
                     <th>Break</th>
                     <th>Time</th>
                     <th>Status</th>
+
                     <th style="width:0px">Comments</th>
                     <th style="width:10px"></th>
                     <th style="width:5px"></th>
@@ -38,6 +40,7 @@
                         <td class="CandidateName">
                             @Html.DisplayFor(modelItem => item.CandidateName)
                         </td>
+                        <td>@item.JobNo</td>
                         <td class="Activity">
                             @Html.DisplayFor(modelItem => item.Activity)
                         </td>
@@ -500,7 +503,7 @@
     });
 
     function ChangeConfirm(rowId){
-        debugger;
+       // debugger;
         var options = { "backdrop": "static", keyboard: true };
         var row = $(rowId).closest("tr");
         var TimeSheetId = row.find(".Id").find("span").html();
