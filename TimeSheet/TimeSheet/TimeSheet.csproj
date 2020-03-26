@@ -234,6 +234,7 @@
     <Compile Include="Models\ResourceTimelineModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\TimesheetEditModel.cs" />
+    <Compile Include="Models\TimesheetExportViewModel.cs" />
     <Compile Include="Models\TimeSheetRegisterPMModel.cs" />
     <Compile Include="Models\TimeSheetViewModel.cs" />
     <Compile Include="Models\CostModelViewModel.cs" />
