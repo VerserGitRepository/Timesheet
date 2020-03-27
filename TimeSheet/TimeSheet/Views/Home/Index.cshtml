@@ -154,6 +154,7 @@
             <table id="TimeSheetTable" class="table table-striped table-bordered"  cellspacing="0">
                 <thead style="background-color:#FFA500;color:white; ">
                     <tr>
+                        <th>Booking ID</th>
                         <th>Resource</th>
                         <th>Opportunity</th>
                         <th>BookDate </th>
@@ -174,6 +175,16 @@
                     @foreach (TimeSheet.Models.TimeSheetViewModel item in Model.CandidateTimeSheetList)
                     {
                     <tr>
+                        <td>
+                            @if ((bool)Session["HasUserPermissionsToEdit"])
+                            {
+                                <a href="javascript:void(0);" class="BookingID" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.CandidateName)
+                            }
+                        </td>
                         <td>
                             @if ((bool)Session["HasUserPermissionsToEdit"])
                             {
@@ -502,7 +513,35 @@ $('#edit').on('shown.bs.modal', function () {
                 }
             });
         });
-
+        
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+        var BookingsURL = './TimesheetBookings';
+    $(function () {
+        $("#TimeSheetTable").on("click", ".BookingID", function () {
+            // debugger;
+            var $buttonClicked = $(this);
+            var Id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: BookingsURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": Id },
+                datatype: "json",
+                success: function (data) {
+                    // debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
 
         //$("#closebtn").on('click',function(){
         //    $('#myModal').modal('hide');

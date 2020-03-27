@@ -70,35 +70,35 @@ namespace TimeSheet.Controllers
                 return View(model);
             }
         }
-        [HttpPost]
-        public ActionResult ExportTimesSheetToExcel()
-        {
-           // var TimeSheetmodel = new List<TimesheetExportViewModel>();
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
-            {               
-               var  TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetExportList().Result;
-                GridView gv = new GridView();
+        //[HttpPost]
+        //public ActionResult ExportTimesSheetToExcel()
+        //{
+        //   // var TimeSheetmodel = new List<TimesheetExportViewModel>();
+        //    if (Session["Username"] == null)
+        //    {
+        //        return RedirectToAction("Login", "Login");
+        //    }
+        //    else
+        //    {               
+        //       var  TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetExportList().Result;
+        //        GridView gv = new GridView();
                
-                gv.DataSource = TimeSheetmodel;
-                gv.DataBind();
-                Response.ClearContent();
-                Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment; filename=SchedulerCurrentBookings.xls");
-                Response.ContentType = "application/ms-excel";
-                Response.Charset = "";
-                StringWriter sw = new StringWriter();
-                HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-                gv.RenderControl(htw);
-                Response.Output.Write(sw.ToString());
-                Response.Flush();
-                Response.End();
-            }
-            return RedirectToAction("Jobs", "Home");
-        }
+        //        gv.DataSource = TimeSheetmodel;
+        //        gv.DataBind();
+        //        Response.ClearContent();
+        //        Response.Buffer = true;
+        //        Response.AddHeader("content-disposition", "attachment; filename=SchedulerCurrentBookings.xls");
+        //        Response.ContentType = "application/ms-excel";
+        //        Response.Charset = "";
+        //        StringWriter sw = new StringWriter();
+        //        HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+        //        gv.RenderControl(htw);
+        //        Response.Output.Write(sw.ToString());
+        //        Response.Flush();
+        //        Response.End();
+        //    }
+        //    return RedirectToAction("Jobs", "Home");
+        //}
         [HttpGet]
         public JsonResult ProjectOpportunities(int projectId)
         {
@@ -130,7 +130,16 @@ namespace TimeSheet.Controllers
             model.ScreenName = "ProjectDetails";
             return PartialView("ProjectDetails", model);
         }
-        
+        [HttpGet]
+        public ActionResult TimesheetBookings(int Id)
+        {
+            TimeSheetViewModel model = new TimeSheetViewModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
+            model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.Id == Id).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+           // model.ScreenName = "Booking";
+            return PartialView("TimesheetBookings", model);
+        }
         [HttpGet]
         public ActionResult StatusList(string status)
         {
@@ -161,6 +170,7 @@ namespace TimeSheet.Controllers
             model.ScreenName = "PMDetails";
             return PartialView("PMDetails", model);
         }
+
         [HttpPost]
         public ActionResult UpdateConfirmStatus(string TimeSheetId)
         {
