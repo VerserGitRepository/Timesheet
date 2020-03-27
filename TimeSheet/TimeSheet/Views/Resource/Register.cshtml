@@ -78,8 +78,8 @@
                             <div class="form-group  required col-md-6" tabindex=6>
                                 <label class="control-label">Job Number</label>
 
-                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.JobID, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Job", new { @id = "JobID", @style = "height:10px; width:10px;", @multiple = "multiple" })
-                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.JobID, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(model => model.TimeSheetRegisterModel.JobNo, new SelectList(Enumerable.Empty<SelectListItem>()), "Select Job", new { @id = "JobID", @style = "height:10px; width:10px;", @multiple = "multiple" })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.JobNo, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -1050,7 +1050,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                        // jobno.empty();
                                 $('#JobID').append($('<option></option>').text("Select Job").val(null));
                             $.each(response, function (index, item) {
-                                $('#JobID').append($('<option></option>').text(item.Id).val(item.Value));
+                                $('#JobID').append($('<option></option>').text(item.Value).val(item.Value));
 
                                 });
                                 $('#JobID').removeAttr('multiple')

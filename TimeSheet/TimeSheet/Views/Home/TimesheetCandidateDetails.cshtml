@@ -173,28 +173,32 @@
        
         if (origVal == "1") {
             if (rowid.find("#ddlStatus").val() == "4" || rowid.find("#ddlStatus").val() == "7") {
-                $.confirm({
-                    title: 'Alert',
-                    content: 'The status cannot be marked from Requested to either Approved or Completed.',
-                    boxWidth: '370px',
-                    useBootstrap: false,
-                    buttons: {
-                        OK: function () {
 
-                            return;
-                        }
-                    }
-                });
-                rowid.find("#ddlStatus").val(origVal);
+                $.alert("Requested Status Booking Has To Be Confirmed Before Approved Or Completed.");
                 return;
+
+                //$.confirm({
+                //    title: '',
+                //    content: 'The status cannot be marked from Requested to either Approved or Completed.',
+                //    boxWidth: '370px',
+                //    useBootstrap: false,
+                //    buttons: {
+                //        OK: function () {
+                //            return;
+                //        }
+                //    }
+                //});
+                //rowid.find("#ddlStatus").val(origVal);
+                //return;
             }
         }
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
-            $.confirm({
-                title: 'Alert!!!',
-                content: 'The activity has Over Time work hours. Are you sure you want to approve?',
+            $.confirm(
+                {
+                title: 'Warning',
+                content: 'The Activity Has Over Time Work Hours. Are You Sure You Want To Approve?',
                 boxWidth: '370px',
                 useBootstrap: false,
                 buttons: {
@@ -203,7 +207,6 @@
                         return true;
                     },
                     cancel: function () {
-
                         rowid.find("#ddlStatus").val(origVal);
                         return ;
                     }
@@ -356,7 +359,7 @@
     };
     function SetDDLValue() {
         //alert('before document ready');
-        debugger;
+       // debugger;
         $("tbody tr td.Status").each(function LoopTR() {
             var ratingTdText = $(this);
             if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
@@ -433,11 +436,8 @@
         CandidateEdit.EndDate = row.find(".EndDate").find("span").html();
         CandidateEdit.Day = row.find(".Day").find("span").html();
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
-
         var timetext = row.find("#spanbreakStartTime").html();
         var twoDates = timetext.split(";");
-
-
         var msec = 0;
         for (var i = 1; i < twoDates.length; i += 2) {
             var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
@@ -514,7 +514,7 @@
 
 
      function ChangeConfirm(rowId){
-        debugger;
+       // debugger;
         var options = { "backdrop": "static", keyboard: true };
         var row = $(rowId).closest("tr");
         var TimeSheetId = row.find(".Id").find("span").html();
