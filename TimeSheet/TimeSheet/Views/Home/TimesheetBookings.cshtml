@@ -10,23 +10,23 @@
         <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;align-self:flex-start;align-items:flex-start;width:100%">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>ID</th>
-                    <th>RESOURCE</th>
-                    <th>ACTIVITY</th>
+                    <th>Id</th>
+                    <th>Project</th>
+                    <th>Candidate</th>
+                    <th style="width:40px">Activity</th>
                     <th>PM</th>
-                    <th>PROJECT</th>
                     <th>JOB</th>
-                    <th style="width:50px">DAY</th>
-                    <th>STARTTIME</th>
-                    <th style="width:5px">ENDTIME</th>
+                    <th style="width:30px">Date</th>
+                    <th>Start</th>
+                    <th style="width:30px">End</th>
                     <th style="width:10px">OLA</th>
-                    <th style="width:10px">ACTUALS</th>
-                    <th>BREAK</th>
-                    <th>TIME</th>
-                    <th style="width:30px">STATUS</th>
-                    <th style="width:10px">COMMENTS</th>
-                    <th></th>
-                    <th></th>
+                    <th style="width:10px">Actual</th>
+                    <th>Break</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th style="width:0px">Comments</th>
+                    <th style="width:10px"></th>
+                    <th style="width:5px"></th>
                 </tr>
             </thead>
             <tbody class="table">
@@ -35,7 +35,10 @@
                     <tr>
                         <td class="Id"> <span>@item.Id</span> </td>
                         <td class="CandidateName">
-                            <span id="txtCandidateName">@item.CandidateName</span>
+                            <span id="ProjectName">@item.ProjectName</span>
+                        </td>
+                        <td class="CandidateName">
+                            @Html.DisplayFor(modelItem => item.CandidateName)
                         </td>
                         <td class="Activity">
                             @Html.DisplayFor(modelItem => item.Activity)
@@ -44,21 +47,24 @@
                             @Html.DisplayFor(modelItem => item.ProjectManager)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ProjectName)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.JobNo)
                         </td>
                         <td class="Day" width="7%">
                             <span>@item.Day.Value.ToShortDateString()</span>
+
+                            @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
                         </td>
                         <td class="StartTime">
                             <span>@item.StartTime.Value.ToShortTimeString()</span>
                             <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
                         </td>
+                        @*<td class="EndDate" width="8%">
+                                @Html.DisplayFor(modelItem => item.EndDate)
 
-                        <td class="EndTime" width="4%">
+                            </td>*@
+
+                        <td class="EndTime" width="8%">
                             <span>@item.EndTime.Value.ToShortTimeString()</span>
                             <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
                         </td>
@@ -79,26 +85,26 @@
                                 new SelectListItem{ Text="30 Mins", Value = "30" },
                                 new SelectListItem{ Text="45 Mins", Value = "45" },
                                 new SelectListItem{ Text="60 Mins", Value = "60" },
-                             }, new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                             } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
                             <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
 
                         </td>
                         <td>
                             <span id="spanbreakStartTime">@item.BreakTime</span>
-
                         </td>
-                        <td class="Status" style="width:2px">
-                            <span style="width:2px" text="Status" span />
+                        <td class="Status">
+                            <span text="Status" span />
                             @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
                             <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
                             <input id="username" type="hidden" value="@User.Identity.Name" />
+                            <input id="screenName" type="hidden" value="@item.ScreenName" />
                         </td>
                         <td class="TimeSheetComments">
                             <span>@item.TimeSheetComments</span>
-                            <textarea rows="3" cols="20" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
+                            <textarea rows="3" cols="10" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
                         </td>
                         <td width="5%">
-                            <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
+                            <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 <span><strong>Edit</strong></span>
                             </a>
@@ -120,20 +126,19 @@
                                 <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
                             @*<a class="Delete" href="javascript:;">Delete</a>*@
                         </td>
-                        @*<td><input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm" /></td>*@
+                        @*<td>
+                                <input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm"/>
+                            </td>*@
                         <td class="Confirm">
                             @if (UserRoles.SiteAdmin())
                             {
                                 if (item.StatusID == 1)
                                 {
-                                    <div id="confirmBtn">
-                                        <a class="btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
+                                    <div id="confirmbtn">
+                                        <a class="Update btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             <span><strong>Confirm</strong></span>
                                         </a>
-                                    </div>
-                                    <div id="confirmSpanDiv" style="display:none;">
-                                        <span><strong>Confirmed</strong></span>
                                     </div>
                                 }
                                 else
@@ -688,18 +693,19 @@
 <style>
     .modal-dialog {
         width: 90%;
-        margin: 30px auto;
-        margin-bottom: 10px;
+        margin: 10px auto;
+        margin-bottom: 5px;
     }
-    input, select, textarea {
-    max-width: 80px;
-    border: 2px;
-    outline: 2px;
-}
 
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
+    }
+
+    input, select, textarea {
+        max-width: 80px;
+        border: 2px;
+        outline: 2px;
     }
 
     .selected {
@@ -722,17 +728,5 @@
         -webkit-transition-duration: 0.5s;
         -moz-transition-duration: 0.5s;
         -o-transition-duration: 0.5s;
-    }
-
-    .span {
-        position: absolute;
-        width: 50px;
-    }
-
-    #myRatingModal {
-        top: 5%;
-        right: 50%;
-        outline: none;
-        overflow: hidden;
     }
 </style>

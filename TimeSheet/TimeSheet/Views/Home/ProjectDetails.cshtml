@@ -9,21 +9,21 @@
         <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;align-self:flex-start;align-items:flex-start;width:100%">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>ID</th>
-                    <th>PROJECT</th>
-                    <th>RESOURCE</th>
-                    <th>ACTIVITIES</th>
+                    <th>Id</th>
+                    <th>Project</th>
+                    <th>Candidate</th>
+                    <th style="width:40px">Activity</th>
                     <th>PM</th>
                     <th>JOB</th>
-                    <th style="width:30px">DATE</th>
-                    <th>STARTTIME</th>
-                    <th>EndTIME</th>
+                    <th style="width:30px">Date</th>
+                    <th>Start</th>
+                    <th style="width:30px">End</th>
                     <th style="width:10px">OLA</th>
-                    <th style="width:10px">ACTUALS</th>
-                    <th>BREAK</th>
-                    <th>TIME</th>
-                    <th>STATUS</th>
-                    <th style="width:0px">COMMENTS</th>
+                    <th style="width:10px">Actual</th>
+                    <th>Break</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th style="width:0px">Comments</th>
                     <th style="width:10px"></th>
                     <th style="width:5px"></th>
                 </tr>
@@ -44,6 +44,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ProjectManager)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JobNo)
                         </td>
                         <td class="Day" width="7%">
                             <span>@item.Day.Value.ToShortDateString()</span>
@@ -72,9 +75,6 @@
                             <span style="width:2px">@item.ActualQuantity</span>
                             <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.JobNo)
-                        </td>
                         <td class="breakHrs">
 
                             @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
@@ -84,7 +84,7 @@
                                 new SelectListItem{ Text="30 Mins", Value = "30" },
                                 new SelectListItem{ Text="45 Mins", Value = "45" },
                                 new SelectListItem{ Text="60 Mins", Value = "60" },
-                             }, new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                             } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
                             <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
 
                         </td>
@@ -133,14 +133,11 @@
                             {
                                 if (item.StatusID == 1)
                                 {
-                                    <div id="confirmBtn">
-                                        <a class="btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
+                                    <div id="confirmbtn">
+                                        <a class="Update btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             <span><strong>Confirm</strong></span>
                                         </a>
-                                    </div>
-                                    <div id="confirmSpanDiv" style="display:none;">
-                                        <span><strong>Confirmed</strong></span>
                                     </div>
                                 }
                                 else
@@ -674,18 +671,19 @@
 <style>
     .modal-dialog {
         width: 90%;
-        /*margin: 30px auto;*/
-        margin-bottom: 10px;
+        margin: 10px auto;
+        margin-bottom: 5px;
     }
-        input, select, textarea {
-    max-width: 80px;
-    border: 2px;
-    outline: 2px;
-}
 
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
+    }
+
+    input, select, textarea {
+        max-width: 80px;
+        border: 2px;
+        outline: 2px;
     }
 
     .selected {

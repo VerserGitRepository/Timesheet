@@ -5,6 +5,7 @@
         <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
+
     <div style="align-content:flex-start;align-self:flex-start;align-items:flex-start;padding-bottom:15px;padding-left:15px;padding-top:10px;width:80%">
         <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;align-self:flex-start;align-items:flex-start;width:100%">
             <thead style="background-color:#FFA500;color:white">
@@ -14,7 +15,7 @@
                     <th>Candidate</th>
                     <th style="width:40px">Activity</th>
                     <th>PM</th>
-                    <th>JobNo</th>
+                    <th>JOB</th>
                     <th style="width:30px">Date</th>
                     <th>Start</th>
                     <th style="width:30px">End</th>
@@ -42,7 +43,7 @@
                         <td class="Activity">
                             @Html.DisplayFor(modelItem => item.Activity)
                         </td>
-                        <td id="PMTD">
+                        <td>
                             @Html.DisplayFor(modelItem => item.ProjectManager)
                         </td>
                         <td>
@@ -84,7 +85,7 @@
                                 new SelectListItem{ Text="30 Mins", Value = "30" },
                                 new SelectListItem{ Text="45 Mins", Value = "45" },
                                 new SelectListItem{ Text="60 Mins", Value = "60" },
-                             }, new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                             } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
                             <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
 
                         </td>
@@ -153,6 +154,7 @@
             </tbody>
         </table>
     </div>
+
 </div>
 <div id="myRatingModal" class="modal fade bs-modal-sm" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -666,16 +668,23 @@
 
     }
 </script>
+
 <style>
     .modal-dialog {
         width: 90%;
-        margin: 30px auto;
-        margin-bottom: 10px;
+        margin: 10px auto;
+        margin-bottom: 5px;
     }
 
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
+    }
+
+    input, select, textarea {
+        max-width: 80px;
+        border: 2px;
+        outline: 2px;
     }
 
     .selected {
@@ -690,11 +699,6 @@
     table tr.active {
         background: red;
     }
-        input, select, textarea {
-    max-width: 80px;
-    border: 2px;
-    outline: 2px;
-}
 
     a.btn {
         -webkit-transform: scale(0.9);
