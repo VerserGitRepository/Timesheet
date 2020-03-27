@@ -319,25 +319,25 @@ namespace TimeSheet.ServiceHelper
             return CostModelLists;
         }
 
-        public static async Task<List<TimesheetExportViewModel>> TimeSheetExportList()
-        {
-           var TimesheetExport = new List<TimesheetExportViewModel>();
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/TimeSheetList")).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var _TimesheetExportViewModel = await response.Content.ReadAsAsync<List<TimesheetExportViewModel>>();
+        //public static async Task<List<TimesheetExportViewModel>> TimeSheetExportList()
+        //{
+        //   var TimesheetExport = new List<TimesheetExportViewModel>();
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(TimeSheetAPIURl);
+        //        HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/TimeSheetList")).Result;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var _TimesheetExportViewModel = await response.Content.ReadAsAsync<List<TimesheetExportViewModel>>();
 
-                    foreach (var a in _TimesheetExportViewModel)
-                    {
-                        TimesheetExport.Add(a);
-                    }
-                }
-            }
-            return TimesheetExport;
-        }
+        //            foreach (var a in _TimesheetExportViewModel)
+        //            {
+        //                TimesheetExport.Add(a);
+        //            }
+        //        }
+        //    }
+        //    return TimesheetExport;
+        //}
 
         public static async Task<List<TimeSheetViewModel>> CandidateTimelines()
         {
