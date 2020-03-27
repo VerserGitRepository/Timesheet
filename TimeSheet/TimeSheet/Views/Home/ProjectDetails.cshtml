@@ -177,27 +177,29 @@
 
         if (origVal == "1") {
             if (rowid.find("#ddlStatus").val() == "4" || rowid.find("#ddlStatus").val() == "7") {
-                $.confirm({
-                    title: 'Alert',
-                    content: 'The status cannot be marked from Requested to either Approved or Completed.',
-                    boxWidth: '370px',
-                    useBootstrap: false,
-                    buttons: {
-                        OK: function () {
-
-                            return;
-                        }
-                    }
-                });
-                rowid.find("#ddlStatus").val(origVal);
+                $.alert("Requested Status Booking Has To Be Confirmed Before Approved Or Completed.");
                 return;
+                //$.confirm({
+                //    title: 'Alert',
+                //    content: 'The status cannot be marked from Requested to either Approved or Completed.',
+                //    boxWidth: '370px',
+                //    useBootstrap: false,
+                //    buttons: {
+                //        OK: function () {
+
+                //            return;
+                //        }
+                //    }
+                //});
+                //rowid.find("#ddlStatus").val(origVal);
+                //return;
             }
         }
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
             $.confirm({
-                title: 'Alert!!!',
+                title: 'Warning',
                 content: 'The activity has Over Time work hours. Are you sure you want to approve?',
                 boxWidth: '370px',
                 useBootstrap: false,
