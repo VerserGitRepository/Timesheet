@@ -5,8 +5,8 @@
         <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
-    <div style="align-content:flex-start;padding-bottom:20px;padding-left:15px;padding-top:10px;width:90%">
-        <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;width:90%">
+    <div style="align-content:flex-start;padding-bottom:20px;padding-left:15px;padding-top:10px;width:80%">
+        <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;width:80%">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -675,6 +675,11 @@
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
     }
+           input, select, textarea {
+    max-width: 80px;
+    border: 2px;
+    outline: 2px;
+}
 
     .selected {
         color: black;
