@@ -10,21 +10,21 @@
         <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:80%">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>Id</th>
-                    <th>Candidate</th>
-                    <th>Activity</th>
+                    <th>ID</th>
+                    <th>RESOURCE</th>
+                    <th>ACTIVITY</th>
                     <th>PM</th>
-                    <th>Project</th>
-                    <th>Job No</th>
-                    <th style="width:50px">Date </th>
-                    <th>StartTime</th>
-                    <th style="width:5px">EndTime </th>
+                    <th>PROJECT</th>
+                    <th>JOB</th>
+                    <th style="width:50px">DAY</th>
+                    <th>STARTTIME</th>
+                    <th style="width:5px">ENDTIME</th>
                     <th style="width:10px">OLA</th>
-                    <th style="width:10px">Actual</th>
-                    <th>Break</th>
-                    <th>Time</th>
-                    <th style="width:30px">Status</th>
-                    <th style="width:10px">Comments</th>
+                    <th style="width:10px">ACTUALS</th>
+                    <th>BREAK</th>
+                    <th>TIME</th>
+                    <th style="width:30px">STATUS</th>
+                    <th style="width:10px">COMMENTS</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -194,7 +194,7 @@
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
             $.confirm({
-                title: 'Alert!!!',
+                title: 'Warning',
                 content: 'The activity has Over Time work hours. Are you sure you want to approve?',
                 boxWidth: '370px',
                 useBootstrap: false,
