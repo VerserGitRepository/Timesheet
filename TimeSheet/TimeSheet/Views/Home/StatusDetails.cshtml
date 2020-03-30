@@ -10,8 +10,8 @@
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
-                    <th style="width:40px">Project</th>
-                    <th style="width:40px">Candidate</th>
+                    <th style="width:30px">Project</th>
+                    <th style="width:30px">Candidate</th>
                     <th style="width:40px">Activity</th>
                     <th style="width:40px">PM</th>
                     <th>JOB</th>
@@ -33,10 +33,10 @@
                 {
                 <tr>
                     <td class="Id"> <span>@item.Id</span> </td>
-                    <td class="CandidateName">
+                    <td class="CandidateName" width="4%">
                         <span id="ProjectName">@item.ProjectName</span>
                     </td>
-                    <td class="CandidateName">
+                    <td class="CandidateName" width="4%">
                         @Html.DisplayFor(modelItem => item.CandidateName)
                     </td>
                     <td class="Activity">
