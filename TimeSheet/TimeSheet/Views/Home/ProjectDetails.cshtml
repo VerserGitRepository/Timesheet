@@ -133,7 +133,7 @@
                             {
                                 if (item.StatusID == 1)
                                 {
-                                    <div id="confirmbtn">
+                                    <div id="confirmBtn">
                                         <a class="btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             <span><strong>Confirm</strong></span>
@@ -479,9 +479,9 @@
     $("#myModal").draggable({
         handle: ".modal-header"
     });
-    $('#myModal').on('hidden.bs.modal', function (e) {
-        location.reload();
-    });
+    //$('#myModal').on('hidden.bs.modal', function (e) {
+    //    location.reload();
+    //});
 
     $(".Edit").on("click", function () {
         $(".popup-overlay, .popup-content").addClass("active");
