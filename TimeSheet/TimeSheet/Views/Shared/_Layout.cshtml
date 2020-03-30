@@ -7,8 +7,6 @@
     <title>@ViewBag.Title -Verser Technology LifeCycles</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
-
 </head>
 <body>
     <div class="navbar navbar-inverse fixed-top" style="margin-left:0px;">
@@ -81,10 +79,7 @@
                                     <li data-toggle="tooltip" data-placement="bottom" title="Paid Timesheet Report">@Html.ActionLink("PAID", "monthlyReport", "Finanace")</li>
 
                                 </ul>
-                            </li>
-                        }
-                        @if (UserRoles.SiteAdmin())
-                        {
+                            </li>                       
                             <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
                         }
                         <li class="dropdown">
@@ -183,6 +178,7 @@
 
     .body {
         padding-top: 0px;
+        width: 100%;
     }
 
     .navbar-inverse {
