@@ -134,11 +134,14 @@
                             {
                                 if (item.StatusID == 1)
                                 {
-                                    <div id="confirmbtn">
+                                    <div id="confirmBtn">
                                         <a class="btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             <span><strong>Confirm</strong></span>
                                         </a>
+                                    </div>
+                                    <div id="confirmSpanDiv" style="display:none;">
+                                        <span><strong>Confirmed</strong></span>
                                     </div>
                                 }
                                 else
@@ -528,7 +531,8 @@
              contentType: 'application/json; charset=utf-8',
              success: function (data) {
                  row.find("#confirmBtn").hide();
-                 row.find("#confirmSpan").show();
+                 row.find("#confirmSpanDiv").show();
+                 row.find("#ddlStatus").val(10);
              //    $.confirm({
              //        title: data.status,
              //        content:'The action has been completed successfully.',
