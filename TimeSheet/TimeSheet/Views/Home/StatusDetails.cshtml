@@ -10,14 +10,14 @@
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
-                    <th>Project</th>
-                    <th>Candidate</th>
+                    <th style="width:40px">Project</th>
+                    <th style="width:40px">Candidate</th>
                     <th style="width:40px">Activity</th>
-                    <th>PM</th>
+                    <th style="width:40px">PM</th>
                     <th>JOB</th>
-                    <th style="width:30px">Date</th>
-                    <th>Start</th>
-                    <th style="width:30px">End</th>
+                    <th>Date</th>
+                    <th style="width:40px">Start</th>
+                    <th style="width:40px">EndTime</th>
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break</th>
@@ -48,22 +48,15 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.JobNo)
                     </td>
-                    <td class="Day" width="7%">
+                    <td class="Day">
                         <span>@item.Day.Value.ToShortDateString()</span>
 
-                        @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
-
                     </td>
-                    <td class="StartTime" width="2%">
+                    <td class="StartTime" >
                         <span>@item.StartTime.Value.ToShortTimeString()</span>
                         <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
                     </td>
-                    @*<td class="EndDate" width="8%">
-            @Html.DisplayFor(modelItem => item.EndDate)
-
-        </td>*@
-
-                    <td class="EndTime" width="2%">
+                    <td class="EndTime" >
                         <span>@item.EndTime.Value.ToShortTimeString()</span>
                         <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none;width:52px" />
                     </td>
