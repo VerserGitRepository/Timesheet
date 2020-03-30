@@ -36,15 +36,17 @@
         padding-left: 0px;
         padding-right: 5px;
         max-width: 100%;
-         margin-left: 100px
+        margin-left: 100px;
     }
 
     .dataTables_filter {
         float: right;
     }
+
     .dataTables_wrapper .dataTables_filter input {
         margin-left: -1.1em;
     }
+
     .modal-header {
         border-bottom: 0 none;
     }
@@ -87,6 +89,7 @@
         padding-right: 2px;
         padding-left: 2px
     }
+
     .table thead > tr > th {
         vertical-align: bottom;
         border-bottom: 2px white;
@@ -134,30 +137,31 @@
                         <span class="glyphicon glyphicon-export black"></span>
                     </button>
                 }
-                </th>
+            </th>
         </tr>
-    </thead>    
+    </thead>
 </table>
 <div class="container" style="margin-left:0px">
     <div class="row">
-        <div class="col-md-12">            
-            <table id="TimeSheetTable" class="table table-striped table-bordered"  cellspacing="0">
+        <div class="col-md-11">
+            <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
                 <thead style="background-color:#FFA500;color:white; ">
                     <tr>
-                        <th>ID</th>
-                        <th>RESOURCE</th>
-                        <th>OPPORTUNITY</th>
-                        <th>BOOKDATE</th>
-                        <th>STARTTIME</th>
-                        <th>ENDTIME</th>
-                        <th>PROJECT</th>
-                        <th>PM</th>
-                        <th>JOB</th>
-                        <th>ACTIVITY</th>
-                        <th>OLA</th>                        
+                        <th>Booking ID</th>
+                        <th>Resource</th>
+                        <th>Opportunity</th>
+                        <th>BookDate </th>
+                        <th>StartTime</th>
+                        <th>EndTime</th>
+                        <th>Project</th>
+                        <th>ProjectManager</th>
+                        <th>JobNo</th>
+                        <th>Activity</th>
+                        <th>OLA</th>
+                        <th>Actual</th>
                         <th>Vechicle</th>
-                        <th>FACILITIES</th>
-                        <th>STATUS</th>
+                        <th>Warehouse</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -226,7 +230,10 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.OLATarget)
-                        </td>                       
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActualQuantity)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Vechicles)
                         </td>
@@ -495,7 +502,7 @@ $('#edit').on('shown.bs.modal', function () {
                 }
             });
         });
-        
+
         $("#closbtn").click(function () {
             $('#myModal').modal('hide');
         });
