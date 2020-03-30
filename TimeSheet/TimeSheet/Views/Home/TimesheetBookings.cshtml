@@ -55,18 +55,18 @@
                             @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
                         </td>
-                        <td class="StartTime">
+                        <td class="StartTime" width="2%">
                             <span>@item.StartTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none;width:52px" />
                         </td>
                         @*<td class="EndDate" width="8%">
                                 @Html.DisplayFor(modelItem => item.EndDate)
 
                             </td>*@
 
-                        <td class="EndTime" width="8%">
+                        <td class="EndTime" width="2%">
                             <span>@item.EndTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none;width:52px" />
                         </td>
 
                         <td class="OLATarget">
@@ -692,7 +692,7 @@
 </script>
 <style>
     .modal-dialog {
-        width: 90%;
+        width: 95%;
         margin: 10px auto;
         margin-bottom: 5px;
     }
