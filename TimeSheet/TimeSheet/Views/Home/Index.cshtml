@@ -22,17 +22,16 @@
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
 <style>
     .row {
         width: 122%;
     }
-
     .body-content {
         padding-left: 0px;
         padding-right: 0px;
         max-width: 100%;
     }
-
     .container {
         padding-left: 0px;
         padding-right: 5px;
@@ -49,27 +48,22 @@
     .modal-header {
         border-bottom: 0 none;
     }
-
     .modal-footer {
         border-top: 0 none;
     }
-
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
     }
-
     .glyphicon {
         height: 12px;
         font-size: 14px;
         color: lightgray;
     }
-
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
     }
-
     .form-control {
         display: block;
         width: 100%;
@@ -87,7 +81,6 @@
         -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
     }
-
     .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6 {
         position: relative;
         min-height: 1px;
@@ -104,18 +97,15 @@
         background-color: orange !important;
         border-color: gray !important;
     }
-
     .black {
         color: black;
     }
-
     .multiselect.dropdown-toggle {
         text-align: left;
         height: 26px;
         width: 80%;
     }
 </style>
-
 <table class="table pull-right" style="width:50%;margin-right:170px;">
     <thead>
         <tr>
@@ -148,7 +138,6 @@
         </tr>
     </thead>    
 </table>
-
 <div class="container" style="margin-left:0px">
     <div class="row">
         <div class="col-md-12">            
@@ -285,7 +274,7 @@
     });
     function Destroy() {
       //  $('#ratingcontainer').data('modal', null);
-        $("#myRatingModalContent").html('');
+      $("#myRatingModalContent").html('');
     }
      $('#ddlWarehouseId').change(function () {
 
@@ -295,7 +284,6 @@
                  var id = $(this).val();
                  if (id != "") {
                      warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
-
                  }
                  else {
                          warehouseUrl = '@Url.Action("Register", "Resource")';
@@ -304,9 +292,7 @@
                         $('#CandidateNameId').empty().multiselect('refresh')
                             $.each(response, function (index, item) {
                                 $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));
-
                             });
-
                         $('#CandidateNameId').multiselect('rebuild');
                        });
             });
@@ -314,7 +300,6 @@
     var URL = "@Url.Content("~/TimeSheet/Register")";
     $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
     });
-
     $('#btnDelete').click(function () {
     var URL = "@Url.Content("~/TimeSheet/Register")";
     $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
