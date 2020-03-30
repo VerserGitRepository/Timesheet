@@ -54,18 +54,18 @@
                             @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
                         </td>
-                        <td class="StartTime">
+                        <td class="StartTime"  width="2%">
                             <span>@item.StartTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none;width:52px" />
                         </td>
                         @*<td class="EndDate" width="8%">
                                 @Html.DisplayFor(modelItem => item.EndDate)
 
                             </td>*@
 
-                        <td class="EndTime" width="8%">
+                        <td class="EndTime" width="2%">
                             <span>@item.EndTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none;width:52px" />
                         </td>
 
                         <td class="OLATarget">
@@ -694,11 +694,30 @@
 </script>
 <style>
     .modal-dialog {
-        width: 90%;
+        width: 95%;
         margin: 10px auto;
         margin-bottom: 5px;
     }
-
+     .dataTables_wrapper .dataTables_filter input {
+    margin-left: -1.9em;
+}
+.form-control {
+    display: block;
+    width: 140%;
+    height: 26px;
+    padding: 1px 1px;
+    font-size: 12px;
+    line-height: 1.4285;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
