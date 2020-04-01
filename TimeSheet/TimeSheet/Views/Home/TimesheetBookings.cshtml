@@ -408,7 +408,16 @@
         row.find(".Update").show();
         row.find(".Cancel").show();
         row.find("#Rate").show();
+        var origVal = row.find("#hdnddlLidt").val();
 
+
+        if (origVal == "1") {
+            row.find("#txtActualQuantity").attr('readonly', true);
+
+        }
+        else {
+            row.find("#txtActualQuantity").attr('readonly', false);
+        }
         $(this).hide();
     });
 
