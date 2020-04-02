@@ -13,7 +13,6 @@ namespace TimeSheet.ServiceHelper
             {
                 return false;
             }
-
             var _roles = LoginService.UserRoleList(UserName).Result;
             return _roles.Where(r => r.Value == "Administrator"
             || r.Value == "Accounts" || r.Value == "WarehouseManager" || r.Value == "ProjectmanagerAdmin").FirstOrDefault() != null ? true : false;
@@ -38,13 +37,18 @@ namespace TimeSheet.ServiceHelper
         }
         public static bool SiteAdmin()
         {
+            bool returnvalue = false;
             string UserName = HttpContext.Current.Session["Username"] != null ? HttpContext.Current.Session["Username"].ToString() : null;
             if (string.IsNullOrEmpty(UserName))
             {
-                return false;
+                return returnvalue;
             }
-            var _roles = LoginService.UserRoleList(UserName).Result;
-            return _roles.Where(r => r.Value == "Administrator" || r.Value == "Accounts").FirstOrDefault() != null ? true : false;
+            var _roles = LoginService.UserRoleList(UserName).Result.Where(r=>r.Value== "Administrator" || r.Value == "Accounts" || r.Value == "Verser Admin").ToList();
+            if (_roles.Count()>0)
+            {
+                returnvalue = true;
+            }          
+            return returnvalue;
         }
         public static bool UserCanEditCompletedTimesheet()
         {
