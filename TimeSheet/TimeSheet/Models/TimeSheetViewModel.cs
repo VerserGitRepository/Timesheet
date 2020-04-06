@@ -33,6 +33,9 @@ namespace TimeSheet.Models
         [DataType(DataType.MultilineText)]
         public string TimeSheetComments { get; set; }
         public string WarehouseName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt }", ApplyFormatInEditMode = true)]
+        public DateTime? CreatedDate { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
