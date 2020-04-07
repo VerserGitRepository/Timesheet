@@ -72,17 +72,16 @@ namespace TimeSheet.Controllers
         }
         [HttpPost]
         public ActionResult ExportTimesSheetToExcel()
-        {
-           // var TimeSheetmodel = new List<TimesheetExportViewModel>();
+        {          
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
             else
-            {               
-               var  TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetExportList().Result;
+            {
+                var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetExportList().Result;
                 GridView gv = new GridView();
-               
+
                 gv.DataSource = TimeSheetmodel;
                 gv.DataBind();
                 Response.ClearContent();
@@ -130,7 +129,16 @@ namespace TimeSheet.Controllers
             model.ScreenName = "ProjectDetails";
             return PartialView("ProjectDetails", model);
         }
-        
+        [HttpGet]
+        public ActionResult TimesheetBookings(int Id)
+        {
+            TimeSheetViewModel model = new TimeSheetViewModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
+            model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.Id == Id).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+           // model.ScreenName = "Booking";
+            return PartialView("TimesheetBookings", model);
+        }
         [HttpGet]
         public ActionResult StatusList(string status)
         {
@@ -139,7 +147,17 @@ namespace TimeSheet.Controllers
             model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.Status == status).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             model.ScreenName = "StatusList";
-            return PartialView("ProjectDetails", model);
+            return PartialView("StatusDetails", model);
+        }
+        [HttpGet]
+        public ActionResult StatusListbyId(string status)
+        {
+            TimeSheetViewModel model = new TimeSheetViewModel();
+            var AlltimesheetRecords = TimeSheetAPIHelperService.TimeSheetList().Result;
+            model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.StatusID == int.Parse(status)).ToList();
+            model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
+            model.ScreenName = "StatusList";
+            return PartialView("StatusDetails", model);
         }
         [HttpGet]
         public ActionResult ProjectManagerDetails(string ProjectManagerName)
@@ -149,8 +167,9 @@ namespace TimeSheet.Controllers
             model.CandidateTimeSheetList = AlltimesheetRecords.Where(c => c.ProjectManager == ProjectManagerName).ToList();
             model.StatusList = new SelectList(ListItemService.StatusList().Result, "ID", "Value");
             model.ScreenName = "PMDetails";
-            return PartialView("ProjectDetails", model);
+            return PartialView("PMDetails", model);
         }
+
         [HttpPost]
         public ActionResult UpdateConfirmStatus(string TimeSheetId)
         {

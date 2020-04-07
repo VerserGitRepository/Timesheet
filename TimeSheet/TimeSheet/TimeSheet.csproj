@@ -638,6 +638,9 @@
     <Content Include="Web References\VerserSalesforce\QuickActionTemplateResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <Content Include="Views\Home\PMDetails.cshtml" />
+    <Content Include="Views\Home\StatusDetails.cshtml" />
+    <Content Include="Views\Home\TimesheetBookings.cshtml" />
     <None Include="Web References\VerserSalesforce\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

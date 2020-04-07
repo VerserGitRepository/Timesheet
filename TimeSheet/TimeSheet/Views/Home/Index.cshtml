@@ -22,53 +22,50 @@
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
 <style>
     .row {
-        width: 112%;
+        width: 122%;
     }
-
     .body-content {
         padding-left: 0px;
         padding-right: 0px;
         max-width: 100%;
     }
-
     .container {
         padding-left: 0px;
         padding-right: 5px;
         max-width: 100%;
+        margin-left: 100px;
     }
 
     .dataTables_filter {
         float: right;
     }
+
     .dataTables_wrapper .dataTables_filter input {
         margin-left: -1.1em;
     }
+
     .modal-header {
         border-bottom: 0 none;
     }
-
     .modal-footer {
         border-top: 0 none;
     }
-
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
     }
-
     .glyphicon {
         height: 12px;
         font-size: 14px;
         color: lightgray;
     }
-
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
     }
-
     .form-control {
         display: block;
         width: 100%;
@@ -86,13 +83,13 @@
         -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
     }
-
     .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6 {
         position: relative;
         min-height: 1px;
         padding-right: 2px;
         padding-left: 2px
     }
+
     .table thead > tr > th {
         vertical-align: bottom;
         border-bottom: 2px white;
@@ -103,18 +100,15 @@
         background-color: orange !important;
         border-color: gray !important;
     }
-
     .black {
         color: black;
     }
-
     .multiselect.dropdown-toggle {
         text-align: left;
         height: 26px;
         width: 80%;
     }
 </style>
-
 <table class="table pull-right" style="width:50%;margin-right:170px;">
     <thead>
         <tr>
@@ -143,17 +137,17 @@
                         <span class="glyphicon glyphicon-export black"></span>
                     </button>
                 }
-                </th>
+            </th>
         </tr>
-    </thead>    
+    </thead>
 </table>
-
 <div class="container" style="margin-left:0px">
     <div class="row">
-        <div class="col-md-11">            
-            <table id="TimeSheetTable" class="table table-striped table-bordered"  cellspacing="0">
+        <div class="col-md-11">
+            <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
                 <thead style="background-color:#FFA500;color:white; ">
                     <tr>
+                        <th>ID</th>
                         <th>Resource</th>
                         <th>Opportunity</th>
                         <th>BookDate </th>
@@ -168,12 +162,23 @@
                         <th>Vechicle</th>
                         <th>Warehouse</th>
                         <th>Status</th>
+                        <th>TimeStamp</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (TimeSheet.Models.TimeSheetViewModel item in Model.CandidateTimeSheetList)
                     {
                     <tr>
+                        <td>
+                            @if ((bool)Session["HasUserPermissionsToEdit"])
+                            {
+                                <a href="javascript:void(0);" class="BookingID" data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.CandidateName)
+                            }
+                        </td>
                         <td>
                             @if ((bool)Session["HasUserPermissionsToEdit"])
                             {
@@ -246,6 +251,9 @@
                                 @Html.DisplayFor(modelItem => item.Status)
                             }
                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
                     </tr>
                     }
                 </tbody>
@@ -277,7 +285,7 @@
     });
     function Destroy() {
       //  $('#ratingcontainer').data('modal', null);
-        $("#myRatingModalContent").html('');
+      $("#myRatingModalContent").html('');
     }
      $('#ddlWarehouseId').change(function () {
 
@@ -287,7 +295,6 @@
                  var id = $(this).val();
                  if (id != "") {
                      warehouseUrl = '@Url.Action("WarehouseResource", "DropDownLoader")';
-
                  }
                  else {
                          warehouseUrl = '@Url.Action("Register", "Resource")';
@@ -296,9 +303,7 @@
                         $('#CandidateNameId').empty().multiselect('refresh')
                             $.each(response, function (index, item) {
                                 $('#CandidateNameId').append($('<option></option>').text(item.Value).val(item.Id));
-
                             });
-
                         $('#CandidateNameId').multiselect('rebuild');
                        });
             });
@@ -306,7 +311,6 @@
     var URL = "@Url.Content("~/TimeSheet/Register")";
     $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
     });
-
     $('#btnDelete').click(function () {
     var URL = "@Url.Content("~/TimeSheet/Register")";
     $("#ModalAddFormLoad").load(URL, function () { $("#ModalAddForm").modal("show") })
@@ -503,6 +507,34 @@ $('#edit').on('shown.bs.modal', function () {
             });
         });
 
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+        var BookingsURL = './TimesheetBookings';
+    $(function () {
+        $("#TimeSheetTable").on("click", ".BookingID", function () {
+            // debugger;
+            var $buttonClicked = $(this);
+            var Id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: BookingsURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": Id },
+                datatype: "json",
+                success: function (data) {
+                    // debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
 
         //$("#closebtn").on('click',function(){
         //    $('#myModal').modal('hide');

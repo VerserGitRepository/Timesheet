@@ -12,7 +12,7 @@ namespace TimeSheet.Controllers
     {
         public ActionResult Index()
         {
-            if (Session["Username"] != null && Session["Administrator"] != null)
+            if (UserRoles.SiteAdmin())
             {               
                 return View(ManageListServices.ManageLists());
             }
@@ -31,7 +31,7 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult UpdateOpportunities(int opportunityID, bool isActive)
         {
-            if (Session["Username"] != null && Session["Administrator"] != null)
+            if (UserRoles.SiteAdmin())
             {
                 var _r= AdminHelperService.UpdateOpportunity(opportunityID, isActive);
                 var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
@@ -40,13 +40,12 @@ namespace TimeSheet.Controllers
             else
             {
                 return RedirectToAction("Login", "Login");
-            }        
-
+            }  
         }
         [HttpPost]
         public ActionResult UpdateResourceState(string resourceName, bool isActive)
         {
-            if (Session["Username"] != null && Session["Administrator"] != null)
+            if (UserRoles.SiteAdmin())
             {
                 var _r = AdminHelperService.UpdateResourceState(resourceName, isActive);
                 var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
@@ -60,7 +59,7 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult UpdateProjectState(string Project, bool isActive)
         {
-            if (Session["Username"] != null && Session["Administrator"] != null)
+            if (UserRoles.SiteAdmin())
             {
                 var _r = AdminHelperService.UpdateProjectState(Project, isActive);
                 var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
@@ -71,13 +70,10 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Login", "Login");
             }
         }
-
-
         [HttpPost]
         public ActionResult UpdateActivityState(int ServiceActivityID, bool isActive)
-
         {
-            if (Session["Username"] != null && Session["Administrator"] != null)
+            if (UserRoles.SiteAdmin())
             {
                 var _r = AdminHelperService.UpdateActivity(ServiceActivityID, isActive);
                 var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");
@@ -86,13 +82,12 @@ namespace TimeSheet.Controllers
             else
             {
                 return RedirectToAction("Login", "Login");
-            }        
-
+            }   
         }
         [HttpPost]
         public ActionResult UpdateOpportunityModel(OpportunityListUpdateModel theModel)
         {
-            if (Session["Username"] != null && Session["Administrator"] != null)
+            if (UserRoles.SiteAdmin())
             {
                 var _r = AdminHelperService.UpdateOpportunityModel(theModel);
                 var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Admin");

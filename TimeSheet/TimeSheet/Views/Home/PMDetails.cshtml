@@ -1,10 +1,11 @@
 ﻿@model  TimeSheet.Models.TimeSheetViewModel
 @using TimeSheet.ServiceHelper
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:100%;font-weight:bold ">
+    <div class="modal-header" style="background-color:lightgray;width:100%;font-weight:bold">
         <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
+
     <div style="align-content:flex-start;align-self:flex-start;align-items:flex-start;padding-bottom:15px;padding-left:15px;padding-top:10px;width:80%">
         <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;align-self:flex-start;align-items:flex-start;width:100%">
             <thead style="background-color:#FFA500;color:white">
@@ -54,7 +55,7 @@
                             @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
                         </td>
-                        <td class="StartTime"  width="2%">
+                        <td class="StartTime" width="2%">
                             <span>@item.StartTime.Value.ToShortTimeString()</span>
                             <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none;width:52px" />
                         </td>
@@ -156,6 +157,7 @@
             </tbody>
         </table>
     </div>
+
 </div>
 <div id="myRatingModal" class="modal fade bs-modal-sm" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -169,8 +171,8 @@
     $('#tblCustomers').dataTable({
         responsive: true,
         stateSave: true
-    });
-   
+        });
+       
     function ShowOTMessage(therowid) {
 
         var rowid = $(therowid).closest("tr");
@@ -178,35 +180,31 @@
         var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
         var origVal = rowid.find("#hdnddlLidt").val();
         var msec = (date2 - date1);
-       
+
         if (origVal == "1") {
             if (rowid.find("#ddlStatus").val() == "4" || rowid.find("#ddlStatus").val() == "7") {
+                $.confirm({
+                    title: 'Alert',
+                    content: 'The status cannot be marked from Requested to either Approved or Completed.',
+                    boxWidth: '370px',
+                    useBootstrap: false,
+                    buttons: {
+                        OK: function () {
 
-                $.alert("Requested Status Booking Has To Be Confirmed Before Approved Or Completed.");
+                            return;
+                        }
+                    }
+                });
+                rowid.find("#ddlStatus").val(origVal);
                 return;
-
-                //$.confirm({
-                //    title: '',
-                //    content: 'The status cannot be marked from Requested to either Approved or Completed.',
-                //    boxWidth: '370px',
-                //    useBootstrap: false,
-                //    buttons: {
-                //        OK: function () {
-                //            return;
-                //        }
-                //    }
-                //});
-                //rowid.find("#ddlStatus").val(origVal);
-                //return;
             }
         }
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
-            $.confirm(
-                {
-                title: 'Warning',
-                content: 'The Activity Has Over Time Work Hours. Are You Sure You Want To Approve?',
+            $.confirm({
+                title: 'Alert!!!',
+                content: 'The activity has Over Time work hours. Are you sure you want to approve?',
                 boxWidth: '370px',
                 useBootstrap: false,
                 buttons: {
@@ -215,22 +213,24 @@
                         return true;
                     },
                     cancel: function () {
+
                         rowid.find("#ddlStatus").val(origVal);
                         return ;
                     }
                 }
-             });
+                    });
         }
     }
-
     function ShowSliderModal(rowid)
     {
 
+
         var row = $(rowid).closest("tr");
 
+        var timetext = row.find("#spanbreakStartTime").html();
         var ddlValue = row.find("#hdnddlbrkhrs").val();
         var sliderURL = '@Url.Action("ReturnSlider", "Home")'
-        var timetext = row.find("#spanbreakStartTime").html();
+
         $.ajax({
             type: "GET",
             url: sliderURL,
@@ -238,24 +238,19 @@
             success: function (data) {
               $.confirm({
                   title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<font size="3">Set Break Timimgs</font>',
-                  content: data,
                   boxWidth: '470px',
                   useBootstrap: false,
+                   content:data,
                          buttons: {
                              Set: function () {
-
-                                 //row.find("#spanbreakStartTime").html(($(".slider-time").text()) + ';' + $(".slider-time2").text());
-
-                                 $(".slider-time2").text();
                                  var twoDates = timetext.split(";");
 
                                  var msec = 0;
-                            for (var i = 1; i < twoDates.length; i+=2)
-                            {
-                                var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
-                                var chkDate2 = new Date("May 26, 2016 " + twoDates[twoDates.length - i-1]);
-                                msec += (chkDate1 - chkDate2)
-                            }
+                                 for (var i = 1; i < twoDates.length; i += 2) {
+                                     var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
+                                     var chkDate2 = new Date("May 26, 2016 " + twoDates[twoDates.length - i - 1]);
+                                     msec += (chkDate1 - chkDate2)
+                                 }
                                  var date1 = new Date("May 26, 2016 " + $('.slider-time').text());
                                  var date2 = new Date("May 26, 2016 " + $('.slider-time2').text());
                                  // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
@@ -264,17 +259,17 @@
                                  //     msec   = (chkDate2 - chkDate1) + (date2 - date1);
                                  //}
                                  //else {
-                                      msec += (date2 - date1);
+                                 msec += (date2 - date1);
                                  //}
                                  var mins = Math.floor(msec / 60000);
                                  if (mins > 60) {
                                      $.alert("<h4>Break time cannot exceed 60 mins.</h4> <br/> This includes the combined time for all breaks.");
                                      return false;
                                  }
-                                 timetext += ';'+$(".slider-time").text() + ';' + $(".slider-time2").text();
+                                 timetext += ';' + $(".slider-time").text() + ';' + $(".slider-time2").text();
                                  row.find("#spanbreakStartTime").html(timetext);
-                                // row.find("#spanbreakStartTime").html(timetext);
-                               //  alert($('#rating-input').val());
+                                 // row.find("#spanbreakStartTime").html(timetext);
+                                 //  alert($('#rating-input').val());
 
                                  $(row).find("#ddlBreak option").each(function (i) {
                                      //alert($(ratingTdText).find("#hdnddlLidt").val());
@@ -282,31 +277,7 @@
                                          $(this).attr('selected', 'selected')
                                      }
                                  });
-                            @*$.ajax({
-                                data: model,
-                                url: '@Url.Action("ReturnSlider", "Home")',
-                                type: "POST",
-                                success: function (data) {
 
-
-
-                                        $("td", row).each(function () {
-                                            if ($(this).find("input").length > 0) {
-                                                $(this).find("input").hide();
-                                                $(this).find("span").show();
-                                                $(this).toggleClass('selected');
-
-                                            }
-                                        });
-                                        row.find(".Update").hide();
-                                        row.find(".Cancel").hide();
-                                        row.find("#Rate").hide();
-
-                                        $(".Edit").show();
-                                    // return;
-
-                                }
-                        });*@
                         return;
                              },
                              cancel: function () {
@@ -320,7 +291,6 @@
                                      return;
                                  });
                              }
-
                          }
 
                      });
@@ -328,9 +298,9 @@
             error: function (errorData) { alert(errorData);}
         });
 
-
     }
-    function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
+    SetDDLValue();
+    function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);
 
@@ -367,7 +337,7 @@
     };
     function SetDDLValue() {
         //alert('before document ready');
-       // debugger;
+        //debugger;
         $("tbody tr td.Status").each(function LoopTR() {
             var ratingTdText = $(this);
             if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
@@ -378,6 +348,7 @@
                     }
                 });
             }
+
 
         });
         $("tbody tr td.breakHrs").each(function LoopTR() {
@@ -396,7 +367,7 @@
     }
     //Edit event handler.
     $("body").on("click", "#tblCustomers .Edit", function () {
-
+        // debugger;
         var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
@@ -410,6 +381,7 @@
         row.find(".Update").show();
         row.find(".Cancel").show();
         row.find("#Rate").show();
+
         var origVal = row.find("#hdnddlLidt").val();
 
 
@@ -420,12 +392,14 @@
         else {
             row.find("#txtActualQuantity").attr('readonly', false);
         }
+
         $(this).hide();
     });
 
     //Update event handler.
     $("body").on("click", "#tblCustomers .Update", function () {
-                var row = $(this).closest("tr");
+        debugger;
+        var row = $(this).closest("tr");
         $("td", row).each(function () {
             if ($(this).find("input").length > 0) {
                 var span = $(this).find("span");
@@ -442,9 +416,10 @@
         row.find(".Cancel").hide();
         row.find("#Rate").hide();
         $(this).hide();
-
-        var CandidateEdit = {};
+        //debugger;
         var options = { "backdrop": "static", keyboard: true };
+        var CandidateEdit = {};
+
         CandidateEdit.Id = row.find(".Id").find("span").html();
         CandidateEdit.ActualQuantity = row.find("#txtActualQuantity").val();
         CandidateEdit.TimeSheetComments = row.find("#txtComments").val();
@@ -455,18 +430,20 @@
         CandidateEdit.StatusID = row.find("#ddlStatus").val();
         var timetext = row.find("#spanbreakStartTime").html();
         var twoDates = timetext.split(";");
+
         var msec = 0;
         for (var i = 1; i < twoDates.length; i += 2) {
             var chkDate1 = new Date("May 26, 2016 " + twoDates[twoDates.length - i]);
             var chkDate2 = new Date("May 26, 2016 " + twoDates[twoDates.length - i - 1]);
             msec += (chkDate1 - chkDate2)
         }
-        var statusval = row.find("#ddlStatus").val();
         var mins = Math.floor(msec / 60000);
+        var statusval = row.find("#ddlStatus").val();
         CandidateEdit.BreakHours = mins;
-        CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text();
+        CandidateEdit.BreakTime = row.find("#spanbreakStartTime").text() ;
         var start = new Date("May 26, 2016 " + CandidateEdit.StartTime);
         var end = new Date("May 26, 2016 " + CandidateEdit.EndTime);
+
         if (start >= end) {
             $.alert('start time should be prior to endtime');
             return;
@@ -475,10 +452,10 @@
             $.alert("Please add Actual Quantity before you mark to Completed / Approved");
             return;
         }
-        if ((Math.floor(end - start) / 60000 > 240 && row.find("#ddlBreak").val() == 0) && (statusval == 4 || statusval == 7 || statusval == 9)){
+        if ((Math.floor(end - start) / 60000 > 240 && row.find("#ddlBreak").val() == 0) && (statusval == 4 || statusval == 7 || statusval == 9)) {
             $.alert("Please add some break time before you mark to Completed / Approved.")
             var ctrl = row.find("#ddlBreak");
-            ctrl.effect("pulsate", { times: 60 }, "slow");status
+            ctrl.effect("pulsate", { times: 60 }, "slow");
             return;
         }
         $.ajax({
@@ -487,15 +464,14 @@
             data: '{CandidateEdit:' + JSON.stringify(CandidateEdit) + '}',
             contentType: "application/json; charset=utf-8",
             dataType: "json"
-
-
         });
 
         $.ajax({
+
             type: "GET",
-            url: './TimesheetCandidateDetails',
+            url: './ProjectManagerDetails',
             contentType: "application/json; charset=utf-8",
-            data: { "CandidateName": row.find("#txtCandidateName").text() },
+            data: { "ProjectManagerName": row.find("#PMTD").text().trim() },
             datatype: "json",
             success: function (data) {
                 // debugger;
@@ -510,15 +486,14 @@
         $('#myModal').on('hidden.bs.modal', function (e) {
             location.reload();
         })
+    });
 
+    $("#myModal").draggable({
+        handle: ".modal-header"
     });
     //$('#myModal').on('hidden.bs.modal', function (e) {
     //    location.reload();
     //});
-    $("#myModal").draggable({
-        handle: ".modal-header"
-    });
-
 
     $(".Edit").on("click", function () {
         $(".popup-overlay, .popup-content").addClass("active");
@@ -529,9 +504,29 @@
         $(".popup-overlay, .popup-content").removeClass("active");
     });
 
+    //Cancel event handler.
+    $("body").on("click", "#tblCustomers .Cancel", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                $(this).removeClass('selected');
+                //input.val(span.html());
+                var textArea = $(this).find("#txtComments");
+                span.show();
+                input.hide();
+                textArea.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Update").hide();
+        row.find("#Rate").hide();
+        $(this).hide();
+    });
 
-     function ChangeConfirm(rowId){
-       // debugger;
+    function ChangeConfirm(rowId){
+        debugger;
         var options = { "backdrop": "static", keyboard: true };
         var row = $(rowId).closest("tr");
         var TimeSheetId = row.find(".Id").find("span").html();
@@ -549,18 +544,18 @@
                  row.find("#confirmBtn").hide();
                  row.find("#confirmSpanDiv").show();
                  row.find("#ddlStatus").val(10);
-                 //$.confirm({
-                 //    title: data.status,
-                 //    content:'The action has been completed successfully.',
-                 //    boxWidth: '370px',
-                 //    useBootstrap: false,
-                 //    buttons: {
-                 //        OK: function () {
+             //    $.confirm({
+             //        title: data.status,
+             //        content:'The action has been completed successfully.',
+             //        boxWidth: '370px',
+             //        useBootstrap: false,
+             //        buttons: {
+             //            OK: function () {
                             
-                 //            return true;
-                 //        }
-                 //    }
-                 //});
+             //                return true;
+             //            }
+             //        }
+             //    });
              },
              error: function () {
                  alert("error");
@@ -590,38 +585,18 @@
 
     }
 
-    //Cancel event handler.
-    $("body").on("click", "#tblCustomers .Cancel", function () {
-        var row = $(this).closest("tr");
-      //  debugger;
-        $("td", row).each(function () {
-            if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
-                var span = $(this).find("span");
-                var input = $(this).find("input");
-                $(this).removeClass('selected');
-                var textArea = $(this).find("#txtComments");
-               // input.val(span.html());
-                span.show();
-                input.hide();
-                textArea.hide();
-            }
-        });
-        row.find(".Edit").show();
-        row.find(".Update").hide();
-        row.find("#Rate").hide();
-        $(this).hide();
-    });
-
     var CandidateRatingDetailsURL = './Rating';
     function Rate(rowid) {
 
+      //  alert('rating');
+       // debugger;
         var $buttonClicked = $(this);
         var tr = $(rowid).closest("tr");
         var td = tr.find("td:nth-child(1)");
         var options = { "backdrop": "static", keyboard: true };
         $('#myModal').modal('hide');
         var data = ""
-       // alert(td.val());
+      //  alert(td.val());
        // $('#myRatingModal').modal('show');
         $.ajax({
             type: "GET",
@@ -630,10 +605,10 @@
             data: {},
             datatype: "json",
             success: function (data) {
-
+                // debugger;
 
                 $.confirm({
-                      title: 'Resource Rating!',
+                         title: 'Resource Rating!',
                          content: data,
                          buttons: {
                              Rate: function () {
@@ -645,7 +620,9 @@
                                      'WorkQuality': $('#rating-input3').val(),
                                      'Comments': $('#txtcomments3').val()
 
+
                                  };
+                               //  alert($('#rating-input').val());
                                      $.ajax({
                                          data: model,
                                          url: '@Url.Action("RateResource", "Resource")',
@@ -668,6 +645,7 @@
 
                                                  $(".Edit").show();
                                                 // return;
+
                                          }
                                  });
                                  $('#myModal').modal('show');
@@ -693,21 +671,26 @@
                                  return;
                              }
                          }
+
                      });
             },
             error: function () {
                 alert("Dynamic content load failed.");
             }
         });
+
+
+
     }
 </script>
+
 <style>
     .modal-dialog {
         width: 95%;
         margin: 10px auto;
         margin-bottom: 5px;
     }
-     .dataTables_wrapper .dataTables_filter input {
+      .dataTables_wrapper .dataTables_filter input {
     margin-left: -1.9em;
 }
 .form-control {
@@ -733,7 +716,7 @@
     }
 
     input, select, textarea {
-          max-width: 150px;
+        max-width: 150px;
         border: 2px;
         outline: 2px;
     }

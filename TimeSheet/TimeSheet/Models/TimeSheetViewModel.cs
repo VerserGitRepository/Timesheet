@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using System.Web.Mvc;
 
 
@@ -34,14 +33,13 @@ namespace TimeSheet.Models
         [DataType(DataType.MultilineText)]
         public string TimeSheetComments { get; set; }
         public string WarehouseName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy hh:mm tt }", ApplyFormatInEditMode = true)]
+        public DateTime? CreatedDate { get; set; }
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime? Day { get; set; }
-        //[Required]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        //public DateTime? EndDate { get; set; }
+        public DateTime? Day { get; set; }       
         [Required(ErrorMessage = "Opportunity Is Mandatory")]
         public int OpportunityID { get; set; }
         public SelectList OpportunityNumberList { get; set; }

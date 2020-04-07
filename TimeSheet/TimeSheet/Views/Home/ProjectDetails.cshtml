@@ -5,15 +5,16 @@
         <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
-    <div style="align-content:flex-start;padding-bottom:20px;padding-left:15px;padding-top:10px;width:90%">
-        <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;width:90%">
+    <div style="align-content:flex-start;align-self:flex-start;align-items:flex-start;padding-bottom:15px;padding-left:15px;padding-top:10px;width:80%">
+        <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;align-self:flex-start;align-items:flex-start;width:100%">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
-                    <th>Project</th>
-                    <th>Candidate</th>
+                    <th style="width:30px">Project</th>
+                    <th style="width:30px">Candidate</th>
                     <th style="width:40px">Activity</th>
                     <th>PM</th>
+                    <th>JOB</th>
                     <th style="width:30px">Date</th>
                     <th>Start</th>
                     <th style="width:30px">End</th>
@@ -32,10 +33,10 @@
                 {
                     <tr>
                         <td class="Id"> <span>@item.Id</span> </td>
-                        <td class="CandidateName">
+                        <td class="CandidateName" width="4%">
                             <span id="ProjectName">@item.ProjectName</span>
                         </td>
-                        <td class="CandidateName">
+                        <td class="CandidateName" width="4%">
                             @Html.DisplayFor(modelItem => item.CandidateName)
                         </td>
                         <td class="Activity">
@@ -44,24 +45,27 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ProjectManager)
                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JobNo)
+                        </td>
                         <td class="Day" width="7%">
                             <span>@item.Day.Value.ToShortDateString()</span>
 
                             @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
                         </td>
-                        <td class="StartTime">
+                        <td class="StartTime"width="2%">
                             <span>@item.StartTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none" />
+                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none;width:52px"/>
                         </td>
                         @*<td class="EndDate" width="8%">
                                 @Html.DisplayFor(modelItem => item.EndDate)
 
                             </td>*@
 
-                        <td class="EndTime" width="8%">
+                        <td class="EndTime" width="2%">
                             <span>@item.EndTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
+                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none;width:52px" />
                         </td>
 
                         <td class="OLATarget">
@@ -163,7 +167,7 @@
 <script type="text/javascript">
     SetDDLValue();
     $('#tblCustomers').dataTable({
-        responsive: true,
+        responsive: true,      
         stateSave: true
         });
        
@@ -177,27 +181,29 @@
 
         if (origVal == "1") {
             if (rowid.find("#ddlStatus").val() == "4" || rowid.find("#ddlStatus").val() == "7") {
-                $.confirm({
-                    title: 'Alert',
-                    content: 'The status cannot be marked from Requested to either Approved or Completed.',
-                    boxWidth: '370px',
-                    useBootstrap: false,
-                    buttons: {
-                        OK: function () {
-
-                            return;
-                        }
-                    }
-                });
-                rowid.find("#ddlStatus").val(origVal);
+                $.alert("Requested Status Booking Has To Be Confirmed Before Approved Or Completed.");
                 return;
+                //$.confirm({
+                //    title: 'Alert',
+                //    content: 'The status cannot be marked from Requested to either Approved or Completed.',
+                //    boxWidth: '370px',
+                //    useBootstrap: false,
+                //    buttons: {
+                //        OK: function () {
+
+                //            return;
+                //        }
+                //    }
+                //});
+                //rowid.find("#ddlStatus").val(origVal);
+                //return;
             }
         }
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
             $.confirm({
-                title: 'Alert!!!',
+                title: 'Warning',
                 content: 'The activity has Over Time work hours. Are you sure you want to approve?',
                 boxWidth: '370px',
                 useBootstrap: false,
@@ -232,7 +238,7 @@
             success: function (data) {
               $.confirm({
                   title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<font size="3">Set Break Timimgs</font>',
-                  boxWidth: '370px',
+                  boxWidth: '470px',
                   useBootstrap: false,
                    content:data,
                          buttons: {
@@ -370,11 +376,23 @@
                 $(this).find("span").hide();
                 $(this).toggleClass('selected');
 
+
             }
         });
         row.find(".Update").show();
         row.find(".Cancel").show();
         row.find("#Rate").show();
+
+        var origVal = row.find("#hdnddlLidt").val();
+        
+
+        if (origVal == "1") {
+            row.find("#txtActualQuantity").attr('readonly', true);
+
+        }
+        else {
+            row.find("#txtActualQuantity").attr('readonly', false);
+        }
 
         $(this).hide();
     });
@@ -430,6 +448,10 @@
             $.alert('start time should be prior to endtime');
             return;
         }
+        if ((row.find("#txtActualQuantity").val() == "" || row.find("#txtActualQuantity").val() == null) && (statusval == 4 || statusval == 7 || statusval == 9)) {
+            $.alert("Please add Actual Quantity before you mark to Completed / Approved");
+            return;
+        }
         if ((Math.floor(end - start) / 60000 > 240 && row.find("#ddlBreak").val() == 0) && (statusval == 4 || statusval == 7 || statusval == 9)) {
             $.alert("Please add some break time before you mark to Completed / Approved.")
             var ctrl = row.find("#ddlBreak");
@@ -469,9 +491,9 @@
     $("#myModal").draggable({
         handle: ".modal-header"
     });
-    $('#myModal').on('hidden.bs.modal', function (e) {
-        location.reload();
-    });
+    //$('#myModal').on('hidden.bs.modal', function (e) {
+    //    location.reload();
+    //});
 
     $(".Edit").on("click", function () {
         $(".popup-overlay, .popup-content").addClass("active");
@@ -663,14 +685,39 @@
 </script>
 <style>
     .modal-dialog {
-        width: 100%;
-        margin: 30px auto;
-        margin-bottom: 10px;
+        width: 95%;
+        margin: 10px auto;
+        margin-bottom: 5px;
     }
-
+         .dataTables_wrapper .dataTables_filter input {
+    margin-left: -1.9em;
+}
+.form-control {
+    display: block;
+    width: 140%;
+    height: 26px;
+    padding: 1px 1px;
+    font-size: 12px;
+    line-height: 1.4285;
+    color: #555;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
+    }
+
+    input, select, textarea {
+         max-width: 150px;
+        border: 2px;
+        outline: 2px;
     }
 
     .selected {

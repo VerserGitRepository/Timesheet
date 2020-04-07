@@ -321,7 +321,7 @@ namespace TimeSheet.ServiceHelper
 
         public static async Task<List<TimesheetExportViewModel>> TimeSheetExportList()
         {
-           var TimesheetExport = new List<TimesheetExportViewModel>();
+            var TimesheetExport = new List<TimesheetExportViewModel>();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
