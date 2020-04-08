@@ -83,7 +83,7 @@ namespace TimeSheet.ServiceHelper
                 return false;
             }
             var _roles = LoginService.UserRoleList(UserName).Result;
-            return _roles.Where(r => r.Value == "HRAdmin").FirstOrDefault() != null ? true : false;
+            return _roles.Where(r => r.Value == "HRAdmin" || r.Value == "Administrator" || r.Value == "Accounts").FirstOrDefault() != null ? true : false;
         }
         public static bool UserCanAddOrUpdateProjection()
         {          
