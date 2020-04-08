@@ -234,6 +234,7 @@
     <Compile Include="Models\ResourceTimelineModel.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\TimesheetEditModel.cs" />
+    <Compile Include="Models\TimesheetExportViewModel.cs" />
     <Compile Include="Models\TimeSheetRegisterPMModel.cs" />
     <Compile Include="Models\TimeSheetViewModel.cs" />
     <Compile Include="Models\CostModelViewModel.cs" />
@@ -508,7 +509,6 @@
     <Content Include="Views\Home\TimeSheet.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\CostModel.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Web References\VerserSalesforce\ChangeOwnPasswordResult.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
