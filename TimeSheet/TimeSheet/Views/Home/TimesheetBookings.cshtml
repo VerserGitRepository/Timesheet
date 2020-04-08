@@ -16,9 +16,9 @@
                     <th style="width:40px">Activity</th>
                     <th>PM</th>
                     <th>JOB</th>
-                    <th style="width:30px">Date</th>
-                    <th>Start</th>
-                    <th style="width:30px">End</th>
+                    <th style="width:20px">Date</th>
+                    <th style="width:40px">StartTime </th>
+                    <th style="width:40px">EndTime </th>
                     <th style="width:10px">OLA</th>
                     <th style="width:10px">Actual</th>
                     <th>Break</th>
@@ -235,9 +235,9 @@
             data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
             success: function (data) {
               $.confirm({
-                  title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<font size="3">Set Break Timimgs</font>',
+                  title: '&nbsp<font size="2">Add BreakTime</font>',
                   content: data,
-                  boxWidth: '470px',
+                  boxWidth: '550px',
                   useBootstrap: false,
                          buttons: {
                              Set: function () {
