@@ -16,11 +16,11 @@ namespace TimeSheet.Models
         public int Id { get; set; }
         [Required]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:HH:mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? StartTime { get; set; }
         [Required]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:HH:mm tt}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:hh:mm tt}", ApplyFormatInEditMode = true)]
         public DateTime? EndTime { get; set; }
         [Required]
         public string JobNo { get; set; }
