@@ -13,9 +13,9 @@ namespace TimeSheet.ServiceHelper
     public class TimeSheetAPIHelperService
     {
         private static readonly string TimeSheetAPIURl = ConfigurationManager.AppSettings["TimeSheetBaseURL"] + ConfigurationManager.AppSettings["TimeSheetRootDirectory"];
-        private static readonly string salesForceQuery = ConfigurationManager.AppSettings["salesForceQuery"] ;
+        private static readonly string salesForceQuery = ConfigurationManager.AppSettings["salesForceQuery"];
         private static readonly string salesForceUser = ConfigurationManager.AppSettings["salesForceUser"];
-        private static readonly string salesForcePWD = ConfigurationManager.AppSettings["salesForcePWD"];       
+        private static readonly string salesForcePWD = ConfigurationManager.AppSettings["salesForcePWD"];
         public static async Task<List<ListItemViewModel>> CostModelProject()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -319,25 +319,25 @@ namespace TimeSheet.ServiceHelper
             return CostModelLists;
         }
 
-        public static async Task<List<TimesheetExportViewModel>> TimeSheetExportList()
-        {
-            var TimesheetExport = new List<TimesheetExportViewModel>();
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/TimeSheetList")).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    var _TimesheetExportViewModel = await response.Content.ReadAsAsync<List<TimesheetExportViewModel>>();
+        //public static async Task<List<TimesheetExportViewModel>> TimeSheetExportList()
+        //{
+        //    var TimesheetExport = new List<TimesheetExportViewModel>();
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri(TimeSheetAPIURl);
+        //        HttpResponseMessage response = client.GetAsync(string.Format("Timesheet/TimeSheetList")).Result;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var _TimesheetExportViewModel = await response.Content.ReadAsAsync<List<TimesheetExportViewModel>>();
 
-                    foreach (var a in _TimesheetExportViewModel)
-                    {
-                        TimesheetExport.Add(a);
-                    }
-                }
-            }
-            return TimesheetExport;
-        }
+        //            foreach (var a in _TimesheetExportViewModel)
+        //            {
+        //                TimesheetExport.Add(a);
+        //            }
+        //        }
+        //    }
+        //    return TimesheetExport;
+        //}
 
         public static async Task<List<TimeSheetViewModel>> CandidateTimelines()
         {
@@ -377,7 +377,25 @@ namespace TimeSheet.ServiceHelper
             }
             return CostModelLists;
         }
+        public static async Task<List<ApprovedTimesheetModel>> TimeSheetApprovedListt()
+        {
+            List<ApprovedTimesheetModel> CostModelLists = new List<ApprovedTimesheetModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/ApprovedTimelines")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var projectactivities = await response.Content.ReadAsAsync<List<ApprovedTimesheetModel>>();
 
+                    foreach (var a in projectactivities)
+                    {
+                        CostModelLists.Add(a);
+                    }
+                }
+            }
+            return CostModelLists;
+        }
         public static async Task<List<TimeSheetViewModel>> VehicleTimeSheetList()
         {
             List<TimeSheetViewModel> CostModelLists = new List<TimeSheetViewModel>();
@@ -642,11 +660,11 @@ namespace TimeSheet.ServiceHelper
                 HttpResponseMessage response = client.GetAsync(string.Format("CostModels/ServicesProfileLossForcast")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    completeList = await response.Content.ReadAsAsync<List<ProfitLossModel>>();                  
+                    completeList = await response.Content.ReadAsAsync<List<ProfitLossModel>>();
                 }
             }
             return completeList;
-        }       
+        }
 
         public static List<ListItemViewModel> SalesForceEntities(out List<ListItemViewModel> opportunityList)
         {
@@ -662,7 +680,7 @@ namespace TimeSheet.ServiceHelper
             SfdcBinding.SessionHeaderValue = new SessionHeader();
             SfdcBinding.SessionHeaderValue.sessionId = CurrentLoginResult.sessionId;
             QueryResult queryResult = null;
-            String SOQL = "";        
+            String SOQL = "";
             SOQL = salesForceQuery;
             // "select OwnerId,Name,Opportunity_Number__c from Opportunity where closedate > 2019-01-01 and stageName in('Approved - Pending to be sent to customer', 'Pending Customer Decision', 'Pending PM Allocation', 'Closed', 'Closed Won')";
 
@@ -676,9 +694,9 @@ namespace TimeSheet.ServiceHelper
                     string firstName = lead.OwnerId;
                     string lastName = lead.Name;
                     string businessPhone = lead.Opportunity_Number__c;
-                    string statusofApproval = lead.Status_of_Approval__c;               
-                    opportunityList.Add(new ListItemViewModel() {Value = lead.Opportunity_Number__c, OpportunityNumber = lead.Opportunity_Number__c });
-                    projectList.Add(new ListItemViewModel() { Id=i, Value = lead.Name, OpportunityNumber = lead.Name });
+                    string statusofApproval = lead.Status_of_Approval__c;
+                    opportunityList.Add(new ListItemViewModel() { Value = lead.Opportunity_Number__c, OpportunityNumber = lead.Opportunity_Number__c });
+                    projectList.Add(new ListItemViewModel() { Id = i, Value = lead.Name, OpportunityNumber = lead.Name });
                 }
             }
             return projectList;

@@ -177,6 +177,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUpdateController.cs" />
+    <Compile Include="Controllers\ApprovedBookingController.cs" />
     <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\RejectedBookingController.cs" />
     <Compile Include="Controllers\CompletedBookingController.cs" />
@@ -201,6 +202,7 @@
     <Compile Include="Models\AdminModel.cs" />
     <Compile Include="Models\AggregatedProfitLossModel.cs" />
     <Compile Include="Models\ApprovedTimesheetDetailedModel.cs" />
+    <Compile Include="Models\ApprovedTimesheetModel.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
     <Compile Include="Models\BreakTimeModel.cs" />
@@ -641,6 +643,9 @@
     <Content Include="Views\Home\PMDetails.cshtml" />
     <Content Include="Views\Home\StatusDetails.cshtml" />
     <Content Include="Views\Home\TimesheetBookings.cshtml" />
+    <Content Include="Views\ApprovedBooking\Index.cshtml" />
+    <Content Include="Views\ApprovedBooking\CandidateDetails.cshtml" />
+    <Content Include="Views\ApprovedBooking\ProjectDetail.cshtml" />
     <None Include="Web References\VerserSalesforce\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
