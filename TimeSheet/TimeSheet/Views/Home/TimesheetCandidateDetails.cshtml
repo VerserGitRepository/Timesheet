@@ -237,9 +237,9 @@
             data: { "StartTime": row.find("#startTime").val(), "EndTime": row.find("#endTime").val()},
             success: function (data) {
               $.confirm({
-                  title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<font size="3">Set Break Timimgs</font>',
+                  title: '&nbsp<font size="2">Add BreakTime</font>',
                   content: data,
-                  boxWidth: '470px',
+                  boxWidth: '550px',
                   useBootstrap: false,
                          buttons: {
                              Set: function () {
@@ -327,7 +327,6 @@
             },
             error: function (errorData) { alert(errorData);}
         });
-
 
     }
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {

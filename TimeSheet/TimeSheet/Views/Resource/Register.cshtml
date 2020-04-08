@@ -86,15 +86,10 @@
                         <div class="row" style="padding-top:10px">
                             <div class="form-group col-md-6" tabindex=7>
 
-                                @*<div style="width: 100px; float:left; height:100px; margin:10px">*@
                                 <label>OLA Target</label>
                                 @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
                                 @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
-                                @*</div>*@
-                                @*<div style="width: 100px; float:left; height:100px; margin:10px">
-                                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                        <button onclick="FetchOLA();"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-                                    </div>*@
+                              
 
                             </div>
                             <div class="form-group  required col-md-6" tabindex=8>
@@ -136,9 +131,8 @@
                                     </div>
                                 </div>
                             </div><br />
-                            <label>Start:  </label><input type="text" style="width:30px;border-style:solid;border-color:grey" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>End:  </label><input type="text" style="width:30px;border-style:solid;border-color:grey" />
+                           
                         </div>
-
                         <br />
                         <div class=" col-md-offset-5">
                             <button type="submit" class="btn btn-warning btn-md" id="btnregister" onclick="PostData(this);">
@@ -345,8 +339,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </section>
 
@@ -785,7 +777,7 @@
         range: true,
         min: 0,
         max: 1440,
-        step: 15,
+        step: 1,
         values: [540, 1020],
         slide: function (e, ui) {
             var hours1 = Math.floor(ui.values[0] / 60);
@@ -846,7 +838,7 @@
         range: true,
         min: 0,
         max: 1440,
-        step: 15,
+        step: 1,
         values: [540, 1020],
         slide: function (e, ui) {
             var hours1 = Math.floor(ui.values[0] / 60);
@@ -905,7 +897,7 @@
         range: true,
         min: 0,
         max: 1440,
-        step: 15,
+        step: 1,
         values: [540, 1020],
         slide: function (e, ui) {
             var hours1 = Math.floor(ui.values[0] / 60);
