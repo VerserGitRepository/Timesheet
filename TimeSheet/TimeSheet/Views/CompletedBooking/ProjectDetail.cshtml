@@ -1,6 +1,6 @@
 ﻿@model  TimeSheet.Models.CompletedTimesheetModel
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1429px">
+    <div class="modal-header" style="background-color:lightgray;width:1470px">
         <h5 class="modal-title text-center">Project Details</h5>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
@@ -100,7 +100,7 @@
                     </td>
                     <td class="TimeSheetComments">
                         <span>@item.TimeSheetComments</span>
-                        <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
+                        <textarea rows="3" cols="10" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
                     </td>
                     <td width="5%">
                         <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
@@ -474,7 +474,7 @@
 </script>
 <style>
     .modal-dialog {
-        width: 1600px;
+        width: 1500px;
         margin: 30px auto;
         margin-bottom: 10px;
     }
