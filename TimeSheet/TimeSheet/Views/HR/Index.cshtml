@@ -20,7 +20,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 <div class="container" @*style="margin-left:0px;width:120%;margin-right:50px"*@>
-    @using (Html.BeginForm("ExportPMBookingSchedule", "ProjectManager", FormMethod.Post))
+    @using (Html.BeginForm("ExportRecruitmentBookings", "HR", FormMethod.Post))
     {
         <div class="row" style="width:120%">
             <button type="submit" class="btn btn-default btn-sm" style="padding-left:10px;padding-top:2px;margin-left:10px">
@@ -66,7 +66,7 @@
                                 @Html.DisplayFor(modelItem => item.EndTime)
                             </td>
                             <td>
-                                <a href="javascript:void(0);" class="ProjectName" data-id="@item.OpportunityName">@Html.DisplayFor(modelItem => item.OpportunityName)</a>                           
+                                @Html.DisplayFor(modelItem => item.OpportunityName)                               
                             </td>
                             <td style="width:18%">
                                 @Html.DisplayFor(modelItem => item.Activity)
@@ -122,16 +122,12 @@
     $('#edit').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')
     })
-
-
     $('#myModal').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')
     })
-
     $('#opportunity').on('shown.bs.modal', function () {
         $('#myInput').trigger('focus')
     })
-
     var CandidateDetailsURL = './TimesheetHRDetails';
     $(function () {
         $("#TimeSheetTable").on("click", ".CandidateName", function () {

@@ -115,22 +115,21 @@ namespace TimeSheet.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
-        public ActionResult ExportPMBookingSchedule()
+        public ActionResult ExportRecruitmentBookings()
         {
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
             }
             else
-            {
-                var model = new HRTimeSheetList();
-                model.HRTimeSheets = TimeSheetAPIHelperService.HRTimeSheetList().Result;
+            {               
+               var model = TimeSheetAPIHelperService.HRTimeSheetList().Result;
                 GridView gv = new GridView();
-                gv.DataSource = model.HRTimeSheets;
+                gv.DataSource = model;
                 gv.DataBind();
                 Response.ClearContent();
                 Response.Buffer = true;
-                Response.AddHeader("content-disposition", "attachment; filename=PMScheduleExport.xls");
+                Response.AddHeader("content-disposition", "attachment; filename=RecruitmentBookings.xls");
                 Response.ContentType = "application/ms-excel";
                 Response.Charset = "";
                 StringWriter sw = new StringWriter();
