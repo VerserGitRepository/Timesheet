@@ -11,11 +11,306 @@
                     <th>Id</th>
                     <th>Opportunity</th>
                     <th>Activity</th>
-                   
+
                     <th style="width:50px">Date </th>
+                    @model  TimeSheet.Models.HRTimeSheetList
+                    <div>
+                        <div class="modal-header" style="background-color:lightgray;width:1320px">
+                            <h5 class="modal-title text-center">Resource Details</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1200px">
+                            <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1200px">
+                                <thead style="background-color:#FFA500;color:white">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Opportunity</th>
+                                        <th>Activity</th>
+
+                                        <th style="width:50px">Date </th>
+                                        <th>StartTime</th>
+                                        <th style="width:50px">EndTime </th>
+
+
+                                        <th>Status</th>
+                                        <th style="width:10px">Comments</th>
+                                        <th style="width:10px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table">
+                                    @foreach (TimeSheet.Models.HRTimeSheetList item in Model.HRTimeSheets)
+                {
+                                    <tr>
+                                        <td class="Id"> <span>@item.id</span> </td>
+                                        <td class="Opportunity">
+                                            <span id="txtCandidateName">@item.OpportunityNumber</span>
+                                        </td>
+                                        <td class="Project">
+                                            @Html.DisplayFor(modelItem => @item.OpportunityName)
+                                        </td>
+                                        <td class="Day" width="7%">
+                                            <span>@item.Day.ToShortDateString()</span>
+                                            @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
+
+                                        </td>
+                                        <td class="StartTime">
+                                            <span>@item.StartTime.ToShortTimeString()</span>
+                                            <input type="time" id="startTime" value="@item.StartTime.ToString("HH:mm")" style="display:none" />
+                                        </td>
+
+
+                                        <td class="EndTime" width="8%">
+                                            <span>@item.EndTime.ToShortTimeString()</span>
+                                            <input type="time" id="endTime" value="@item.EndTime.ToString("HH:mm")" style="display:none" />
+                                        </td>
+                                        <td class="ActivityStatus">
+                                            <span text="Status" span />
+                                            @Html.DropDownListFor(model => item.StatusID,Model.StatusList , "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
+                                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                                            <input id="username" type="hidden" value="@User.Identity.Name" />
+                                        </td>
+                                        <td class="TimeSheetComments">
+                                            <span>@item.TimesheetComments</span>
+                                            <textarea rows="4" cols="40" id="txtComments" style="display:none">@item.TimesheetComments</textarea>
+                                        </td>
+                                        <td width="5%">
+                                            <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                <span><strong>Edit</strong></span>
+                                            </a>
+
+                                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                <span><strong>Update</strong></span>
+                                            </a>
+
+                                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                <span><strong>Cancel</strong></span>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#tblCustomers').dataTable({
+                                responsive: true
+                            });
+                            $('.dataTables_filter').addClass('pull-right');
+                        });
+                        SetDDLValue();
+
+
+
+
+                        function SetDDLValue() {
+                            //alert('before document ready');
+
+                            $("tbody tr td.ActivityStatus").each(function LoopTR() {
+                                var ratingTdText = $(this);
+                                if ($(ratingTdText).find("#hdnddlLidt").val() != "") {
+                                    $(ratingTdText).find("#ddlStatus option").each(function (i) {
+                                        //alert($(ratingTdText).find("#hdnddlLidt").val());
+                                        if (($(this).val() == $(ratingTdText).find("#hdnddlLidt").val())) {
+                                            $(this).attr('selected', 'selected')
+                                        }
+                                    });
+                                }
+
+
+                            });
+
+
+                        }
+
+                        //Edit event handler.
+                        $("body").on("click", "#tblCustomers .Edit", function () {
+                            // debugger;
+                            var row = $(this).closest("tr");
+                            $("td", row).each(function () {
+                                if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
+                                    $(this).find("input").show();
+                                    $(this).find("span").hide();
+                                    $(this).find("#txtComments").show();
+                                    $(this).toggleClass('selected');
+
+                                }
+                            });
+                            row.find(".Update").show();
+                            row.find(".Cancel").show();
+
+                            $(this).hide();
+                        });
+
+                        //Update event handler.
+                        $("body").on("click", "#tblCustomers .Update", function () {
+                            var row = $(this).closest("tr");
+                            $("td", row).each(function () {
+                                if ($(this).find("input").length > 0) {
+                                    var span = $(this).find("span");
+                                    var input = $(this).find("input");
+                                    var textArea = $(this).find("#txtComments");
+                                    //span.html(input.val());
+                                    span.show();
+                                    input.hide();
+                                    textArea.hide();
+                                    $(this).removeClass('selected');
+                                }
+                            });
+                            row.find(".Edit").show();
+                            row.find(".Cancel").hide();
+                            $(this).hide();
+
+                            var start = new Date("May 26, 2016 " + row.find("#startTime").val());
+                            var end = new Date("May 26, 2016 " + row.find("#endTime").val());
+                            if (start >= end) {
+                                $.alert('start time should be prior to endtime');
+                                return;
+                            }
+                            var UpdateProjectManagerModel = {
+                                'Id': row.find(".Id").find("span").html(),
+
+                                'TimeSheetComments': row.find("#txtComments").val(),
+                                'StartTime': row.find("#startTime").val(),
+                                'EndTime': row.find("#endTime").val(),
+
+                                'Day': row.find(".Day").find("span").html(),
+                                'StatusID': row.find("#ddlStatus").val()
+                            }
+
+
+                            debugger;
+                            $.ajax({
+                                type: "POST",
+                                url: "./UpdateHRTimesheet",
+                                data: JSON.stringify(UpdateProjectManagerModel),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
+                                    debugger;
+                                    $.confirm({
+                                        boxWidth: '600px',
+                                        useBootstrap: false,
+                                        title: '',
+                                        content: 'Data has been updated successfully.',
+                                        closeIcon: true,
+
+                                        buttons: {
+                                            yes: { isHidden: true }
+                                        }
+                                    });
+                                },
+                                error: function () {
+                                    alert("Dynamic content load failed.");
+                                }
+                            });
+
+
+
+                            //$.ajax({
+                            //    type: "GET",
+                            //    url: './CandidateDetails',
+                            //    contentType: "application/json; charset=utf-8",
+                            //    data: { "CandidateName": row.find("#txtCandidateName").text() },
+                            //    datatype: "json",
+                            //    success: function (data) {
+                            //        // debugger;
+                            //        $('#myModalContent').html(data);
+                            //        $('#myModal').modal(options);
+                            //        $('#myModal').modal('show');
+                            //    },
+                            //    error: function () {
+                            //        alert("Dynamic content load failed.");
+                            //    }
+                            //});
+
+                            $('#myModal').on('hidden.bs.modal', function (e) {
+                                location.reload();
+                                $('#myModal').hide();
+
+                            })
+                        });
+
+                        $("#myModal").draggable({
+                            handle: ".modal-header"
+                        });
+                        $('#myModal').on('hidden.bs.modal', function (e) {
+                            location.reload();
+                        });
+
+                        $(".Edit").on("click", function () {
+                            $(".popup-overlay, .popup-content").addClass("active");
+                        });
+
+                        //removes the "active" class to .popup and .popup-content when the "Close" button is clicked
+                        $(".Update, .popup-overlay").on("click", function () {
+                            $(".popup-overlay, .popup-content").removeClass("active");
+                        });
+
+                        //Cancel event handler.
+                        $("body").on("click", "#tblCustomers .Cancel", function () {
+                            var row = $(this).closest("tr");
+                            $("td", row).each(function () {
+                                if ($(this).find("input").length > 0 || $(this).find("#txtComments").length > 0) {
+                                    var span = $(this).find("span");
+                                    var input = $(this).find("input");
+                                    $(this).removeClass('selected');
+                                    var textArea = $(this).find("#txtComments");
+                                    //input.val(span.html());
+                                    span.show();
+                                    input.hide();
+                                    textArea.hide();
+                                }
+                            });
+                            row.find(".Edit").show();
+                            row.find(".Update").hide();
+                            $(this).hide();
+                        });
+
+                    </script>
+                    <style>
+                        .modal-dialog {
+                            width: 1350px;
+                            margin: 30px auto;
+                            margin-bottom: 10px;
+                        }
+
+                        .table-hover > tbody > tr:hover > td,
+                        .table-hover > tbody > tr:hover > th {
+                            background-color: lightgray;
+                        }
+
+                        .selected {
+                            color: black;
+                            background-color: lightgray;
+                        }
+
+                        .btn {
+                            font-size: 10px;
+                        }
+
+                        table tr.active {
+                            background: red;
+                        }
+
+                        a.btn {
+                            -webkit-transform: scale(0.9);
+                            -moz-transform: scale(0.6);
+                            -o-transform: scale(0.6);
+                            -webkit-transition-duration: 0.5s;
+                            -moz-transition-duration: 0.5s;
+                            -o-transition-duration: 0.5s;
+                        }
+                    </style>
                     <th>StartTime</th>
                     <th style="width:50px">EndTime </th>
-                  
+
 
                     <th>Status</th>
                     <th style="width:10px">Comments</th>
