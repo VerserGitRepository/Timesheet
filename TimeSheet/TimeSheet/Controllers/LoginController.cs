@@ -34,36 +34,8 @@ namespace TimeSheet.Controllers
             {
                 Session["Username"] = login.UserName;
                 Session["FullName"] = userReturn.Result.FullName;
-                Session["ErrorMessage"] = null;       
-                //var _roles = LoginService.UserRoleList(login.UserName).Result;
-                //if (_roles.Count() > 0 )
-                //{
-                //    foreach (var r in _roles)
-                //    {
-                //        if (r.Value == "Administrator")
-                //        {
-                //            Session["Administrator"] = true;
-                //            Session["HR"] = true;
-                //        }
-                //        if (r.Value == "Accounts")
-                //        {
-                //            Session["Accounts"] = true;
-                //            Session["HR"] = true;
-                //        }
-                //        if (r.Value == "ProjectmanagerAdmin")
-                //        {
-                //            Session["ProjectManager"] = true;
-                //        }
-                //        if (r.Value == "WarehouseManager")
-                //        {
-                //            Session["WarehouseManager"] = true;
-                //        }
-                //        if (r.Value == "HRAdmin")
-                //        {
-                //            Session["HR"] = true;
-                //        }
-                //    }                  
-                //}
+                Session["ErrorMessage"] = null;      
+
                 return RedirectToAction("Index", "Home");
             }
             else

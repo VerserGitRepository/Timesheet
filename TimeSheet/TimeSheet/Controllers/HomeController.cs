@@ -70,34 +70,8 @@ namespace TimeSheet.Controllers
                 return View(model);
             }
         }
-       // [HttpPost]
-        //public ActionResult ExportTimesSheetToExcel()
-        //{          
-        //    if (Session["Username"] == null)
-        //    {
-        //        return RedirectToAction("Login", "Login");
-        //    }
-        //    else
-        //    {
-        //        var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetExportList().Result;
-        //        GridView gv = new GridView();
+       
 
-        //        gv.DataSource = TimeSheetmodel;
-        //        gv.DataBind();
-        //        Response.ClearContent();
-        //        Response.Buffer = true;
-        //        Response.AddHeader("content-disposition", "attachment; filename=SchedulerCurrentBookings.xls");
-        //        Response.ContentType = "application/ms-excel";
-        //        Response.Charset = "";
-        //        StringWriter sw = new StringWriter();
-        //        HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
-        //        gv.RenderControl(htw);
-        //        Response.Output.Write(sw.ToString());
-        //        Response.Flush();
-        //        Response.End();
-        //    }
-        //    return RedirectToAction("Jobs", "Home");
-        //}
         [HttpGet]
         public JsonResult ProjectOpportunities(int projectId)
         {
@@ -421,6 +395,7 @@ namespace TimeSheet.Controllers
             Response.End();
             return RedirectToAction("AllBookingEntries", "Home");
         }
+
         [HttpGet]
         public ActionResult ReturnSlider(string StartTime, string EndTime)
         {
