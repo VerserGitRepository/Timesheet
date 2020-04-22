@@ -141,7 +141,7 @@
                             events.push({
                                 eventID: v.ID,
                                 title: v.CandidateName + ' - ' + v.Activity,
-                                description: v.Activity +  '\n\n PM :' + v.ProjectManager,
+                                description: v.Activity +  '<br /><b> PM :</b>' + v.ProjectManager + '<br/> <b>JobNo </b>:' + v.JobNo,
                                 start: moment(v.StartTime),
                                 end: v.EndTime != null ? moment(v.EndTime) : null,
                                 color: v.Colour,
