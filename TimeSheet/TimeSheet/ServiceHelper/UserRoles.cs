@@ -17,6 +17,18 @@ namespace TimeSheet.ServiceHelper
             return _roles.Where(r => r.Value == "Administrator"
             || r.Value == "Accounts" || r.Value == "WarehouseManager" || r.Value == "ProjectmanagerAdmin").FirstOrDefault() != null ? true : false;
         }
+
+        public static bool UserCanConfirmBookings()
+        {
+            string UserName = HttpContext.Current.Session["Username"] != null ? HttpContext.Current.Session["Username"].ToString() : null;
+            if (string.IsNullOrEmpty(UserName))
+            {
+                return false;
+            }
+            var _roles = LoginService.UserRoleList(UserName).Result;
+            return _roles.Where(r => r.Value == "Administrator"|| r.Value == "Accounts").FirstOrDefault() != null ? true : false;
+        }
+
         public static bool PMEditCompleteBookings()
         {
             string UserName = HttpContext.Current.Session["Username"] != null ? HttpContext.Current.Session["Username"].ToString() : null;

@@ -22,8 +22,11 @@ namespace TimeSheet.Models
         public decimal CostperUnit { get; set; }
         public decimal? priceperUnit { get; set; }
         public decimal ProjectionQuantity { get; set; }
-        public decimal CostModelQuantity { get; set; }      
-           
+        public decimal CostModelQuantity { get; set; }
+
+        public decimal LabourCostHoursPerUnit { get; set; }
+        public decimal PMCostHoursPerUnit { get; set; }
+
         public int ActualQuantity { get; set; }
 
         public decimal CostModelRevenue { get { return Math.Round((CostModelQuantity * Convert.ToDecimal(priceperUnit)), 2, MidpointRounding.ToEven); } set { } }
@@ -31,8 +34,7 @@ namespace TimeSheet.Models
 
         public decimal Gap { get; set; }
         public string Comments { get; set; }
-        
-       
 
+     
     }
 }

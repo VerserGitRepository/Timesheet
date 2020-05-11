@@ -67,7 +67,7 @@
                                     <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
                                     <li>@Html.ActionLink("TIMESHEET APPROVAL", "ApproveProjectTimesheet", "Projection")</li>
                                     <li>@Html.ActionLink("PROFIT AND LOSS", "Index", "ProfitLoss")</li>
-                                    <li>@Html.ActionLink("RESOURCE DETAILS", "Index", "Resource")</li>
+                                    @*<li>@Html.ActionLink("RESOURCE DETAILS", "Index", "Resource")</li>*@
                                 </ul>
                             </li>
                         }
@@ -152,9 +152,9 @@
         <script src="~/Scripts/jquery-1.10.2.min.js"></script>
         <script src="~/Scripts/bootstrap.min.js"></script>
     *@
-
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")*@
+
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
 </body>

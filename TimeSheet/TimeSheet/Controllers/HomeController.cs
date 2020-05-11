@@ -147,7 +147,7 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult UpdateConfirmStatus(string TimeSheetId)
         {
-            if (UserRoles.UserCanEditTimesheet() != true)
+            if (UserRoles.UserCanConfirmBookings() != true)
             {
                 return RedirectToAction("Index", "Home");
             }

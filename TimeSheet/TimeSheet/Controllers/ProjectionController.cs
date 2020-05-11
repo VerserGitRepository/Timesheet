@@ -344,6 +344,8 @@ namespace TimeSheet.Controllers
                     modelexport.ProjectionQuantity = mdl.ProjectionQuantity;
                     modelexport.ProjectManager = mdl.ProjectManager;
                     modelexport.CostperUnit = mdl.CostperUnit;
+                    modelexport.LabourCostHoursPerUnit = mdl.LabourCostHoursPerUnit;
+                    modelexport.PMCostHoursPerUnit = mdl.PMCostHoursPerUnit;
                     modelexport.SalesManager = mdl.SalesManager;
                     modelexport.Project = mdl.ProjectName;
                     modelexport.Facility = mdl.wareHouseName;

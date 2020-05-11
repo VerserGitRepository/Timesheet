@@ -47,6 +47,8 @@ namespace TimeSheet.Models
         public decimal ProjectionQuantity { get; set; }
         public decimal CostModelQuantity { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
+        public decimal LabourCostHoursPerUnit { get; set; }
+        public decimal PMCostHoursPerUnit { get; set; }
 
     }
 }
