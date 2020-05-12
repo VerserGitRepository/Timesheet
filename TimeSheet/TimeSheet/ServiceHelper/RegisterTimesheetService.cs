@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using TimeSheet.Models;
-
 namespace TimeSheet.ServiceHelper
 {
     public class RegisterTimesheetService
@@ -30,8 +29,7 @@ namespace TimeSheet.ServiceHelper
                             HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
                         }
                         else if (ReturnResult.Message.Contains("Is Already Booked"))
-                        {
-                           // ReturnResult.Message = "Candidate Timesheet has been registered successfully.";
+                        {                         
                             HttpContext.Current.Session["InfoMessage"] = ReturnResult.Message;
                         }
                         else
@@ -52,16 +50,10 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult; 
         }
-
         public static async Task<ReturnModel> EditTimesheetModel(UpdateTimeSheetModel UpdateModel)
         {
-            var ReturnResult = new ReturnModel();
-
-            if (UpdateModel.ActualQuantity == null && UpdateModel.BreakHours <= 0 && UpdateModel.StatusID == 1 && UpdateModel.TimeSheetComments == null)
-            {
-                ReturnResult.IsSuccess = false;
-                return ReturnResult;
-            }
+            var ReturnResult = new ReturnModel();     
+            
             if (UpdateModel.StatusID == 7 || UpdateModel.StatusID == 4)
             {
                 if (string.IsNullOrEmpty(UpdateModel.ActualQuantity.ToString()))
@@ -70,6 +62,12 @@ namespace TimeSheet.ServiceHelper
                 HttpContext.Current.Session["ErrorMessage"] = "Actual Quantity Required To Complete or Approve Booking!";
                 return ReturnResult;
                 }
+            }
+            if(ValidateUpdates.ValidateConfirmBooking(Convert.ToInt32(UpdateModel.StatusID)) != true)
+            {
+                ReturnResult.IsSuccess = false;
+                HttpContext.Current.Session["ErrorMessage"] = "Your UserName Doesn't Obtained Status Change Permission !";
+                return ReturnResult;
             }
             using (HttpClient client = new HttpClient())
             {
@@ -87,14 +85,13 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult; 
         }
-        public static async Task<ReturnModel> Confirmbooking(string bookingId)
+        public static async Task<ReturnModel> Confirmbooking(string bookingId,string FullName)
         {
             ReturnModel ReturnResult = new ReturnModel();
-
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format($"timesheet/confirmbooking/{bookingId}")).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format($"timesheet/confirmbooking/{bookingId}/{FullName}")).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
@@ -227,6 +224,5 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
-
     }
 }

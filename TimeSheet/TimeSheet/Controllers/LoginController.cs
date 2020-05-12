@@ -40,8 +40,9 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                Session["FullUserName"] = null;
-                Session["ErrorMessage"] = "Invalid UserName Or Password";             
+                Session["ErrorMessage"] = "Invalid UserName Or Password";
+                Session.Clear();
+                Session.RemoveAll();               
                 return View("Login");
             }
         }

@@ -21,7 +21,8 @@ namespace TimeSheet.ServiceHelper
         public static bool UserCanConfirmBookings()
         {
             string UserName = HttpContext.Current.Session["Username"] != null ? HttpContext.Current.Session["Username"].ToString() : null;
-            if (string.IsNullOrEmpty(UserName))
+            string FullName = HttpContext.Current.Session["FullName"] != null ? HttpContext.Current.Session["FullName"].ToString() : null;
+            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(UserName))
             {
                 return false;
             }

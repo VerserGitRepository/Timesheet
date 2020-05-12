@@ -153,7 +153,7 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                var ReturnValue = RegisterTimesheetService.Confirmbooking(TimeSheetId);
+                var ReturnValue = RegisterTimesheetService.Confirmbooking(TimeSheetId, Session["FullName"].ToString());
             }
             return Json(new {status = "Success" });
         }
@@ -412,5 +412,6 @@ namespace TimeSheet.Controllers
                 return PartialView("_BreakTimeSlider",model);
             }
         }
+        
     }
 }
