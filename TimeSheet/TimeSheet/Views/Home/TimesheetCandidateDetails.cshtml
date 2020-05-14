@@ -172,8 +172,11 @@
     });
    
     function ShowOTMessage(therowid) {
-
+        debugger;
         var rowid = $(therowid).closest("tr");
+
+
+
         var date1 = new Date("May 26, 2016 " + rowid.find("#startTime").val());
         var date2 = new Date("May 26, 2016 " + rowid.find("#endTime").val());
         var origVal = rowid.find("#hdnddlLidt").val();
@@ -200,6 +203,7 @@
                 //return;
             }
         }
+
         var mins = Math.floor(msec / 60000) - rowid.find("#ddlBreak").val();
         if (mins > 450 && (rowid.find("#ddlStatus").val() == 7 || rowid.find("#ddlStatus").val() == 4)) {
 
@@ -220,6 +224,10 @@
                     }
                 }
              });
+        }
+        if (rowid.find("#ddlStatus").val() == "4" || rowid.find("#ddlStatus").val() == "7") {
+            FetchActuals(rowid);
+            return;
         }
     }
 
@@ -329,6 +337,24 @@
         });
 
     }
+    function FetchActuals(rowid) {
+
+       var theId = rowid.find(".Id").find("span").html()
+
+        $.ajax({
+
+            type: "GET",
+           url: './FetchActuals',
+            contentType: "application/json; charset=utf-8",
+            data: { "Id": theId },
+            datatype: "json",
+            success: function (data) {
+             rowid.find("#txtActualQuantity").val(data.Result);
+
+            },
+        });
+    }
+
     function AppendRow(row, Id, OLATarget, ActualQuantity, TimeSheetComments, StartTime, EndTime, Day, EndDate ) {
         //Bind CustomerId.
         $(".Id", row).find("span").html(Id);

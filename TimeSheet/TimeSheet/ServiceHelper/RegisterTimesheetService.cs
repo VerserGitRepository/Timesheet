@@ -224,5 +224,25 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
+        public static async Task<string> FetchActuals(string bookingId)
+        {
+            string ReturnResult = "";
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"timesheet/{bookingId}/ActivityActuals")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsStringAsync();
+                    //HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Error occurred in the request.";
+                }
+            }
+            return ReturnResult;
+        }
     }
 }

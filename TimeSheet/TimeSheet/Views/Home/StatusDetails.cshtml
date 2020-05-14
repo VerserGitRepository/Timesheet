@@ -213,6 +213,27 @@
                 }
                     });
         }
+     if (rowid.find("#ddlStatus").val() == "4" || rowid.find("#ddlStatus").val() == "7") {
+            FetchActuals(rowid);
+            return;
+        }
+    }
+    function FetchActuals(rowid) {
+
+       var theId = rowid.find(".Id").find("span").html()
+
+        $.ajax({
+
+            type: "GET",
+           url: './FetchActuals',
+            contentType: "application/json; charset=utf-8",
+            data: { "Id": theId },
+            datatype: "json",
+            success: function (data) {
+             rowid.find("#txtActualQuantity").val(data.Result);
+
+            },
+        });
     }
     function ShowSliderModal(rowid)
     {

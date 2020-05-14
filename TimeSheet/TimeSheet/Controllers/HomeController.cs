@@ -412,6 +412,12 @@ namespace TimeSheet.Controllers
                 return PartialView("_BreakTimeSlider",model);
             }
         }
-        
+        [HttpGet]
+        public JsonResult FetchActuals(string id)
+        {
+            var item = RegisterTimesheetService.FetchActuals(id);
+            return Json(item, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
