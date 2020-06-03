@@ -12,13 +12,6 @@ namespace TimeSheet.ServiceHelper
             bool returnFlag = false;
             switch (bookingStatusId)
             {
-                case 10:
-                    if (UserRoles.UserCanConfirmBookings() == true)
-                    {
-                        returnFlag= true;
-                    }
-                    break;
-
                 case 2:
                     if (UserRoles.UserCanConfirmBookings() == true)
                     {
@@ -30,13 +23,7 @@ namespace TimeSheet.ServiceHelper
                     {
                         returnFlag = true;
                     }
-                    break;
-                case 5:
-                    if (UserRoles.UserCanConfirmBookings() == true)
-                    {
-                        returnFlag = true;
-                    }
-                    break;
+                    break;                            
                 default:
                     returnFlag = false;
                     break;
