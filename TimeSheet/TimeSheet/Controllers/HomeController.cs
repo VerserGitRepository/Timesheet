@@ -157,6 +157,19 @@ namespace TimeSheet.Controllers
             }
             return Json(new {status = "Success" });
         }
+        [HttpPost]
+        public ActionResult UpdateRejectStatus(string TimeSheetId,string comments)
+        {
+            if (UserRoles.UserCanConfirmBookings() != true)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                var ReturnValue = RegisterTimesheetService.Rejectbooking(TimeSheetId, comments);
+            }
+            return Json(new { status = "Success" });
+        }
         [HttpGet]
         public ActionResult Edit(int id)
         {

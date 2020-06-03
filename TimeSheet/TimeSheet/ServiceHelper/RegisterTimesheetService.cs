@@ -63,12 +63,12 @@ namespace TimeSheet.ServiceHelper
                 return ReturnResult;
                 }
             }
-            if(ValidateUpdates.ValidateConfirmBooking(Convert.ToInt32(UpdateModel.StatusID)) != true)
-            {
-                ReturnResult.IsSuccess = false;
-                HttpContext.Current.Session["ErrorMessage"] = "Your UserName Doesn't Obtained Status Change Permission !";
-                return ReturnResult;
-            }
+            //if(ValidateUpdates.ValidateConfirmBooking(Convert.ToInt32(UpdateModel.StatusID)) != true)
+            //{
+            //    ReturnResult.IsSuccess = false;
+            //    HttpContext.Current.Session["ErrorMessage"] = "Your UserName Doesn't Obtained Status Change Permission !";
+            //    return ReturnResult;
+            //}
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
@@ -92,6 +92,28 @@ namespace TimeSheet.ServiceHelper
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
                 HttpResponseMessage response = client.GetAsync(string.Format($"timesheet/confirmbooking/{bookingId}/{FullName}")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
+                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return ReturnResult;
+        }
+        public static async Task<ReturnModel> Rejectbooking(string bookingId, string comments)
+        {
+            ReturnModel ReturnResult = new ReturnModel();
+            ListItems item = new ListItems();
+            item.Id = int.Parse(bookingId);
+            item.Value = comments;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format($"TimeSheet/RemoveRejectedBookings"),item).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();

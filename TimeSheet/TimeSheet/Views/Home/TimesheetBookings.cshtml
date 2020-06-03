@@ -140,6 +140,12 @@
                                             <span><strong>Confirm</strong></span>
                                         </a>
                                     </div>
+                                    <div id="rejectBtn">
+                                        <a class="Reject btn btn-danger a-btn-slide-text" onclick="ChangeReject(this);" id="RejectButton">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            <span><strong>Reject</strong></span>
+                                        </a>
+                                    </div>
                                     <div id="confirmSpanDiv" style="display:none;">
                                         <span><strong>Confirmed</strong></span>
                                     </div>
@@ -550,6 +556,98 @@
         $(".popup-overlay, .popup-content").removeClass("active");
     });
 
+    var comments = "";
+    function saveRow(rowId) {
+        var row = $(rowId).closest("tr");
+        var TimeSheetId = row.find(".Id").find("span").html();
+        var loadUrl = '@Url.Action("UpdateRejectStatus", "Home")';
+        var data = {
+            'TimeSheetId': TimeSheetId,
+            'comments': $("#txtRejectComments").val()
+
+        };
+        $.ajax({
+            url: loadUrl,
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+               var obj =  row.remove();
+                $("#tblCustomers").DataTable();
+                $.confirm({
+                    title: data.status,
+                    content:'The booking has been rejected.',
+                    boxWidth: '370px',
+                    useBootstrap: false,
+                    closeIcon: true,
+                    buttons: {
+                        OK: function () {
+
+                            return true;
+                        }
+                    }
+                });
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+        
+    }
+        function ChangeReject(rowId){
+            debugger;
+            var row = $(rowId).closest("tr");
+            $.confirm({
+                    title: 'Reject Comments',
+                    content: '<textarea class="form-control-100 textarea" cols="20" id="txtRejectComments" placeholder="Comments here..." rows="2" style="border:solid 1px lightgray;width:200px;"></textarea>',
+                    boxWidth: '350px',
+                useBootstrap: false,
+                closeIcon: true,
+                    buttons: {
+                        OK: function () {
+                            comments = $("#txtRejectComments").val();
+                           // alert(comments);
+                            
+                            return saveRow(rowId);
+                        }
+                    }
+            });
+            
+          //  alert(comments);
+        @*var options = { "backdrop": "static", keyboard: true };
+        var row = $(rowId).closest("tr");
+        var TimeSheetId = row.find(".Id").find("span").html();
+        var loadUrl = '@Url.Action("UpdateConfirmStatus", "Home")';
+
+        var data = {
+            'TimeSheetId': TimeSheetId
+                };
+         $.ajax({
+             url: loadUrl,
+             type: 'POST',
+             data: JSON.stringify(data),
+             contentType: 'application/json; charset=utf-8',
+             success: function (data) {
+                 row.find("#confirmBtn").hide();
+                 row.find("#confirmSpanDiv").show();
+                 row.find("#ddlStatus").val(10);
+                 //$.confirm({
+                 //    title: data.status,
+                 //    content:'The action has been completed successfully.',
+                 //    boxWidth: '370px',
+                 //    useBootstrap: false,
+                 //    buttons: {
+                 //        OK: function () {
+                            
+                 //            return true;
+                 //        }
+                 //    }
+                 //});
+             },
+             error: function () {
+                 alert("error");
+             }*@
+         }
 
      function ChangeConfirm(rowId){
         debugger;
