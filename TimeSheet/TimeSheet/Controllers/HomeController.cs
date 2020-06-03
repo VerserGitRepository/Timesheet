@@ -70,7 +70,73 @@ namespace TimeSheet.Controllers
                 return View(model);
             }
         }
-       
+
+        [HttpPost]
+        public ActionResult ExportTimesSheetToExcel()
+        {
+            var TimeSheetExportData = new List<CompletedtimesheetExportModel>();
+
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                var TimeSheetmodel = TimeSheetAPIHelperService.TimeSheetList().Result;
+
+                foreach (var item in TimeSheetmodel)
+                {
+                    int otEnd = 0;
+                    int otStart = 0;
+                    if (Convert.ToInt32(item.EndTime.Value.ToString("HH")) > 18)
+                    {
+                        otEnd = Convert.ToInt32(item.EndTime.Value.ToString("HH")) - 18;
+                    }
+                    if (Convert.ToInt32(item.StartTime.Value.ToString("HH")) < 6)
+                    {
+                        otStart = 6 - Convert.ToInt32(item.StartTime.Value.ToString("HH"));
+                    }
+                    TimeSheetExportData.Add(new CompletedtimesheetExportModel
+                    {
+                        ProjectName = item.ProjectName,
+                        CandidateName = item.CandidateName,
+                        OpportunityNumber = item.OpportunityNumber,
+                        Activity = item.Activity,
+                        WarehouseName = item.WarehouseName,
+                        StartTime = item.StartTime,
+                        EndTime = item.EndTime,
+                        JobNo = item.JobNo,
+                        OLATarget = item.OLATarget,
+                        ActualQuantity = item.ActualQuantity,
+                        Day = item.Day.Value.Date,
+                        Status = item.Status,
+                        TimeSheetComments = item.TimeSheetComments,
+                        TotalHours = item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes / 60,
+                        BreakHours = item.BreakHours,
+                        WorkedHours = (item.EndTime.Value.Subtract(item.StartTime.Value).TotalMinutes - item.BreakHours) / 60,
+                        OutsideWorkHours = otStart + otEnd,
+                        ProjectManager = item.ProjectManager
+                        //BookedBy = item.BookedBy,
+                        //ApprovedBy = item.ApprovedBy,
+                    });
+                }
+                GridView gv = new GridView();
+                gv.DataSource = TimeSheetExportData;
+                gv.DataBind();
+                Response.ClearContent();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=CurrentTimeSheetBookings.xls");
+                Response.ContentType = "application/ms-excel";
+                Response.Charset = "";
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+                gv.RenderControl(htw);
+                Response.Output.Write(sw.ToString());
+                Response.Flush();
+                Response.End();
+            }
+            return RedirectToAction("Index", "Home");
+        }
 
         [HttpGet]
         public JsonResult ProjectOpportunities(int projectId)

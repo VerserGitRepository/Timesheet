@@ -63,11 +63,14 @@ namespace TimeSheet.ServiceHelper
                 return ReturnResult;
                 }
             }
-            if(ValidateUpdates.ValidateConfirmBooking(Convert.ToInt32(UpdateModel.StatusID)) != true)
+            if (UpdateModel.StatusID == 2 || UpdateModel.StatusID ==3)
             {
-                ReturnResult.IsSuccess = false;
-                HttpContext.Current.Session["ErrorMessage"] = "Your UserName Doesn't Obtained Status Change Permission !";
-                return ReturnResult;
+                if(ValidateUpdates.ValidateConfirmBooking(Convert.ToInt32(UpdateModel.StatusID)) != true)
+                {
+                    ReturnResult.IsSuccess = false;
+                    HttpContext.Current.Session["ErrorMessage"] = "Your UserName Doesn't Obtained Status Change Permission !";
+                    return ReturnResult;
+                }
             }
             using (HttpClient client = new HttpClient())
             {
