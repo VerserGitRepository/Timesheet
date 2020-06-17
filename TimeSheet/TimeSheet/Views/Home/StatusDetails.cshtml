@@ -133,7 +133,7 @@
                                     </a>
                                 </div>
                                 <div id="rejectBtn">
-                                    <a class="Reject btn btn-danger a-btn-slide-text" onclick="ChangeReject(this);" id="RejectButton">
+                                    <a class="Reject btn btn-danger a-btn-slide-text" onclick="ChangeReject(this);" id="RejectButton" >
                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         <span><strong>Reject</strong></span>
                                     </a>
@@ -585,9 +585,9 @@
             debugger;
             var row = $(rowId).closest("tr");
             $.confirm({
-                    title: 'Reject Comments',
-                    content: '<textarea class="form-control-100 textarea" cols="20" id="txtRejectComments" placeholder="Comments here..." rows="2" style="border:solid 1px lightgray;width:200px;"></textarea>',
-                    boxWidth: '350px',
+                    title: '',
+                content: '<textarea class="form-control-200 textarea" cols="30" id="txtRejectComments" placeholder="Reject Comments..." rows="3" style="border:solid 1px lightgray;width:300px;"></textarea>',
+                    boxWidth: '200px',
                 useBootstrap: false,
                 closeIcon: true,
                     buttons: {
