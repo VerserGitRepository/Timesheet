@@ -15,6 +15,7 @@
                     <th style="width:30px">Candidate</th>
                     <th style="width:40px">Activity</th>
                     <th>PM</th>
+                    <th>EmpType</th>
                     <th>JOB</th>
                     <th style="width:20px">Date</th>
                     <th style="width:40px">StartTime </th>
@@ -32,133 +33,136 @@
             <tbody class="table">
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
-                    <tr>
-                        <td class="Id"> <span>@item.Id</span> </td>
-                        <td class="CandidateName"width="4%">
-                            <span id="ProjectName">@item.ProjectName</span>
-                        </td>
-                        <td class="CandidateName"width="4%">
-                            @Html.DisplayFor(modelItem => item.CandidateName)
-                        </td>
-                        <td class="Activity">
-                            @Html.DisplayFor(modelItem => item.Activity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProjectManager)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.JobNo)
-                        </td>
-                        <td class="Day" width="7%">
-                            <span>@item.Day.Value.ToShortDateString()</span>
+                <tr>
+                    <td class="Id"> <span>@item.Id</span> </td>
+                    <td class="CandidateName" width="4%">
+                        <span id="ProjectName">@item.ProjectName</span>
+                    </td>
+                    <td class="CandidateName" width="4%">
+                        @Html.DisplayFor(modelItem => item.CandidateName)
+                    </td>
+                    <td class="Activity">
+                        @Html.DisplayFor(modelItem => item.Activity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectManager)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.employeementType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.JobNo)
+                    </td>
+                    <td class="Day" width="7%">
+                        <span>@item.Day.Value.ToShortDateString()</span>
 
-                            @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
+                        @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
-                        </td>
-                        <td class="StartTime" width="2%">
-                            <span>@item.StartTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none;width:82px" />
-                        </td>
-                        @*<td class="EndDate" width="8%">
-                                @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td class="StartTime" width="2%">
+                        <span>@item.StartTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none;width:82px" />
+                    </td>
+                    @*<td class="EndDate" width="8%">
+            @Html.DisplayFor(modelItem => item.EndDate)
 
-                            </td>*@
+        </td>*@
 
-                        <td class="EndTime" width="2%">
-                            <span>@item.EndTime.Value.ToShortTimeString()</span>
-                            <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none;width:82px" />
-                        </td>
+                    <td class="EndTime" width="2%">
+                        <span>@item.EndTime.Value.ToShortTimeString()</span>
+                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none;width:82px" />
+                    </td>
 
-                        <td class="OLATarget">
-                            @Html.DisplayFor(modelItem => item.OLATarget)
-                        </td>
-                        <td class="ActualQuantity">
-                            <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
-                        </td>
-                        <td class="breakHrs">
+                    <td class="OLATarget">
+                        @Html.DisplayFor(modelItem => item.OLATarget)
+                    </td>
+                    <td class="ActualQuantity">
+                        <span style="width:2px">@item.ActualQuantity</span>
+                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                    </td>
+                    <td class="breakHrs">
 
-                            @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                        @Html.DropDownListFor(model => item.BreakHours, new List<SelectListItem>
+                        {
+                            new SelectListItem{ Text="No Break", Value = "0" },
+                            new SelectListItem{ Text="15 Mins", Value = "15" },
+                            new SelectListItem{ Text="30 Mins", Value = "30" },
+                            new SelectListItem{ Text="45 Mins", Value = "45" },
+                            new SelectListItem{ Text="60 Mins", Value = "60" },
+                         }, new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
+                        <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
+
+                    </td>
+                    <td>
+                        <span id="spanbreakStartTime">@item.BreakTime</span>
+                    </td>
+                    <td class="Status">
+                        <span text="Status" span />
+                        @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
+                        <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
+                        <input id="username" type="hidden" value="@User.Identity.Name" />
+                        <input id="screenName" type="hidden" value="@item.ScreenName" />
+                    </td>
+                    <td class="TimeSheetComments">
+                        <span>@item.TimeSheetComments</span>
+                        <textarea rows="3" cols="10" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
+                    </td>
+                    <td width="5%">
+                        <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+                        <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            <span><strong>Rate</strong></span>
+                        </a>
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
+
+                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span><strong>Cancel</strong></span>
+                        </a>
+
+                        @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
+            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
+                        @*<a class="Delete" href="javascript:;">Delete</a>*@
+                    </td>
+                    @*<td>
+            <input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm"/>
+        </td>*@
+                    <td class="Confirm">
+                        @if (UserRoles.SiteAdmin())
+                        {
+                            if (item.StatusID == 1)
                             {
-                                new SelectListItem{ Text="No Break", Value = "0" },
-                                new SelectListItem{ Text="15 Mins", Value = "15" },
-                                new SelectListItem{ Text="30 Mins", Value = "30" },
-                                new SelectListItem{ Text="45 Mins", Value = "45" },
-                                new SelectListItem{ Text="60 Mins", Value = "60" },
-                             } , new { @id = "ddlBreak", @onchange = "ShowSliderModal(this)" })
-                            <input class="hidden" type="text" id="hdnddlbrkhrs" value="@item.BreakHours" />
-
-                        </td>
-                        <td>
-                            <span id="spanbreakStartTime">@item.BreakTime</span>
-                        </td>
-                        <td class="Status">
-                            <span text="Status" span />
-                            @Html.DropDownListFor(model => item.StatusID, Model.StatusList, "Select Status", new { @id = "ddlStatus", @onchange = "ShowOTMessage(this)" })
-                            <input class="hidden" type="text" id="hdnddlLidt" value="@item.StatusID" />
-                            <input id="username" type="hidden" value="@User.Identity.Name" />
-                            <input id="screenName" type="hidden" value="@item.ScreenName" />
-                        </td>
-                        <td class="TimeSheetComments">
-                            <span>@item.TimeSheetComments</span>
-                            <textarea rows="3" cols="10" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
-                        </td>
-                        <td width="5%">
-                            <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Edit</strong></span>
-                            </a>
-                            <a class="Cancel btn btn-success a-btn-slide-text" onclick="Rate(this);" style="display:none" id="Rate" data-id="@item.CandidateName;@item.Activity">
-                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                <span><strong>Rate</strong></span>
-                            </a>
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Update</strong></span>
-                            </a>
-
-                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                <span><strong>Cancel</strong></span>
-                            </a>
-
-                            @*<a class="Update" href="javascript:;" style="display:none" id="Update">Update</a>
-                                <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
-                            @*<a class="Delete" href="javascript:;">Delete</a>*@
-                        </td>
-                        @*<td>
-                                <input type="submit" value="Confirm" name="Confirm" class="btn-success btn-group-sm"/>
-                            </td>*@
-                        <td class="Confirm">
-                            @if (UserRoles.SiteAdmin())
-                            {
-                                if (item.StatusID == 1)
-                                {
-                                    <div id="confirmBtn">
-                                        <a class="btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
-                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                            <span><strong>Confirm</strong></span>
-                                        </a>
-                                    </div>
-                                    <div id="rejectBtn">
-                                        <a class="Reject btn btn-danger a-btn-slide-text" onclick="ChangeReject(this);" id="RejectButton">
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                            <span><strong>Reject</strong></span>
-                                        </a>
-                                    </div>
-                                    <div id="confirmSpanDiv" style="display:none;">
-                                        <span><strong>Confirmed</strong></span>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div id="confirmSpan">
-                                        <span><strong>Confirmed</strong></span>
-                                    </div>
-                                }
+                                <div id="confirmBtn">
+                                    <a class="btn btn-success a-btn-slide-text" onclick="ChangeConfirm(this);" id="ConfirmButton">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        <span><strong>Confirm</strong></span>
+                                    </a>
+                                </div>
+                                <div id="rejectBtn">
+                                    <a class="Reject btn btn-danger a-btn-slide-text" onclick="ChangeReject(this);" id="RejectButton">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        <span><strong>Reject</strong></span>
+                                    </a>
+                                </div>
+                                <div id="confirmSpanDiv" style="display:none;">
+                                    <span><strong>Confirmed</strong></span>
+                                </div>
                             }
-                        </td>
-                    </tr>
+                            else
+                            {
+                                <div id="confirmSpan">
+                                    <span><strong>Confirmed</strong></span>
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
