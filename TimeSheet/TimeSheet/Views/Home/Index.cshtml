@@ -156,6 +156,7 @@
                         <th>EndTime</th>
                         <th>Project</th>
                         <th>ProjectManager</th>
+                        <th>EmpType</th>
                         <th>JobNo</th>
                         <th>Activity</th>
                         <th>OLA</th>                      
@@ -222,6 +223,9 @@
                             {
                                 @Html.DisplayFor(modelItem => item.ProjectManager)
                             }
+                        </td>
+                        <td>
+                                @Html.DisplayFor(modelItem => item.employeementType)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.JobNo)

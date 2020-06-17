@@ -70,6 +70,7 @@ namespace TimeSheet.Models
         public string ProjectName { get; set; }
         public string ProjectManager { get; set; }
         public int? EmploymentTypeID { get; set; }
+        public string employeementType { get; set; }
         public SelectList EmploymentList { get; set; }
         public virtual TimeSheetRegisterModel TimeSheetRegisterModel { get;set;}
         public virtual PMRegisterViewModel PMRegisterViewModel { get; set; }
