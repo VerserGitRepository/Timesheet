@@ -29,77 +29,79 @@
             <div class="navbar-collapse collapse" style="font-size:smaller">
                 @if (@Session["Username"] != null)
                 {
-                    <ul class="nav navbar-nav">
-                        @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <ul class="nav navbar-nav">
+                    @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
+                            <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
+                            <li>@Html.ActionLink("COMPLETED BOOKINGS", "Index", "CompletedBooking")</li>
+                            <li>@Html.ActionLink("APPROVED BOOKINGS", "Index", "ApprovedBooking")</li>
+                            <li>@Html.ActionLink("PM BOOKINGS", "Index", "ProjectManager")</li>
+                            @if (UserRoles.HRUser() != false)
+                            {
+                                <li>@Html.ActionLink("RECRUITMENT BOOKINGS", "Index", "HR")</li>
+                            }
+                            <li>@Html.ActionLink("REJECTED BOOKINGS", "RejectedBooking", "RejectedBooking")</li>
+                            <li>@Html.ActionLink("ALL BOOKING", "AllBookingEntries", "Home")</li>
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">CALENDAR AND TIMELINE</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("RESOURCE CALENDAR", "Index", "ManageCalender")</li>
+                            <li>@Html.ActionLink("RESOURCE TIMELINE", "Index", "ResourceTimeline")</li>
+                            <li>@Html.ActionLink("VEHICLE TIMELINE", "VehicleTimeline", "ResourceTimeline")</li>
+                            <li>@Html.ActionLink("PM TIMELINE", "PMTimeline", "ResourceTimeline")</li>
+                        </ul>
+                    </li>
+                    @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>*@
+                    @if (UserRoles.UserCanRegisterPMTimesheet())
+                    {
                         <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")">PROJECTION</a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
-                                <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
-                                <li>@Html.ActionLink("COMPLETED BOOKINGS", "Index", "CompletedBooking")</li>
-                                <li>@Html.ActionLink("APPROVED BOOKINGS", "Index", "ApprovedBooking")</li>
-                                <li>@Html.ActionLink("PM BOOKINGS", "Index", "ProjectManager")</li>
-                                @if (UserRoles.HRUser() != false)
-                                {
-                                    <li>@Html.ActionLink("RECRUITMENT BOOKINGS", "Index", "HR")</li>
-                                }
-                                <li>@Html.ActionLink("REJECTED BOOKINGS", "RejectedBooking", "RejectedBooking")</li>
-                                <li>@Html.ActionLink("ALL BOOKING", "AllBookingEntries", "Home")</li>
+                                <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
+                                <li>@Html.ActionLink("TIMESHEET APPROVAL", "ApproveProjectTimesheet", "Projection")</li>
+                                <li>@Html.ActionLink("PROFIT AND LOSS", "Index", "ProfitLoss")</li>
+                                @*<li>@Html.ActionLink("RESOURCE DETAILS", "Index", "Resource")</li>*@
+                            </ul>
+                        </li>
+                    }
+                    @if (UserRoles.SiteAdmin())
+                    {
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
+                            <ul class="dropdown-menu">
+                                <li data-toggle="tooltip" data-placement="bottom" title="Unpaid Timesheet Report">@Html.ActionLink("UNPAID", "WeeklyReport", "Finanace")</li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Approved Overtime Timesheet Report">@Html.ActionLink("OVERTIME", "OvertimeReport", "Finanace")</li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Paid Timesheet Report">@Html.ActionLink("PAID", "monthlyReport", "Finanace")</li>
 
                             </ul>
                         </li>
+                        <li>@Html.ActionLink("COSTMODEL", "Index", "CostModel")</li>
+                        <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
+                    }
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
+                        <ul class="dropdown-menu">
 
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">CALENDAR AND TIMELINE</a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("RESOURCE CALENDAR", "Index", "ManageCalender")</li>
-                                <li>@Html.ActionLink("RESOURCE TIMELINE", "Index", "ResourceTimeline")</li>
-                                <li>@Html.ActionLink("VEHICLE TIMELINE", "VehicleTimeline", "ResourceTimeline")</li>
-                                <li>@Html.ActionLink("PM TIMELINE", "PMTimeline", "ResourceTimeline")</li>
-                            </ul>
-                        </li>
-                        @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>*@
-                        @if (UserRoles.UserCanRegisterPMTimesheet())
-                        {
-                            <li class="dropdown">
-                                <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")">PROJECTION</a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
-                                    <li>@Html.ActionLink("TIMESHEET APPROVAL", "ApproveProjectTimesheet", "Projection")</li>
-                                    <li>@Html.ActionLink("PROFIT AND LOSS", "Index", "ProfitLoss")</li>
-                                    @*<li>@Html.ActionLink("RESOURCE DETAILS", "Index", "Resource")</li>*@
-                                </ul>
-                            </li>
-                        }
-                        @if (UserRoles.SiteAdmin())
-                        {
-                            <li class="dropdown">
-                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
-                                <ul class="dropdown-menu">
-                                    <li data-toggle="tooltip" data-placement="bottom" title="Unpaid Timesheet Report">@Html.ActionLink("UNPAID", "WeeklyReport", "Finanace")</li>
-                                    <li data-toggle="tooltip" data-placement="bottom" title="Approved Overtime Timesheet Report">@Html.ActionLink("OVERTIME", "OvertimeReport", "Finanace")</li>
-                                    <li data-toggle="tooltip" data-placement="bottom" title="Paid Timesheet Report">@Html.ActionLink("PAID", "monthlyReport", "Finanace")</li>
+                            <li><a href="http://dc-sqldev/Reports/Pages/Report.aspx?ItemPath=%2fJMS+Reports%2fCandidateTimesheetReport" target="_blank">TIMESHEET REPORT</a></li>
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TIMESHEET BI</a></li>
 
-                                </ul>
-                            </li>
-                            <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
-                        }
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
-                            <ul class="dropdown-menu">
-
-                                <li><a href="http://dc-sqldev/Reports/Pages/Report.aspx?ItemPath=%2fJMS+Reports%2fCandidateTimesheetReport" target="_blank">TIMESHEET REPORT</a></li>
-                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TIMESHEET BI</a></li>
-
-                                @*<li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">RESOURCE Available</a></li>*@
-                                <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">PROJECTION</a></li>
-                                <li>
-                                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYjg2Njc5YmQtMzA0Zi00NmI5LWIyNzAtMjQ5YjlmMzBlZGVhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9
+                            @*<li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">RESOURCE Available</a></li>*@
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">PROJECTION</a></li>
+                            <li>
+                                <a href="https://app.powerbi.com/view?r=eyJrIjoiYjg2Njc5YmQtMzA0Zi00NmI5LWIyNzAtMjQ5YjlmMzBlZGVhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9
 " target="_blank">ON GOING PROJECTION</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                 
                     <ul class="nav navbar-nav" @*style="float:right"*@>
                         <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
                     </ul>

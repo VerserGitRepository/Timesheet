@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -105,6 +108,10 @@
     </Reference>
     <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -178,6 +185,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUpdateController.cs" />
     <Compile Include="Controllers\ApprovedBookingController.cs" />
+    <Compile Include="Controllers\CostModelController.cs" />
     <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\RejectedBookingController.cs" />
     <Compile Include="Controllers\CompletedBookingController.cs" />
@@ -203,6 +211,7 @@
     <Compile Include="Models\AggregatedProfitLossModel.cs" />
     <Compile Include="Models\ApprovedTimesheetDetailedModel.cs" />
     <Compile Include="Models\ApprovedTimesheetModel.cs" />
+    <Compile Include="Models\AutoMapperProfile.cs" />
     <Compile Include="Models\AvailableResourceSearchModel.cs" />
     <Compile Include="Models\AvailableResourceViewModel.cs" />
     <Compile Include="Models\BreakTimeModel.cs" />
@@ -212,6 +221,7 @@
     <Compile Include="Models\AggregatedCompletedTimesheetModel.cs" />
     <Compile Include="Models\CompletedTimesheetModel.cs" />
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
+    <Compile Include="Models\DTOs\ExportApprovedTimesheetDto.cs" />
     <Compile Include="Models\HRActivities.cs" />
     <Compile Include="Models\HRTimeSheetList.cs" />
     <Compile Include="Models\JMSEntities\JMSModelEntities.cs" />
@@ -274,6 +284,7 @@
     <Compile Include="ServiceHelper\SearchFilterService.cs" />
     <Compile Include="ServiceHelper\TimeSheetAPIHelperService.cs" />
     <Compile Include="ServiceHelper\UserRoles.cs" />
+    <Compile Include="ServiceHelper\ValidateUpdates.cs" />
     <Compile Include="Utils\ReflectionUtils.cs" />
     <Compile Include="Web References\VerserSalesforce\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -644,8 +655,7 @@
     <Content Include="Views\Home\StatusDetails.cshtml" />
     <Content Include="Views\Home\TimesheetBookings.cshtml" />
     <Content Include="Views\ApprovedBooking\Index.cshtml" />
-    <Content Include="Views\ApprovedBooking\CandidateDetails.cshtml" />
-    <Content Include="Views\ApprovedBooking\ProjectDetail.cshtml" />
+    <Content Include="Views\CostModel\Index.cshtml" />
     <None Include="Web References\VerserSalesforce\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
