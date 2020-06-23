@@ -11,11 +11,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+@*<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-multiselect.js"></script>
-<link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />*@
 
 <style>
     .row {
@@ -185,81 +185,81 @@
         $('.dataTables_filter').addClass('pull-right');
 
 
-        $('#edit').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
+        //$('#edit').on('shown.bs.modal', function () {
+        //    $('#myInput').trigger('focus')
+        //})
 
 
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
+        //$('#myModal').on('shown.bs.modal', function () {
+        //    $('#myInput').trigger('focus')
+        //})
 
-        $('#opportunity').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
+        //$('#opportunity').on('shown.bs.modal', function () {
+        //    $('#myInput').trigger('focus')
+        //})
 
-        var CandidateDetailsURL = './CandidateDetails';
-        $(function () {
-            $("#TimeSheetTable").on("click", ".CandidateName", function () {
-                // debugger;
-                var $buttonClicked = $(this);
-                var CandidateName = $buttonClicked.attr('data-id');
-                var options = { "backdrop": "static", keyboard: true };
-                $.ajax({
-                    type: "GET",
-                    url: CandidateDetailsURL,
-                    contentType: "application/json; charset=utf-8",
-                    data: { "CandidateName": CandidateName },
-                    datatype: "json",
-                    success: function (data) {
-                        // debugger;
-                        $('#myModalContent').html(data);
-                        $('#myModal').modal(options);
-                        $('#myModal').modal('show');
-                    },
-                    error: function () {
-                        alert("Dynamic content load failed.");
-                    }
-                });
-            });
+        //var CandidateDetailsURL = './CandidateDetails';
+       //$(function () {
+       //     $("#TimeSheetTable").on("click", ".CandidateName", function () {
+       //         // debugger;
+       //         var $buttonClicked = $(this);
+       //         var CandidateName = $buttonClicked.attr('data-id');
+       //         var options = { "backdrop": "static", keyboard: true };
+       //         $.ajax({
+       //             type: "GET",
+       //             url: CandidateDetailsURL,
+       //             contentType: "application/json; charset=utf-8",
+       //             data: { "CandidateName": CandidateName },
+       //             datatype: "json",
+       //             success: function (data) {
+       //                 // debugger;
+       //                 $('#myModalContent').html(data);
+       //                 $('#myModal').modal(options);
+       //                 $('#myModal').modal('show');
+       //             },
+       //             error: function () {
+       //                 alert("Dynamic content load failed.");
+       //             }
+       //         });
+       //     });
 
-            var BookedDetailsURL = './ProjectDetail';
-            $(function () {
-                $("#TimeSheetTable").on("click", ".ProjectName", function () {
-                    // debugger;
-                    var $buttonClicked = $(this);
-                    var ProjectName = $buttonClicked.attr('data-id');
-                    var options = { "backdrop": "static", keyboard: true };
-                    $.ajax({
-                        type: "GET",
-                        url: BookedDetailsURL,
-                        contentType: "application/json; charset=utf-8",
-                        data: { "ProjectName": ProjectName },
-                        datatype: "json",
-                        success: function (data) {
-                            // debugger;
-                            $('#myModalContent').html(data);
-                            $('#myModal').modal(options);
-                            $('#myModal').modal('show');
-                        },
-                        error: function () {
-                            alert("Dynamic content load failed.");
-                        }
-                    });
-                });
+       //     var BookedDetailsURL = './ProjectDetail';
+       //     $(function () {
+       //         $("#TimeSheetTable").on("click", ".ProjectName", function () {
+       //             // debugger;
+       //             var $buttonClicked = $(this);
+       //             var ProjectName = $buttonClicked.attr('data-id');
+       //             var options = { "backdrop": "static", keyboard: true };
+       //             $.ajax({
+       //                 type: "GET",
+       //                 url: BookedDetailsURL,
+       //                 contentType: "application/json; charset=utf-8",
+       //                 data: { "ProjectName": ProjectName },
+       //                 datatype: "json",
+       //                 success: function (data) {
+       //                     // debugger;
+       //                     $('#myModalContent').html(data);
+       //                     $('#myModal').modal(options);
+       //                     $('#myModal').modal('show');
+       //                 },
+       //                 error: function () {
+       //                     alert("Dynamic content load failed.");
+       //                 }
+       //             });
+       //         });
 
-                $("#closbtn").click(function () {
-                    $('#myModal').modal('hide');
-                });
-            });
+       //         $("#closbtn").click(function () {
+       //             $('#myModal').modal('hide');
+       //         });
+       //     });
 
-            //$("#closebtn").on('click',function(){
-            //    $('#myModal').modal('hide');
+       //     //$("#closebtn").on('click',function(){
+       //     //    $('#myModal').modal('hide');
 
-            $("#closbtn").click(function () {
-                $('#myModal').modal('hide');
-            });
-        });
+       //     $("#closbtn").click(function () {
+       //         $('#myModal').modal('hide');
+       //     });
+       // });
     });
 
 </script>

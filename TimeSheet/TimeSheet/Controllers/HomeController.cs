@@ -14,7 +14,7 @@ namespace TimeSheet.Controllers
 
     public class HomeController : Controller
     {
-        [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]       
+       // [OutputCache(CacheProfile = "OneHour", VaryByHeader ="X-Requested-With", Location =OutputCacheLocation.Server)]       
         public ActionResult Index()
         {
             Session["Accounts"] = "";
@@ -24,16 +24,13 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                TimeSheetViewModel model = new TimeSheetViewModel();                            
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");  
-                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
-                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
-                model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
-                model.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
+                var HomeIndexDataModel = new TimeSheetViewModel();   
+                HomeIndexDataModel = ListItemService.DropDownListFactory();
+                HomeIndexDataModel.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
+                HomeIndexDataModel.HasUserPermissionsToEdit = UserRoles.UserCanEditTimesheet();
                 Session["HasUserPermissionsToEdit"] = UserRoles.UserCanEditTimesheet();
-                Session["HomeIndex"] = model;
-                return View(model);
+                Session["HomeIndex"] = HomeIndexDataModel;
+                return View(HomeIndexDataModel);
             }                 
         }
         [HttpPost]
@@ -45,19 +42,17 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                TimeSheetViewModel model = new TimeSheetViewModel();
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
-                model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
+                var IndexPostDataModel = new TimeSheetViewModel();
+                IndexPostDataModel = ListItemService.DropDownListFactory();           
+
                 var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
                 {
                     Id = x.Id,
                     Value = x.Value
                 });
                 int opportunityId = listitem.FirstOrDefault().Id;
-                model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
-                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+                IndexPostDataModel.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
+               
                 var Search= new SearchViewModel
                 {
                     ProjectID= SearchModel.ProjectID,
@@ -66,8 +61,8 @@ namespace TimeSheet.Controllers
                     OpportunityNumberID  = SearchModel.OpportunityID,
                     EmploymentTypeID = SearchModel.EmploymentTypeID
                 };
-                model.CandidateTimeSheetList = SearchFilterService.SearchTimeSheetRecord(Search).Result;               
-                return View(model);
+                IndexPostDataModel.CandidateTimeSheetList = SearchFilterService.SearchTimeSheetRecord(Search).Result;               
+                return View(IndexPostDataModel);
             }
         }
 
@@ -360,22 +355,24 @@ namespace TimeSheet.Controllers
                 return PartialView("RatingDetails");
             }
         }
+
+        [OutputCache(CacheProfile = "OneHour", VaryByHeader = "X-Requested-With", Location = OutputCacheLocation.Server)]
         public ActionResult AllBookingEntries()
         {
-            Session["Accounts"] = "";
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("Login", "Login");
+          
+            if (UserRoles.UserCanEditTimesheet())
+            {               
+               CompletedTimesheetModel model = new CompletedTimesheetModel();
+               model.CompletedTimeSheetList =  TimeSheetAPIHelperService.AllBookingEntries().Result;             
+                
+                //Session["HasUserPermissionsToEdit"] = UserRoles.UserCanEditTimesheet();
+                //Session["HomeIndex"] = model;
+                return View("AllBookingEntries",model);
             }
             else
             {
-               CompletedTimesheetModel model = new CompletedTimesheetModel();
-               model.CompletedTimeSheetList =  TimeSheetAPIHelperService.AllBookingEntries().Result;              
-                
-                Session["HasUserPermissionsToEdit"] = UserRoles.UserCanEditTimesheet();
-                Session["HomeIndex"] = model;
-                return View("AllBookingEntries",model);
-            }
+                return RedirectToAction("Login", "Login");
+            }            
         }
         [HttpPost]
         public ActionResult ExportCompleteBookingSchedule()

@@ -23,9 +23,10 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                TimeSheetViewModel model = new TimeSheetViewModel();
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
-                model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
+                var model = new TimeSheetViewModel();
+
+                model = ListItemService.DropDownListFactory();
+
                 var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
                 {
                     Id = x.Id,
@@ -33,18 +34,43 @@ namespace TimeSheet.Controllers
                 });
                 int opportunityId = listitem.FirstOrDefault().Id;
                 model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
-                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.CandidateTimelines().Result;
                 Session["CalenderModel"] = model;
+
                 var jsonlist = Newtonsoft.Json.JsonConvert.SerializeObject(model.WarehouseNameList);
-                //var jsonobj= JsonResult { Data = model.WarehouseNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                List<ResourceListModel> reslt = (from k in model.CandidateTimeSheetList  select new  ResourceListModel { BookingId = k.Id,ProjectManager = k.ProjectManager, id = Convert.ToString(k.ResourceID), title = Convert.ToString(k.CandidateName),eventColor=k.Colour, ResourceName = k.CandidateName, WarehouseName = k.WarehouseName, ActivityDescription = k.Activity,ProjectName=k.ProjectName,StartTime=Convert.ToDateTime(k.StartTime),EndTime=Convert.ToDateTime(k.EndTime),JobId=Convert.ToInt32(k.JobID) } ).Distinct().ToList();
+                List<ResourceListModel> reslt = (from k in model.CandidateTimeSheetList
+                                                 select new ResourceListModel
+                                                 {
+                                                     BookingId = k.Id,
+                                                     ProjectManager = k.ProjectManager,
+                                                     id = Convert.ToString(k.ResourceID),
+                                                     title = Convert.ToString(k.CandidateName),
+                                                     eventColor = k.Colour,
+                                                     ResourceName = k.CandidateName,
+                                                     WarehouseName = k.WarehouseName,
+                                                     ActivityDescription = k.Activity,
+                                                     ProjectName = k.ProjectName,
+                                                     StartTime = Convert.ToDateTime(k.StartTime),
+                                                     EndTime = Convert.ToDateTime(k.EndTime),
+                                                     JobId = Convert.ToInt32(k.JobID)
+                                                 }).Distinct().ToList();
 
                 model.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
-                List<ResourceEventsModel> resourceEvents = (from k in model.CandidateTimeSheetList  select new ResourceEventsModel { BookingId = k.Id, projectmanager = k.ProjectManager, resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName + "-" + k.ProjectManager + "-" + k.Activity + "-" + k.WarehouseName, start=Convert.ToDateTime(k.StartTime.Value).ToString("s"),end=Convert.ToDateTime(k.EndTime).ToString("s"), activitydescription = k.Activity, JobId = Convert.ToInt32(k.JobID) }).Distinct().ToList();
+                List<ResourceEventsModel> resourceEvents = (from k in model.CandidateTimeSheetList
+                                                            select new ResourceEventsModel
+                                                            {
+                                                                BookingId = k.Id,
+                                                                projectmanager = k.ProjectManager,
+                                                                resourceId = Convert.ToString(k.ResourceID),
+                                                                title = k.ProjectName + "-" + k.ProjectManager + "-" + k.Activity + "-" + k.WarehouseName,
+                                                                start = Convert.ToDateTime(k.StartTime.Value).ToString("s"),
+                                                                end = Convert.ToDateTime(k.EndTime).ToString("s"),
+                                                                activitydescription = k.Activity,
+                                                                JobId = Convert.ToInt32(k.JobID)
+                                                            }).Distinct().ToList();
+
                 model.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
-               
+
                 return View(model);
             }
         }
@@ -58,29 +84,34 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                TimeSheetViewModel model = new TimeSheetViewModel();
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
-                model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
+                var model = new TimeSheetViewModel();
+
+                model = ListItemService.DropDownListFactory();
+
                 var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
                 {
                     Id = x.Id,
                     Value = x.Value
                 });
                 int opportunityId = listitem.FirstOrDefault().Id;
-              //  model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
-                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+
+
                 model.CandidateTimeSheetList = TimeSheetAPIHelperService.VehicleTimeSheetList().Result;
                 Session["CalenderModel"] = model;
                 var jsonlist = Newtonsoft.Json.JsonConvert.SerializeObject(model.WarehouseNameList);
-                //var jsonobj= JsonResult { Data = model.WarehouseNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-               var reslt = model.CandidateTimeSheetList.GroupBy(x => x.Vechicles).Select(grp =>new VehicleModel { id = grp.Key, title = grp.Key }).ToList();
-
+                var reslt = model.CandidateTimeSheetList.GroupBy(x => x.Vechicles).Select(grp => new VehicleModel { id = grp.Key, title = grp.Key }).ToList();
                 model.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
-                var resourceEvents = (from k in model.CandidateTimeSheetList select new VehicleBookedModel { resourceId=k.Vechicles, project = k.ProjectName,
-                   
-                    title = k.CandidateName + "-" +
-                k.WarehouseName +"-" + k.ProjectName + "-" + k.ProjectManager + "-"  +"-" + k.Activity  , start = Convert.ToDateTime(k.StartTime.Value).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s"),jobid=Convert.ToInt32(k.JobID) }).ToList();
+                var resourceEvents = (from k in model.CandidateTimeSheetList
+                                      select new VehicleBookedModel
+                                      {
+                                          resourceId = k.Vechicles,
+                                          project = k.ProjectName,
+                                          title = k.CandidateName + "-" +
+                                          k.WarehouseName + "-" + k.ProjectName + "-" + k.ProjectManager + "-" + "-" + k.Activity,
+                                          start = Convert.ToDateTime(k.StartTime.Value).ToString("s"),
+                                          end = Convert.ToDateTime(k.EndTime).ToString("s"),
+                                          jobid = Convert.ToInt32(k.JobID)
+                                      }).ToList();
                 model.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
 
                 return View(model);
@@ -148,25 +179,46 @@ namespace TimeSheet.Controllers
             else
             {
                 ProjectManagerTimesheet model = new ProjectManagerTimesheet();
+
                 model.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
                 model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
+                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
+                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+
                 var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
                 {
                     Id = x.Id,
                     Value = x.Value
                 });
-                int opportunityId = listitem.FirstOrDefault().Id;
-               // model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
-                model.WarehouseNameList = new SelectList(ListItemService.Warehouses().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(ListItemService.Resources().Result, "ID", "Value");
+                int opportunityId = listitem.FirstOrDefault().Id;               
                 model.PMTimeSheetList = TimeSheetAPIHelperService.PMTimeSheetList().Result;
                 Session["CalenderModel"] = model;
                 var jsonlist = Newtonsoft.Json.JsonConvert.SerializeObject(model.WarehouseNameList);
-                //var jsonobj= JsonResult { Data = model.WarehouseNameList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-                List<ResourceListModel> reslt = (from k in model.PMTimeSheetList select new ResourceListModel {  id = Convert.ToString(k.ResourceID), title = Convert.ToString(k.CandidateName), eventColor = k.Colour, ResourceName = k.CandidateName, WarehouseName = k.WarehouseName, ActivityDescription = k.Activity, ProjectName = k.ProjectName, StartTime = Convert.ToDateTime(k.StartTime), EndTime = Convert.ToDateTime(k.EndTime) }).Distinct().ToList();
+              
+                List<ResourceListModel> reslt = (from k in model.PMTimeSheetList
+                                                 select new ResourceListModel
+                                                 {
+                                                     id = Convert.ToString(k.ResourceID),
+                                                     title = Convert.ToString(k.CandidateName),
+                                                     eventColor = k.Colour,
+                                                     ResourceName = k.CandidateName,
+                                                     WarehouseName = k.WarehouseName,
+                                                     ActivityDescription = k.Activity,
+                                                     ProjectName = k.ProjectName,
+                                                     StartTime = Convert.ToDateTime(k.StartTime),
+                                                     EndTime = Convert.ToDateTime(k.EndTime)
+                                                 }).Distinct().ToList();
 
                 model.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
-                List<ResourceEventsModel> resourceEvents = (from k in model.PMTimeSheetList select new ResourceEventsModel {  resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName + "-" + k.CandidateName + "-" + k.Activity + "-" + k.WarehouseName, start = Convert.ToDateTime(k.StartTime).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s") }).Distinct().ToList();
+                List<ResourceEventsModel> resourceEvents = (from k in model.PMTimeSheetList
+                                                            select new ResourceEventsModel
+                                                            {
+                                                                resourceId = Convert.ToString(k.ResourceID),
+                                                                title = k.ProjectName + "-" + k.CandidateName + "-" + k.Activity + "-" + k.WarehouseName,
+                                                                start = Convert.ToDateTime(k.StartTime).ToString("s"),
+                                                                end = Convert.ToDateTime(k.EndTime).ToString("s")
+                                                            }).Distinct().ToList();
+
                 model.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
 
                 return View(model);
@@ -179,7 +231,7 @@ namespace TimeSheet.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-        public ActionResult UpdateTime(int bookingId,string resourceName, string projectManager,string start,string end,string activityDescription)
+        public ActionResult UpdateTime(int bookingId, string resourceName, string projectManager, string start, string end, string activityDescription)
         {
             TimeSheetViewModel vm = new TimeSheetViewModel();
             vm.CandidateName = resourceName;

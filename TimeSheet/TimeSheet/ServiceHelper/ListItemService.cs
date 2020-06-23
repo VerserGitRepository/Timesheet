@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 using TimeSheet.Models;
 
 namespace TimeSheet.ServiceHelper
@@ -224,6 +225,19 @@ namespace TimeSheet.ServiceHelper
             }
             return opportunityList;
         }
+
+        public static TimeSheetViewModel DropDownListFactory()
+        {
+            var DropDownListItems = new TimeSheetViewModel();
+            DropDownListItems.Projectlist = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "Value");
+            DropDownListItems.WarehouseNameList = new SelectList(Warehouses().Result, "ID", "Value");
+            DropDownListItems.CandidateNameList = new SelectList(Resources().Result, "ID", "Value");
+            DropDownListItems.EmploymentList = new SelectList(EmploymentTypeList().Result, "ID", "Value");
+            DropDownListItems.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");        
+
+            return DropDownListItems;
+        }
+
     }
 }
 

@@ -25,6 +25,7 @@ namespace TimeSheet.Controllers
                 model.ProjectList = new SelectList(listadd.Select(x => x.ProjectName).Distinct());
                 model.OpportunityNumberList = new SelectList(listadd.Select(x => x.OpportunityNumber).Distinct());
                 model.ProjectmanagerList = new SelectList(listadd.Select(x => x.ProjectManager).Distinct());
+
                 model.projectionOpportunityModel = listadd;  // listA;
                 Session["projectionModel"] = model;
                 return View(model);

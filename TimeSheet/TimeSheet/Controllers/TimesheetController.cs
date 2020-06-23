@@ -48,21 +48,29 @@ namespace TimeSheet.Controllers
             }
             else
             {
-                TimeSheetViewModel model = new TimeSheetViewModel();
-                model.Projectlist = new SelectList(TimeSheetAPIHelperService.JMSProjects().Result, "ID", "Value");
-                model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
+                TimeSheetViewModel RegisterDataModel = new TimeSheetViewModel();
+
+                RegisterDataModel = ListItemService.DropDownListFactory();
+
+                //RegisterDataModel.Projectlist = new SelectList(TimeSheetAPIHelperService.JMSProjects().Result, "ID", "Value");
+                //RegisterDataModel.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
+                //RegisterDataModel.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");
+                //RegisterDataModel.CandidateNameList = new SelectList(TimeSheetAPIHelperService.Resources().Result, "ID", "Value");
+                //RegisterDataModel.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
+
                 var listitem = TimeSheetAPIHelperService.CostModelProject().Result.Select(x => new ListItemViewModel()
                 {
                     Id = x.Id,
                     Value = x.Value
                 });
                 int opportunityId = listitem.FirstOrDefault().Id;
-                model.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
-                model.WarehouseNameList = new SelectList(TimeSheetAPIHelperService.Warehouses().Result, "ID", "Value");
-                model.EmploymentList = new SelectList(ListItemService.EmploymentTypeList().Result, "ID", "Value");
-                model.CandidateNameList = new SelectList(TimeSheetAPIHelperService.Resources().Result, "ID", "Value");
-                model.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
-                return View(model);
+                RegisterDataModel.ActivityList = new SelectList(TimeSheetAPIHelperService.ProjectActivities(opportunityId).Result, "ID", "Value");
+             
+               
+            
+          
+                RegisterDataModel.CandidateTimeSheetList = TimeSheetAPIHelperService.TimeSheetList().Result;
+                return View(RegisterDataModel);
             }
         }
         [HttpPost]
