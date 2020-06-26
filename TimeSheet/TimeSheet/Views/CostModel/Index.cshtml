@@ -25,9 +25,9 @@
                     <li><a href="#tab2default" data-toggle="tab">PRICING SUMMARY</a></li>
                     <li><a href="#tab3default" data-toggle="tab">CUSTOM PRICING </a></li>
                     <li><a href="#tab4default" data-toggle="tab">RATE CARD AUS</a></li>
-                    <li><a href="#tab4default" data-toggle="tab">RATE CARD PRICING</a></li>
-                    <li><a href="#tab4default" data-toggle="tab">ASSETS</a></li>
-                    <li><a href="#tab4default" data-toggle="tab">HOURLY RATE WORKINGS</a></li>
+                    <li><a href="#tab5default" data-toggle="tab">RATE CARD PRICING</a></li>
+                    <li><a href="#tab6default" data-toggle="tab">ASSETS</a></li>
+                    <li><a href="#tab7default" data-toggle="tab">HOURLY RATE WORKINGS</a></li>
                 </ul>
             </div>
 
@@ -104,9 +104,9 @@
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
                                     </div>
-                                </div>                          
+                                </div>
                             </div>
-                        
+
                         </div>
 
 
@@ -218,15 +218,152 @@
                         Revenue Section
                     </div>
                     <div class="col-md-6 well" style="width:550px;margin-left:5px;height:270px">
-                        Cost Section               
+                        Cost Section
                     </div>
 
                 </div>
 
-                <div class="tab-pane fade" id="tab4default">
-                    <div class="col-md-6" style="padding-left:0px">
-                        
+                <div class="tab-pane fade" id="tab6default">
+                    <div class="row">
+
+                        <div class="container" style="margin:20px; width:1000px;padding-top:5px;padding-bottom:5px">
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Asset Description</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtAddress" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Asset type</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtAddress" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Specifications</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtPhone" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Year of manufacturer</label>
+                                <div class="col-sm-6">
+                                    <input type="date" class="form-control form-control-sm" id="txtFax" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Qty</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtFax" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Location</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtFax" placeholder="Fax">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Sell(Ex GST)</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Total Sell</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Buy</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Total Buy</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Additional Information</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
+                </div>
+
+
+                <div class="tab-pane fade" id="tab5default">
+                    <div class="row">
+
+                        <div class="container" style="margin:20px; width:1000px;padding-top:5px;padding-bottom:5px">
+                            <div class="col-md-10">
+                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Warehouse Configuration</label>
+                                <select class="form-control">
+                                    <option>
+                                        Asset processing - New asset
+                                    </option>
+                                    <option>Asset processing - 1 pass wipe</option>
+                                    <option>Asset processing - 7 pass wipe</option>
+                                </select>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Recycling Services</label>
+                                <select class="form-control">
+                                    <option>
+                                       Asset processing - New asset
+                                    </option>
+                                    <option>Recycle Small UPS</option>
+                                    <option>Recycle assets (DT,LP, printer etc)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Deployment</label>
+                                <select class="form-control">
+                                    <option>
+                                        Basic Deployment - min 6 bundles
+                                                                         </option>
+                                    <option>Extended deployment - min 6 bundles</option>
+                                    
+                                </select>
+                            </div>
+
+                            <div class="col-md-10">
+                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">On-site data wipe / destruction</label>
+                                <select class="form-control">
+                                    <option>
+                                        On-site loose HD destruction - min 30 HDs
+                                         </option>
+                                    <option> On-site data wipe - min 10 assets < 300GB</option>
+                                    
+                                </select>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">On-site technical</label>
+                                <select class="form-control">
+                                    <option>
+                                        Metro L1 Bus hours- call out 1 tech (2 hrs on-site)
+                                    </option>
+                                    <option>Metro L1 Bus hours- call out 2 techs (2 hrs on-site)</option>
+                                    <option>Metro L3 O/side Bus hours- call out 2 tech (2 hrs on-site)</option>
+                                   
+                                </select>
+                            </div>
+                           
+                           
+                           
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
 
@@ -265,6 +402,12 @@
         border: 2px;
         outline: 2px;
     }
+    .container {
+    padding-right: 15px;
+    padding-left: 5px;
+    margin-right: auto;
+    margin-left: 22px;
+}
 
     .selected {
         color: black;
