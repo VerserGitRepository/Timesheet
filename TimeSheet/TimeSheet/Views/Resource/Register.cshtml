@@ -89,7 +89,7 @@
                                 <label>OLA Target</label>
                                 @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATarget, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
                                 @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATarget, "", new { @class = "text-danger" })
-                              
+
 
                             </div>
                             <div class="form-group  required col-md-6" tabindex=8>
@@ -114,7 +114,16 @@
 
                             </div>
                         </div>
+                        <div class="row" style="padding-top:10px">
+                            <div class="form-group  required col-md-6" tabindex=7>
+                                <div id="main">
+                                    <input type="button" id="btAdd" value="Add Travel" class="bt" />
+                                    <input type="button" id="btRemove" value="Remove Travel" class="bt" />
+                                    <input type="button" id="btRemoveAll" value="Remove All" class="bt" /><br/>
+                                </div>
 
+                            </div>                            
+                        </div>
                         <div class="row" style="padding-top:10px">
                             <div class="form-group col-md-6" tabindex=11>
                                 <label>Theme Colour</label>
@@ -131,7 +140,6 @@
                                     </div>
                                 </div>
                             </div><br />
-                           
                         </div>
                         <br />
                         <div class=" col-md-offset-5">
@@ -586,7 +594,7 @@
 
 
                 html += '<script>';
-                html += '$("#slider-range' + iCnt + '").slider({range: true,min: 0,max: 120,step: 15,values: [0, 15],slide: function (e, ui) { var minutes1 = ui.values[0] ;';
+                html += '$("#slider-range' + iCnt + '").slider({range: true,min: 0,max: 240,step: 15,values: [0, 15],slide: function (e, ui) { var minutes1 = ui.values[0] ;';
                 html += 'if (minutes1.length == 1) minutes1 = "0" + minutes1;if (minutes1 == 0) minutes1 = "";minutes1 = minutes1;$(".slider-time' + iCnt + '").html(minutes1);';
                 html += 'var hours2 = Math.floor(ui.values[1] / 60);var minutes2 = ui.values[1] - (hours2 * 60);$(".slider-time2' + iCnt + '").html(hours2 + ":" + minutes2);}});';
                 //html+='//script>';
