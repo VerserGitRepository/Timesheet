@@ -28,6 +28,7 @@ namespace TimeSheet.Models
         //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         //public DateTime? EndDate { get; set; }
         public int? OLATarget { get; set; }
+        public int? OLATravel { get; set; }
         public int? ActualQuantity { get; set; }
         [DataType(DataType.MultilineText)]
         [AllowHtml]
