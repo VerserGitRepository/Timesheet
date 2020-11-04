@@ -136,8 +136,36 @@ namespace TimeSheet.Controllers
         {
             bool isPMBooking = false;
             theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("Source Start ", "").Replace("Dest Reach ", ",").Replace("Dest Start ", "-").Replace("Source Reach ", ",");
-          
-            theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("AM", "00 AM").Replace("PM", "00 PM");
+
+            //theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("AM", "00 AM").Replace("PM", "00 PM");
+            try
+            {
+                string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
+                string StartTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[0];
+                string EndTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[1];
+                string dtSt = dateString + " " + StartTimeString;
+
+                string dtEn = dateString + " " + EndTimeString;
+                theModel.TravelTimeStartOfStart = Convert.ToDateTime(dtSt);
+                theModel.TravelTimeStartOfEnd = Convert.ToDateTime(dtEn);
+
+                StartTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[0];
+                EndTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[1];
+                dtSt = dateString + " " + StartTimeString;
+
+                dtEn = dateString + " " + EndTimeString;
+
+                theModel.TravelTimeEndOfStart = Convert.ToDateTime(dtSt);
+                theModel.TravelTimeEndOfEnd = Convert.ToDateTime(dtEn);
+            }
+            catch (Exception ex)
+            {
+                theModel.TravelTimeStartOfStart = DateTime.Now;
+                theModel.TravelTimeStartOfEnd = DateTime.Now;
+                theModel.TravelTimeEndOfStart = DateTime.Now;
+                theModel.TravelTimeEndOfEnd = DateTime.Now;
+            }
+
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -183,6 +211,11 @@ namespace TimeSheet.Controllers
                 regModel.BookingTravelTime = theModel.BookingTravelTime;
                 regModel.BookingEstimatedTravelCost = theModel.BookingEstimatedTravelCost;
                 regModel.BookingEstimatedTravelHrs = theModel.BookingEstimatedTravelHrs;
+                regModel.TravelTimeStartOfStart = theModel.TravelTimeStartOfStart;
+                regModel.TravelTimeStartOfEnd = theModel.TravelTimeStartOfEnd;
+                regModel.TravelTimeEndOfStart = theModel.TravelTimeEndOfStart;
+                regModel.TravelTimeEndOfEnd = theModel.TravelTimeEndOfEnd;
+
                 if (regModel.JobID == null || regModel.JobID == 0)
                 {
                     isPMBooking = true;

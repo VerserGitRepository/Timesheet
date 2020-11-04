@@ -1403,7 +1403,9 @@ $('#ddlRegOpportunityNumberID').change(function () {
             'Colour': $('#ddlColour').val(),
             'OLATarget': $('#txtOLA').val(),
                 'Vechicles': $("#ddlVan option:selected").text(),
-                'BookingTravelTime': $("#time-rangeTravelStart").text().trim() + $("#time-rangeTravelEnd").text().trim()
+                'BookingTravelTime': $("#time-rangeTravelStart").text().trim() + $("#time-rangeTravelEnd").text().trim(),
+                'BookingEstimatedTravelHrs': $('#BookingEstimatedTravelHrs').val(),
+                'BookingEstimatedTravelCost': $('#BookingEstimatedTravelCost').val()
                  
             };
             }
