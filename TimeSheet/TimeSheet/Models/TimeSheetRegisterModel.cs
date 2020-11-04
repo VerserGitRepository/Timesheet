@@ -55,5 +55,6 @@ namespace TimeSheet.Models
         public List<int?> ResourceIDs { get; set; }
         public string FullName { get; set; }
         public string Vechicles { get; set; }
+        public string BookingTravelTime { get; set; }
     }
 }

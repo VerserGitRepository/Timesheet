@@ -84,8 +84,8 @@ namespace TimeSheet.Models
         public int BreakHours { get; set; }
         public string BreakTime { get; set; }
         public string ScreenName { get; set; }
-        public decimal BookingEstimatedTravelHrs { get; set; }
-        public decimal BookingEstimatedTravelCost { get; set; }
+        public decimal? BookingEstimatedTravelHrs { get; set; }
+        public decimal? BookingEstimatedTravelCost { get; set; }
         public string BookingTravelTime { get; set; }
     }   
 }

@@ -135,6 +135,8 @@ namespace TimeSheet.Controllers
         public ActionResult PostResourceData(TimeSheetViewModel theModel)
         {
             bool isPMBooking = false;
+            theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("Source Start ", "").Replace("Dest Reach ", ",").Replace("Dest Start ", "-").Replace("Source Reach ", ",");
+            theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("AM", "00 AM").Replace("PM", "00 PM");
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
@@ -176,6 +178,7 @@ namespace TimeSheet.Controllers
                 regModel.FullName = Session["FullName"].ToString();
                 regModel.TimeSheetComments = theModel.TimeSheetComments;
                 regModel.Vechicles = theModel.Vechicles;
+                regModel.BookingTravelTime = theModel.BookingTravelTime;
                 if (regModel.JobID == null || regModel.JobID == 0)
                 {
                     isPMBooking = true;
