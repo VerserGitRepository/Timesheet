@@ -87,5 +87,9 @@ namespace TimeSheet.Models
         public decimal? BookingEstimatedTravelHrs { get; set; }
         public decimal? BookingEstimatedTravelCost { get; set; }
         public string BookingTravelTime { get; set; }
+        public DateTime? TravelTimeStartOfStart { get; set; }
+        public DateTime? TravelTimeStartOfEnd { get; set; }
+        public DateTime? TravelTimeEndOfStart { get; set; }
+        public DateTime? TravelTimeEndOfEnd { get; set; }
     }   
 }

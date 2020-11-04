@@ -55,6 +55,12 @@ namespace TimeSheet.Models
         public List<int?> ResourceIDs { get; set; }
         public string FullName { get; set; }
         public string Vechicles { get; set; }
+        public decimal? BookingEstimatedTravelHrs { get; set; }
+        public decimal? BookingEstimatedTravelCost { get; set; }
         public string BookingTravelTime { get; set; }
+        public DateTime? TravelTimeStartOfStart { get; set; }
+        public DateTime? TravelTimeStartOfEnd { get; set; }
+        public DateTime? TravelTimeEndOfStart { get; set; }
+        public DateTime? TravelTimeEndOfEnd { get; set; }
     }
 }

@@ -136,6 +136,7 @@ namespace TimeSheet.Controllers
         {
             bool isPMBooking = false;
             theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("Source Start ", "").Replace("Dest Reach ", ",").Replace("Dest Start ", "-").Replace("Source Reach ", ",");
+          
             theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("AM", "00 AM").Replace("PM", "00 PM");
             if (Session["Username"] == null)
             {
@@ -161,6 +162,7 @@ namespace TimeSheet.Controllers
                 var StartdateTime = Convert.ToDateTime(dtSt);
                 var EnddateTime = Convert.ToDateTime(dtEn);
                 regModel.CandidateNameId = theModel.ResourceIDs[i];
+                
                 regModel.ResourceID = theModel.ResourceIDs[i];
                 regModel.Colour = theModel.Colour;
                 regModel.Day = theModel.Day;
@@ -179,6 +181,8 @@ namespace TimeSheet.Controllers
                 regModel.TimeSheetComments = theModel.TimeSheetComments;
                 regModel.Vechicles = theModel.Vechicles;
                 regModel.BookingTravelTime = theModel.BookingTravelTime;
+                regModel.BookingEstimatedTravelCost = theModel.BookingEstimatedTravelCost;
+                regModel.BookingEstimatedTravelHrs = theModel.BookingEstimatedTravelHrs;
                 if (regModel.JobID == null || regModel.JobID == 0)
                 {
                     isPMBooking = true;
