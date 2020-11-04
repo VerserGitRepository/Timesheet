@@ -345,5 +345,12 @@ namespace TimeSheet.Controllers
             var result = ResourceHelperService.FetchOLA(serviceActivityId, opportunityId, totalMins);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult FetchTravelOLA(int serviceActivityId, int opportunityId, int totalMins)
+        {
+            var result = ResourceHelperService.FetchTravelOLA(serviceActivityId, opportunityId, totalMins);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

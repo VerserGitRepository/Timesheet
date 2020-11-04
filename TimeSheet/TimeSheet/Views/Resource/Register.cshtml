@@ -110,9 +110,9 @@
                                 <label class="control-label">Start Date</label>
 
                                 @Html.EditorFor(model => model.TimeSheetRegisterModel.Day, new { htmlAttributes = new { @class = "form-control date-picker", Id = "DatePickId" } })
-                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.Day, "", new { @class = "text-danger" })                               
 
-                            </div>
+                            </div>                           
                         </div>
 
                         <div class="row" style="padding-top:10px">
@@ -133,19 +133,29 @@
                             </div><br />
                         </div>
                         <div class="row" style="padding-top:10px">
-                            <div class="form-group  required col-md-6" tabindex=7>
-                                <div id="main">
-                                    <input type="button" id="btAdd" value="Add Travel" class="bt" />
-                                    <input type="button" id="btRemove" value="Remove Travel" class="bt" />
-                                    <input type="button" id="btRemoveAll" value="Remove All" class="bt" /><br />
+                            <label>
+                                @Html.CheckBox("AddTravel", new { @name = "AddTravel", @id = "AddTravelChkBox", @onclick = "ShowTravelDiv(this);" }) Add Travel
+                            </label>
+
+                            <div id="travelTimeDiv" style="display:none;">
+                                <div id="time-rangeTravelStart" style="padding-top:10px;width:300px">
+                                    <p>
+                                        Source Start <b><span class="slider-timeTravelStartSource">08:30 AM </span></b>Dest Reach <b><span class="slider-timeTravelEndDest">5:00 PM</span></b>
+
+                                    </p>
+                                    <div class="sliders_step1">
+                                        <div id="slider-rangeTravelStart"></div>
+                                    </div>
                                 </div>
+                                <div id="time-rangeTravelEnd" style="padding-top:10px;width:300px">
+                                    <p>
+                                        Dest Start <b><span class="slider-timeTravelStartDest">08:30 AM</span></b> Source Reach <b><span class="slider-timeTravelEndSource">5:00 PM</span></b>
 
-                            </div>
-                            <div class="form-group required col-md-6" tabindex=10>
-                                <label>OLA Travel</label>
-                                @Html.EditorFor(model => model.TimeSheetRegisterModel.OLATravel, new { htmlAttributes = new { @class = "form-control", id = "txtOLA" } })
-                                @Html.ValidationMessageFor(model => model.TimeSheetRegisterModel.OLATravel, "", new { @class = "text-danger" })
-
+                                    </p>
+                                    <div class="sliders_step1">
+                                        <div id="slider-rangeTravelEnd"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <br />
@@ -550,7 +560,8 @@
 </style>
 
 <script>
-
+    var globalTravelStartMin = 1440;
+    var globalTravelEndMin = 1440;
     $(document).ready(function () {
         $('#ddlregCustomerID').removeAttr('multiple')
         $('#ddlregCustomerID').multiselect('rebuild');
@@ -968,6 +979,128 @@
         }
     });
 
+
+    $("#slider-rangeTravelStart").slider({
+        range: true,
+        min: 0,
+        max: globalTravelStartMin,
+        step: 1,
+        values: [0, globalTravelStartMin],
+        slide: function (e, ui) {
+            var hours1 = Math.floor(ui.values[0] / 60);
+            var minutes1 = ui.values[0] - (hours1 * 60);
+
+            if (hours1.length == 1) hours1 = '0' + hours1;
+            if (minutes1.length == 1) minutes1 = '0' + minutes1;
+            if (minutes1 == 0) minutes1 = '00';
+            if (hours1 >= 12) {
+                if (hours1 == 12) {
+                    hours1 = hours1;
+                    minutes1 = minutes1 + " PM";
+                } else {
+                    hours1 = hours1 - 12;
+                    minutes1 = minutes1 + " PM";
+                }
+            } else {
+                hours1 = hours1;
+                minutes1 = minutes1 + " AM";
+            }
+            if (hours1 == 0) {
+                hours1 = 12;
+                minutes1 = minutes1;
+            }
+
+
+
+            $('.slider-timeTravelStartSource').html(hours1 + ':' + minutes1);
+
+            var hours2 = Math.floor(ui.values[1] / 60);
+            var minutes2 = ui.values[1] - (hours2 * 60);
+
+            if (hours2.length == 1) hours2 = '0' + hours2;
+            if (minutes2.length == 1) minutes2 = '0' + minutes2;
+            if (minutes2 == 0) minutes2 = '00';
+            if (hours2 >= 12) {
+                if (hours2 == 12) {
+                    hours2 = hours2;
+                    minutes2 = minutes2 + " PM";
+                } else if (hours2 == 24) {
+                    hours2 = 11;
+                    minutes2 = "59 PM";
+                } else {
+                    hours2 = hours2 - 12;
+                    minutes2 = minutes2 + " PM";
+                }
+            } else {
+                hours2 = hours2;
+                minutes2 = minutes2 + " AM";
+            }
+
+            $('.slider-timeTravelEndDest').html(hours2 + ':' + minutes2);
+            FetchTravelOLA();
+        }
+    });
+    $("#slider-rangeTravelEnd").slider({
+        range: true,
+        min: globalTravelEndMin,
+        max: 1440,
+        step: 1,
+        values: [globalTravelEndMin, 1440],
+        slide: function (e, ui) {
+            var hours1 = Math.floor(ui.values[0] / 60);
+            var minutes1 = ui.values[0] - (hours1 * 60);
+
+            if (hours1.length == 1) hours1 = '0' + hours1;
+            if (minutes1.length == 1) minutes1 = '0' + minutes1;
+            if (minutes1 == 0) minutes1 = '00';
+            if (hours1 >= 12) {
+                if (hours1 == 12) {
+                    hours1 = hours1;
+                    minutes1 = minutes1 + " PM";
+                } else {
+                    hours1 = hours1 - 12;
+                    minutes1 = minutes1 + " PM";
+                }
+            } else {
+                hours1 = hours1;
+                minutes1 = minutes1 + " AM";
+            }
+            if (hours1 == 0) {
+                hours1 = 12;
+                minutes1 = minutes1;
+            }
+
+
+
+            $('.slider-timeTravelStartDest').html(hours1 + ':' + minutes1);
+
+            var hours2 = Math.floor(ui.values[1] / 60);
+            var minutes2 = ui.values[1] - (hours2 * 60);
+
+            if (hours2.length == 1) hours2 = '0' + hours2;
+            if (minutes2.length == 1) minutes2 = '0' + minutes2;
+            if (minutes2 == 0) minutes2 = '00';
+            if (hours2 >= 12) {
+                if (hours2 == 12) {
+                    hours2 = hours2;
+                    minutes2 = minutes2 + " PM";
+                } else if (hours2 == 24) {
+                    hours2 = 11;
+                    minutes2 = "59 PM";
+                } else {
+                    hours2 = hours2 - 12;
+                    minutes2 = minutes2 + " PM";
+                }
+            } else {
+                hours2 = hours2;
+                minutes2 = minutes2 + " AM";
+            }
+
+            $('.slider-timeTravelEndSource').html(hours2 + ':' + minutes2);
+            FetchTravelOLA();
+        }
+    });
+
     $('#ddlregWarehouseNameId, #ddlEmploymentId').change(function () {
 
                  var warehouseUrl = '';
@@ -1138,6 +1271,52 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 $('#txtOLA').val(data.Result);
             },
         });
+    }
+
+    function FetchTravelOLA() {
+
+        var OLAUrl = '@Url.Action("FetchTravelOLA", "Resource")';
+
+        var opportunityId = $('#ddlRegOpportunityNumberID').val();
+
+        var serviceActivityId = $('#ServiceActivityID').val();
+
+            var end_time = $(".slider-timeTravelEndDest").text();
+            var start_time = $(".slider-timeTravelStartSource").text();
+
+        var startTime = new Date("May 26, 2016 " + start_time);//arbitary
+
+
+            var endTime = new Date("May 26, 2016 " + end_time);//arbitary
+
+            var end_time1 = $(".slider-timeTravelEndSource").text();
+            var start_time1 = $(".slider-timeTravelStartDest").text();
+
+            var startTime1 = new Date("May 26, 2016 " + start_time);//arbitary
+
+
+            var endTime1 = new Date("May 26, 2016 " + end_time);//arbitary
+            var totalMins = Math.floor(endTime - startTime) / 60000 + Math.floor(endTime1 - startTime1) / 60000;
+
+        $.ajax({
+
+            type: "GET",
+            url: './FetchTravelOLA',
+            contentType: "application/json; charset=utf-8",
+            data: {"serviceActivityId": serviceActivityId, "opportunityId": opportunityId, "totalMins": totalMins },
+            datatype: "json",
+            success: function (data) {
+                $('#txtOLA').val(data.Result);
+            },
+        });
+    }
+    function ShowTravelDiv(ctrl) {
+        if ($("#AddTravelChkBox").is(':checked')) {
+            $("#travelTimeDiv").show(500);
+        }
+        else {
+            $("#travelTimeDiv").hide(500);
+        }
     }
     function PostData(id)
     {

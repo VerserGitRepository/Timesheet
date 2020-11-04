@@ -74,6 +74,26 @@ namespace TimeSheet.ServiceHelper
             }
             return result;
         }
+        public static async Task<EstimatedTravelCostModel> FetchTravelOLA(int serviceActivityId, int opportunityId, int totalMins)
+        {
+            int result = 0;
+            //wtonsoft.Json.
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("TimeSheet/{0}/{1}/{2}/EstimateActivityTravelCost", serviceActivityId, opportunityId, totalMins)).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    result = await response.Content.ReadAsAsync<EstimatedTravelCostModel>();
+                    //HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+                }
+                else
+                {
+                    // HttpContext.Current.Session["ErrorMessage"] = ReturnResult.Message;
+                }
+            }
+            return result;
+        }
 
 
     }
