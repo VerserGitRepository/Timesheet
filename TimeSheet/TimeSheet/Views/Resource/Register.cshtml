@@ -1264,6 +1264,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
                 $('#txtOLA').val(data.Result);
             },
         });
+        ShowTravelDiv();
     }
 
     function FetchTravelOLA() {
@@ -1318,7 +1319,7 @@ $('#ddlRegOpportunityNumberID').change(function () {
         });
 
     }
-    function ShowTravelDiv(ctrl) {
+    function ShowTravelDiv() {
         if ($("#AddTravelChkBox").is(':checked')) {
             $("#travelTimeDiv").show(500);
             FetchTravelOLA();
