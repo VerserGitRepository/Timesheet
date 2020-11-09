@@ -140,23 +140,33 @@ namespace TimeSheet.Controllers
             //theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("AM", "00 AM").Replace("PM", "00 PM");
             try
             {
-                string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
-                string StartTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[0];
-                string EndTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[1];
-                string dtSt = dateString + " " + StartTimeString;
+                if (theModel.TravelCheckBoxChecked)
+                {
+                    string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
+                    string StartTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[0];
+                    string EndTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[1];
+                    string dtSt = dateString + " " + StartTimeString;
 
-                string dtEn = dateString + " " + EndTimeString;
-                theModel.TravelTimeStartOfStart = Convert.ToDateTime(dtSt);
-                theModel.TravelTimeStartOfEnd = Convert.ToDateTime(dtEn);
+                    string dtEn = dateString + " " + EndTimeString;
+                    theModel.TravelTimeStartOfStart = Convert.ToDateTime(dtSt);
+                    theModel.TravelTimeStartOfEnd = Convert.ToDateTime(dtEn);
 
-                StartTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[0];
-                EndTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[1];
-                dtSt = dateString + " " + StartTimeString;
+                    StartTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[0];
+                    EndTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[1];
+                    dtSt = dateString + " " + StartTimeString;
 
-                dtEn = dateString + " " + EndTimeString;
+                    dtEn = dateString + " " + EndTimeString;
 
-                theModel.TravelTimeEndOfStart = Convert.ToDateTime(dtSt);
-                theModel.TravelTimeEndOfEnd = Convert.ToDateTime(dtEn);
+                    theModel.TravelTimeEndOfStart = Convert.ToDateTime(dtSt);
+                    theModel.TravelTimeEndOfEnd = Convert.ToDateTime(dtEn);
+                }
+                else
+                {
+                    theModel.TravelTimeStartOfStart = theModel.Day;
+                    theModel.TravelTimeStartOfEnd = theModel.Day;
+                    theModel.TravelTimeEndOfStart = theModel.Day;
+                    theModel.TravelTimeEndOfEnd = theModel.Day;
+                }
             }
             catch (Exception ex)
             {

@@ -91,5 +91,6 @@ namespace TimeSheet.Models
         public DateTime? TravelTimeStartOfEnd { get; set; }
         public DateTime? TravelTimeEndOfStart { get; set; }
         public DateTime? TravelTimeEndOfEnd { get; set; }
+        public bool TravelCheckBoxChecked { get; set; }
     }   
 }
