@@ -36,7 +36,7 @@ namespace TimeSheet.Models
         public string WarehouseName { get; set; }
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Day { get; set; }
         [Required]
         [DataType(DataType.Date)]
