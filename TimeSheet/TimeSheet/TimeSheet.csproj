@@ -222,6 +222,7 @@
     <Compile Include="Models\CompletedTimesheetModel.cs" />
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
     <Compile Include="Models\DTOs\ExportApprovedTimesheetDto.cs" />
+    <Compile Include="Models\EstimatedTravelCostModel.cs" />
     <Compile Include="Models\HRActivities.cs" />
     <Compile Include="Models\HRTimeSheetList.cs" />
     <Compile Include="Models\JMSEntities\JMSModelEntities.cs" />

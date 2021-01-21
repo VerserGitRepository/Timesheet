@@ -135,28 +135,31 @@ namespace TimeSheet.Controllers
         public ActionResult PostResourceData(TimeSheetViewModel theModel)
         {
             bool isPMBooking = false;
-            theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("Source Start ", "").Replace("Dest Reach ", ",").Replace("Dest Start ", "-").Replace("Source Reach ", ",");
-
-            //theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("AM", "00 AM").Replace("PM", "00 PM");
+            if (theModel.BookingTravelTime !=null)
+            {
+                theModel.BookingTravelTime = theModel.BookingTravelTime.Replace("Source Start ", "").Replace("Dest Reach ", ",").Replace("Dest Start ", "-").Replace("Source Reach ", ",");
+            }  
             try
             {
-                string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
-                string StartTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[0];
-                string EndTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[1];
-                string dtSt = dateString + " " + StartTimeString;
+                if (theModel.BookingTravelTime != null)
+                {
+                    string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
+                    string StartTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[0];
+                    string EndTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[1];
+                    string dtSt = dateString + " " + StartTimeString;
 
-                string dtEn = dateString + " " + EndTimeString;
-                theModel.TravelTimeStartOfStart = Convert.ToDateTime(dtSt);
-                theModel.TravelTimeStartOfEnd = Convert.ToDateTime(dtEn);
+                    string dtEn = dateString + " " + EndTimeString;
+                    theModel.TravelTimeStartOfStart = Convert.ToDateTime(dtSt);
+                    theModel.TravelTimeStartOfEnd = Convert.ToDateTime(dtEn);
 
-                StartTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[0];
-                EndTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[1];
-                dtSt = dateString + " " + StartTimeString;
+                    StartTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[0];
+                    EndTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[1];
+                    dtSt = dateString + " " + StartTimeString;
+                    dtEn = dateString + " " + EndTimeString;
 
-                dtEn = dateString + " " + EndTimeString;
-
-                theModel.TravelTimeEndOfStart = Convert.ToDateTime(dtSt);
-                theModel.TravelTimeEndOfEnd = Convert.ToDateTime(dtEn);
+                    theModel.TravelTimeEndOfStart = Convert.ToDateTime(dtSt);
+                    theModel.TravelTimeEndOfEnd = Convert.ToDateTime(dtEn);
+                }
             }
             catch (Exception ex)
             {
@@ -165,7 +168,6 @@ namespace TimeSheet.Controllers
                 theModel.TravelTimeEndOfStart = DateTime.Now;
                 theModel.TravelTimeEndOfEnd = DateTime.Now;
             }
-
             if (Session["Username"] == null)
             {
                 return RedirectToAction("Login", "Login");
