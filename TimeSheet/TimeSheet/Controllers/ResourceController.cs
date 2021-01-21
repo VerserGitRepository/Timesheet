@@ -141,7 +141,7 @@ namespace TimeSheet.Controllers
             }  
             try
             {
-                if (theModel.BookingTravelTime != null)
+                if (theModel.TravelCheckBoxChecked)
                 {
                     string dateString = String.Format("{0:dd/MM/yyyy}", theModel.Day);
                     string StartTimeString = theModel.BookingTravelTime.Split('-')[0].Split(',')[0];
@@ -155,10 +155,18 @@ namespace TimeSheet.Controllers
                     StartTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[0];
                     EndTimeString = theModel.BookingTravelTime.Split('-')[1].Split(',')[1];
                     dtSt = dateString + " " + StartTimeString;
+
                     dtEn = dateString + " " + EndTimeString;
 
                     theModel.TravelTimeEndOfStart = Convert.ToDateTime(dtSt);
                     theModel.TravelTimeEndOfEnd = Convert.ToDateTime(dtEn);
+                }
+                else
+                {
+                    theModel.TravelTimeStartOfStart = theModel.Day;
+                    theModel.TravelTimeStartOfEnd = theModel.Day;
+                    theModel.TravelTimeEndOfStart = theModel.Day;
+                    theModel.TravelTimeEndOfEnd = theModel.Day;
                 }
             }
             catch (Exception ex)
