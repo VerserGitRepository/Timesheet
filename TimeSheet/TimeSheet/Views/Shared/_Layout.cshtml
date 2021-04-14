@@ -9,115 +9,104 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse fixed-top" style="margin-left:0px;">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    @*<span class="icon-bar"></span>*@
-                </button>
-                <div id="LogoImage" style="text-align:left">
-                    <img src="~/Images/Verser.png" style="height:43px; width:220px ;vertical-align:top;margin-right:2px; background-color:#D3D3D3" />
-                </div>
+    <div class="navbar navbar-fixed-top" style="background-color:black; padding:0 10px; height:50px; border:none">
+        <div class="navbar-header" align="center" style="height:50px;vertical-align:middle">
+            <div id="LogoImage" style="float:left">
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/Images/Verser.jpg" style="height:50px; width:140px;" />
+                </a>
             </div>
-            <script src="~/Scripts/respond.js"></script>
-           
-            <div class="navbar-collapse collapse" style="font-size:smaller">
-                @if (@Session["Username"] != null)
-                {
+        </div>
+        <script src="~/Scripts/respond.js"></script>
+
+        <div class="navbar-collapse collapse pull-left">
+            @if (@Session["Username"] != null)
+            {
                 <ul class="nav navbar-nav">
                     @*@Html.ActionLink("TIME SCHEDULER", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")">BOOKINGS</a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>
-                            <li>@Html.ActionLink("CURRENT BOOKINGS", "Index", "Home")</li>
-                            <li>@Html.ActionLink("COMPLETED BOOKINGS", "Index", "CompletedBooking")</li>
-                            <li>@Html.ActionLink("APPROVED BOOKINGS", "Index", "ApprovedBooking")</li>
-                            <li>@Html.ActionLink("PM BOOKINGS", "Index", "ProjectManager")</li>
+                    <li class="dropdown" id="dropmenu">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Home")" style="color:white; font-weight:600">BOOKINGS</a>
+                        <ul class="dropdown-menu" style="background-color:white !important">
+                            <li><a href="@Url.Action("Register", "Resource")" style="padding-top:8px; padding-bottom:8px">BOOK RESOURCE</a></li>
+                            <li><a href="@Url.Action("Index", "Home")" style="padding-top:8px; padding-bottom:8px">CURRENT BOOKINGS</a></li>
+                            <li><a href="@Url.Action("Index", "CompletedBooking")" style="padding-top:8px; padding-bottom:8px">COMPLETED BOOKINGS</a></li>
+                            <li><a href="@Url.Action("Index", "ApprovedBooking")" style="padding-top:8px; padding-bottom:8px">APPROVED BOOKINGS</a></li>
+                            <li><a href="@Url.Action("Index", "ProjectManager")" style="padding-top:8px; padding-bottom:8px">PM BOOKINGS</a></li>
                             @if (UserRoles.HRUser() != false)
                             {
-                                <li>@Html.ActionLink("RECRUITMENT BOOKINGS", "Index", "HR")</li>
+                                <li><a href="@Url.Action("Index", "HR")" style="padding-top:8px; padding-bottom:8px">RECRUITMENT BOOKINGS</a></li>
                             }
-                            <li>@Html.ActionLink("REJECTED BOOKINGS", "RejectedBooking", "RejectedBooking")</li>
-                            <li>@Html.ActionLink("ALL BOOKING", "AllBookingEntries", "Home")</li>
-
+                            <li><a href="@Url.Action("RejectedBooking", "RejectedBooking")" style="padding-top:8px; padding-bottom:8px">REJECTED BOOKINGS</a></li>
+                            <li><a href="@Url.Action("AllBookingEntries", "Home")" style="padding-top:8px; padding-bottom:8px">ALL BOOKING</a></li>
                         </ul>
                     </li>
 
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">CALENDAR AND TIMELINE</a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("RESOURCE CALENDAR", "Index", "ManageCalender")</li>
-                            <li>@Html.ActionLink("RESOURCE TIMELINE", "Index", "ResourceTimeline")</li>
-                            <li>@Html.ActionLink("VEHICLE TIMELINE", "VehicleTimeline", "ResourceTimeline")</li>
-                            <li>@Html.ActionLink("PM TIMELINE", "PMTimeline", "ResourceTimeline")</li>
+                    <li class="dropdown" id="dropmenu">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="color:white; font-weight:600">CALENDAR AND TIMELINE</a>
+                        <ul class="dropdown-menu" style="background-color:white !important">
+                            <li><a href="@Url.Action("Index", "ManageCalender")" style="padding-top:8px; padding-bottom:8px">RESOURCE CALENDAR</a></li>
+                            <li><a href="@Url.Action("Index", "ResourceTimeline")" style="padding-top:8px; padding-bottom:8px">RESOURCE TIMELINE</a></li>
+                            <li><a href="@Url.Action("VehicleTimeline", "ResourceTimeline")" style="padding-top:8px; padding-bottom:8px">VEHICLE TIMELINE</a></li>
+                            <li><a href="@Url.Action("PMTimeline", "ResourceTimeline")" style="padding-top:8px; padding-bottom:8px">PM TIMELINE</a></li>
                         </ul>
                     </li>
                     @*<li>@Html.ActionLink("BOOK RESOURCE", "Register", "Resource")</li>*@
                     @if (UserRoles.UserCanRegisterPMTimesheet())
                     {
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")">PROJECTION</a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("PROJECTION", "Index", "Projection")</li>
-                                <li>@Html.ActionLink("TIMESHEET APPROVAL", "ApproveProjectTimesheet", "Projection")</li>
-                                <li>@Html.ActionLink("PROFIT AND LOSS", "Index", "ProfitLoss")</li>
+                        <li class="dropdown" id="dropmenu">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")"  style="color:white; font-weight:600">PROJECTION</a>
+                            <ul class="dropdown-menu" style="background-color:white !important">
+                                <li><a href="@Url.Action("Index", "Projection")" style="padding-top:8px; padding-bottom:8px">PROJECTION</a></li>
+                                <li><a href="@Url.Action("ApproveProjectTimesheet", "Projection")" style="padding-top:8px; padding-bottom:8px">TIMESHEET APPROVAL</a></li>
+                                <li><a href="@Url.Action("Index", "Projection")" style="padding-top:8px; padding-bottom:8px">PROFIT AND LOSS</a></li>
                                 @*<li>@Html.ActionLink("RESOURCE DETAILS", "Index", "Resource")</li>*@
                             </ul>
                         </li>
                     }
                     @if (UserRoles.SiteAdmin())
                     {
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">FINANCE</a>
-                            <ul class="dropdown-menu">
-                                <li data-toggle="tooltip" data-placement="bottom" title="Unpaid Timesheet Report">@Html.ActionLink("UNPAID", "WeeklyReport", "Finanace")</li>
-                                <li data-toggle="tooltip" data-placement="bottom" title="Approved Overtime Timesheet Report">@Html.ActionLink("OVERTIME", "OvertimeReport", "Finanace")</li>
-                                <li data-toggle="tooltip" data-placement="bottom" title="Paid Timesheet Report">@Html.ActionLink("PAID", "monthlyReport", "Finanace")</li>
+                        <li class="dropdown" id="dropmenu">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="color:white; font-weight:600">FINANCE</a>
+                            <ul class="dropdown-menu" style="background-color:white !important">
+                                <li data-toggle="tooltip" data-placement="bottom" title="Unpaid Timesheet Report"><a href="@Url.Action("WeeklyReport", "Finanace")" style="padding-top:8px; padding-bottom:8px">UNPAID</a></li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Approved Overtime Timesheet Report"><a href="@Url.Action("OvertimeReport", "Finanace")" style="padding-top:8px; padding-bottom:8px">OVERTIME</a></li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Paid Timesheet Report"><a href="@Url.Action("monthlyReport", "Finanace")" style="padding-top:8px; padding-bottom:8px">PAID</a></li>
 
                             </ul>
                         </li>
-                        <li>@Html.ActionLink("COSTMODEL", "Index", "CostModel")</li>
-                        <li>@Html.ActionLink("ADMINISTRATION", "Index", "Admin")</li>
+                        <li id="dropmenu"><a href="@Url.Action("Index", "CostModel")" style="color:white; font-weight:600">COSTMODEL</a></li>
+                        <li id="dropmenu"><a href="@Url.Action("Index", "Admin")" style="color:white; font-weight:600">ADMINISTRATION</a></li>
                     }
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">REPORTS</a>
-                        <ul class="dropdown-menu">
-
-                            <li><a href="http://dc-sqldev/Reports/Pages/Report.aspx?ItemPath=%2fJMS+Reports%2fCandidateTimesheetReport" target="_blank">TIMESHEET REPORT</a></li>
-                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">TIMESHEET BI</a></li>
+                    <li class="dropdown" id="dropmenu">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="color:white; font-weight:600">REPORTS</a>
+                        <ul class="dropdown-menu" style="background-color:white !important">
+                            <li><a href="http://dc-sqldev/Reports/Pages/Report.aspx?ItemPath=%2fJMS+Reports%2fCandidateTimesheetReport" target="_blank" style="padding-top:8px; padding-bottom:8px">TIMESHEET REPORT</a></li>
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiYWJkNGM5NmItNTRhZS00MDAwLTk0ZWYtZjRiOTU3OTNiZGY5IiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank" style="padding-top:8px; padding-bottom:8px">TIMESHEET BI</a></li>
 
                             @*<li><a href="https://app.powerbi.com/view?r=eyJrIjoiM2Y1YzRlMTMtZmY4YS00MmRkLWIwZGEtZTEwYWU3YzU4YjliIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">RESOURCE Available</a></li>*@
-                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank">PROJECTION</a></li>
+                            <li><a href="https://app.powerbi.com/view?r=eyJrIjoiMjU1ODJiMTAtNDNiZS00OGRiLThmNWQtNTk1YjNiZjI1MDhmIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank" style="padding-top:8px; padding-bottom:8px">PROJECTION</a></li>
                             <li>
-                                <a href="https://app.powerbi.com/view?r=eyJrIjoiYjg2Njc5YmQtMzA0Zi00NmI5LWIyNzAtMjQ5YjlmMzBlZGVhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9
-" target="_blank">ON GOING PROJECTION</a>
+                                <a href="https://app.powerbi.com/view?r=eyJrIjoiYjg2Njc5YmQtMzA0Zi00NmI5LWIyNzAtMjQ5YjlmMzBlZGVhIiwidCI6IjI0Y2IwYjA4LWI1OTEtNDE2NC05MTc0LThlMTI5MzlkNDA0NSJ9" target="_blank" style="padding-top:8px; padding-bottom:8px">ON GOING PROJECTION</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
-                 
-                    <ul class="nav navbar-nav" @*style="float:right"*@>
-                        <li>@Html.ActionLink("LOGOUT", "Logout", "Login")</li>
-                    </ul>
-                }
-                @if (@Session["Username"] == null)
-                {
-                    <ul>
-                        <li class="nav navbar-nav" style="float:right">@Html.ActionLink("Login", "Login", "Login")</li>
-                    </ul>
-                }
-            </div>
-        </div>
-    </div>
-    @*container-fluid body-content*@
 
-    <div class="container body-content">
+                <ul class="nav navbar-nav">
+                    <li id="dropmenu"><a href="@Url.Action("Login", "Login")" style="color:white; font-weight:600">LOGOUT</a></li>
+                </ul>
+            }
+            @if (@Session["Username"] == null)
+            {
+                <ul>
+                    <li class="nav navbar-nav" id="dropmenu">@Html.ActionLink("Login", "Login", "Login")</li>
+                </ul>
+            }
+        </div>
+
+    </div>
+
+    <div class="container-fluid">
         @if (HttpContext.Current.Session["ResultMessage"] != null)
         {
             <div class="alert alert-success text-center  alert-dismissible" role="alert" style="margin-left:0px">
@@ -144,11 +133,12 @@
         }
 
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Verser TIME SCHEDULER</p>
-        </footer>
+
     </div>
+    @*<hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Verser TIME SCHEDULER</p>
+    </footer>*@
 
     @*  Calender Scripts
         <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -169,36 +159,25 @@
 </script>
 <style>
 
-    #navbar {
-        overflow: hidden;
-        background-color: #f1f1f1;
-        padding: 90px 10px;
-        transition: 0.4s;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 99;
-    }
-
     .body {
-        padding-top: 0px;
         width: 100%;
     }
 
-    .navbar-inverse {
-        background-color: #e2e2e2 !important;
-        border-color: #D3D3D3 !important;
+    #dropmenu {
+        background-color:black;
     }
-
-        .navbar-inverse .navbar-nav > li > a {
-            color: #959ca1;
-            font-family: sans-serif;
-            font-weight: 600;
+        #dropmenu :hover {
+            background-color: #f79636;
         }
 
-            .navbar-inverse .navbar-nav > li > a:hover {
-                color: #f79636;
-            }
+    #dropitem {
+        background-color:white;
+    }
+
+        #dropitem :hover {
+            background-color: #f79636;
+        }
+
 
     a {
         color: #959ca1;
@@ -208,15 +187,10 @@
         min-height: 40px;
         max-height: 60px;
         height: 50px;
-        margin-left: 60px;
     }
 
     .fixed-top {
-        min-height: 40px;
-        max-height: 60px;
         height: 50px;
-        margin-left: 60px;
-        margin-top: 0px;
     }
     /* Additional styles to style some of your child elements */
     .navbar-brand {
@@ -225,10 +199,6 @@
 
     .dropdown:hover .dropdown-menu {
         display: block;
-    }
-
-    .nav-tabs .dropdown-menu, .nav-pills .dropdown-menu, .navbar-nav .dropdown-menu, .nav .navbar-nav .dropdown-toggle {
-        margin-top: 0;
     }
 
     .dropdown-menu > li > a:hover {
