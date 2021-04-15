@@ -1,11 +1,11 @@
 ﻿@model  TimeSheet.Models.CompletedTimesheetModel
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1470px">
-        <h5 class="modal-title text-center">Project Details</h5>
+    <div class="modal-header" style="background-color:lightgray">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h5 class="modal-title text-center">Project Details</h5>
     </div>
-    <div style="align-content:center;padding-bottom:40px;padding-left:19px;width:1200px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-bottom:10px;width:1400px">
+    <div style="align-content:center; align-self:flex-start; align-items:flex-start;padding:15px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:flex-start; align-self:flex-start; align-items:flex-start;">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -14,17 +14,16 @@
                     <th>Activity</th>
                     <th>PM</th>
                     <th>Project</th>
-                    <th style="width:50px">Date </th>
+                    <th>Date </th>
                     <th>StartTime</th>
-                    <th style="width:50px">EndDate </th>
-                    @*<th>EndTime</th>*@
-                    <th style="width:10px">OLA</th>
-                    <th style="width:10px">Actual</th>
+                    <th>EndDate </th>
+                    <th>OLA</th>
+                    <th>Actual</th>
                     <th>Break</th>
                     <th>BreakTime</th>
                     <th>Status</th>
-                    <th style="width:10px">Comments</th>
-                    <th style="width:10px"></th>
+                    <th>Comments</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="table">
@@ -47,7 +46,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ProjectName)
                     </td>
-                    <td class="Day" width="7%">
+                    <td class="Day">
                         <span>@item.Day.Value.ToShortDateString()</span>
                         @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
@@ -61,7 +60,7 @@
 
         </td>*@
 
-                    <td class="EndTime" width="8%">
+                    <td class="EndTime">
                         <span>@item.EndTime.Value.ToShortTimeString()</span>
                         <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
                     </td>
@@ -71,7 +70,7 @@
                     </td>
                     <td class="ActualQuantity">
                         <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;" />
                     </td>
                     <td class="breakHrs">
 
@@ -102,7 +101,7 @@
                         <span>@item.TimeSheetComments</span>
                         <textarea rows="3" cols="10" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
                     </td>
-                    <td width="5%">
+                    <td>
                         <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             <span><strong>Edit</strong></span>

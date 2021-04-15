@@ -20,6 +20,7 @@
         <script src="~/Scripts/respond.js"></script>
 
         <div class="navbar-collapse collapse pull-left">
+
             @if (@Session["Username"] != null)
             {
                 <ul class="nav navbar-nav">
@@ -54,7 +55,7 @@
                     @if (UserRoles.UserCanRegisterPMTimesheet())
                     {
                         <li class="dropdown" id="dropmenu">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")"  style="color:white; font-weight:600">PROJECTION</a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="@Url.Action("Index", "Projection")" style="color:white; font-weight:600">PROJECTION</a>
                             <ul class="dropdown-menu" style="background-color:white !important">
                                 <li><a href="@Url.Action("Index", "Projection")" style="padding-top:8px; padding-bottom:8px">PROJECTION</a></li>
                                 <li><a href="@Url.Action("ApproveProjectTimesheet", "Projection")" style="padding-top:8px; padding-bottom:8px">TIMESHEET APPROVAL</a></li>
@@ -91,17 +92,21 @@
                         </ul>
                     </li>
                 </ul>
+            }
+        </div>
 
-                <ul class="nav navbar-nav">
-                    <li id="dropmenu"><a href="@Url.Action("Login", "Login")" style="color:white; font-weight:600">LOGOUT</a></li>
-                </ul>
-            }
-            @if (@Session["Username"] == null)
-            {
-                <ul>
-                    <li class="nav navbar-nav" id="dropmenu">@Html.ActionLink("Login", "Login", "Login")</li>
-                </ul>
-            }
+        <div class="navbar-collapse collapse pull-right">
+            <ul class="nav navbar-nav navbar-right">
+                @if (Session["Username"] != null)
+                {
+                    <li class="dropdown" id="dropmenu">
+                        <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown" style="color:white; font-weight:600">@Session["Username"].ToString()</a>
+                        <ul class="dropdown-menu" style="right: 0; background-color:white !important">
+                            <li><a href="@Url.Action("Logout", "Login")" style="padding-top:8px; padding-bottom:8px">LOGOUT</a></li>
+                        </ul>
+                    </li>
+                }
+            </ul>
         </div>
 
     </div>

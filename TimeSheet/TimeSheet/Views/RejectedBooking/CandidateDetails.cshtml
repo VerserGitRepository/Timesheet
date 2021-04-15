@@ -1,27 +1,26 @@
 ﻿@model  TimeSheet.Models.CompletedTimesheetModel
 
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1228px">
-        <h5 class="modal-title text-center">Resource Details</h5>
+    <div class="modal-header" style="background-color:lightgray;">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h5 class="modal-title text-center">Resource Details</h5>
     </div>
-    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1200px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1200px">
+    <div style="align-content: flex-start; align-self: flex-start; align-items: flex-start; padding: 15px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center; align-self: flex-start; align-items: flex-start;">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th>Id</th>
-                    <th>Candidate</th>
-                    <th>Activity</th>
-                    <th style="width:50px">Date </th>
-                    <th>StartTime</th>
-                    <th style="width:50px">EndTime </th>
-                    <th style="width:10px">OLA</th>
-                    <th style="width:10px">Actual</th>
-                    <th>Break (Minutes)</th>
-                    <th>BreakTime</th>
-
-                    <th>Status</th>
-                    <th style="width:10px">Comments</th>
+                    <th class="text-center">Id</th>
+                    <th class="text-center">Candidate</th>
+                    <th class="text-center">Activity</th>
+                    <th class="text-center">Date </th>
+                    <th class="text-center">StartTime</th>
+                    <th class="text-center">EndTime </th>
+                    <th class="text-center">OLA</th>
+                    <th class="text-center">Actual</th>
+                    <th class="text-center">Break (Minutes)</th>
+                    <th class="text-center">BreakTime</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Comments</th>
                     @*<th style="width:10px"></th>*@
                 </tr>
             </thead>
@@ -37,7 +36,7 @@
                             @Html.DisplayFor(modelItem => item.Activity)
                         </td>
 
-                        <td class="Day" width="7%">
+                        <td class="Day">
                             <span>@item.Day.Value.ToShortDateString()</span>
                             @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
 
@@ -48,7 +47,7 @@
                         </td>
 
 
-                        <td class="EndTime" width="8%">
+                        <td class="EndTime">
                             <span>@item.EndTime.Value.ToShortTimeString()</span>
                             <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
                         </td>
@@ -58,7 +57,7 @@
                         </td>
                         <td class="ActualQuantity">
                             <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;" />
                         </td>
                         <td class="breakHrs">
 

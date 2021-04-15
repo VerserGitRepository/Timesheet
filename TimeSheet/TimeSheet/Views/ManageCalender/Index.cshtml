@@ -23,33 +23,31 @@
 </head>
 
 <body>
-    <div class="container" style="margin-left:0px;width:150%;margin-bottom:700px;margin-right:2px;margin-top:2px">
-        <div class="row" style="vertical-align:baseline;padding-top:2px;margin-left:250px;">
-            <div class="pull-left col-md-offset-0" style="padding-right:2px;margin-right:2px">
-                <div class="form-group col-md-2" style="width:18%">
-                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId" })
-                </div>
-                <div class="form-group col-md-3" style="width:22%">
-                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID" })
-                </div>
-                <div class="form-group col-md-2" style="width:18%">
-                    @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
-                </div>
-                <div class="form-group col-md-1" style="padding-right:2px;margin-right:2px">
-                    @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:7px;", @multiple = "multiple" })
-                    @Html.HiddenFor(model => model.ResourceID)
-                </div>
+    <div class="col-md-12" style="margin-top:55px">
+        <div class="col-md-8 pull-left">
+            <div class="form-group col-md-3">
+                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId" })
             </div>
-            <div class="form-group col-md-1">
-                <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;height:26px" OnClick="SearchAndRenderCalendar();">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
+            <div class="form-group col-md-3">
+                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID" })
             </div>
+            <div class="form-group col-md-3">
+                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
+            </div>
+            <div class="form-group col-md-2">
+                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:7px;", @multiple = "multiple" })
+                @Html.HiddenFor(model => model.ResourceID)
+            </div>
+        </div>
+        <div class="form-group col-md-1">
+            <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;height:26px" OnClick="SearchAndRenderCalendar();">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
         </div>
 
         <div class="calendar-room" style="margin-left:0px;">
 
-            <div id="calender" class="col-md-12" style="width:100%; display: inline-block; font-size:17px"></div>
+            <div id="calender" class="col-md-12" style="width:100%; display: inline-block;"></div>
 
             <div id="myModal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -483,7 +481,6 @@
     html, body {
         overflow: hidden; /* don't do scrollbars */
         font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-        font-size: 20px;
     }
 
     .popper,

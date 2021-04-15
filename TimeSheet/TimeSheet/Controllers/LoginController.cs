@@ -10,11 +10,18 @@ namespace TimeSheet.Controllers
     {
         public ActionResult Index()
         {
+       
             return View();
         }
         [HttpGet]
         public ActionResult Login()
         {
+            Session["Username"] = null;
+            Session["FullName"] = null;
+            Session["ErrorMessage"] = null;
+            Session.Clear();
+            Session.RemoveAll();
+            Session.Abandon();
             return View();
         }
         [HttpPost]
@@ -48,6 +55,9 @@ namespace TimeSheet.Controllers
         }
         public ActionResult Logout(LoginModel login)
         {
+            Session["Username"] = null;
+            Session["FullName"] = null;
+            Session["ErrorMessage"] = null;
             Session.Clear();
             Session.RemoveAll();
             Session.Abandon();

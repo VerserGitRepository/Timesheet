@@ -23,11 +23,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
 <div class="col-md-12">
-    <div class="col-md-8">
-        <table class="table" style="margin-top:45px;">
+    <div class="col-md-8 pull-left" style="margin-top:45px">
+        <table class="table">
             <thead>
                 <tr>
-                    <th class="col-md-1">
+                    <th class="col-md-1" style="padding-left:0">
                         @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId" })
                     </th>
                     <th class="col-md-1">
@@ -43,7 +43,16 @@
                             <span class="glyphicon glyphicon-search" style=""></span>
                         </button>
                     </th>
-                    <th class="col-md-1">
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+    <div class="col-md-4">
+        <table class="table" style="margin-top:45px;">
+            <thead>
+                <tr>
+                    <th class="col-md-1 pull-right" style="margin-top:3px">
                         @using (Html.BeginForm("ExportTimesSheetToExcel", "Home", FormMethod.Post))
                         {
                             <button type="submit" value="ExportToExcel" class="btn btn-secondary" name="submitButton" style="border-color:lightgray;">

@@ -147,7 +147,7 @@ namespace TimeSheet.Controllers
 
             var reslt = whereList.GroupBy(x => x.Vechicles).Select(grp => new VehicleModel { id = grp.Key, title = grp.Key }).ToList();
 
-            newModel.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
+            newModel.jsonResources = JsonConvert.SerializeObject(reslt);
             var resourceEvents = (from k in whereList
                                   select new VehicleBookedModel
                                   {

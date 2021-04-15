@@ -5,27 +5,26 @@
 @model  TimeSheet.Models.ProjectManagerTimesheet
 
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1350px">
-        <h5 class="modal-title text-center">Project Details</h5>
+    <div class="modal-header" style="background-color:lightgray;">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h5 class="modal-title text-center">Project Details</h5>
     </div>
-    <div style="align-content:center;padding-bottom:40px;padding-left:20px;width:1200px;padding-top:4px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;width:1200px">
+    <div style="align-content:center; align-self:flex-start; align-items:flex-start;padding:15px">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:flex-start; align-self:flex-start; align-items:flex-start;">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
-                    <th style="width:20px">Id</th>
-                    <th style="width:70px">Project</th>
-                    <th style="width:70px">Candidate</th>
-                    <th style="width:70px">Activity</th>
-                    <th style="width:50px">StartDate </th>
-                    <th style="width:50px">StartTime</th>
-                    <th style="width:50px">EndTime </th>
+                    <th>Id</th>
+                    <th>Project</th>
+                    <th>Candidate</th>
+                    <th>Activity</th>
+                    <th>StartDate </th>
+                    <th>StartTime</th>
+                    <th>EndTime </th>
                     <th>Break (Minutes)</th>
                     <th>BreakTime</th>
-
                     <th>Status</th>
-                    <th style="width:70px">Comments</th>
-                    <th style="width:10px"></th>
+                    <th>Comments</th>
+                    <th></th>
 
                 </tr>
             </thead>
@@ -86,7 +85,7 @@
                         <span>@item.TimeSheetComments</span>
                         <textarea rows="4" cols="10" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
                     </td>
-                    <td width="5%">
+                    <td>
                         <a class="Edit btn btn-primary a-btn-slide-text" href="javascript:;">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             <span><strong>Edit</strong></span>
@@ -527,9 +526,7 @@
 </script>
 <style>
     .modal-dialog {
-        width: 1370px;
-        margin: 30px auto;
-        margin-bottom: 10px;
+        width: 90%;
     }
 
     .table-hover > tbody > tr:hover > td,

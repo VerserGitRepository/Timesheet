@@ -1,32 +1,32 @@
 ﻿@model  TimeSheet.Models.TimeSheetViewModel
 @using TimeSheet.ServiceHelper
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:100%;font-weight:bold ">
-        <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
+    <div class="modal-header" style="background-color:lightgray;font-weight:bold ">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h6 class="modal-title text-center" style="font-weight: bold">Update Booking Details</h6>
     </div>
-    <div style="align-content:flex-start;align-self:flex-start;align-items:flex-start;padding-bottom:15px;padding-left:15px;padding-top:10px;width:80%">
-        <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;align-self:flex-start;align-items:flex-start;width:100%">
+    <div style="align-content:flex-start;align-self:flex-start;align-items:flex-start;padding:15px;">
+        <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;align-self:flex-start;align-items:flex-start;">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
-                    <th style="width:30px">Project</th>
-                    <th style="width:30px">Candidate</th>
-                    <th style="width:40px">Activity</th>
+                    <th>Project</th>
+                    <th>Candidate</th>
+                    <th>Activity</th>
                     <th>PM</th>
                     <th>EmpType</th>
                     <th>JOB</th>
-                    <th style="width:30px">Date</th>
+                    <th>Date</th>
                     <th>Start</th>
-                    <th style="width:30px">End</th>
-                    <th style="width:10px">OLA</th>
-                    <th style="width:10px">Actual</th>
+                    <th>End</th>
+                    <th>OLA</th>
+                    <th>Actual</th>
                     <th>Break</th>
                     <th>Time</th>
                     <th>Status</th>
-                    <th style="width:0px">Comments</th>
-                    <th style="width:10px"></th>
-                    <th style="width:5px"></th>
+                    <th>Comments</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="table">
@@ -34,10 +34,10 @@
                 {
                 <tr>
                     <td class="Id"> <span>@item.Id</span> </td>
-                    <td class="CandidateName" width="2%">
+                    <td class="CandidateName">
                         <span id="ProjectName">@item.ProjectName</span>
                     </td>
-                    <td class="CandidateName" width="2%">
+                    <td class="CandidateName">
                         @Html.DisplayFor(modelItem => item.CandidateName)
                     </td>
                     <td class="Activity">
@@ -52,7 +52,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.JobNo)
                     </td>
-                    <td class="Day" width="7%">
+                    <td class="Day">
                         <span>@item.Day.Value.ToShortDateString()</span>
 
                         @*@Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })*@
@@ -60,16 +60,16 @@
                     </td>
                     <td class="StartTime" width="2%">
                         <span>@item.StartTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none;width:82px" />
+                        <input type="time" id="startTime" value="@item.StartTime.Value.ToString("HH:mm")" style="display:none;" />
                     </td>
                     @*<td class="EndDate" width="8%">
             @Html.DisplayFor(modelItem => item.EndDate)
 
         </td>*@
 
-                    <td class="EndTime" width="2%">
+                    <td class="EndTime">
                         <span>@item.EndTime.Value.ToShortTimeString()</span>
-                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none;width:82px" />
+                        <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none;" />
                     </td>
 
                     <td class="OLATarget">
@@ -77,7 +77,7 @@
                     </td>
                     <td class="ActualQuantity">
                         <span style="width:2px">@item.ActualQuantity</span>
-                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                        <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;" />
                     </td>
                     <td class="breakHrs">
 
@@ -106,7 +106,7 @@
                         <span>@item.TimeSheetComments</span>
                         <textarea rows="3" cols="10" id="txtComments" style="display:none">@item.TimeSheetComments</textarea>
                     </td>
-                    <td width="5%">
+                    <td>
                         <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             <span><strong>Edit</strong></span>
