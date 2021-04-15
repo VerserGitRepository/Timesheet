@@ -157,8 +157,7 @@ namespace TimeSheet.Controllers
         }
 
         public TimeSheetRegisterModel MapTimesheetRegisterModel(TimeSheetViewModel timesheetviewmodel)
-        {
-            
+        {            
             var MapRegisterData = new TimeSheetRegisterModel()
             {
                 ProjectID = timesheetviewmodel.TimeSheetRegisterModel.ProjectID,

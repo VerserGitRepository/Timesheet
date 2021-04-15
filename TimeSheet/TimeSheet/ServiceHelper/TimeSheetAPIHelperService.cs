@@ -64,7 +64,6 @@ namespace TimeSheet.ServiceHelper
             }
             return projectsList;
         }
-
         public static async Task<List<ListItemViewModel>> HRActivities()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -103,7 +102,6 @@ namespace TimeSheet.ServiceHelper
             }
             return projectsList;
         }
-
         public static async Task<List<ListItemViewModel>> ProjectOpportunities(int projectID)
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -122,7 +120,6 @@ namespace TimeSheet.ServiceHelper
             }
             return projectsList;
         }
-
         public static async Task<List<ListItemViewModel>> JobNo(int OpportunityID)
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();

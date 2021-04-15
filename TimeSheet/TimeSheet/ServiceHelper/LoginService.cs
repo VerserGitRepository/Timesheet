@@ -32,7 +32,6 @@ namespace TimeSheet.ServiceHelper
         {
            var returnmessage = new List<ListItems>();
             string BaseUri = ConfigurationManager.AppSettings["LoginManagerBase"];
-
             using (HttpClient client = new System.Net.Http.HttpClient())
             {
                 client.BaseAddress = new Uri(BaseUri);
