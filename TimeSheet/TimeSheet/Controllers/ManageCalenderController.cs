@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.UI;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
+using Newtonsoft.Json;
 
 namespace TimeSheet.Controllers
 {
@@ -117,9 +118,9 @@ namespace TimeSheet.Controllers
                
             List<ResourceListModel> reslt = (from k in newModel.CandidateTimeSheetList select new ResourceListModel { BookingId = k.Id, ProjectManager = k.ProjectManager, id = Convert.ToString(k.ResourceID), title = Convert.ToString(k.CandidateName), eventColor = k.Colour, ResourceName = k.CandidateName, ActivityDescription = k.Activity, ProjectName = k.ProjectName, StartTime = Convert.ToDateTime(k.StartTime), EndTime = Convert.ToDateTime(k.EndTime) }).Distinct().ToList();
 
-            newModel.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
+            newModel.jsonResources = JsonConvert.SerializeObject(reslt);
             List<ResourceEventsModel> resourceEvents = (from k in newModel.CandidateTimeSheetList select new ResourceEventsModel { BookingId = k.Id, projectmanager = k.ProjectManager, resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName+"-"+k.ProjectManager+"-"+k.Activity, start = Convert.ToDateTime(k.StartTime).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s") }).Distinct().ToList();
-            newModel.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
+            newModel.jsonEvents = JsonConvert.SerializeObject(resourceEvents);
 
 
             return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet, MaxJsonLength = int.MaxValue };
@@ -146,7 +147,7 @@ namespace TimeSheet.Controllers
 
             var reslt = whereList.GroupBy(x => x.Vechicles).Select(grp => new VehicleModel { id = grp.Key, title = grp.Key }).ToList();
 
-            newModel.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
+            newModel.jsonResources = JsonConvert.SerializeObject(reslt);
             var resourceEvents = (from k in whereList
                                   select new VehicleBookedModel
                                   {
@@ -158,7 +159,7 @@ k.WarehouseName + "-" + k.ProjectName + "-" + k.ProjectManager + "-" + "-" + k.A
                                       start = Convert.ToDateTime(k.StartTime.Value).ToString("s"),
                                       end = Convert.ToDateTime(k.EndTime).ToString("s")
                                   }).ToList();
-            newModel.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
+            newModel.jsonEvents = JsonConvert.SerializeObject(resourceEvents);
 
 
             return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -185,9 +186,9 @@ k.WarehouseName + "-" + k.ProjectName + "-" + k.ProjectManager + "-" + "-" + k.A
 
             List<ResourceListModel> reslt = (from k in newModel.PMTimeSheetList select new ResourceListModel { ProjectManager = k.CandidateName, id = Convert.ToString(k.ResourceID), title = Convert.ToString(k.CandidateName), eventColor = k.Colour, ResourceName = k.CandidateName, ActivityDescription = k.Activity, ProjectName = k.ProjectName, StartTime = Convert.ToDateTime(k.StartTime), EndTime = Convert.ToDateTime(k.EndTime) }).Distinct().ToList();
 
-            newModel.jsonResources = Newtonsoft.Json.JsonConvert.SerializeObject(reslt);
+            newModel.jsonResources = JsonConvert.SerializeObject(reslt);
             List<ResourceEventsModel> resourceEvents = (from k in newModel.PMTimeSheetList select new ResourceEventsModel { projectmanager = k.CandidateName, resourceId = Convert.ToString(k.ResourceID), title = k.ProjectName + "-" + k.CandidateName + "-" + k.Activity, start = Convert.ToDateTime(k.StartTime).ToString("s"), end = Convert.ToDateTime(k.EndTime).ToString("s") }).Distinct().ToList();
-            newModel.jsonEvents = Newtonsoft.Json.JsonConvert.SerializeObject(resourceEvents);
+            newModel.jsonEvents = JsonConvert.SerializeObject(resourceEvents);
 
 
             return new JsonResult { Data = newModel, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
