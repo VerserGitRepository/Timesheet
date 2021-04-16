@@ -20,83 +20,79 @@
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-<div class="container" style="padding-top:100px;padding-bottom:0px;margin-left:0px;padding-left:0px;padding-right:10px;width:150%">
 
-    @using (Html.BeginForm("ExportCompletedScheduls", "Finanace", FormMethod.Post))
-    {
-        <div class="row">
-            <button type="submit" class="btn btn-default btn-sm" style="padding-left:10px;padding-top:2px;margin-left:10px;background-color:lightgray">
+
+<div class="col-md-12" style="margin-top:55px; margin-bottom:5px">
+    <div class="pull-right">
+        @using (Html.BeginForm("ExportCompletedScheduls", "Finanace", FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-export black"></span> Export
             </button>
-        </div>
-    }
-    <div class="row">
-        <div class="col-md-10">
-
-            <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
-                <thead style="background-color:#FFA500;color:white">
-                    <tr>
-                        <th>ADP Employee ID</th>
-                        <th>Project Manager</th>
-                        <th>Resource</th>
-                        <th>Hours</th>
-                        <th>Resource Type</th>
-                        <th>Pay Frequency</th>
-                        @*<th>Date</th>*@
-                        <th>Paid</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (TimeSheet.Models.AggregatedCompletedTimesheetModel item in Model.AggregaredTimesheetModel)
-                    {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ADPEmployeeID)
-                            <input type="hidden" id="hdntxtPMId" value="@item.projectManagerID" />
-                            <input type="hidden" id="hdntxtProjectId" value="@item.ProjectID" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProjectManager)
-
-                        </td>
-                        <td>
-                            <span id="txtCandidateName">@item.CandidateName</span>
-                            <input type="hidden" id="txtResourceId" value="@item.ResourceId" />
-
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Hours)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EmployeementType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PayFrequency)
-                        </td>
-                        @*<td>
-                            @Html.DisplayFor(modelItem => item.da)
-                        </td>*@
-                        <td>
-                           
-                            <button class="btn btn-success btn-xs" data-title="Approve" onclick="ApprovePayment(this);" data-toggle="modal" data-target="#approve">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </button>
-
-                        </td>
-                        <td>
-                            <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.CandidateName">
-                                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                            </a>
-                        </td>
-
-                    </tr>
-                    }
-                </tbody>
-            </table>
-
-        </div>
+        }
     </div>
+    <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
+        <thead style="background-color:#FFA500;color:white">
+            <tr>
+                <th>ADP Employee ID</th>
+                <th>Project Manager</th>
+                <th>Resource</th>
+                <th>Hours</th>
+                <th>Resource Type</th>
+                <th>Pay Frequency</th>
+                @*<th>Date</th>*@
+                <th>Paid</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (TimeSheet.Models.AggregatedCompletedTimesheetModel item in Model.AggregaredTimesheetModel)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ADPEmployeeID)
+                    <input type="hidden" id="hdntxtPMId" value="@item.projectManagerID" />
+                    <input type="hidden" id="hdntxtProjectId" value="@item.ProjectID" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectManager)
+
+                </td>
+                <td>
+                    <span id="txtCandidateName">@item.CandidateName</span>
+                    <input type="hidden" id="txtResourceId" value="@item.ResourceId" />
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeementType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayFrequency)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.da)
+                </td>*@
+                <td>
+                           
+                    <button class="btn btn-success btn-xs" data-title="Approve" onclick="ApprovePayment(this);" data-toggle="modal" data-target="#approve">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+
+                </td>
+                <td>
+                    <a href="javascript:void(0);" class="btn btn-warning btn-edit" @*class="CandidateDetail"*@ data-id="@item.CandidateName">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    </a>
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+
 </div>
 
 <div id='myModal' class='modal'>
@@ -190,15 +186,13 @@
 
 </script>
 <style>
-    .row {
-        width: 100%;
-    }
+
 
     .body-content {
         margin-top: 0px;
         padding-left: 0px;
         padding-right: 0px;
-        max-width: 100%;
+
     }
 
     .container {
@@ -244,10 +238,6 @@
 
     .black {
         color: black;
-    }
-    .btn {
-        font-size: 8px;
-        
     }
 
     .multiselect.dropdown-toggle {

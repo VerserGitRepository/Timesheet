@@ -1,23 +1,24 @@
 ﻿@model  TimeSheet.Models.CompletedTimesheetModel
 <div>
-    <div class="modal-header" style="background-color:lightgray;width:1228px">
-        <h5 class="modal-title text-center" style="font-weight: bold">Resource Details</h5>
+    <div class="modal-header" style="background-color:lightgray;font-weight:bold">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h6 class="modal-title text-center" style="font-weight: bold">Resource Details</h6>
     </div>
-    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1200px">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1200px">
+
+    <div style="align-content:flex-start;align-self:flex-start;align-items:flex-start;padding:15px;">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content: flex-start; align-self: flex-start; align-items: flex-start;">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
                     <th>CandidateName</th>
                     <th>Project</th>
                     <th>Activity</th>
-                    <th style="width:50px">StartDate </th>
+                    <th>StartDate </th>
                     <th>StartTime</th>
-                    <th style="width:50px">EndTime </th>
-                    <th style="width:10px">OLA</th>
-                    <th style="width:10px">Actual</th>
-                    <th style="width:10px">Comments</th>
+                    <th>EndTime </th>
+                    <th>OLA</th>
+                    <th>Actual</th>
+                    <th style="width:14%">Comments</th>
                     @*<th style="width:10px"></th>*@
                 </tr>
             </thead>
@@ -36,7 +37,7 @@
                             @Html.DisplayFor(modelItem => item.Activity)
                         </td>
 
-                        <td class="Day" width="7%">
+                        <td class="Day">
                             <span>@item.Day.Value.ToShortDateString()</span>
                             @Html.TextBoxFor(model => item.Day, "{0:yyyy-MM-dd}", new { @type = "date", @style = "display:none" })
 
@@ -47,7 +48,7 @@
                         </td>
 
 
-                        <td class="EndTime" width="8%">
+                        <td class="EndTime">
                             <span>@item.EndTime.Value.ToShortTimeString()</span>
                             <input type="time" id="endTime" value="@item.EndTime.Value.ToString("HH:mm")" style="display:none" />
                         </td>
@@ -57,7 +58,7 @@
                         </td>
                         <td class="ActualQuantity">
                             <span style="width:2px">@item.ActualQuantity</span>
-                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;width:30px" />
+                            <input type="text" id="txtActualQuantity" value="@item.ActualQuantity" style="display:none;" />
                         </td>
                         <td class="TimeSheetComments">
                             <span>@item.TimeSheetComments</span>
@@ -105,9 +106,9 @@
 
 <style>
     .modal-dialog {
-        width: 1250px;
-        margin: 30px auto;
-        margin-bottom: 10px;
+        width: 95%;
+        margin: 10px auto;
+        margin-bottom: 5px;
     }
 
     .table-hover > tbody > tr:hover > td,

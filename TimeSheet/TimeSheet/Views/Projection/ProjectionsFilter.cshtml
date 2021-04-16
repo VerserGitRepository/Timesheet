@@ -6,13 +6,13 @@
 }
 
 
-<div class="container" style="margin-left:0px">
-    <div class="modal-header" style="background-color:lightgray;width:1550px">
-        <h5 class="modal-title text-center">Projection Details</h5>
+<div>
+    <div class="modal-header" style="background-color:lightgray; font-weight:bold">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h5 class="modal-title text-center">Projection Details</h5>
     </div>
-    <div style="align-content:center;padding-top:15px;padding-bottom:40px;padding-left:20px;width:1400px">
-        <table class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center;padding-top:15px;padding-bottom:10px;width:1400px" id="MANAGEPROJECTION">
+    <div style="align-content:center; align-self:flex-start; align-items:flex-start;padding:15px">
+        <table class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content: flex-start; align-self: flex-start; align-items: flex-start;" id="MANAGEPROJECTION">
             <thead style="background-color:#FFA500;color:white ">
                 <tr>
 
@@ -25,8 +25,8 @@
                     <th>CostModel Quantity</th>
                     <th>Projection Quantity</th>
                     <th>EstimatedInvoiceDate</th>
-                    <th>Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                    <th style="width:20px"></th>
+                    <th width="18%">Comments</th>
+                    <th></th>
                     <th class="hidden"></th>
                     <th class="hidden"></th>
                     <th class="hidden"></th>
@@ -631,13 +631,6 @@
         margin-bottom: 10px;
     }
 
-    .textarea {
-        max-width: 280px;
-        font-size: 10px;
-        border: 2px;
-        outline: 2px;
-    }
-
     .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
         background-color: #FFA500;
         border-color: white;
@@ -705,10 +698,6 @@
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
         background-color: lightgray;
-    }
-
-    .row {
-        width: 112%;
     }
 
     .body-content {

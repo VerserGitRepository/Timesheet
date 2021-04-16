@@ -15,8 +15,8 @@
     ViewBag.Title = "Index";
 }
 
-<div class="container-fluid" style="margin-left:0px;padding-top:200px">
-    <div class="container" style="width:200%; padding-top:15px; margin-left:0px; border-color:lightgray;padding-left:0px">
+<div class="container-fluid" style="margin-left:0px;padding-top:5px">
+
 
         <div class="panel with-nav-tabs panel-default" style="width:100%">
             <div class="panel-heading">
@@ -32,12 +32,11 @@
             </div>
 
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="tab1default" role="tabpanel">
-
-                    <div class="col-md-6" style="padding-left:0px">
+                <div class="tab-pane fade in active" id="tab1default" role="tabpanel" style="width:100%">
+                    <div class="col-md-12" style="padding-left:0px">
                         <div class="row">
 
-                            <div class="container" style="margin:20px; width:1000px;padding-top:5px;padding-bottom:5px">
+                            <div class="container" style="margin:20px; width:1100px;padding-top:5px;padding-bottom:5px">
                                 <div class="col-md-6">
                                     <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Customer</label>
                                     <div class="col-sm-6">
@@ -113,9 +112,9 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="tab2default" style="width:1150px">
+                <div class="tab-pane fade" id="tab2default" style="width:100%">
 
-                    <div class="col-md-6 well" style="width:550px;margin-left:5px;height:270px">
+                    <div class="col-md-7 well" style="margin-left:5px;">
                         Revenue Section
 
                         <div class="row clearfix">
@@ -124,16 +123,16 @@
                                     <thead style="background-color:lightgray">
                                         <tr>
 
-                                            <th class="text-center" style="width:60%">
+                                            <th class="text-center"  style="width:30%">
                                                 Service Description
                                             </th>
-                                            <th class="text-center" style="width:10%">
+                                            <th class="text-center">
                                                 Price Per Unit
                                             </th>
-                                            <th class="text-center" style="width:10%">
+                                            <th class="text-center">
                                                 Qty
                                             </th>
-                                            <th class="text-center" style="width:10%">
+                                            <th class="text-center">
                                                 Total Price
                                             </th>
                                         </tr>
@@ -160,7 +159,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 well" style="width:550px;margin-left:5px;height:270px">
+                    <div class="col-md-7 well" style="margin-left:5px;">
                         Cost Section
 
                         <div class="row clearfix">
@@ -169,19 +168,19 @@
                                     <thead style="background-color:lightgray">
                                         <tr>
 
-                                            <th class="text-center" style="width:60%">
+                                            <th class="text-center" style="width:30%">
                                                 Cost Category
                                             </th>
-                                            <th class="text-center" style="width:10%">
+                                            <th class="text-center">
                                                 Cost Per Unit
                                             </th>
-                                            <th class="text-center" style="width:10%">
+                                            <th class="text-center">
                                                 Total Cost
                                             </th>
-                                            <th class="text-center" style="width:10%">
+                                            <th class="text-center">
                                                 profit per Unit
                                             </th>
-                                            <th class="text-center" style="width:10%">
+                                            <th class="text-center">
                                                 Total Profit
                                             </th>
                                         </tr>
@@ -213,6 +212,7 @@
                     </div>
 
                 </div>
+
                 <div class="tab-pane fade" id="tab3default">
                     <div class="col-md-6 well" style="width:550px;margin-left:5px;height:270px">
                         Revenue Section
@@ -223,88 +223,88 @@
 
                 </div>
 
-                <div class="tab-pane fade" id="tab6default">
-                    <div class="row">
+                <div class="tab-pane fade" id="tab6default" style="width:100%">
+                    <div class="col-md-12" style="padding-left:0px">
+                        <div class="row">
 
-                        <div class="container" style="margin:20px; width:1000px;padding-top:5px;padding-bottom:5px">
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Asset Description</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtAddress" placeholder="">
+                            <div class="container" style="margin:20px; padding-top:5px;padding-bottom:5px">
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Asset Description</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtAddress" placeholder="">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Asset type</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtAddress" placeholder="">
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Asset type</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtAddress" placeholder="">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Specifications</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtPhone" placeholder="">
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Specifications</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtPhone" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Year of manufacturer</label>
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control form-control-sm" id="txtFax" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Qty</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtFax" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Location</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtFax" placeholder="Fax">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Sell(Ex GST)</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Total Sell</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Buy</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Total Buy</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Additional Information</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Year of manufacturer</label>
-                                <div class="col-sm-6">
-                                    <input type="date" class="form-control form-control-sm" id="txtFax" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Qty</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtFax" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Location</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtFax" placeholder="Fax">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Sell(Ex GST)</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Total Sell</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Buy</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Total Buy</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm">Additional Information</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-sm" id="txtEmail" placeholder="">
-                                </div>
-                            </div>
                         </div>
-
                     </div>
-
                 </div>
 
-
-                <div class="tab-pane fade" id="tab5default">
+                <div class="tab-pane fade" id="tab5default" style="width:100%">
                     <div class="row">
 
-                        <div class="container" style="margin:20px; width:1000px;padding-top:5px;padding-bottom:5px">
+                        <div class="container" style="margin:20px; padding-top:5px;padding-bottom:5px">
                             <div class="col-md-10">
                                 <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Warehouse Configuration</label>
                                 <select class="form-control">
@@ -368,10 +368,10 @@
             </div>
 
         </div>
-        <div>
-            <input type="submit" class="btn-primary btn-lg"  value="PRODUCE COSTMODEL" />
+        <div class="pull-right" style="margin-right:15px;">
+            <input type="submit" class="btn-primary btn-lg" style="font-size: 12px !important" value="PRODUCE COSTMODEL" />
         </div>
-    </div>
+
    
 </div>
 <script type="text/javascript">
@@ -395,19 +395,6 @@
 
 </script>
 <style>
-
-    .textarea {
-        max-width: 280px;
-        font-size: 10px;
-        border: 2px;
-        outline: 2px;
-    }
-    .container {
-    padding-right: 15px;
-    padding-left: 5px;
-    margin-right: auto;
-    margin-left: 22px;
-}
 
     .selected {
         color: black;
