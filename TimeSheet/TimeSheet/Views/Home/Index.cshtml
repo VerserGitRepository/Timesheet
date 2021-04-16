@@ -28,13 +28,13 @@
             <thead>
                 <tr>
                     <th class="col-md-1" style="padding-left:0">
-                        @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId" })
+                        @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId", @style = "height:34px" })
                     </th>
                     <th class="col-md-1">
-                        @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID" })
+                        @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID", @style = "height:34px" })
                     </th>
                     <th class="col-md-1">
-                        @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId" })
+                        @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId", @style = "height:34px" })
                     </th>
                     <th class="col-md-1">
                         @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:7px; width:7px;", @multiple = "multiple" })
@@ -281,8 +281,8 @@
 
     .multiselect.dropdown-toggle {
         text-align: left;
-        height: 26px;
-        width: 80%;
+        height: 34px;
+        width: 100%;
     }
 </style>
 

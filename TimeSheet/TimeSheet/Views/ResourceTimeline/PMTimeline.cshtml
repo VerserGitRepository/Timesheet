@@ -28,36 +28,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 </head>
 <body>
-    <div class="container" style="margin-left:0px;width:1800px; margin-bottom:700px">
-        @*<div class="row" style="vertical-align:baseline;padding-top:10PX;margin-left:250px;">*@
-        <div class="pull-left">
-            <div class="row" style="vertical-align:baseline;padding-top:100PX;margin-left:70px;">
-                <div class="form-group col-md-1" style="width:20%">
-                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId" })
-                </div>
-                <div class="form-group col-md-1" style="width:22%">
-                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID", @id = "OpportunityID" })
-                </div>
-                <div class="form-group col-md-2" style="width:20%">
-                    @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
+    <div class="container" style="margin-left:0px;">
+        <div class="col-md-6">
+            <div class="row" style="vertical-align:baseline;padding-top:55px; width:200%">
+                <div class="form-group col-md-3">
+                    @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId", @style = "height:34px" })
                 </div>
                 <div class="form-group col-md-3">
+                    @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID", @id = "OpportunityID", @style = "height:34px" })
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId", @style = "height:34px" })
+                </div>
+                <div class="form-group col-md-2">
 
-                    @Html.DropDownListFor(model => Model.ResourceID, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:10px;", @multiple = "multiple" })
+                    @Html.DropDownListFor(model => Model.ResourceID, Model.CandidateNameList, new { @id = "CandidateNameId", @multiple = "multiple" })
 
                     @Html.HiddenFor(model => model.ResourceID)
                     <input class="hidden" type="text" id="hdnJsonString" value="@Model.jsonResources" />
                     <input class="hidden" type="text" id="hdnJsonEvents" value="@Model.jsonEvents" />
                 </div>
                 <div class="form-group col-md-1">
-                    <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;height:26px;margin-left:50px" OnClick="SearchAndRenderCalendar();">
+                    <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;" OnClick="SearchAndRenderCalendar();">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
 
                 </div>
             </div>
 
-            <div id='calendar-room' style="width:1800px;margin-left:20px;">
+            <div id='calendar-room'>
                 <div id='calendar'></div>
             </div>
         </div>
@@ -356,8 +355,8 @@ Activities.append($('<option></option>').text(item.Value).val(item.Id));
 
     .multiselect.dropdown-toggle {
         text-align: left;
-        height: 26px;
-        width: 80%;
+        height: 34px;
+        width: 100%;
     }
 
     .form-control {

@@ -26,21 +26,21 @@
     <div class="col-md-12" style="margin-top:55px">
         <div class="col-md-8 pull-left">
             <div class="form-group col-md-3">
-                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId" })
+                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId", @style = "height:34px" })
             </div>
             <div class="form-group col-md-3">
-                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID" })
+                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID", @style = "height:34px" })
             </div>
             <div class="form-group col-md-3">
-                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId" })
+                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId", @style = "height:34px" })
             </div>
             <div class="form-group col-md-2">
-                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:10px; width:7px;", @multiple = "multiple" })
+                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @multiple = "multiple" })
                 @Html.HiddenFor(model => model.ResourceID)
             </div>
         </div>
         <div class="form-group col-md-1">
-            <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;height:26px" OnClick="SearchAndRenderCalendar();">
+            <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;" OnClick="SearchAndRenderCalendar();">
                 <span class="glyphicon glyphicon-search"></span>
             </button>
         </div>
@@ -517,7 +517,7 @@
 
     .multiselect.dropdown-toggle {
         text-align: left;
-        height: 26px;
+        height: 34px;
         width: 80%;
     }
 
