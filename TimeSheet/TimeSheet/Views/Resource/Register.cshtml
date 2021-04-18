@@ -16,10 +16,10 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 
-<section id="tabs" class="project-tab" style="margin-top:30px">
+<section id="tabs" class="project-tab">
     <div class="container" style="width:170%; padding-top:5px; margin-left:1px; border-color:black">
         <nav>
-            <ul class="nav nav-tabs" style="padding-top:15px" id="myTab" role="tablist">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">BOOK RESOURCES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">BOOK PROJECT MANAGERS</a></li>
                 @if (UserRoles.HRUser() != false)

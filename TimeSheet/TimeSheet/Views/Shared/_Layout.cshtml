@@ -7,6 +7,7 @@
     <title>@ViewBag.Title -Verser Technology LifeCycles</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-fixed-top" style="background-color:black; padding:0 10px; height:50px; border:none">
@@ -108,36 +109,33 @@
                 }
             </ul>
         </div>
-
     </div>
 
-    <div class="container">
+    <div class="container-fluid" style="margin-top:50px">
         @if (HttpContext.Current.Session["ResultMessage"] != null)
         {
-            <div class="alert alert-success text-center  alert-dismissible" role="alert" style="margin-top:100px; margin-bottom:0; z-index:9999">
+            <div class="alert alert-success text-center  alert-dismissible" role="alert" style="margin-bottom:5px">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 @HttpContext.Current.Session["ResultMessage"]
             </div>
-            HttpContext.Current.Session["ResultMessage"] = null;
+        @@HttpContext.Current.Session["ResultMessage"] = null;
         }
         @if (HttpContext.Current.Session["InfoMessage"] != null)
         {
-            <div class="alert alert-info text-center  alert-dismissible" role="alert" style="margin-top: 100px; margin-bottom:0; z-index: 9999">
+            <div class="alert alert-info text-center  alert-dismissible" role="alert" style="margin-bottom:5px">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 @HttpContext.Current.Session["InfoMessage"]
             </div>
-            HttpContext.Current.Session["InfoMessage"] = null;
+        @@HttpContext.Current.Session["InfoMessage"] = null;
         }
         @if (HttpContext.Current.Session["ErrorMessage"] != null)
         {
-            <div class="alert alert-danger text-center  alert-dismissible" role="alert" style="margin-top: 100px;margin-bottom:0; z-index: 9999">
+            <div class="alert alert-danger text-center  alert-dismissible" role="alert" style="margin-bottom:5px">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 @HttpContext.Current.Session["ErrorMessage"]
             </div>
-            HttpContext.Current.Session["ErrorMessage"] = null;
+        @@HttpContext.Current.Session["ErrorMessage"] = null;
         }
-    </div>
-    <div class="container-fluid">
         @RenderBody()
     </div>
     @*<hr />
@@ -164,10 +162,6 @@
 </script>
 <style>
 
-    .body {
-        width: 100%;
-    }
-
     #dropmenu {
         background-color:black;
     }
@@ -188,28 +182,12 @@
         color: #959ca1;
     }
 
-    .navbar, .navbar div {
-        height: 50px;
-    }
-
-    .fixed-top {
-        height: 50px;
-    }
-    /* Additional styles to style some of your child elements */
-    .navbar-brand {
-        padding: 10px;
-    }
-
     .dropdown:hover .dropdown-menu {
         display: block;
     }
 
     .dropdown-menu > li > a:hover {
         background-color: #FFA500;
-    }
-
-    .navbar .navbar-toggle {
-        padding: 4px 10px;
     }
 
     .tooltip-inner {

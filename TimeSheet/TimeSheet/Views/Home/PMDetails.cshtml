@@ -9,7 +9,7 @@
     <div style="align-content:flex-start;align-self:flex-start;align-items:flex-start;padding:15px;">
         <table id="tblCustomers" class="table-bordered table-responsive table-hover table-scroll" style="align-content:flex-start;align-self:flex-start;align-items:flex-start;">
             <thead style="background-color:#FFA500;color:white">
-                <tr>
+                <tr style="font-size:x-small">
                     <th>Id</th>
                     <th>Project</th>
                     <th>Candidate</th>
@@ -33,7 +33,7 @@
             <tbody class="table">
                 @foreach (var item in Model.CandidateTimeSheetList)
                 {
-                <tr>
+                <tr style="font-size:x-small">
                     <td class="Id"> <span>@item.Id</span> </td>
                     <td class="CandidateName" width="4%">
                         <span id="ProjectName">@item.ProjectName</span>
