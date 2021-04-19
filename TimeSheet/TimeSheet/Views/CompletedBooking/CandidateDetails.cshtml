@@ -7,7 +7,7 @@
     <div style="align-content:center; align-self:flex-start; align-items:flex-start; padding:15px">
         <table id="tblCustomers" class="table-bordered table-responsive text-center table-hover table-scroll" style="align-content:flex-start; align-self:flex-start; align-items:flex-start;">
             <thead style="background-color:#FFA500;color:white">
-                <tr>
+                <tr style="font-size:x-small">
                     <th class="text-center">Id</th>
                     <th class="text-center">Candidate</th>
                     <th class="text-center">Activity</th>
@@ -28,7 +28,7 @@
             <tbody class="table">
                 @foreach (var item in Model.CompletedTimeSheetList)
                 {
-                <tr>
+                <tr style="font-size:x-small">
                     <td class="Id"> <span>@item.Id</span> </td>
                     <td class="CandidateName">
                         <span id="txtCandidateName">@item.CandidateName</span>
@@ -119,6 +119,9 @@
 </div>
 
 <script type="text/javascript">
+    $('#tblCustomers').dataTable({
+        responsive: true
+    });
     SetDDLValue();
     function ShowOTMessage(therowid) {
         var rowid = $(therowid).closest("tr");

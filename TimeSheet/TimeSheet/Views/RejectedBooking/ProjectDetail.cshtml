@@ -1,12 +1,12 @@
 ﻿@model  TimeSheet.Models.CompletedTimesheetModel
 
 <div>
-    <div class="modal-header" style="background-color:lightgray">
+    <div class="modal-header" style="background-color:lightgray;">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h5 class="modal-title text-center">Project Details</h5>
+        <h6 class="modal-title text-center">Project Details</h6>
     </div>
     <div style="align-content:flex-start; align-self:flex-start; align-items:flex-start;padding:15px;">
-        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:flex-start; align-self:flex-start; align-items:flex-start;">
+        <table id="tblCustomers" class="table-bordered table-responsive-md text-center table-hover table-scroll" style="align-content:center; align-self:flex-start; align-items:flex-start;">
             <thead style="background-color:#FFA500;color:white">
                 <tr>
                     <th>Id</th>
@@ -464,11 +464,6 @@
 
 </script>
 <style>
-    .modal-dialog {
-        width: 1380px;
-        margin: 30px auto;
-        margin-bottom: 10px;
-    }
 
     .table-hover > tbody > tr:hover > td,
     .table-hover > tbody > tr:hover > th {
