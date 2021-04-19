@@ -79,7 +79,9 @@
 </div>
 
 <script type="text/javascript">
-
+    $('#tblCustomers').dataTable({
+        responsive: true
+    });
     $("body").on("click", "#tblCustomers .Update", function () {
        // debugger;
     var row = $(this).closest("tr");
