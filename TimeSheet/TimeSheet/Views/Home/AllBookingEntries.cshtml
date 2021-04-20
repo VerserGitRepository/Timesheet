@@ -29,7 +29,7 @@
 
     <table id="TimeSheetTable" class="table table-striped table-bordered" cellspacing="0">
         <thead style="background-color:#FFA500;color:white; ">
-            <tr style="font-size:x-small">
+            <tr style="font-size: smaller; font-weight:500">
                 <th width="12%">Resource</th>
                 <th>Opportunity</th>
                 <th>BookDate </th>
@@ -49,7 +49,7 @@
         <tbody>
             @foreach (TimeSheet.Models.CompletedTimesheetModel item in Model.CompletedTimeSheetList)
             {
-            <tr style="font-size:x-small">
+            <tr style="font-size: smaller; font-weight:500">
                 <td>
                     @Html.DisplayFor(modelItem => item.CandidateName)
                 </td>
