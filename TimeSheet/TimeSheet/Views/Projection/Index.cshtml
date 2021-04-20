@@ -209,7 +209,9 @@
     $(document).ready(function () {
        // alert('document ready');
         $('table#MANAGEPROJECTIONMAIN').DataTable({
-            responsive: true
+            responsive: true,
+            "lengthMenu": [15, 30, 50, 100],
+            "pageLength": 15
         });
        // SetDDLValue();
 

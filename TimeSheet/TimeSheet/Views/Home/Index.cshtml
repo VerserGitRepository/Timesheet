@@ -289,7 +289,9 @@
     $(document).ready(function () {
         $('#TimeSheetTable').dataTable({
             responsive: true,
-            stateSave: true
+            stateSave: true,
+            "lengthMenu": [15, 30, 50, 100],
+            "pageLength": 15
         });
         $('.dataTables_filter').addClass('pull-right');
     });
