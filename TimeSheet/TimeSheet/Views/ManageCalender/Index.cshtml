@@ -25,24 +25,29 @@
 <body>
     <div class="col-md-12" style="margin-top:55px">
         <div class="col-md-8 pull-left">
-            <div class="form-group col-md-3">
-                @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECTS", new { @class = "form-control project", @id = "ddlProjectId", @style = "height:34px" })
-            </div>
-            <div class="form-group col-md-3">
-                @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control .OpportunityNumberID", @style = "height:34px" })
-            </div>
-            <div class="form-group col-md-3">
-                @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "FACILITIES", new { @class = "form-control", id = "ddlWarehouseId", @style = "height:34px" })
-            </div>
-            <div class="form-group col-md-2">
-                @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @multiple = "multiple" })
-                @Html.HiddenFor(model => model.ResourceID)
-            </div>
-        </div>
-        <div class="form-group col-md-1">
-            <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;" OnClick="SearchAndRenderCalendar();">
-                <span class="glyphicon glyphicon-search"></span>
-            </button>
+
+            <table class="table" style="margin-bottom:5px !important">
+                <thead>
+                    <tr>
+                        <th class="col-md-1" style="padding-left:0; border:none;">
+                            @Html.DropDownListFor(model => model.ProjectID, Model.Projectlist, "PROJECT", new { @class = "form-control project", @id = "ddlProjectId", @style = "height:34px" })
+                        </th>
+                        <th class="col-md-1" style="border:none;">
+                            @Html.DropDownListFor(model => model.OpportunityID, new SelectList(Enumerable.Empty<SelectListItem>()), "OPPORTUNITY", new { @class = "form-control OpportunityNumberID", @style = "height:34px" })
+                        </th>
+                        <th class="col-md-1" style="border:none;">
+                            @Html.DropDownListFor(model => model.WarehouseID, Model.WarehouseNameList, "WAREHOUSE", new { @class = "form-control", id = "ddlWarehouseId", @style = "height:34px" })
+                        </th>
+                        <th class="col-md-1" style="border:none;">
+                            @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:7px; width:7px;", @multiple = "multiple" })
+                            @Html.HiddenFor(model => model.ResourceID)
+                            <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;" OnClick="SearchAndRenderCalendar();">
+                                <span class="glyphicon glyphicon-search" style=""></span>Search
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
         </div>
 
         <div class="calendar-room" style="margin-left:0px;">
@@ -450,11 +455,6 @@
         color: #fff;
     }
 
-    .table {
-        display: block;
-        max-height: 680px;
-        overflow-y: scroll;
-    }
 
     .multiselect.dropdown-toggle {
         text-align: left;

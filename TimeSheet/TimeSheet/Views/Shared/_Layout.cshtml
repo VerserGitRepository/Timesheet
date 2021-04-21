@@ -111,7 +111,7 @@
         </div>
     </div>
 
-    <div class="container-fluid" style="margin-top:50px">
+    <div class="container-fluid">
         @if (HttpContext.Current.Session["ResultMessage"] != null)
         {
             <div class="alert alert-success text-center  alert-dismissible" role="alert" style="margin-bottom:5px">
@@ -142,13 +142,6 @@
     <footer>
         <p>&copy; @DateTime.Now.Year - Verser TIME SCHEDULER</p>
     </footer>*@
-
-    @*  Calender Scripts
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-        <script src="~/Scripts/bootstrap.min.js"></script>
-    *@
-    @*@Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")*@
 
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)

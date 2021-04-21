@@ -41,13 +41,12 @@
                         @Html.DropDownListFor(model => Model.ResourceIDs, Model.CandidateNameList, new { @id = "CandidateNameId", @style = "height:7px; width:7px;", @multiple = "multiple" })
                         @Html.HiddenFor(model => model.ResourceID)
                         <button type="submit" value="Search" class="btn btn-warning" name="submitButton" style="border-color:lightgray;" OnClick="SearchAndFetchResourceDetails();">
-                            <span class="glyphicon glyphicon-search" style=""></span>
+                            <span class="glyphicon glyphicon-search" style=""></span>Search
                         </button>
                     </th>
                 </tr>
             </thead>
         </table>
-
     </div>
     <div class="col-md-4">
         <table class="table" style="margin-bottom:5px !important">
