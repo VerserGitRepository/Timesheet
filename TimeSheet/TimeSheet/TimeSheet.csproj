@@ -185,8 +185,10 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminUpdateController.cs" />
     <Compile Include="Controllers\ApprovedBookingController.cs" />
+    <Compile Include="Controllers\CorporateExpenseClaimerController.cs" />
     <Compile Include="Controllers\CostModelController.cs" />
     <Compile Include="Controllers\HRController.cs" />
+    <Compile Include="Controllers\PersonalExpenseClaimerController.cs" />
     <Compile Include="Controllers\RejectedBookingController.cs" />
     <Compile Include="Controllers\CompletedBookingController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
@@ -657,6 +659,8 @@
     <Content Include="Views\Home\TimesheetBookings.cshtml" />
     <Content Include="Views\ApprovedBooking\Index.cshtml" />
     <Content Include="Views\CostModel\Index.cshtml" />
+    <Content Include="Views\CorporateExpenseClaimer\Index.cshtml" />
+    <Content Include="Views\PersonalExpenseClaimer\Index.cshtml" />
     <None Include="Web References\VerserSalesforce\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
