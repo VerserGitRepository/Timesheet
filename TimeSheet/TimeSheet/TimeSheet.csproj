@@ -308,9 +308,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\CompanyLogo.jpg" />
     <Content Include="Images\download.png" />
+    <Content Include="Images\Verser.jpg" />
     <Content Include="Images\Verser.png" />
+    <Content Include="Images\Verser_bg.jpg" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap-multiselect.css" />
     <Content Include="Scripts\bootstrap-multiselect.js" />
