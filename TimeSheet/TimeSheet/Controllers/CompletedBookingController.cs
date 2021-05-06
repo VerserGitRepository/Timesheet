@@ -138,7 +138,8 @@ namespace TimeSheet.Controllers
                     var EnddateTime = Convert.ToDateTime(dtEn);
                     CandidateEdit.StartTime = StartdateTime;
                     CandidateEdit.EndTime = EnddateTime;
-                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);                    
+                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit).Result;
+                    TempData["ResultMessage"] = ReturnValue.Message;
                 }
             }
             return RedirectToAction("Index", "Home");

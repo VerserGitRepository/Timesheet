@@ -273,7 +273,9 @@ namespace TimeSheet.Controllers
                     EditModel.EndTime = EnddateTime;
                     EditModel.FullName = Session["FullName"].ToString();
                 }  
-                var ReturnValue = RegisterTimesheetService.EditTimesheetModel(EditModel);
+                var ReturnValue = RegisterTimesheetService.EditTimesheetModel(EditModel).Result;
+                TempData["ResultMessage"] = ReturnValue?.Message;
+
             }
             return RedirectToAction("Index", "Home");
         }
@@ -292,7 +294,8 @@ namespace TimeSheet.Controllers
                     CandidateEdit.StartTime = StartdateTime;
                     CandidateEdit.EndTime = EnddateTime;
                     CandidateEdit.FullName= Session["FullName"].ToString();
-                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit);                                  
+                    var ReturnValue = RegisterTimesheetService.EditTimesheetModel(CandidateEdit).Result;
+               
             }
             else
             {

@@ -79,7 +79,9 @@ namespace TimeSheet.ServiceHelper
                 if (response.IsSuccessStatusCode)
                 {
                     ReturnResult = await response.Content.ReadAsAsync<ReturnModel>();
-                    HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;
+
+                      HttpContext.Current.Session["ResultMessage"] = ReturnResult.Message;                  
+
                 }
                 else
                 {
