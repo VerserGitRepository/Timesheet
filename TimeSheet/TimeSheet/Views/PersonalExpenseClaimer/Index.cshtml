@@ -39,25 +39,25 @@
                 <div class="form-group col-md-12">
                     @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3" style="margin-top:7px;">
-
+                        <input type="text" class="form-control form-control-sm" id="" placeholder="">
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3" style="margin-top:7px">
-
+                        <input type="date" class="form-control form-control-sm" id="" placeholder="">
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     @Html.Label("Employee Signature:", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3" style="margin-top:7px">
-
+                        <input type="text" class="form-control form-control-sm" id="" placeholder="">
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     @Html.Label("Prepared by:  ", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-3" style="margin-top:7px">
-
+                        <input type="text" class="form-control form-control-sm" id="" placeholder="">
                     </div>
                 </div>
             </div>
@@ -66,43 +66,43 @@
 
     <div class="col-md-4" style="margin-top:10px">
         <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px">
-            <div class="form-group" style="margin-bottom:8px">
-                <div class="form-group col-md-12" style="margin-bottom:2px">
+            <div class="form-group" style="margin-bottom:35px">
+                <div class="form-group col-md-12" style="margin-bottom:8px">
                     @Html.Label("Expenses Summary", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center; font-weight:800" })
                 </div>
-                <div class="form-group col-md-12" style="margin-bottom:2px">
+                <div class="form-group col-md-12" style="margin-bottom:8px">
                     @Html.Label("Travel", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
+                    <div class="col-md-6" style="margin-top:3px">
 
                     </div>
                 </div>
-                <div class="form-group col-md-12" style="margin-bottom:2px">
+                <div class="form-group col-md-12" style="margin-bottom:8px">
                     @Html.Label("Accommodation", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
+                    <div class="col-md-6" style="margin-top:3px">
 
                     </div>
                 </div>
-                <div class="form-group col-md-12" style="margin-bottom:2px">
+                <div class="form-group col-md-12" style="margin-bottom:8px">
                     @Html.Label("Meals ", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
+                    <div class="col-md-6" style="margin-top:3px">
 
                     </div>
                 </div>
-                <div class="form-group col-md-12" style="margin-bottom:2px">
+                <div class="form-group col-md-12" style="margin-bottom:8px">
                     @Html.Label("Tools", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
+                    <div class="col-md-6" style="margin-top:3px">
 
                     </div>
                 </div>
-                <div class="form-group col-md-12" style="margin-bottom:2px">
+                <div class="form-group col-md-12" style="margin-bottom:8px">
                     @Html.Label("Other", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
+                    <div class="col-md-6" style="margin-top:3px">
 
                     </div>
                 </div>
-                <div class="form-group col-md-12" style="margin-bottom:2px">
+                <div class="form-group col-md-12" style="margin-bottom:8px">
                     @Html.Label("Total", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
+                    <div class="col-md-6" style="margin-top:3px">
 
                     </div>
                 </div>
@@ -112,13 +112,66 @@
 </div>
 
 <div class="row well" style="margin-left:15px; margin-right:15px; margin-top:10px;margin-bottom:0">
+    <form>
+        <div class="form-group col-md-4">
+            @Html.Label("Date:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="Date" id="txtDate" placeholder="Date">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Supplier:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtSupplier" placeholder="Supplier">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Description:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtDescription" placeholder="Description">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtBranch" placeholder="Branch">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Project:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtProject" placeholder="Project">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("PO Number:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtPONumber" placeholder="PO Number">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtTravel" placeholder="Travel">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Acommodation:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtAcommodation" placeholder="Acommodation">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Meals:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtMeals" placeholder="Meals">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Tools:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtTools" placeholder="Tools">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtOther" placeholder="Other">
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Total:", htmlAttributes: new { @class = "control-label col-md-3", style = "margin-top:5px" })
+            <input class="form-control form-control-sm col-md-9" type="text" id="txtTotal" placeholder="Total">
+        </div>
+        <input type="button" id="add-row" class="btn btn-warning btn-sm pull-right" value="Add Row" style="margin-bottom:20px" />
+    </form>
     <table class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
         <thead style="background-color:orange; color:white">
             <tr>
+                <th>Select</th>
                 <th>Date</th>
                 <th>Supplier</th>
                 <th>Description</th>
-                <th>Project/Branch</th>
+                <th>Project</th>
+                <th>Branch</th>
                 <th>PO Number</th>
                 <th>Travel</th>
                 <th>Acommodation</th>
@@ -129,21 +182,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+
         </tbody>
     </table>
+    <button type="button" class="btn btn-warning btn-sm pull-right" id="delete-row">Delete Row</button>
 </div>
 
 <div class="row" style="margin-left:15px; margin-right:15px; margin-top:10px;margin-bottom:0">
@@ -152,17 +194,58 @@
             <div class="form-group col-md-12">
                 @Html.Label("Branch Manager:", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left" })
                 <div class="col-md-2" style="margin-top:5px">
-
+                    <input type="text" class="form-control form-control-sm" id="" placeholder="">
                 </div>
             </div>
             <div class="form-group col-md-12">
                 @Html.Label("Manager Signature (Email Approval Ok): ", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left" })
                 <div class="col-md-2" style="margin-top:5px">
-
+                    <input type="text" class="form-control form-control-sm" id="" placeholder="">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#add-row").click(function () {
+            var Date = $("#txtDate").val();
+            var Supplier = $("#txtSupplier").val();
+            var Description = $("#txtDescription").val();
+            var Branch = $("#txtBranch").val();
+            var Project = $("#txtProject").val();
+            var PONumber = $("#txtPONumber").val();
+            var Travel = $("#txtTravel").val();
+            var Acommodation = $("#txtAcommodation").val();
+            var Meals = $("#txtMeals").val();
+            var Tools = $("#txtTools").val();
+            var Other = $("#txtOther").val();
+            var Total = $("#txtTotal").val();
+            var markup = "<tr><td><input type='checkbox' name='record'></td><td>"
+                + Date + "</td><td>"
+                + Supplier + "</td><td>"
+                + Description + "</td><td>"
+                + Branch + "</td><td>"
+                + Project + "</td><td>"
+                + PONumber + "</td><td>"
+                + Travel + "</td><td>"
+                + Acommodation + "</td><td>"
+                + Meals + "</td><td>"
+                + Tools + "</td><td>"
+                + Other + "</td><td>"
+                + Total + "</td></tr>";
+            $("table tbody").append(markup);
+        });
 
+        // Find and remove selected table rows
+        $("#delete-row").click(function () {
+            $("table tbody").find('input[name="record"]').each(function () {
+                if ($(this).is(":checked")) {
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+    });
+</script>
