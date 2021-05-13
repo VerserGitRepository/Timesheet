@@ -37,7 +37,7 @@
                 <div class="form-group col-md-6">
                     @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-6" style="margin-top:7px;">
-                        <input type="text" class="form-control form-control-sm" id="" placeholder="">
+                        <input type="text" class="form-control form-control-sm" id="txtemployeeName" placeholder="">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -215,7 +215,7 @@
             </div>
             <div class="col-md-4 pull-right">
                 <div class="col-md-12" style="margin-top:5px">
-                    <button type="button" class="btn btn-warning btn-sm pull-right" id="Submit" style="font-size:16px;">Submit</button>
+                    <button type="button" class="btn btn-warning btn-sm pull-right" id="CreateClaimBtn" style="font-size:16px;">Submit</button>
                 </div>
 
             </div>
@@ -226,6 +226,10 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function () {
+        
+        var MainModelExpenseCliams = {};
+        var CorporateCardExpenseClaimItems = new Array();
+
         $("#add-row").click(function () {
             var Date = $("#txtDate").val();
             var Supplier = $("#txtSupplier").val();
@@ -253,6 +257,30 @@
                 + Other + "</td><td>"
                 + Total + "</td></tr>";
             $("table tbody").append(markup);
+            var CliamLineItem = {};
+            CliamLineItem.Date = Date;
+            CliamLineItem.Supplier = Supplier;
+            CliamLineItem.Description = Description;
+            CliamLineItem.Branch = Branch;
+            CliamLineItem.Project = Project;
+            CliamLineItem.PONumber = Date;
+            CliamLineItem.Date = PONumber;
+            MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
+        });
+
+        $("#CreateClaimBtn").click(function () {
+
+            MainModelExpenseCliams.EmployeeName = $("#txtemployeeName").val();                
+            $.ajax({
+                type: "POST",
+                url: "./CreateExpenseClaimItemEntity",
+                data: JSON.stringify(MainModelExpenseCliams),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                 //   window.location.href = "./ExportTimesSheetToExcel?path=" + r.fileName;
+                }
+            });
         });
 
         // Find and remove selected table rows
