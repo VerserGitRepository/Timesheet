@@ -28,5 +28,56 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
+
+        public static async Task<List<CorporateCardExpenseClaimItemsModel>> GetExpenseClaimItemsById(int ClaimId)
+        {
+            var ReturnResult = new List<CorporateCardExpenseClaimItemsModel>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimId}/GetExpenseClaimItemsById")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<List<CorporateCardExpenseClaimItemsModel>>();
+                }
+            }
+            return ReturnResult;
+        }
+
+        public static async Task<CorporateCardExpenseClaimItemsModel> GetExpenseClaimItem(int ClaimItemId)
+        {
+            var ReturnResult = new CorporateCardExpenseClaimItemsModel();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimItemId}/GetExpenseClaimItem")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<CorporateCardExpenseClaimItemsModel>();
+                }
+            }
+            return ReturnResult;
+        }
+
+        public static void UpdateExpenseClaimItem(CorporateCardExpenseClaimItemsModel UpdateClaimItemModel)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ExpenseClaims/UpdateExpenseClaimItem"), UpdateClaimItemModel).Result;
+               
+                if (response.IsSuccessStatusCode)
+                {
+                  //var  ReturnResult =  response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Expense ClaimItem Updated Successfully!";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Expense ClaimItem Updated Failed!";
+                }
+            }
+        }
     }
 }

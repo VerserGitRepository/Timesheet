@@ -102,5 +102,14 @@ namespace TimeSheet.ServiceHelper
         {          
             return PMEditCompleteBookings();
         }
+
+        public static bool IsLoginActive()
+        {
+            if (HttpContext.Current.Session["Username"] != null || HttpContext.Current.Session["FullName"] != null)
+            {
+                return true;
+            }           
+            return false;
+        }
     }
 }
