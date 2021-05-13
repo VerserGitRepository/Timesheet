@@ -222,6 +222,8 @@
     <Compile Include="Models\CompletedtimesheetExportModel.cs" />
     <Compile Include="Models\AggregatedCompletedTimesheetModel.cs" />
     <Compile Include="Models\CompletedTimesheetModel.cs" />
+    <Compile Include="Models\CorporateCardExpenseClaimItemsModel.cs" />
+    <Compile Include="Models\CorporateCardExpenseClaimModel.cs" />
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
     <Compile Include="Models\DTOs\ExportApprovedTimesheetDto.cs" />
     <Compile Include="Models\EstimatedTravelCostModel.cs" />
@@ -277,6 +279,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ServiceHelper\AdminHelperService.cs" />
+    <Compile Include="ServiceHelper\ExpenseClaimerService.cs" />
     <Compile Include="ServiceHelper\ListItemService.cs" />
     <Compile Include="ServiceHelper\LoadDropDownsServices.cs" />
     <Compile Include="ServiceHelper\LoginService.cs" />
@@ -662,8 +665,11 @@
     <Content Include="Views\Home\TimesheetBookings.cshtml" />
     <Content Include="Views\ApprovedBooking\Index.cshtml" />
     <Content Include="Views\CostModel\Index.cshtml" />
-    <Content Include="Views\CorporateExpenseClaimer\Index.cshtml" />
     <Content Include="Views\PersonalExpenseClaimer\Index.cshtml" />
+    <Content Include="Views\CorporateExpenseClaimer\Index.cshtml" />
+    <Content Include="Views\CorporateExpenseClaimer\ExpenseClaims.cshtml" />
+    <Content Include="Views\CorporateExpenseClaimer\ExpenseClaimItems.cshtml" />
+    <Content Include="Views\CorporateExpenseClaimer\UpdateExpenseClaimItem.cshtml" />
     <None Include="Web References\VerserSalesforce\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
