@@ -58,16 +58,19 @@ namespace TimeSheet.Controllers
                 if (UserRoles.UserCanRegisterTimesheet() == true)
                 {
                     TimeSheetViewModel model = new TimeSheetViewModel();
+
                     List<ListItemViewModel> salesForceOpp = new List<ListItemViewModel>();                
                     var projectList = TimeSheetAPIHelperService.CostModelProject().Result;
                     model.Projectlist = new SelectList(projectList.Where(i => i.Value != RecruitmentProjectName), "ID", "Value");
                     model.OpportunityNumberList = new SelectList(TimeSheetAPIHelperService.CostModelProject().Result, "ID", "OpportunityNumber");
-                    var salesForceProjectList = TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp);
+                  //  var salesForceProjectList = TimeSheetAPIHelperService.SalesForceEntities(out salesForceOpp);
                     var newProjectList = projectList.Where(item => item.Value == RecruitmentProjectName);            
+                    
+                    //newProjectList.FirstOrDefault().Id = salesForceProjectList.Count();
+                    //salesForceProjectList.Add(newProjectList.FirstOrDefault());
+                    //model.SalesForceProjectlist = new SelectList(salesForceProjectList, "ID", "Value");
+
                     int verserProjectId = newProjectList.FirstOrDefault().Id;
-                    newProjectList.FirstOrDefault().Id = salesForceProjectList.Count();
-                    salesForceProjectList.Add(newProjectList.FirstOrDefault());
-                    model.SalesForceProjectlist = new SelectList(salesForceProjectList, "ID", "Value");
                     List<ListItemViewModel> load = new List<ListItemViewModel>();
                     load = TimeSheetAPIHelperService.ProjectOpportunities(verserProjectId).Result.Select(x => new ListItemViewModel()
                     {

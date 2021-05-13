@@ -1,0 +1,106 @@
+﻿
+@model IEnumerable<TimeSheet.Models.CorporateCardExpenseClaimModel>
+@{
+    ViewBag.Title = "ExpenseClaims";
+}
+    <div class="row well" style="margin-left:15px; margin-right:15px; margin-top:40px;margin-bottom:0">
+        <table id="ExpenseClaimsTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
+            <thead style="background-color:orange; color: white">
+                <tr>
+                    <th>ClaimID</th>
+                    <th>ClaimDate</th>
+                    <th>EmployeeName</th>
+                    <th>CreditCardNo</th>
+                    <th>ExpenseClaimType</th>
+                    <th>ApprovedBy</th>
+                    <th>Accommodation</th>
+                    <th>ToolsTotal</th>
+                    <th>Meals</th>
+                    <th>Other</th>
+                    <th>Travel</th>
+                    <th>Total</th>
+                    <th>SharePointFileLocation</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @using (Html.BeginForm("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = item.Id }, FormMethod.Post))
+                            {
+                            <button type="submit">
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </button>
+                                   @*<a href="javascript:void(0);" class="ClaimID"*@ 
+                                   @*onclick="ExpenseClaimItems('@item.Id')"*@ 
+                                   @*data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>*@
+                            }
+                            </td>
+                        <td>  @Html.DisplayFor(modelItem => item.ExpenseDateOfClaim)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.EmployeeName)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.CreditCardNo)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.ExpenseClaimType)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.AccommodationTotal)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.ToolsTotal)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.MealsTotal)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.OtherTotal)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.TravelTotal)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.ExpenseTotal)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.SharePointFileLocation)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div id='myModal' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+    //$(document).ready(function () {
+
+    //    $('#ExpenseClaimsTable').dataTable({
+    //        responsive: true,
+    //        stateSave: true,
+    //        "lengthMenu": [15, 30, 50, 100],
+    //        "pageLength": 15
+    //    });
+    //    $('.dataTables_filter').addClass('pull-right');
+    //});
+    function ExpenseClaimItems(ClaimId)
+    {
+        alert(ClaimId)
+
+                var URLClaimItems ='@Url.Action("ExpenseClaimItems", "CorporateExpenseClaimer")'; 
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "POST",
+                    url: URLClaimItems,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "ClaimId": ClaimId },
+                    datatype: "json",
+                    success: function (data) {
+                        // debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+    }
+    //$("#closbtn").click(function ()
+    //{
+    //   $('#myModal').modal('hide');
+    //});
+
+    </script>
+
