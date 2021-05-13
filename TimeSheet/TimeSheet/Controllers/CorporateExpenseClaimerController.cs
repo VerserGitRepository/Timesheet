@@ -67,6 +67,18 @@ namespace TimeSheet.Controllers
             ClaimItemsUpdateModel.ExpenseTotal = (ClaimItemsUpdateModel.AccommodationCost + ClaimItemsUpdateModel.TravelCost + ClaimItemsUpdateModel.ToolsCost + ClaimItemsUpdateModel.MealsCost + ClaimItemsUpdateModel.OtherCost);
             ExpenseClaimerService.UpdateExpenseClaimItem(ClaimItemsUpdateModel);
             return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
-        }        
+        }
+
+        [HttpPost]
+        public ActionResult CreateExpenseClaimItemEntity(CorporateCardExpenseClaimItemsModel ClaimItemsUpdateModel)
+        {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            ClaimItemsUpdateModel.ExpenseTotal = (ClaimItemsUpdateModel.AccommodationCost + ClaimItemsUpdateModel.TravelCost + ClaimItemsUpdateModel.ToolsCost + ClaimItemsUpdateModel.MealsCost + ClaimItemsUpdateModel.OtherCost);
+            ExpenseClaimerService.UpdateExpenseClaimItem(ClaimItemsUpdateModel);
+            return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
+        }
     }
 }
