@@ -22,97 +22,6 @@
                 <div class="col-md-12">
                     @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-top:20px" })
                     <div class="col-md-8" style="margin-top:20px; padding-top:7px; padding-left:20px">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row" style="margin-left:0px; margin-right:0px">
-    <div class="col-md-8" style="margin-top:10px">
-        <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px">
-            <div class="form-group" style="margin-top:5px; margin-bottom:0px">
-                <div class="form-group col-md-6">
-                    @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-6" style="margin-top:7px;">
-                        <input type="text" class="form-control form-control-sm" id="txtemployeeName" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <input type="date" class="form-control form-control-sm" id="" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Employee Signature:", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <input type="text" class="form-control form-control-sm" id="" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Approved by:", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <input type="text" class="form-control form-control-sm" id="" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Credit Card No:", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <input type="text" class="form-control form-control-sm" id="" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Expense Claim Type:", htmlAttributes: new { @class = "control-label col-md-3" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <input type="text" class="form-control form-control-sm" id="" placeholder="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4" style="margin-top:10px">
-        <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px">
-            <div class="form-group" style="margin-bottom:5px">
-                <div class="form-group col-md-12" style="margin-bottom:8px">
-                    @Html.Label("Expenses Summary", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center; font-weight:800" })
-                </div>
-                <div class="form-group col-md-6" style="margin-bottom:8px">
-                    @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-
-                    </div>
-                </div>
-                <div class="form-group col-md-6" style="margin-bottom:8px">
-                    @Html.Label("Accommodation:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-
-                    </div>
-                </div>
-                <div class="form-group col-md-6" style="margin-bottom:8px">
-                    @Html.Label("Meals:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-
-                    </div>
-                </div>
-                <div class="form-group col-md-6" style="margin-bottom:8px">
-                    @Html.Label("Tools:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-
-                    </div>
-                </div>
-                <div class="form-group col-md-6" style="margin-bottom:8px">
-                    @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-
-                    </div>
-                </div>
-                <div class="form-group col-md-6" style="margin-bottom:8px">
-                    @Html.Label("Total:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
 
                     </div>
                 </div>
@@ -121,116 +30,238 @@
     </div>
 </div>
 
-<div class="row well" style="margin-left:15px; margin-right:15px; margin-top:10px;margin-bottom:0">
-    <form>
-        <div class="form-group col-md-3">
-            @Html.Label("Date:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="Date" id="txtDate" placeholder="Date">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Supplier:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtSupplier" placeholder="Supplier">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Description:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtDescription" placeholder="Description">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtBranch" placeholder="Branch">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Project:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtProject" placeholder="Project">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("PO Number:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtPONumber" placeholder="PO Number">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtTravel" placeholder="Travel">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Acommodation:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtAcommodation" placeholder="Acommodation">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Meals:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtMeals" placeholder="Meals">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Tools:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtTools" placeholder="Tools">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtOther" placeholder="Other">
-        </div>
-        <div class="form-group col-md-3">
-            @Html.Label("Total:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
-            <input class="form-control form-control-sm col-md-8" type="text" id="txtTotal" placeholder="Total">
-        </div>
-        <input type="button" id="add-row" class="btn btn-warning btn-sm pull-right" value="Add Row" style="margin-bottom:10px; margin-top:10px" />
-    </form>
-    <table id="CreditCardTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
-        <thead style="background-color:orange; color: white">
-            <tr>
-                <th>Select</th>
-                <th>Date</th>
-                <th>Supplier</th>
-                <th>Description</th>
-                <th>Branch</th>
-                <th>Project</th>
-                <th>PO Number</th>
-                <th>Travel</th>
-                <th>Acommodation</th>
-                <th>Meals</th>
-                <th>Tools</th>
-                <th>Other</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
 
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-warning btn-sm pull-right" id="delete-row">Delete Row</button>
-</div>
-
-<div class="row" style="margin-left:15px; margin-right:15px; margin-top:10px;margin-bottom:0">
-    <div class="form-horizontal well" style="font-size:smaller; padding:5px; margin-bottom:0px">
-        <div class="form-group" style="margin-bottom:0; padding-bottom:0">
-            <div class="col-md-4">
-                @Html.Label("Branch Manager:", htmlAttributes: new { @class = "control-label col-md-3", style = "text-align:left" })
-                <div class="col-md-6" style="margin-top:5px">
-                    <input type="text" class="form-control form-control-sm" id="" placeholder="">
+    <div class="row" style="margin-left:0px; margin-right:0px">
+        <div class="col-md-8" style="margin-top:10px">
+            <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px; ">
+                <div class="form-group" style="margin-top:5px; margin-bottom:0px">
+                    <div class="form-group col-md-6">
+                        @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px;">
+                            <input type="text" class="form-control form-control-sm" id="txtemployeeName" name="employeeName">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="date" class="form-control form-control-sm" id="txtDateofClaim" name="DateofClaim">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Employee Signature:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="text" class="form-control form-control-sm" id="txtEmployeeSignature" name="EmployeeSignature">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Approved by:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="text" class="form-control form-control-sm" id="txtApprovedby" name="Approvedby">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Credit Card No:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="text" class="form-control form-control-sm" id="txtCreditCardNo" name="CreditCardNo">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Expense Claim Type:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <select type="text" class="form-control form-control-sm" id="txtExpenseClaimType" name="ExpenseClaimType" >
+                                <option></option>
+                                <option>Corporate</option>
+                                <option>Personal</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                @Html.Label("Manager Signature (Email Approval Ok): ", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:left" })
-                <div class="col-md-6" style="margin-top:5px">
-                    <input type="text" class="form-control form-control-sm" id="" placeholder="">
+        </div>
+
+        <div class="col-md-4" style="margin-top:10px">
+            <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px">
+                <div class="form-group" style="margin-bottom:5px">
+                    <div class="form-group col-md-12" style="margin-bottom:8px">
+                        @Html.Label("Expenses Summary", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center; font-weight:800" })
+                    </div>
+                    <div class="form-group col-md-6" style="margin-bottom:8px">
+                        @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" style="margin-bottom:8px">
+                        @Html.Label("Accommodation:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" style="margin-bottom:8px">
+                        @Html.Label("Meals:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" style="margin-bottom:8px">
+                        @Html.Label("Tools:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" style="margin-bottom:8px">
+                        @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6" style="margin-bottom:8px">
+                        @Html.Label("Total:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 pull-right">
-                <div class="col-md-12" style="margin-top:5px">
-                    <button type="button" class="btn btn-warning btn-sm pull-right" id="CreateClaimBtn" style="font-size:16px;">Submit</button>
-                </div>
+        </div>
+    </div>
+
+    <div class="row well" style="margin-left:15px; margin-right:15px; margin-top:10px;margin-bottom:0">
+        <form id="MainForm">
+            <div class="form-group col-md-3">
+                @Html.Label("Date:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="Date" id="txtDate" name="Date" placeholder="Date">
+            </div>
+            <div class="form-group col-md-3">
+                @Html.Label("Supplier:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtSupplier" name="Supplier" placeholder="Supplier">
+            </div>
+            <div class="form-group col-md-3">
+                @Html.Label("Description:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtDescription" name="Description" placeholder="Description">
+            </div>
+
+            <div class="form-group col-md-3">
+                @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                @*<input class="form-control form-control-sm col-md-8" type="text" id="txtBranch" name="Branch" placeholder="Branch">*@
+                <select type="text" class="form-control form-control-sm" id="txtBranch" name="Branch">
+                    <option></option>
+                    <option>Sydney</option>
+                    <option>Melbourne</option>
+                    <option>Brisbane</option>
+                    <option>Canberra</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                @Html.Label("Project:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtProject" name="Project" placeholder="Project">
+            </div>
+            <div class="form-group col-md-3">
+                @Html.Label("PO Number:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtPONumber" name="PONumber" placeholder="PO Number">
+            </div>
+            <div class="form-group col-md-3">
+                @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtTravel" name="Travel" placeholder="Travel">
+            </div>
+            <div class="form-group col-md-3">
+                @Html.Label("Acommodation:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtAcommodation" name="Acommodation" placeholder="Acommodation">
+            </div>
+            <div class="form-group col-md-3">
+                @Html.Label("Meals:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtMeals" name="Meals" placeholder="Meals">
+            </div>
+            <div class="form-group col-md-3">
+                @Html.Label("Tools:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtTools" name="Tools" placeholder="Tools">
+            </div>
+            <div class="form-group col-md-3">
+                @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
+                <input class="form-control form-control-sm col-md-8" type="text" id="txtOther" name="Other" placeholder="Other">
+            </div>
+            <input type="submit" id="add-row" class="btn btn-warning btn-sm pull-right" value="Add Row" style="margin-bottom:10px; margin-top:10px; margin-right:22px" />
+        </form>
+        <table id="CreditCardTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
+            <thead style="background-color:orange; color: white">
+                <tr>
+                    <th>Select</th>
+                    <th>Date</th>
+                    <th>Supplier</th>
+                    <th>Description</th>
+                    <th>Branch</th>
+                    <th>Project</th>
+                    <th>PO Number</th>
+                    <th>Travel</th>
+                    <th>Acommodation</th>
+                    <th>Meals</th>
+                    <th>Tools</th>
+                    <th>Other</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-warning btn-sm pull-right" id="delete-row">Delete Row</button>
+    </div>
+
+    <div class="row" style="margin-left:15px; margin-right:15px; margin-top:10px;margin-bottom:0">
+        <div class="form-horizontal well" style="font-size:smaller; padding:5px; margin-bottom:0px">
+            <div class="form-group" style="margin-bottom:0; padding-bottom:0">
+
+                <form id="testForm">
+
+                    <div class="form-group col-md-3">
+                        @Html.Label("Branch Manager:", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
+                        <div class="col-md-8" style="margin-top:5px">
+                            <input type="text" class="form-control form-control-sm" name="BranchManager" placeholder="">
+                        </div>
+                    </div>
+                    <div class=" form-group col-md-3">
+                        @Html.Label("Manager Signature: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
+                        <div class="col-md-8" style="margin-top:5px">
+                            <input type="text" class="form-control form-control-sm" name="ManagerSignature" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        @Html.Label("Invoices Location: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
+                        <div class="col-md-8" style="margin-top:5px">
+                            <input type="text" class="form-control form-control-sm" name="InvoicesLocation" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-1 pull-right">
+                        <div class="col-md-12" style="margin-top:5px">
+                            <button type="submit" class="btn btn-warning btn-sm pull-right" id="CreateClaimBtn" style="font-size:16px;">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
 
             </div>
         </div>
     </div>
-</div>
+
+
+@*<form id="testForm" style="margin-top :50px">
+    <div>
+        <input class="form-control form-control-sm" name="employeeName" placeholder="employeeName" type="text">
+    </div>
+    <input class="btn btn-primary" id="submit-button" value="sign up" type="submit">
+</form>*@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <script>
     $(document).ready(function () {
-        
-        var MainModelExpenseCliams = {};      
+
+        var MainModelExpenseCliams = {};
         MainModelExpenseCliams.CorporateCardExpenseClaimItems = new Array();
         $("#add-row").click(function () {
-          
+
             var Date = $("#txtDate").val();
             var Supplier = $("#txtSupplier").val();
             var Description = $("#txtDescription").val();
@@ -263,15 +294,50 @@
             CliamLineItem.Description = Description;
             CliamLineItem.Branch = Branch;
             CliamLineItem.Project = Project;
-            CliamLineItem.PONumber = Date;
-
-            CliamLineItem.Date = PONumber;
+            CliamLineItem.PONumber = PONumber;
+            CliamLineItem.Acommodation = Acommodation;
+            CliamLineItem.Meals = Meals;
+            CliamLineItem.Tools = Tools;
+            CliamLineItem.Other = Other;          
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
         });
 
         $("#CreateClaimBtn").click(function () {
 
-            MainModelExpenseCliams.EmployeeName = $("#txtemployeeName").val();                
+            MainModelExpenseCliams.EmployeeName = $("#txtemployeeName").val();
+            MainModelExpenseCliams.DateofClaim = $("#txtDateofClaim").val();
+            MainModelExpenseCliams.EmployeeSignature = $("#txtEmployeeSignature").val();
+            MainModelExpenseCliams.Approvedby = $("#txtApprovedby").val();
+            MainModelExpenseCliams.CreditCardNo = $("#txtCreditCardNo").val();
+            MainModelExpenseCliams.ExpenseClaimType = $("#txtExpenseClaimType").val();        
+
+            var ErrorMessage = '';
+
+            if (MainModelExpenseCliams.EmployeeName == '')
+            {
+                ErrorMessage += 'EmployeeName is Required. \n';                
+            }
+            if (MainModelExpenseCliams.DateofClaim == '') {
+                ErrorMessage +='DateofClaim is Required. \n';
+               
+            }
+            if (MainModelExpenseCliams.CreditCardNo == '') {
+                ErrorMessage +='CreditCardNo is Required. \n';               
+            }
+            if (MainModelExpenseCliams.ExpenseClaimType == '') {
+                ErrorMessage += 'ExpenseClaimType is Required. \n';
+            }
+            if (MainModelExpenseCliams.EmployeeSignature == '') {
+                ErrorMessage += 'EmployeeSignature is Required. \n';
+            }
+            if (MainModelExpenseCliams.Approvedby == '') {
+                ErrorMessage += 'Approvedby is Required. \n';
+            }
+            if (ErrorMessage != '')
+            {
+                alert(ErrorMessage)
+                return false;
+            }
             $.ajax({
                 type: "POST",
                 url: "./CreateExpenseClaimItemEntity",
@@ -279,7 +345,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (r) {
-                 //   window.location.href = "./ExportTimesSheetToExcel?path=" + r.fileName;
+                    //   window.location.href = "./ExportTimesSheetToExcel?path=" + r.fileName;
                 }
             });
         });
@@ -292,11 +358,69 @@
                 }
             });
         });
+
+        $(function () {
+            var MainForm = $("#MainForm")
+            if (MainForm.length) {
+                MainForm.validate({
+                    rules: {
+                        Date: { required: true },
+                        Supplier: { required: true },
+                        Description: { required: true },
+                        Branch: { required: true },
+                        Project: { required: true },
+                        PONumber: { required: true },
+                        Travel: { required: true },
+                        Acommodation: { required: true },
+                        Meals: { required: true },
+                        Tools: { required: true },
+                        Other: { required: true }
+                    },
+                    messages: {
+                        Date: { required: "Date is required" },
+                        Supplier: { required: "Supplier is required" },
+                        Description: { required: "Description is required" },
+                        Branch: { required: "Branch is required" },
+                        Project: { required: "Project is required" },
+                        PONumber: { required: "PO Number is required" },
+                        Travel: { required: "Travel is required" },
+                        Acommodation: { required: "Acommodation is required" },
+                        Meals: { required: "Meals is required" },
+                        Tools: { required: "Tools is required" },
+                        Other: { required: "Other is required" }
+                    }
+                })
+            }
+        });
+
+        $(function () {
+            var testForm = $("#testForm")
+            if (testForm.length) {
+                testForm.validate({
+                    rules: {
+                        BranchManager: { required: true },
+                        ManagerSignature: { required: true },
+                        InvoicesLocation: { required: true }
+                    },
+                    messages: {
+                        BranchManager: { required: "Branch Manager is required" },
+                        ManagerSignature: { required: "Manager Signature is required" },
+                        InvoicesLocation: { required: "Invoices Location is required" }
+                    }
+                })
+            }
+        });
+
     });
 </script>
 
 <style>
     .form-group {
         margin-bottom: 2px;
+    }
+
+    .error {
+        color:red;
+        font-style:italic;
     }
 </style>

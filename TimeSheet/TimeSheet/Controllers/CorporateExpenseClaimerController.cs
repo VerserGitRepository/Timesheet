@@ -72,6 +72,10 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult CreateExpenseClaimItemEntity(CorporateCardExpenseClaimModel ClaimItemsUpdateModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
+            }
             if (!UserRoles.IsLoginActive())
             {
                 return RedirectToAction("Login", "Login");
