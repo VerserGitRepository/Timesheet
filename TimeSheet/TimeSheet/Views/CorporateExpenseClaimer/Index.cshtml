@@ -227,10 +227,10 @@
 <script>
     $(document).ready(function () {
         
-        var MainModelExpenseCliams = {};
-        var CorporateCardExpenseClaimItems = new Array();
-
+        var MainModelExpenseCliams = {};      
+        MainModelExpenseCliams.CorporateCardExpenseClaimItems = new Array();
         $("#add-row").click(function () {
+          
             var Date = $("#txtDate").val();
             var Supplier = $("#txtSupplier").val();
             var Description = $("#txtDescription").val();
@@ -264,6 +264,7 @@
             CliamLineItem.Branch = Branch;
             CliamLineItem.Project = Project;
             CliamLineItem.PONumber = Date;
+
             CliamLineItem.Date = PONumber;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
         });
