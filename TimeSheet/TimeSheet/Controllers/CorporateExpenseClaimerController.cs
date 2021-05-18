@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using TimeSheet.Models;
 using TimeSheet.ServiceHelper;
 
@@ -95,6 +98,64 @@ namespace TimeSheet.Controllers
 
             ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);
             return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
+        }
+
+        [HttpPost]
+        public ActionResult ExportExpenseClaims()
+        {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            //var ExportableData = new List<ExportableExpenseRequests>();
+
+           // var ClaimData = 
+
+            //foreach (var item in ClaimData)
+            //{
+            //    foreach (var claimitem in item.CorporateCardExpenseClaimItems)
+            //    {
+            //        var _ExportableData = new ExportableExpenseRequests
+            //        {
+            //            ExpenseDateOfClaim = item.ExpenseDateOfClaim,
+            //            EmployeeName = item.EmployeeName,
+            //            ApprovedBy = item.ApprovedBy,
+            //            ExpenseClaimType = item.ExpenseClaimType,
+            //            CreditCardNo = item.CreditCardNo,
+            //            SharePointFileLocation = item.SharePointFileLocation,
+            //            IsEmailApproved = item.IsEmailApproved,
+            //            Supplier = claimitem.Supplier,
+            //            ItemDescription = claimitem.ItemDescription,
+            //            Project = claimitem.Project,
+            //            Branch = claimitem.Branch,
+            //            PONumber = claimitem.PONumber,
+            //            TravelCost = claimitem.TravelCost,
+            //            MealsCost = claimitem.MealsCost,
+            //            AccommodationCost = claimitem.AccommodationCost,
+            //            ToolsCost = claimitem.ToolsCost,
+            //            OtherCost = claimitem.OtherCost,
+            //            ClaimDate = claimitem.ClaimDate                       
+            //        };
+            //        ExportableData.Add(_ExportableData);
+            //    }                
+            //}
+
+            GridView gv = new GridView();
+            gv.DataSource = ExpenseClaimerService.ExportExpenseClaims().Result; ;
+            gv.DataBind();
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=CurrentTimeSheetBookings.xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            gv.RenderControl(htw);
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+
+            return RedirectToAction("ExpenseClaims", " CorporateExpenseClaimer");
         }
     }
 }
