@@ -81,19 +81,17 @@ namespace TimeSheet.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-            foreach(var items in ClaimItemsUpdateModel.CorporateCardExpenseClaimItems)
-            {  
-                decimal? _itemtotal= (items.AccommodationCost + items.TravelCost + items.ToolsCost + items.MealsCost + items.OtherCost);
+            //foreach(var items in ClaimItemsUpdateModel.CorporateCardExpenseClaimItems)
+            //{  
+            //    decimal? _itemtotal= (items.AccommodationCost + items.TravelCost + items.ToolsCost + items.MealsCost + items.OtherCost);
 
-                ClaimItemsUpdateModel.AccommodationTotal += items.AccommodationCost;
-                ClaimItemsUpdateModel.TravelTotal += items.TravelCost;
-                ClaimItemsUpdateModel.ToolsTotal += items.ToolsCost;
-                ClaimItemsUpdateModel.MealsTotal += items.MealsCost;
-                ClaimItemsUpdateModel.OtherTotal += items.OtherCost;
-                ClaimItemsUpdateModel.ExpenseTotal += Convert.ToDecimal( _itemtotal);
-            }
-           
-            //ExpenseClaimerService.UpdateExpenseClaimItem(ClaimItemsUpdateModel);
+            //    ClaimItemsUpdateModel.AccommodationTotal += items.AccommodationCost;
+            //    ClaimItemsUpdateModel.TravelTotal += items.TravelCost;
+            //    ClaimItemsUpdateModel.ToolsTotal += items.ToolsCost;
+            //    ClaimItemsUpdateModel.MealsTotal += items.MealsCost;
+            //    ClaimItemsUpdateModel.OtherTotal += items.OtherCost;
+            //    ClaimItemsUpdateModel.ExpenseTotal += Convert.ToDecimal( _itemtotal);
+            //}
 
             ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);
             return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
