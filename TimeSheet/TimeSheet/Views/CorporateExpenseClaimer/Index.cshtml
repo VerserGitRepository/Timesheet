@@ -11,7 +11,6 @@
                     <img src="~/Images/CompanyLogo.jpg" style="height:30px; width:130px; float:right" />
                 </div>
             </div>
-
             <div class="form-group-sm col-md-8 pull-right">
                 <div class="col-md-12" style="text-align:center">
                     <h3 style="font-weight:600">CREDIT CARD EXPENSE REPORT</h3>
@@ -29,8 +28,6 @@
         </div>
     </div>
 </div>
-
-
     <div class="row" style="margin-left:0px; margin-right:0px">
         <div class="col-md-8" style="margin-top:10px">
             <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px; ">
@@ -88,13 +85,13 @@
                     <div class="form-group col-md-6" style="margin-bottom:8px">
                         @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                         <div class="col-md-6" style="margin-top:7px">
-
+                            <input type="number" id="lbltraveltotal" />
                         </div>
                     </div>
                     <div class="form-group col-md-6" style="margin-bottom:8px">
                         @Html.Label("Accommodation:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                         <div class="col-md-6" style="margin-top:7px">
-
+                            <input type="number" id="lblaccomdationtotal" />
                         </div>
                     </div>
                     <div class="form-group col-md-6" style="margin-bottom:8px">
@@ -118,7 +115,7 @@
                     <div class="form-group col-md-6" style="margin-bottom:8px">
                         @Html.Label("Total:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                         <div class="col-md-6" style="margin-top:7px">
-
+                            <input type="number" id="lbltotalExpense" />
                         </div>
                     </div>
                 </div>
@@ -260,6 +257,7 @@
 
         var MainModelExpenseCliams = {};
         MainModelExpenseCliams.CorporateCardExpenseClaimItems = new Array();
+        var _totalExpense=0;
         $("#add-row").click(function () {
 
             var Date = $("#txtDate").val();
@@ -294,11 +292,16 @@
             CliamLineItem.Description = Description;
             CliamLineItem.Branch = Branch;
             CliamLineItem.Project = Project;
+            CliamLineItem.PONumber = Travel;
             CliamLineItem.PONumber = PONumber;
             CliamLineItem.Acommodation = Acommodation;
             CliamLineItem.Meals = Meals;
             CliamLineItem.Tools = Tools;
             CliamLineItem.Other = Other;          
+            _totalExpense += (Acommodation + Meals + Tools + Other + Travel);
+            alert(_totalExpense);
+            $("#lbltotalExpense").val = _totalExpense;
+
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
         });
 
