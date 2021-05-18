@@ -3,82 +3,138 @@
 @{
     ViewBag.Title = "ExpenseClaims";
 }
-    <div class="row well" style="margin-left:15px; margin-right:15px; margin-top:40px;margin-bottom:0">
-        <table id="ExpenseClaimsTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
-            <thead style="background-color:orange; color: white">
-                <tr>
-                    <th>ClaimID</th>
-                    <th>ClaimDate</th>
-                    <th>EmployeeName</th>
-                    <th>CreditCardNo</th>
-                    <th>ExpenseClaimType</th>
-                    <th>ApprovedBy</th>
-                    <th>Accommodation</th>
-                    <th>ToolsTotal</th>
-                    <th>Meals</th>
-                    <th>Other</th>
-                    <th>Travel</th>
-                    <th>Total</th>
-                    <th>SharePointFileLocation</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
 
-                        <td>
-                            @using (Html.BeginForm("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = item.Id }, FormMethod.Post))
-                            {
-                            <button type="submit">
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+<link href="~/Scripts/bootstrap-multiselect.css" rel="stylesheet" />
+<link href="~/Styles/Rating/star-rating.css" rel="stylesheet" />
+<script src="~/Scripts/Rating/star-rating.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<div class="col-md-12" style="margin-top:55px; margin-bottom:5px">
+    <table id="ExpenseClaimsTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
+        <thead style="background-color:orange; color: white">
+            <tr>
+                <th>ClaimID</th>
+                <th>ClaimDate</th>
+                <th>EmployeeName</th>
+                <th>CreditCardNo</th>
+                <th>ExpenseClaimType</th>
+                <th>ApprovedBy</th>
+                <th>Accommodation</th>
+                <th>ToolsTotal</th>
+                <th>Meals</th>
+                <th>Other</th>
+                <th>Travel</th>
+                <th>Total</th>
+                <th>SharePointFileLocation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td style="text-align:center">
+                        @using (Html.BeginForm("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = item.Id }, FormMethod.Post))
+                        {
+                            <button type="submit" class="btn btn-warning">
                                 @Html.DisplayFor(modelItem => item.Id)
                             </button>
-                                   @*<a href="javascript:void(0);" class="ClaimID"*@ 
-                                   @*onclick="ExpenseClaimItems('@item.Id')"*@ 
-                                   @*data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>*@
-                            }
-                            </td>
-                        <td>  @Html.DisplayFor(modelItem => item.ExpenseDateOfClaim)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.EmployeeName)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.CreditCardNo)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.ExpenseClaimType)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.AccommodationTotal)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.ToolsTotal)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.MealsTotal)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.OtherTotal)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.TravelTotal)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.ExpenseTotal)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.SharePointFileLocation)</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <div id='myModal' class='modal'>
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div id='myModalContent'></div>
-                </div>
+                            @*<a href="javascript:void(0);" class="ClaimID"*@
+                            @*onclick="ExpenseClaimItems('@item.Id')"*@
+                            @*data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>*@
+                        }
+                    </td>
+                    <td>  @Html.DisplayFor(modelItem => item.ExpenseDateOfClaim)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.EmployeeName)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.CreditCardNo)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ExpenseClaimType)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.AccommodationTotal)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ToolsTotal)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.MealsTotal)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.OtherTotal)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.TravelTotal)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ExpenseTotal)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.SharePointFileLocation)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id='myModal' class='modal'>
+        <div class="modal-dialog" style="width:95%">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
             </div>
         </div>
     </div>
-    <script>
+</div>
 
-    //$(document).ready(function () {
 
-    //    $('#ExpenseClaimsTable').dataTable({
-    //        responsive: true,
-    //        stateSave: true,
-    //        "lengthMenu": [15, 30, 50, 100],
-    //        "pageLength": 15
-    //    });
-    //    $('.dataTables_filter').addClass('pull-right');
-    //});
+<script>
+    $(document).ready(function () {
+
+        $('#ExpenseClaimsTable').dataTable({
+            responsive: true,
+            stateSave: true,
+            "lengthMenu": [15, 30, 50, 100],
+            "pageLength": 15
+        });
+        $('.dataTables_filter').addClass('pull-right');
+    });
+
+
+    @*$(function () {
+        $("#ExpenseClaimsTable").on("click", ".ClaimID", function () {
+            //debugger;
+            var ExpenseClaimItems = '@Url.Action("ExpenseClaimItems", "CorporateExpenseClaimer")';
+            var $buttonClicked = $(this);
+            var Id = $buttonClicked.attr('data-id');
+            ExpenseClaimItems(Id);
+
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "POST",
+                url: ExpenseClaimItems,
+                contentType: "application/json; charset=utf-8",
+                data: { "ClaimId": Id },
+                datatype: "json",
+                success: function (data) {
+                    alert(data);
+                    //  debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+    });*@
+
+
+
+
     function ExpenseClaimItems(ClaimId)
     {
         alert(ClaimId)
 
-                var URLClaimItems ='@Url.Action("ExpenseClaimItems", "CorporateExpenseClaimer")'; 
+                var URLClaimItems ='@Url.Action("ExpenseClaimItems", "CorporateExpenseClaimer")';
                 var options = { "backdrop": "static", keyboard: true };
                 $.ajax({
                     type: "POST",
@@ -97,10 +153,10 @@
                     }
                 });
     }
-    //$("#closbtn").click(function ()
-    //{
-    //   $('#myModal').modal('hide');
-    //});
+    $("#closbtn").click(function ()
+    {
+       $('#myModal').modal('hide');
+    });
 
-    </script>
+</script>
 
