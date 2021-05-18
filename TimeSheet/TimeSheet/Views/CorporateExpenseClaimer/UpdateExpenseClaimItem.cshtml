@@ -3,22 +3,22 @@
 @{
     ViewBag.Title = "ExpenseClaimItems";
 } 
-<div class="col-md-5 well" style="margin-bottom:5px">
-    <div class="form-horizontal" style="padding-bottom:20px">
+<div class="col-md-8 well" style="margin-bottom:5px">
+    <div class="form-horizontal" style="padding-bottom:10px">
         @using (Html.BeginForm("UpdateExpenseClaimItemEntity", "CorporateExpenseClaimer", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.ClaimDate, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.ClaimDate, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.ClaimDate, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.Supplier, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Supplier, new { htmlAttributes = new { @class = "form-control" } })
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.ItemDescription, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.ItemDescription, new { htmlAttributes = new { @class = "form-control" } })
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.Project, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Project, new { htmlAttributes = new { @class = "form-control" } })
@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.Branch, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.Branch, new { htmlAttributes = new { @class = "form-control" } })
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.PONumber, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.PONumber, new { htmlAttributes = new { @class = "form-control" } })
@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.TravelCost, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.TravelCost, new { htmlAttributes = new { @class = "form-control" } })
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.MealsCost, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.MealsCost, new { htmlAttributes = new { @class = "form-control" } })
@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.AccommodationCost, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.AccommodationCost, new { htmlAttributes = new { @class = "form-control" } })
@@ -82,7 +82,15 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.OtherCost, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.OtherCost, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OtherCost, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.ToolsCost, htmlAttributes: new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.ToolsCost, new { htmlAttributes = new { @class = "form-control" } })
@@ -90,17 +98,11 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.OtherCost, htmlAttributes: new { @class = "control-label col-md-3" })
-                <div class="col-md-9">
-                    @Html.EditorFor(model => model.OtherCost, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.OtherCost, "", new { @class = "text-danger" })
-                </div>
+            <div class="form-group col-md-7" style="margin-top:10px">
+                <a id="backbtn" href="@Url.Action("ExpenseClaimItems", "CorporateExpenseClaimer")" style="padding:10px; color:#fff; background-color:orange; font-size:13px">Back to th list</a>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-10 col-md-2">
-                    <input type="submit" value="UPDATE" class="btn btn-warning btn-lg" />
-                </div>
+            <div class="form-group col-md-5">
+                <input type="submit" value="UPDATE" class="btn btn-warning pull-right" />
             </div>
         }
     </div>
