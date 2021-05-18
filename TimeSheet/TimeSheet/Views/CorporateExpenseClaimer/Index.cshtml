@@ -216,19 +216,19 @@
                     <div class="form-group col-md-3">
                         @Html.Label("Branch Manager:", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
                         <div class="col-md-8" style="margin-top:5px">
-                            <input type="text" class="form-control form-control-sm" name="BranchManager" placeholder="">
+                            <input type="text" class="form-control form-control-sm" id="txtBranchManager" name="BranchManager" placeholder="">
                         </div>
                     </div>
                     <div class=" form-group col-md-3">
                         @Html.Label("Manager Signature: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
                         <div class="col-md-8" style="margin-top:5px">
-                            <input type="text" class="form-control form-control-sm" name="ManagerSignature" placeholder="">
+                            <input type="text" class="form-control form-control-sm" id="txtManagerSignature" name="ManagerSignature" placeholder="">
                         </div>
                     </div>
                     <div class="form-group col-md-3">
                         @Html.Label("Invoices Location: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
                         <div class="col-md-8" style="margin-top:5px">
-                            <input type="text" class="form-control form-control-sm" name="InvoicesLocation" placeholder="">
+                            <input type="text" class="form-control form-control-sm" id="txtInvoicesLocation" name="InvoicesLocation" placeholder="">
                         </div>
                     </div>
                     <div class="form-group col-md-1 pull-right">
@@ -309,7 +309,11 @@
             MainModelExpenseCliams.EmployeeSignature = $("#txtEmployeeSignature").val();
             MainModelExpenseCliams.Approvedby = $("#txtApprovedby").val();
             MainModelExpenseCliams.CreditCardNo = $("#txtCreditCardNo").val();
-            MainModelExpenseCliams.ExpenseClaimType = $("#txtExpenseClaimType").val();        
+            MainModelExpenseCliams.ExpenseClaimType = $("#txtExpenseClaimType").val();  
+            MainModelExpenseCliams.SharePointFileLocation = $("#txtInvoicesLocation").val();  
+            MainModelExpenseCliams.BranchManager = $("#txtBranchManager").val();  
+            MainModelExpenseCliams.ManagerSignature = $("#txtManagerSignature").val();  
+
 
             var ErrorMessage = '';
 
@@ -332,6 +336,13 @@
             }
             if (MainModelExpenseCliams.Approvedby == '') {
                 ErrorMessage += 'Approvedby is Required. \n';
+            }
+
+            if (MainModelExpenseCliams.SharePointFileLocation == '') {
+                ErrorMessage += 'SharePoint Invoice Files Location is Required. \n';
+            }     
+            if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length == 0) {
+                ErrorMessage += 'Atleast One Expense ClaimItems is Required. \n';
             }
             if (ErrorMessage != '')
             {
