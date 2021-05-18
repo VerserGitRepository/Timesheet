@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TimeSheet.Models;
@@ -80,8 +81,21 @@ namespace TimeSheet.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-           // ClaimItemsUpdateModel.ExpenseTotal = (ClaimItemsUpdateModel.AccommodationCost + ClaimItemsUpdateModel.TravelCost + ClaimItemsUpdateModel.ToolsCost + ClaimItemsUpdateModel.MealsCost + ClaimItemsUpdateModel.OtherCost);
+            foreach(var items in ClaimItemsUpdateModel.CorporateCardExpenseClaimItems)
+            {  
+                decimal? _itemtotal= (items.AccommodationCost + items.TravelCost + items.ToolsCost + items.MealsCost + items.OtherCost);
+
+                ClaimItemsUpdateModel.AccommodationTotal += items.AccommodationCost;
+                ClaimItemsUpdateModel.TravelTotal += items.TravelCost;
+                ClaimItemsUpdateModel.ToolsTotal += items.ToolsCost;
+                ClaimItemsUpdateModel.MealsTotal += items.MealsCost;
+                ClaimItemsUpdateModel.OtherTotal += items.OtherCost;
+                ClaimItemsUpdateModel.ExpenseTotal += Convert.ToDecimal( _itemtotal);
+            }
+           
             //ExpenseClaimerService.UpdateExpenseClaimItem(ClaimItemsUpdateModel);
+
+            ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);
             return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
         }
     }
