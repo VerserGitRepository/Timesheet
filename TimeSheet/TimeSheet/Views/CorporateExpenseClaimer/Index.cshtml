@@ -115,7 +115,7 @@
                     <div class="form-group col-md-6" style="margin-bottom:8px">
                         @Html.Label("Total:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                         <div class="col-md-6" style="margin-top:7px">
-                            <input type="number" id="lbltotalExpense" />
+                            <input type="text" id="lbltotalExpense" />
                         </div>
                     </div>
                 </div>
@@ -257,7 +257,8 @@
 
         var MainModelExpenseCliams = {};
         MainModelExpenseCliams.CorporateCardExpenseClaimItems = new Array();
-        var _totalExpense=0;
+        var _totalExpense = 0;
+        var _RowtotalExpense = 0;
         $("#add-row").click(function () {
 
             var Date = $("#txtDate").val();
@@ -271,7 +272,14 @@
             var Meals = $("#txtMeals").val();
             var Tools = $("#txtTools").val();
             var Other = $("#txtOther").val();
-            var Total = $("#txtTotal").val();
+
+            _totalExpense += (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(Other) + parseInt(Travel));
+            _RowtotalExpense = (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(Other) + parseInt(Travel));
+            alert(_totalExpense);
+            alert(_RowtotalExpense);
+            $("#lbltotalExpense").value = _totalExpense;
+
+            var Total = _RowtotalExpense;
             var markup = "<tr><td><input type='checkbox' name='record'></td><td>"
                 + Date + "</td><td>"
                 + Supplier + "</td><td>"
@@ -297,11 +305,8 @@
             CliamLineItem.Acommodation = Acommodation;
             CliamLineItem.Meals = Meals;
             CliamLineItem.Tools = Tools;
-            CliamLineItem.Other = Other;          
-            _totalExpense += (Acommodation + Meals + Tools + Other + Travel);
-            alert(_totalExpense);
-            $("#lbltotalExpense").val = _totalExpense;
-
+            CliamLineItem.Other = Other;
+            CliamLineItem.Total = Total;       
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
         });
 
