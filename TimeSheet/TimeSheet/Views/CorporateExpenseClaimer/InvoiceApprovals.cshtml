@@ -16,25 +16,21 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
-
 <div class="col-md-12">
     <div class="pull-right">
         @using (Html.BeginForm("ImportInvoices", "CorporateExpenseClaimer", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
-            <div class="well pull-right" style="margin-bottom:10px; margin-top:10px; padding:10px">
+            <div class="well pull-right" style="margin-bottom:5px; margin-top:5px; padding:5px">
                 <input type="file" name="file" id="file" value="ImportExcelAssets" data-val-required="Please Choose a Assets File.." />
                 <input type="Submit" value="IMPORT" class="btn btn-sm btn-warning pull-right" id="Submit" />
                 <div style="margin-top:10px">
                     <a href="~/InvoiceExcelFiles/GeneralInvoiceApporovalImporter.xlsx"><u style="color:blue;font-weight:400;font-size:smaller"> Download Sample Template</u></a>
                 </div>
             </div>
-            @*<label style="color:orange;font-weight:700">Download The File Format And Fill The Records To Avoid The Errors</label>
-                <a href="~/ExcelFile/NuMobileFeedImportFormat.xlsx"><u style="color:blue;font-weight:800">Download</u></a>*@
-        }
-        <div class="col-md-12" style="margin-top:15px; margin-bottom:5px">
-            <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
+        }       
+         <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
                 <thead style="background-color:orange; color: white">
                     <tr>
                         @*<th>Id</th>*@
@@ -81,8 +77,8 @@
                     </tr>
                     }
                 </tbody>
-            </table>           
-        </div>
+            </table>          
+     
     </div>
 </div>
 <script>
@@ -91,11 +87,9 @@
         $('#InvoicesTable').dataTable({
             responsive: true,
             stateSave: true,
-            "lengthMenu": [10, 30, 50, 100],
+            "lengthMenu": [10,15,20, 30, 50, 100],
             "pageLength": 10
         });
         $('.dataTables_filter').addClass('pull-right');
     });
-
-
 </script>
