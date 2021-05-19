@@ -248,24 +248,6 @@
         </div>
     </div>
 
-
-    @*<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#alert-modal">Open Modal</button>
-    <div id="alert-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 id="alert-modal-title" class="modal-title"></h4>
-                </div>
-                <div id="alert-modal-body" class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>*@
-
-
     <script>
         $(document).ready(function () {
 
@@ -303,7 +285,7 @@
                 _MealsTotal += (parseInt(Meals));
                 _AccommodationTotal += (parseInt(Acommodation));
 
-              
+
                 $("#lbltotalExpense").val(_totalExpense);
 
                 var Total = _RowtotalExpense;
@@ -398,21 +380,6 @@
                     ErrorMessage += 'Project in the table is Required. \n';
                 }
                 if (ErrorMessage != '')
-                {
-                   //ErrorAlertModal(ErrorMessage);
-
-                   // $('#alert-modal-title').html("Validation Errors");
-                   // $('#alert-modal-body').html(ErrorMessage);
-                   // $('#alert-modal').modal({ show: true });
-                   
-                   // $('#alert-modal').on('shown.bs.modal', function () {
-                   //     alert(ErrorMessage);
-                   //     var modal = $(this)
-                   //     modal.find('.modal-title').text('Validation Errors')                    
-                   //     modal.find('.modal-body input').val(ErrorMessage)
-                        
-                   // });
-
 
                     $.alert({
                         title: 'Validation Errors',
@@ -440,25 +407,7 @@
                     }
                 });
             });
-
-            function ErrorAlertModal(body) {
-               
-                // Display error message to the user in a modal
-
-                    $('#alert-modal-title').html("Validation Errors");
-                    $('#alert-modal-body').html(ErrorMessage);
-                    $('#alert-modal').modal("show");
-                // alert(body);
-
-               // $(window).on('load', function ()
-               // {
-                   // $("#alert-modal").modal();
-                    //$('#alert-modal-title').html("Validation Errors");
-                    //$('#alert-modal-body').html(ErrorMessage);
-                    //$('#alert-modal').modal("show");
-
-               // });
-            }
+          
             $(function () {
                 var MainForm = $("#MainForm")
                 if (MainForm.length) {

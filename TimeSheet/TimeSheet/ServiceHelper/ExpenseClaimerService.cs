@@ -29,6 +29,23 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
+        public static async Task<List<ExportableExpenseRequests>> ExportExpenseClaims()
+        {
+            var ReturnResult = new List<ExportableExpenseRequests>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ExpenseClaims/ExportExpenseClaims")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<List<ExportableExpenseRequests>>();
+                }
+            }
+            return ReturnResult;
+        }
+
+
         public static async Task<List<CorporateCardExpenseClaimItemsModel>> GetExpenseClaimItemsById(int ClaimId)
         {
             var ReturnResult = new List<CorporateCardExpenseClaimItemsModel>();
