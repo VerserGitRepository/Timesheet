@@ -94,7 +94,7 @@
                     <div class="form-group col-md-6" style="margin-bottom:8px">
                         @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                         <div class="col-md-6" style="margin-top:7px">
-                            <input type="number" id="lbltraveltotal" />
+                            <input type="text" id="lbltraveltotal" />
                         </div>
                     </div>
                     <div class="form-group col-md-6" style="margin-bottom:8px">
@@ -106,19 +106,19 @@
                     <div class="form-group col-md-6" style="margin-bottom:8px">
                         @Html.Label("Meals:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                         <div class="col-md-6" style="margin-top:7px">
-                            <input type="text" id="lbltotalExpense" />
+                            <input type="text" id="lblMealstotal" />
                         </div>
                     </div>
                     <div class="form-group col-md-6" style="margin-bottom:8px">
                         @Html.Label("Tools:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                         <div class="col-md-6" style="margin-top:7px">
-                            <input type="text" id="lbltotalExpense" />
+                            <input type="text" id="lblToolstotal" />
                         </div>
                     </div>
                     <div class="form-group col-md-6" style="margin-bottom:8px">
                         @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                         <div class="col-md-6" style="margin-top:7px">
-                            <input type="text" id="lbltotalExpense" />
+                            <input type="text" id="lblOthertotal" />
                         </div>
                     </div>
                     <div class="form-group col-md-6" style="margin-bottom:8px">
@@ -283,11 +283,13 @@
                 _ToolsTotal += (parseInt(Tools));
                 _OtherTotal += (parseInt(Other));
                 _MealsTotal += (parseInt(Meals));
-                _AccommodationTotal += (parseInt(Acommodation));
-
-
+                _AccommodationTotal += (parseInt(Acommodation));              
+                $("#lbltraveltotal").val(_TravelTotal);
+                $("#lblOthertotal").val(_OtherTotal);
+                $("#lblToolstotal").val(_ToolsTotal);
+                $("#lblMealstotal").val(_MealsTotal);
+                $("#lblaccomdationtotal").val(_AccommodationTotal);
                 $("#lbltotalExpense").val(_totalExpense);
-
                 var Total = _RowtotalExpense;
                 var markup = "<tr><td><input type='checkbox' name='record'></td><td>"
                     + Date + "</td><td>"
@@ -319,8 +321,6 @@
                 CliamLineItem.ExpenseTotal = Total;
                 MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
             });
-
-
             $("#CreateClaimBtn").click(function () {
 
                 MainModelExpenseCliams.EmployeeName = $("#txtemployeeName").val();
@@ -397,6 +397,7 @@
                     dataType: "json",
                     success: function (r) {
                         //   window.location.href = "./ExportTimesSheetToExcel?path=" + r.fileName;
+                      //  window.location.href = "./ExpenseClaims";
                     }
                 });
             });
