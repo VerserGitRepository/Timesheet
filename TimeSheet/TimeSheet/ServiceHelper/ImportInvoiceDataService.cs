@@ -46,5 +46,22 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
+
+        public static async Task ApproveExpenseInvoice(int InvoiceID)
+        {          
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{InvoiceID}/ApproveExpenseInvoice")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Current.Session["ResultMessage"] = "Invoice Approval is Successfully!";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Invoice Approval is Failed!";
+                }
+            }           
+        }
     }
 }

@@ -192,8 +192,13 @@ namespace TimeSheet.Controllers
             //<ImportInvoiceDataModel>> GetExpenseClaims()
             var Invoices =  ImportInvoiceDataService.GetExpenseClaims().Result;
             return View(Invoices);
-        }       
-
+        }
+        [HttpPost]
+        public ActionResult ApproveInvoice(int InvoiceId) 
+        {
+            ImportInvoiceDataService.ApproveExpenseInvoice(InvoiceId);
+            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+        }
         private static string GetCellValue(Cell theCell, WorkbookPart wbPart)
         {
             string value = "";

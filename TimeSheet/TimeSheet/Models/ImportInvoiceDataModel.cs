@@ -13,6 +13,7 @@ namespace TimeSheet.Models
         public DateTime? ReceivedInvoiceDate { get; set; }
         public decimal? InvoiceAmount_ex_gst { get; set; }
         public decimal? InvoiceAmount_Inc_gst { get; set; }
+        public string InvoiceStatus { get; set; }
         public DateTime? Invoice_Date { get; set; }
         public string InvoiceNumber { get; set; }
         public string Project_Job { get; set; }
