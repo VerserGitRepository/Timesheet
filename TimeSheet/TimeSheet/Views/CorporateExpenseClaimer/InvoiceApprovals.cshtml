@@ -2,72 +2,90 @@
 @{
     ViewBag.Title = "InvoiceApprovals";
 }
-    <div style="padding-top:15px;">
 
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+
+<div class="col-md-12">
+    <div class="pull-right">
         @using (Html.BeginForm("ImportInvoices", "CorporateExpenseClaimer", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
-            <div>   
-                <input type="file" name="file" id="file" value="ImportExcelAssets" data-val-required="Please Choose a Assets File.." />              
-                    <input type="Submit" value="IMPORT" class="btn btn-default btn-primary" id="Submit" />
-          
+            <div class="well pull-right" style="margin-bottom:10px; margin-top:10px; padding:10px">
+                <input type="file" name="file" id="file" value="ImportExcelAssets" data-val-required="Please Choose a Assets File.." />
+                <input type="Submit" value="IMPORT" class="btn btn-sm btn-warning pull-right" id="Submit" />
+                <div style="margin-top:10px">
+                    <a href="~/InvoiceExcelFiles/GeneralInvoiceApporovalImporter.xlsx"><u style="color:blue;font-weight:400;font-size:smaller"> Download Sample Template</u></a>
+                </div>
             </div>
             @*<label style="color:orange;font-weight:700">Download The File Format And Fill The Records To Avoid The Errors</label>
-            <a href="~/ExcelFile/NuMobileFeedImportFormat.xlsx"><u style="color:blue;font-weight:800">Download</u></a>*@
+                <a href="~/ExcelFile/NuMobileFeedImportFormat.xlsx"><u style="color:blue;font-weight:800">Download</u></a>*@
         }
-        <div class="col-md-12" style="margin-top:15px; margin-bottom:5px">
-            <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
-                <thead style="background-color:orange; color: white">
-                    <tr>
-                        @*<th>Id</th>*@
-                        <th>Invoice_Date</th>
-                        <th>InvoiceNumber</th>
-                        <th>InvoiceAmount_ex_gst</th>
-                        <th>ReceivedInvoiceDate</th>
-                        <th>Invoice_Description</th>
-                        <th>Approver</th>
-                        <th>Line</th>
-                        <th>SupplierName</th>
-                        <th>Project_Job</th>
-                        <th>PM_Warehouse_HO</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                    <tr>
-                       
-                        @*<td>  @Html.DisplayFor(modelItem => item.Id)</td>*@
-                        <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.InvoiceNumber)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.InvoiceAmount_ex_gst)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.Invoice_Description)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.Approver)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.Line)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
-                        <td style="text-align:center">
-                            @using (Html.BeginForm("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = item.Id }, FormMethod.Post))
-                            {
-                                <button type="submit" class="btn btn-success btn-sm">
-                                   APPROVE
-                                </button>
-                                @*<a href="javascript:void(0);" class="ClaimID"*@
-                                @*onclick="ExpenseClaimItems('@item.Id')"*@
-                                @*data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>*@
-                            }
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>           
-        </div>
     </div>
-    <script>
+
+
+    <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
+        <thead style="background-color:orange; color: white">
+            <tr>
+                @*<th>Id</th>*@
+                <th>Invoice_Date</th>
+                <th>InvoiceNumber</th>
+                <th>InvoiceAmount_ex_gst</th>
+                <th>ReceivedInvoiceDate</th>
+                <th>Invoice_Description</th>
+                <th>Approver</th>
+                <th>Line</th>
+                <th>SupplierName</th>
+                <th>Project_Job</th>
+                <th>PM_Warehouse_HO</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    @*<td>  @Html.DisplayFor(modelItem => item.Id)</td>*@
+                    <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceNumber)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceAmount_ex_gst)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Invoice_Description)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Approver)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Line)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
+                    <td style="text-align:center">
+
+                            <button type="submit" class="btn btn-success btn-sm">
+                                APPROVE
+                            </button>
+                            @*<a href="javascript:void(0);" class="ClaimID"*@
+                            @*onclick="ExpenseClaimItems('@item.Id')"*@
+                            @*data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>*@
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<script>
     $(document).ready(function () {
 
         $('#InvoicesTable').dataTable({
@@ -78,4 +96,6 @@
         });
         $('.dataTables_filter').addClass('pull-right');
     });
-    </script>
+
+
+</script>
