@@ -2,22 +2,16 @@
 @{
     ViewBag.Title = "InvoiceApprovals";
 }
-    <div style="padding-top:55px;">
+    <div style="padding-top:15px;">
 
         @using (Html.BeginForm("ImportInvoices", "CorporateExpenseClaimer", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-group">
-                @Html.Label("File:", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input type="file" name="file" id="file" value="ImportExcelAssets" data-val-required="Please Choose a Assets File.." />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+            <div>   
+                <input type="file" name="file" id="file" value="ImportExcelAssets" data-val-required="Please Choose a Assets File.." />              
                     <input type="Submit" value="IMPORT" class="btn btn-default btn-primary" id="Submit" />
-                </div>
+          
             </div>
             @*<label style="color:orange;font-weight:700">Download The File Format And Fill The Records To Avoid The Errors</label>
             <a href="~/ExcelFile/NuMobileFeedImportFormat.xlsx"><u style="color:blue;font-weight:800">Download</u></a>*@
