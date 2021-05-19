@@ -1,29 +1,87 @@
-﻿
+﻿@model IEnumerable<TimeSheet.Models.ImportInvoiceDataModel>
 @{
     ViewBag.Title = "InvoiceApprovals";
 }
+    <div style="padding-top:55px;">
 
+        @using (Html.BeginForm("ImportInvoices", "CorporateExpenseClaimer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
 
-<div style="padding-top:55px;">
-
-    @using (Html.BeginForm("ImportInvoices", "CorporateExpenseClaimer", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-group">
-            @Html.Label("File:", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="file" id="file" value="ImportExcelAssets" data-val-required="Please Choose a Assets File.." />
+            <div class="form-group">
+                @Html.Label("File:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="file" id="file" value="ImportExcelAssets" data-val-required="Please Choose a Assets File.." />
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="Submit" value="IMPORT" class="btn btn-default btn-primary" id="Submit" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="Submit" value="IMPORT" class="btn btn-default btn-primary" id="Submit" />
+                </div>
             </div>
+            @*<label style="color:orange;font-weight:700">Download The File Format And Fill The Records To Avoid The Errors</label>
+            <a href="~/ExcelFile/NuMobileFeedImportFormat.xlsx"><u style="color:blue;font-weight:800">Download</u></a>*@
+        }
+        <div class="col-md-12" style="margin-top:15px; margin-bottom:5px">
+            <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
+                <thead style="background-color:orange; color: white">
+                    <tr>
+                        @*<th>Id</th>*@
+                        <th>Invoice_Date</th>
+                        <th>InvoiceNumber</th>
+                        <th>InvoiceAmount_ex_gst</th>
+                        <th>ReceivedInvoiceDate</th>
+                        <th>Invoice_Description</th>
+                        <th>Approver</th>
+                        <th>Line</th>
+                        <th>SupplierName</th>
+                        <th>Project_Job</th>
+                        <th>PM_Warehouse_HO</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                       
+                        @*<td>  @Html.DisplayFor(modelItem => item.Id)</td>*@
+                        <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.InvoiceNumber)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.InvoiceAmount_ex_gst)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.Invoice_Description)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.Approver)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.Line)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
+                        <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
+                        <td style="text-align:center">
+                            @using (Html.BeginForm("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = item.Id }, FormMethod.Post))
+                            {
+                                <button type="submit" class="btn btn-success btn-sm">
+                                   APPROVE
+                                </button>
+                                @*<a href="javascript:void(0);" class="ClaimID"*@
+                                @*onclick="ExpenseClaimItems('@item.Id')"*@
+                                @*data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>*@
+                            }
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>           
         </div>
-        <label style="color:orange;font-weight:700">Download The File Format And Fill The Records To Avoid The Errors</label>
-        <a href="~/ExcelFile/NuMobileFeedImportFormat.xlsx"><u style="color:blue;font-weight:800">Download</u></a>
+    </div>
+    <script>
+    $(document).ready(function () {
 
-    }
-
-</div>
+        $('#InvoicesTable').dataTable({
+            responsive: true,
+            stateSave: true,
+            "lengthMenu": [15, 30, 50, 100],
+            "pageLength": 15
+        });
+        $('.dataTables_filter').addClass('pull-right');
+    });
+    </script>

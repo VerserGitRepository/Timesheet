@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -120,7 +121,8 @@ namespace TimeSheet.Controllers
         public ActionResult ImportInvoices()
         {
             try
-            {
+            {             
+
                 HttpPostedFileBase file = Request.Files["file"];
                 if (file.ContentLength > 0)
                 {
@@ -142,12 +144,18 @@ namespace TimeSheet.Controllers
                             Row currentrow = (Row)Rows.ChildElements.GetItem(row);
                             if (!string.IsNullOrEmpty(GetCellValue((Cell)currentrow.ChildElements.GetItem(0), wbPart)))
                             {
+                                CultureInfo provider = CultureInfo.InvariantCulture;                               
+
                                 var asset = new ImportInvoiceDataModel();
                                 asset.SupplierName = GetCellValue((Cell)currentrow.ChildElements.GetItem(0), wbPart);
                                 asset.Line = GetCellValue((Cell)currentrow.ChildElements.GetItem(1), wbPart);
-                                asset.ReceivedInvoiceDate = Convert.ToDateTime( GetCellValue((Cell)currentrow.ChildElements.GetItem(2), wbPart));
+                                string _ReceivedInvoiceDate = GetCellValue((Cell)currentrow.ChildElements.GetItem(2), wbPart);
+                                DateTime dateTime16 = DateTime.ParseExact(_ReceivedInvoiceDate, new string[] {"dd/MM/yyyy" }, provider, DateTimeStyles.None);
+                                asset.ReceivedInvoiceDate = dateTime16;// Convert.ToDateTime();
                                 asset.InvoiceAmount_ex_gst =Convert.ToDecimal( GetCellValue((Cell)currentrow.ChildElements.GetItem(3), wbPart));
-                                asset.Invoice_Date = Convert.ToDateTime(GetCellValue((Cell)currentrow.ChildElements.GetItem(4), wbPart));
+                                string _Invoice_Date = GetCellValue((Cell)currentrow.ChildElements.GetItem(4), wbPart);
+                                DateTime dateTime17 = DateTime.ParseExact(_Invoice_Date, new string[] {"dd/MM/yyyy" }, provider, DateTimeStyles.None);
+                                asset.Invoice_Date = dateTime17;// Convert.ToDateTime(GetCellValue((Cell)currentrow.ChildElements.GetItem(4), wbPart));
                                 asset.InvoiceNumber = GetCellValue((Cell)currentrow.ChildElements.GetItem(5), wbPart);
                                 asset.Project_Job = GetCellValue((Cell)currentrow.ChildElements.GetItem(6), wbPart);
                                 asset.Approver = GetCellValue((Cell)currentrow.ChildElements.GetItem(7), wbPart);
@@ -181,8 +189,11 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult InvoiceApprovals()
         {
-            return View();
-        }
+            //<ImportInvoiceDataModel>> GetExpenseClaims()
+            var Invoices =  ImportInvoiceDataService.GetExpenseClaims().Result;
+            return View(Invoices);
+        }       
+
         private static string GetCellValue(Cell theCell, WorkbookPart wbPart)
         {
             string value = "";
