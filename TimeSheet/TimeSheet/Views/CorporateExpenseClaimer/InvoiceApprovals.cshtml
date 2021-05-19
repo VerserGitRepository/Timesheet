@@ -29,28 +29,28 @@
                     <a href="~/InvoiceExcelFiles/GeneralInvoiceApporovalImporter.xlsx"><u style="color:blue;font-weight:400;font-size:smaller"> Download Sample Template</u></a>
                 </div>
             </div>
-        }       
-         <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
-                <thead style="background-color:orange; color: white">
-                    <tr>
-                        @*<th>Id</th>*@
-                        <th>Invoice_Date</th>
-                        <th>InvoiceNumber</th>
-                        <th>InvoiceAmount_ex_gst</th>
-                        <th>ReceivedInvoiceDate</th>
-                        <th>Status</th>
-                        <th>Invoice_Description</th>
-                        <th>Approver</th>
-                        <th>Line</th>
-                        <th>SupplierName</th>
-                        <th>Project_Job</th>
-                        <th>PM_Warehouse_HO</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+        }
+        <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
+            <thead style="background-color:orange; color: white">
+                <tr>
+                    @*<th>Id</th>*@
+                    <th>Invoice_Date</th>
+                    <th>InvoiceNumber</th>
+                    <th>InvoiceAmount_ex_gst</th>
+                    <th>Invoice_Description</th>
+                    <th>ReceivedInvoiceDate</th>
+                    <th>Status</th>
+                    <th>Approver</th>
+                    <th>Line</th>
+                    <th>SupplierName</th>
+                    <th>Project_Job</th>
+                    <th>PM_Warehouse_HO</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
                     <tr>
 
                         @*<td>  @Html.DisplayFor(modelItem => item.Id)</td>*@
@@ -70,15 +70,15 @@
                             {
                                 using (Html.BeginForm("ApproveInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
                                 {
-                                   <button type="submit" class="btn btn-success btn-sm">APPROVE</button>
+                                    <button type="submit" class="btn btn-success btn-sm">APPROVE</button>
                                 }
                             }
                         </td>
                     </tr>
-                    }
-                </tbody>
-            </table>          
-     
+                }
+            </tbody>
+        </table>
+
     </div>
 </div>
 <script>
@@ -87,7 +87,7 @@
         $('#InvoicesTable').dataTable({
             responsive: true,
             stateSave: true,
-            "lengthMenu": [10,15,20, 30, 50, 100],
+            "lengthMenu": [10, 15, 20, 30, 50, 100],
             "pageLength": 10
         });
         $('.dataTables_filter').addClass('pull-right');
