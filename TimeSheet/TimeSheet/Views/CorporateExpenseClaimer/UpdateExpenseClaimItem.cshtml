@@ -98,14 +98,17 @@
                 </div>
             </div>
 
-            <div class="form-group col-md-7" style="margin-top:10px">
-                <a id="backbtn" href="@Url.Action("ExpenseClaimItems", "CorporateExpenseClaimer")" style="padding:10px; color:#fff; background-color:orange; font-size:13px">Back to th list</a>
-            </div>
-            <div class="form-group col-md-5">
-                <input type="submit" value="UPDATE" class="btn btn-warning pull-right" />
-            </div>
-        }
-    </div>
+            @*using (Html.BeginForm("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = Model.Fk_CorporateCardExpenseClaimID }, FormMethod.Post))
+            {<div class="form-group col-md-7" style="margin-top:10px">
+             <a id="backbtn" style="padding:10px; color:#fff; background-color:orange; font-size:13px">Back to th list</a>
+             </div>
+            }*@
+               
+                <div class="form-group col-md-5">
+                    <input type="submit" value="UPDATE" class="btn btn-warning pull-right" />
+                </div>
+            }
+        </div>
 </div>  
 
     @*<div>
