@@ -49,6 +49,9 @@
     <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.13.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.13.0\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -177,6 +180,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -188,7 +192,6 @@
     <Compile Include="Controllers\CorporateExpenseClaimerController.cs" />
     <Compile Include="Controllers\CostModelController.cs" />
     <Compile Include="Controllers\HRController.cs" />
-    <Compile Include="Controllers\PersonalExpenseClaimerController.cs" />
     <Compile Include="Controllers\RejectedBookingController.cs" />
     <Compile Include="Controllers\CompletedBookingController.cs" />
     <Compile Include="Controllers\DropDownLoaderController.cs" />
@@ -227,8 +230,10 @@
     <Compile Include="Models\EmploymentTypeViewModel.cs" />
     <Compile Include="Models\DTOs\ExportApprovedTimesheetDto.cs" />
     <Compile Include="Models\EstimatedTravelCostModel.cs" />
+    <Compile Include="Models\ExportableExpenseRequests.cs" />
     <Compile Include="Models\HRActivities.cs" />
     <Compile Include="Models\HRTimeSheetList.cs" />
+    <Compile Include="Models\ImportInvoiceDataModel.cs" />
     <Compile Include="Models\JMSEntities\JMSModelEntities.cs" />
     <Compile Include="Models\ListItems.cs" />
     <Compile Include="Models\OpportunityListUpdateModel.cs" />
@@ -280,6 +285,7 @@
     </Compile>
     <Compile Include="ServiceHelper\AdminHelperService.cs" />
     <Compile Include="ServiceHelper\ExpenseClaimerService.cs" />
+    <Compile Include="ServiceHelper\ImportInvoiceDataService.cs" />
     <Compile Include="ServiceHelper\ListItemService.cs" />
     <Compile Include="ServiceHelper\LoadDropDownsServices.cs" />
     <Compile Include="ServiceHelper\LoginService.cs" />
@@ -665,11 +671,11 @@
     <Content Include="Views\Home\TimesheetBookings.cshtml" />
     <Content Include="Views\ApprovedBooking\Index.cshtml" />
     <Content Include="Views\CostModel\Index.cshtml" />
-    <Content Include="Views\PersonalExpenseClaimer\Index.cshtml" />
     <Content Include="Views\CorporateExpenseClaimer\Index.cshtml" />
     <Content Include="Views\CorporateExpenseClaimer\ExpenseClaims.cshtml" />
     <Content Include="Views\CorporateExpenseClaimer\ExpenseClaimItems.cshtml" />
     <Content Include="Views\CorporateExpenseClaimer\UpdateExpenseClaimItem.cshtml" />
+    <Content Include="Views\CorporateExpenseClaimer\InvoiceApprovals.cshtml" />
     <None Include="Web References\VerserSalesforce\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -708,6 +714,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="InvoiceExcelFiles\" />
     <Folder Include="Scripts\FullCalender\bootstrap\" />
     <Folder Include="Scripts\FullCalender\core\locales\" />
     <Folder Include="Scripts\FullCalender\daygrid\" />
