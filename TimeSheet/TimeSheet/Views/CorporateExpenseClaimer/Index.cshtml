@@ -358,14 +358,13 @@
                 var ErrorMessage = '';
 
                 if (MainModelExpenseCliams.EmployeeName == '') {
-                    ErrorMessage += 'EmployeeName is Required.\n ';
+                    ErrorMessage += 'Employee Name is Required.';
                 }
                 if (MainModelExpenseCliams.DateofClaim == '') {
-                    ErrorMessage += 'DateofClaim is Required. \n';
-
+                    ErrorMessage += 'Date of Claim is Required. \n';
                 }
                 if (MainModelExpenseCliams.CreditCardNo == '') {
-                    ErrorMessage += 'CreditCardNo is Required. \n';
+                    ErrorMessage += 'Credit Card No is Required. \n';
                 }
                 if (MainModelExpenseCliams.ExpenseClaimType == '') {
                     ErrorMessage += 'ExpenseClaimType is Required. \n';
@@ -414,11 +413,10 @@
                         
                    // });
 
-                  //  alert(ErrorMessage)
+
                     $.alert({
                         title: 'Validation Errors',
                         content: ErrorMessage,
-                       // .css("color", "red"),
                     });
                     return false;
                 }
@@ -509,4 +507,9 @@
             color: red;
             font-style: italic;
         }
+
+        .jconfirm {
+            color:red;
+        }
+
     </style>
