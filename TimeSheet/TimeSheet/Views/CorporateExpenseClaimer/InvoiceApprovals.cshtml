@@ -66,6 +66,9 @@
                     <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
                     <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
                     <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
+
+
+
                     <td style="text-align:center">
                         @if (item.InvoiceStatus.Contains("Requested") || item.InvoiceStatus.Contains("Disputed"))
                         {
