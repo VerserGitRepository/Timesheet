@@ -215,6 +215,12 @@ namespace TimeSheet.Controllers
            var UpdatebleItem= ImportInvoiceDataService.GetInvoiceLineItem(InvoiceId).Result;
             return View(UpdatebleItem);
         }
+        [HttpPost]
+        public ActionResult UpdateInvoiceLineItem(ImportInvoiceDataModel InvoiceLineItemModel)
+        {
+           ImportInvoiceDataService.UpdateInvoiceLineItem(InvoiceLineItemModel);
+            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+        }
         private static string GetCellValue(Cell theCell, WorkbookPart wbPart)
         {
             string value = "";
