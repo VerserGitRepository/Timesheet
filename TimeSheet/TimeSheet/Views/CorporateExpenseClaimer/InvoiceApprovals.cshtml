@@ -30,12 +30,13 @@
                 </div>
             </div>
         }
-        <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:small; font-weight:600">
+        <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
             <thead style="background-color:orange; color: white">
                 <tr>
                     @*<th>Id</th>*@
-                    <th>Invoice_Date</th>
                     <th>InvoiceNumber</th>
+                    <th>Invoice_Date</th>
+                    
                     <th>InvoiceAmount_ex_gst</th>
                     <th>Invoice_Description</th>
                     <th>ReceivedInvoiceDate</th>
@@ -51,30 +52,37 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                <tr>
 
-                        @*<td>  @Html.DisplayFor(modelItem => item.Id)</td>*@
-                        <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.InvoiceNumber)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.InvoiceAmount_ex_gst)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.Invoice_Description)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.InvoiceStatus)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.Approver)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.Line)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
-                        <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
-                        <td style="text-align:center">
-                            @if (item.InvoiceStatus.Contains("Requested"))
+                    @*<td>  @Html.DisplayFor(modelItem => item.Id)</td>*@
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceNumber)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceAmount_ex_gst)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Invoice_Description)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceStatus)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Approver)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Line)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
+                    <td style="text-align:center">
+                        @if (item.InvoiceStatus.Contains("Requested") || item.InvoiceStatus.Contains("Disputed"))
+                        {
+                            using (Html.BeginForm("ApproveInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
                             {
-                                using (Html.BeginForm("ApproveInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
-                                {
-                                    <button type="submit" class="btn btn-success btn-sm">APPROVE</button>
-                                }
+                                <button type="submit" class="btn-sm btn-success">APPROVE</button>
                             }
-                        </td>
-                    </tr>
+                        }
+                        @if (item.InvoiceStatus.Contains("Requested"))
+                        {
+                            using (Html.BeginForm("DisputedInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
+                            {
+                                <button type="submit" class="btn-sm btn-danger">DISPUTED</button>
+                            }
+                        }
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -85,11 +93,11 @@
     $(document).ready(function () {
 
         $('#InvoicesTable').dataTable({
-            responsive: true,
+                                responsive: true,
             stateSave: true,
             "lengthMenu": [10, 15, 20, 30, 50, 100],
             "pageLength": 10
         });
         $('.dataTables_filter').addClass('pull-right');
-    });
+                            });
 </script>

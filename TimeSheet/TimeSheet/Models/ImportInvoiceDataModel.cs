@@ -21,5 +21,19 @@ namespace TimeSheet.Models
         public string Invoice_Description { get; set; }       
         public string PM_Warehouse_HO { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public string ApprovedBy { get; set; }
+        public DateTime? ApprovedDate { get; set; }
+        public string Comments { get; set; }
+        public string Term { get; set; }
+        public DateTime? DueDate { get; set; }
+        public string POShortage { get; set; }
+        public string POShortageComment { get; set; }
+        public string GLDescription { get; set; }
+        public string GLCode { get; set; }
+        public string Branch { get; set; }
+        public DateTime? DateRecordedinMYOB { get; set; }
+        public string MYOBItemNumber { get; set; }
+        public string InvoiceLocation { get; set; }
+
     }
 }
