@@ -205,6 +205,16 @@ namespace TimeSheet.Controllers
             ImportInvoiceDataService.DisputedExpenseInvoice(InvoiceId);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
+        public ActionResult UpdateInvoiceLine()
+        {           
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateInvoiceLine(int InvoiceId)
+        {
+           var UpdatebleItem= ImportInvoiceDataService.GetInvoiceLineItem(InvoiceId).Result;
+            return View(UpdatebleItem);
+        }
         private static string GetCellValue(Cell theCell, WorkbookPart wbPart)
         {
             string value = "";

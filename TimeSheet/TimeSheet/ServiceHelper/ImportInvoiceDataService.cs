@@ -79,5 +79,42 @@ namespace TimeSheet.ServiceHelper
                 }
             }
         }
+
+        public static async Task<ImportInvoiceDataModel> GetInvoiceLineItem(int InvoiceID)
+        {
+            var ReturnResult = new ImportInvoiceDataModel();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{InvoiceID}/GetInvoiceLineItem")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<ImportInvoiceDataModel>();
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Invoice Approval is Failed!";
+                }
+            }
+            return ReturnResult;
+        }
+
+        public static void UpdateInvoiceLineItem(ImportInvoiceDataModel UpdateInvoiceDataRequest)
+        {
+            var _json = Newtonsoft.Json.JsonConvert.SerializeObject(UpdateInvoiceDataRequest);
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ExpenseClaims/UpdateInvoiceLineItem"), UpdateInvoiceDataRequest).Result;
+                if (response.IsSuccessStatusCode)
+                {                   
+                    HttpContext.Current.Session["ResultMessage"] = "Expense ClaimItem Updated Successfully!";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Expense ClaimItem Updated Failed!";
+                }
+            }
+        }
     }
 }
