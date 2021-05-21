@@ -31,6 +31,14 @@
             </div>
         }
     </div>
+    <div class="pull-right" style="margin-top:10px; margin-right:10px">
+        @using (Html.BeginForm("InvoiceApprovals", "CorporateExpenseClaimer", FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-warning btn-sm">
+                <span class="glyphicon glyphicon-export black"></span> Export
+            </button>
+        }
+    </div>
     <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
         <thead style="background-color:orange; color: white">
             <tr>
@@ -64,59 +72,59 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                  <td style="text-align:center">
-                    @using (Html.BeginForm("UpdateInvoiceLine", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
-                    {
-                        <button type="submit" class="btn btn-warning">
-                            @Html.DisplayFor(modelItem => item.InvoiceNumber)
-                        </button>                      
-                    }
-                </td>             
-                <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
-                <td>  @Html.DisplayFor(modelItem => item.InvoiceAmount_ex_gst)</td>
-                <td>  @Html.DisplayFor(modelItem => item.Invoice_Description)</td>
-                <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
-                <td>  @Html.DisplayFor(modelItem => item.InvoiceStatus)</td>
-                <td>  @Html.DisplayFor(modelItem => item.Approver)</td>
-                @*<td>  @Html.DisplayFor(modelItem => item.Line)</td>*@
-                <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
-                <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
-                <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
-                <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
-                @*<td>  @Html.DisplayFor(modelItem => item.ApprovedDate)</td>*@
-                <td>  @Html.DisplayFor(modelItem => item.Comments)</td>
-                <td>  @Html.DisplayFor(modelItem => item.Term)</td>
-                <td>  @Html.DisplayFor(modelItem => item.DueDate)</td>
-                <td>  @Html.DisplayFor(modelItem => item.POShortage)</td>
-                @*<td>  @Html.DisplayFor(modelItem => item.POShortageComment)</td>*@
-                @*<td>  @Html.DisplayFor(modelItem => item.GLDescription)</td>*@
-                <td>  @Html.DisplayFor(modelItem => item.GLCode)</td>
-                <td>  @Html.DisplayFor(modelItem => item.Branch)</td>
-                @*<td>  @Html.DisplayFor(modelItem => item.MYOBItemNumber)</td>*@
-                <td>  @Html.DisplayFor(modelItem => item.InvoiceLocation)</td>
+                <tr>
+                    <td style="text-align:center">
+                        @using (Html.BeginForm("UpdateInvoiceLine", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
+                        {
+                            <button type="submit" class="btn btn-warning- btn-sm">
+                                @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                            </button>
+                        }
+                    </td>
+                    <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceAmount_ex_gst)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Invoice_Description)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceStatus)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Approver)</td>
+                    @*<td>  @Html.DisplayFor(modelItem => item.Line)</td>*@
+                    <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
+                    @*<td>  @Html.DisplayFor(modelItem => item.ApprovedDate)</td>*@
+                    <td>  @Html.DisplayFor(modelItem => item.Comments)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Term)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.DueDate)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.POShortage)</td>
+                    @*<td>  @Html.DisplayFor(modelItem => item.POShortageComment)</td>*@
+                    @*<td>  @Html.DisplayFor(modelItem => item.GLDescription)</td>*@
+                    <td>  @Html.DisplayFor(modelItem => item.GLCode)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Branch)</td>
+                    @*<td>  @Html.DisplayFor(modelItem => item.MYOBItemNumber)</td>*@
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceLocation)</td>
 
-                <td style="text-align:center">
-                    <div style="padding-left:0;padding-bottom:2px">
-                        @if (item.InvoiceStatus.Contains("Requested") || item.InvoiceStatus.Contains("Disputed"))
-                        {
-                            using (Html.BeginForm("ApproveInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
+                    <td style="text-align:center">
+                        <div style="padding-left:0;padding-bottom:2px">
+                            @if (item.InvoiceStatus.Contains("Requested") || item.InvoiceStatus.Contains("Disputed"))
                             {
-                                <button type="submit" class="btn btn-sm btn-success" style="font-size:9px; font-weight:500">APPROVE</button>
+                                using (Html.BeginForm("ApproveInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
+                                {
+                                    <button type="submit" class="btn btn-sm btn-success" style="font-size:9px; font-weight:500">APPROVE</button>
+                                }
                             }
-                        }
-                    </div>
-                    <div style="padding-left:0">
-                        @if (item.InvoiceStatus.Contains("Requested"))
-                        {
-                            using (Html.BeginForm("DisputedInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
+                        </div>
+                        <div style="padding-left:0">
+                            @if (item.InvoiceStatus.Contains("Requested"))
                             {
-                                <button type="submit" class="btn btn-sm btn-danger" style="font-size:9px; font-weight:500">DISPUTED</button>
+                                using (Html.BeginForm("DisputedInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger" style="font-size:9px; font-weight:500">DISPUTED</button>
+                                }
                             }
-                        }
-                    </div>
-                </td>
-            </tr>
+                        </div>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
