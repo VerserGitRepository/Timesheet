@@ -144,7 +144,7 @@ namespace TimeSheet.Controllers
                             Row currentrow = (Row)Rows.ChildElements.GetItem(row);
                             if (!string.IsNullOrEmpty(GetCellValue((Cell)currentrow.ChildElements.GetItem(0), wbPart)))
                             {
-                                CultureInfo provider = CultureInfo.InvariantCulture;                               
+                                CultureInfo provider = CultureInfo.InvariantCulture;                             
 
                                 var asset = new ImportInvoiceDataModel();
                                 asset.SupplierName = GetCellValue((Cell)currentrow.ChildElements.GetItem(0), wbPart);
@@ -161,7 +161,20 @@ namespace TimeSheet.Controllers
                                 asset.Approver = GetCellValue((Cell)currentrow.ChildElements.GetItem(7), wbPart);
                                 asset.Invoice_Description = GetCellValue((Cell)currentrow.ChildElements.GetItem(8), wbPart);
                                 asset.PM_Warehouse_HO = GetCellValue((Cell)currentrow.ChildElements.GetItem(9), wbPart);
+                                asset.Comments= GetCellValue((Cell)currentrow.ChildElements.GetItem(10), wbPart);
+                                asset.Term = GetCellValue((Cell)currentrow.ChildElements.GetItem(11), wbPart);
+                                string _DueDate= GetCellValue((Cell)currentrow.ChildElements.GetItem(12), wbPart);
+                                DateTime dateTime12 = DateTime.ParseExact(_DueDate, new string[] { "dd/MM/yyyy" }, provider, DateTimeStyles.None);
+                                asset.DueDate = dateTime12;
+                                asset.POShortage = GetCellValue((Cell)currentrow.ChildElements.GetItem(13), wbPart);
+                                asset.POShortageComment = GetCellValue((Cell)currentrow.ChildElements.GetItem(14), wbPart);
+                                asset.GLDescription = GetCellValue((Cell)currentrow.ChildElements.GetItem(15), wbPart);
+                                asset.GLCode = GetCellValue((Cell)currentrow.ChildElements.GetItem(16), wbPart);
+                                asset.Branch = GetCellValue((Cell)currentrow.ChildElements.GetItem(17), wbPart);
+                                asset.MYOBItemNumber = GetCellValue((Cell)currentrow.ChildElements.GetItem(18), wbPart);
                                 assetList.Add(asset);
+                              //  Approved / Disputed Status Comments(for internal purpose)	Term Due Date PO Shortage PO Shortage 
+                                //Comment GL Description  GL code Branch Date Recorded in MYOB MYOB Item Number
                             }
                             else
                             {
@@ -186,7 +199,14 @@ namespace TimeSheet.Controllers
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
 
-        [HttpGet]
+
+        [HttpPost]
+        public ActionResult CreateNewInvoiceLine(ImportInvoiceDataModel _ImportInvoiceDataModel)
+        {
+            return View();
+        }
+
+            [HttpGet]
         public ActionResult InvoiceApprovals()
         {
             //<ImportInvoiceDataModel>> GetExpenseClaims()

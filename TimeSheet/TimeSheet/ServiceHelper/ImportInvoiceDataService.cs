@@ -32,6 +32,25 @@ namespace TimeSheet.ServiceHelper
             }
         }
 
+        public static void CreateInvoiceItem(ImportInvoiceDataModel InvoiceDataRequest)
+        {
+            var _json = Newtonsoft.Json.JsonConvert.SerializeObject(InvoiceDataRequest);
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ExpenseClaims/CreateInvoiceItem"), InvoiceDataRequest).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    //var  ReturnResult =  response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Expense ClaimItem Updated Successfully!";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Expense ClaimItem Updated Failed!";
+                }
+            }
+        }
+
         public static async Task<IEnumerable<ImportInvoiceDataModel>> GetExpenseClaims()
         {
             var ReturnResult = new List<ImportInvoiceDataModel>();
