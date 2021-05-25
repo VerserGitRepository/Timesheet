@@ -22,8 +22,8 @@
                     <th>Travel</th>
                     <th>Accomdation</th>
                     <th>Other</th>
-
                     <th>ExpenseTotal</th>
+                    <th>Edit</th>
                     <th></th>
                 </tr>
             </thead>
@@ -70,20 +70,23 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ExpenseTotal)
                     </td>
-                    <td>
-                        <div style="padding-left:0;padding-bottom:2px">
+                    <td style="text-align:center">
+                        @using (Html.BeginForm("UpdateExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id }, FormMethod.Post))
+                        {
+                            <button type="submit" class="Edit btn btn-sm btn-warning a-btn-slide-text"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                        }
+                    </td>
+                    <td width="10%" style="text-align:center">
+                        <div class="col-md-6">
                             @using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "Approved" }, FormMethod.Post))
                             {
-                                <button type="submit" class="btn btn-sm btn-success" style="font-size:9px; font-weight:500">APPROVE</button>
+                                <button type="submit" class="btn btn-success" style="font-size:9px; font-weight:500">APPROVE</button>
                             }
-
+                        </div>
+                        <div class="col-md-6">
                             @using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "UnApproved" }, FormMethod.Post))
                             {
-                                <button type="submit" class="btn btn-sm btn-danger" style="font-size:9px; font-weight:500">UnApprove</button>
-                            }
-                            @using (Html.BeginForm("UpdateExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id }, FormMethod.Post))
-                            {
-                                <button type="submit" class="Edit btn btn-sm btn-warning a-btn-slide-text"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                                <button type="submit" class="btn btn-danger" style="font-size:9px; font-weight:500">UnApprove</button>
                             }
                         </div>
                     </td>
