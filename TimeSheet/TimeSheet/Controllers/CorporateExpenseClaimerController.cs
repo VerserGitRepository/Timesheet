@@ -259,6 +259,12 @@ namespace TimeSheet.Controllers
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
         [HttpPost]
+        public ActionResult UpdateInvoicePaid(int InvoiceId)
+        {
+            ImportInvoiceDataService.UpdateInvoicePaid(InvoiceId);
+            return RedirectToAction("InvoiceApprovedItems", "CorporateExpenseClaimer");
+        }        
+        [HttpPost]
         public ActionResult DisputedInvoice(int InvoiceId)
         {
             ImportInvoiceDataService.DisputedExpenseInvoice(InvoiceId);

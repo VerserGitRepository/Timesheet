@@ -109,6 +109,24 @@ namespace TimeSheet.ServiceHelper
                 }
             }           
         }
+
+        public static async Task UpdateInvoicePaid(int InvoiceID)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{InvoiceID}/UpdateInvoicePaid")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    HttpContext.Current.Session["ResultMessage"] = "Invoice Status Updated to Paid Successfully!";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Invoice Status Updated to Paid is Failed!";
+                }
+            }
+        }
+
         public static async Task DisputedExpenseInvoice(int InvoiceID)
         {
             using (HttpClient client = new HttpClient())
