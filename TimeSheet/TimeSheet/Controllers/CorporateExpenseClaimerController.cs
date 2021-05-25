@@ -210,10 +210,17 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult CreateNewInvoiceLine(ImportInvoiceDataModel _ImportInvoiceDataModel)
         {
+            ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
+            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+        }
+
+        [HttpGet]
+        public ActionResult CreateNewInvoiceLine() 
+        {
             return View();
         }
 
-            [HttpGet]
+        [HttpGet]
         public ActionResult InvoiceApprovals()
         {
             //<ImportInvoiceDataModel>> GetExpenseClaims()

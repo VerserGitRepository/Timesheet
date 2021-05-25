@@ -39,6 +39,11 @@
             </button>
         }
     </div>
+    <div class="pull-right" style="margin-top:10px; margin-right:10px">
+        <button type="button" class="btn btn-warning btn-sm" id="Invoice">
+            @*<span class="glyphicon glyphicon-export black"></span>*@ Invoice
+        </button>
+    </div>
     <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
         <thead style="background-color:orange; color: white">
             <tr>
@@ -129,6 +134,9 @@
         </tbody>
     </table>
 </div>
+
+<div class="modal fade" id="myModal" role="dialog" data-url='@Url.Action("CreateNewInvoiceLine","CorporateExpenseClaimer")'></div>
+
 <script>
     $(document).ready(function () {
 
@@ -140,6 +148,23 @@
         });
         $('.dataTables_filter').addClass('pull-right');
     });
+
+
+    $(document).ready(function () {
+
+        $('#Invoice').click(function () {
+
+            var url = $('#myModal').data('url');
+            $.get(url, function (data) {
+
+                $("#myModal").html(data);
+                $("#myModal").modal('show');
+            });
+        });
+
+    });
+
+
 </script>
 
 
