@@ -42,16 +42,16 @@ namespace TimeSheet.ServiceHelper
                 if (response.IsSuccessStatusCode)
                 {
                     //var  ReturnResult =  response.Content.ReadAsAsync<bool>();
-                    HttpContext.Current.Session["ResultMessage"] = "Expense ClaimItem Updated Successfully!";
+                    HttpContext.Current.Session["ResultMessage"] = "Invoice Created Successfully!";
                 }
                 else
                 {
-                    HttpContext.Current.Session["ErrorMessage"] = "Expense ClaimItem Updated Failed!";
+                    HttpContext.Current.Session["ErrorMessage"] = "Invoice Creation Failed!";
                 }
             }
         }
 
-        public static async Task<IEnumerable<ImportInvoiceDataModel>> GetExpenseClaims()
+        public static async Task<IEnumerable<ImportInvoiceDataModel>> GetInvoiceLineItems()
         {
             var ReturnResult = new List<ImportInvoiceDataModel>();
             using (HttpClient client = new HttpClient())
@@ -65,7 +65,34 @@ namespace TimeSheet.ServiceHelper
             }
             return ReturnResult;
         }
-
+        public static async Task<IEnumerable<ImportInvoiceDataModel>> GetApprovedInvoiceLineItems()
+        {
+            var ReturnResult = new List<ImportInvoiceDataModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ExpenseClaims/GetApprovedInvoiceLineItems")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<List<ImportInvoiceDataModel>>();
+                }
+            }
+            return ReturnResult;
+        }
+        public static async Task<IEnumerable<ImportInvoiceDataModel>> ExportAllInvoices()
+        {
+            var ReturnResult = new List<ImportInvoiceDataModel>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format("ExpenseClaims/ExportAllInvoices")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<List<ImportInvoiceDataModel>>();
+                }
+            }
+            return ReturnResult;
+        }
         public static async Task ApproveExpenseInvoice(int InvoiceID)
         {          
             using (HttpClient client = new HttpClient())
