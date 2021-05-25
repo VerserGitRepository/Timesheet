@@ -115,5 +115,24 @@ namespace TimeSheet.ServiceHelper
                 }
             }
         }
+
+        public static void ApproveExpenseClaimItem(int ClaimitemId, string ClaimitemStatus)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimitemId}/{ClaimitemStatus}/ApproveExpenseClaimItem")).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    //var  ReturnResult =  response.Content.ReadAsAsync<bool>();
+                    HttpContext.Current.Session["ResultMessage"] = "Expense ClaimItem Updated Successfully!";
+                }
+                else
+                {
+                    HttpContext.Current.Session["ErrorMessage"] = "Expense ClaimItem Updated Failed!";
+                }
+            }
+        }
     }
 }

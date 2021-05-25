@@ -64,6 +64,15 @@ namespace TimeSheet.Controllers
             var ClaimItemsData = ExpenseClaimerService.GetExpenseClaimItem(ClaimItemId).Result;
             return View(ClaimItemsData);           
         }
+
+        [HttpPost]
+        public ActionResult ApproveExpenseClaimItem(int ClaimItemId,string claimItemStatus)
+        {
+             ExpenseClaimerService.ApproveExpenseClaimItem(ClaimItemId, claimItemStatus);
+            return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
+        }
+
+        //ApproveExpenseClaimItem
         [HttpPost]
         public ActionResult UpdateExpenseClaimItemEntity(CorporateCardExpenseClaimItemsModel ClaimItemsUpdateModel)
         {
@@ -115,7 +124,6 @@ namespace TimeSheet.Controllers
             Response.End();
             return RedirectToAction("ExpenseClaims", " CorporateExpenseClaimer");
         }
-
 
         [HttpPost]
         public ActionResult ImportInvoices()
@@ -198,7 +206,6 @@ namespace TimeSheet.Controllers
             }
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
-
 
         [HttpPost]
         public ActionResult CreateNewInvoiceLine(ImportInvoiceDataModel _ImportInvoiceDataModel)

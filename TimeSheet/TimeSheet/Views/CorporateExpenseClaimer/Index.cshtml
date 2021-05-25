@@ -72,14 +72,21 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.Label("Expense Claim Type:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <select type="text" class="form-control form-control-sm" id="txtExpenseClaimType" name="ExpenseClaimType">
-                            <option></option>
-                            <option>Corporate</option>
-                            <option>Personal</option>
-                        </select>
-                    </div>
+                  
+                        @Html.Label("Claim-Type:", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:center" })                      
+                            <select type="text" class="form-control form-control-sm" id="txtExpenseClaimType" name="ExpenseClaimType" title="Claim-Type">
+                                <option></option>
+                                <option>Corporate</option>
+                                <option>Personal</option>
+                            </select>                                  
+                        @Html.Label("Claim-Status:", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:center" })
+                            <select type="text" class="form-control form-control-sm col-md-3" id="txtExpenseClaimStatus" name="ClaimStatus" title="Claim-Status">
+                                <option></option>
+                                <option>Fully-Approved</option>
+                                <option>Partially-Approved</option>
+                                <option>UnApproved</option>
+                            </select>                   
+                    </div>                   
                 </div>
             </div>
         </div>
@@ -187,7 +194,15 @@
             @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-4", style = "margin-top:5px" })
             <input class="form-control form-control-sm col-md-8" type="text" id="txtOther" name="Other" placeholder="Other">
         </div>
-        <input type="button" id="add-row" class="btn btn-warning btn-sm pull-right" value="Add Row" style="margin-bottom:10px; margin-top:10px; margin-right:22px" />
+         <div class="form-group col-md-3">
+            @Html.Label("Status:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <select type="text" class="form-control form-control-sm col-md-3 " id="dpdClaimItemStatus" name="ClaimItemStatus" title="Claim-Status">
+                <option></option>
+                <option>Approved</option>
+                <option>UnApproved</option>
+            </select>
+            </div>
+            <input type="button" id="add-row" class="btn btn-warning btn-sm pull-right" value="Add Row" style="margin-bottom:10px; margin-top:10px; margin-right:22px" />
     </form>
     <table id="CreditCardTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
         <thead style="background-color:orange; color: white">
@@ -204,6 +219,7 @@
                 <th>Meals</th>
                 <th>Tools</th>
                 <th>Other</th>
+                <th>Status</th>
                 <th>Total</th>
             </tr>
         </thead>
@@ -275,7 +291,7 @@
             var Meals = $("#txtMeals").val();
             var Tools = $("#txtTools").val();
             var Other = $("#txtOther").val();
-
+            var ClaimItemStatus = $("#dpdClaimItemStatus").val();            
             _totalExpense += (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(Other) + parseInt(Travel));
             _RowtotalExpense = (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(Other) + parseInt(Travel));
 
@@ -303,6 +319,7 @@
                 + Meals + "</td><td>"
                 + Tools + "</td><td>"
                 + Other + "</td><td>"
+                + ClaimItemStatus + "</td><td>"            
                 + Total + "</td></tr>";
             $("table tbody").append(markup);
             var CliamLineItem = {};
@@ -317,6 +334,7 @@
             CliamLineItem.MealsCost = Meals;
             CliamLineItem.ToolsCost = Tools;
             CliamLineItem.OtherCost = Other;
+            CliamLineItem.ClaimItemStatus = ClaimItemStatus;           
             CliamLineItem.TravelCost = Travel;
             CliamLineItem.ExpenseTotal = Total;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
@@ -335,6 +353,7 @@
             MainModelExpenseCliams.MealsTotal = _MealsTotal;
             MainModelExpenseCliams.AccommodationTotal = _AccommodationTotal;
             MainModelExpenseCliams.ToolsTotal = _ToolsTotal;
+            MainModelExpenseCliams.ClaimStatus = $("#txtExpenseClaimStatus").val();
             MainModelExpenseCliams.ExpenseTotal = _totalExpense;
 
             var ErrorMessage = '';

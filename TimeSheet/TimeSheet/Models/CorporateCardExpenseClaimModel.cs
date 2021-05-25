@@ -31,6 +31,9 @@ namespace TimeSheet.Models
 		public decimal? AccommodationTotal { get; set; }	
 
 		public decimal? ToolsTotal { get; set; }
+
+		public string ClaimStatus { get; set; }
+		
 		public decimal? OtherTotal { get; set; }
 	
 		public decimal ExpenseTotal { get; set; }

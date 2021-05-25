@@ -14,6 +14,7 @@ namespace TimeSheet.Models
 		public string ItemDescription { get; set; }
 		public string Project { get; set; }
 		public string Branch { get; set; }
+		public string ClaimItemStatus { get; set; }
 		public string PONumber { get; set; }
 		public decimal? TravelCost { get; set; }
 		public decimal? MealsCost { get; set; }

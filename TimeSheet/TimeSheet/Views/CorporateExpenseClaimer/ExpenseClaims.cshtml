@@ -37,6 +37,7 @@
             <tr>
                 <th>ClaimID</th>
                 <th>ClaimDate</th>
+                <th>Status</th>
                 <th>EmployeeName</th>
                 <th>CreditCardNo</th>
                 <th>ExpenseClaimType</th>
@@ -53,32 +54,33 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+            <tr>
 
-                    <td style="text-align:center">
-                        @using (Html.BeginForm("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = item.Id }, FormMethod.Post))
-                        {
-                            <button type="submit" class="btn btn-warning- btn-sm">
-                                @Html.DisplayFor(modelItem => item.Id)
-                            </button>
-                            @*<a href="javascript:void(0);" class="ClaimID"*@
-                            @*onclick="ExpenseClaimItems('@item.Id')"*@
-                            @*data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>*@
-                        }
-                    </td>
-                    <td>  @Html.DisplayFor(modelItem => item.ExpenseDateOfClaim)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.EmployeeName)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.CreditCardNo)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.ExpenseClaimType)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.AccommodationTotal)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.ToolsTotal)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.MealsTotal)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.OtherTotal)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.TravelTotal)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.ExpenseTotal)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.SharePointFileLocation)</td>
-                </tr>
+                <td style="text-align:center">
+                    @using (Html.BeginForm("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = item.Id }, FormMethod.Post))
+                    {
+                        <button type="submit" class="btn btn-warning- btn-sm">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </button>
+                        @*<a href="javascript:void(0);" class="ClaimID"*@
+                        @*onclick="ExpenseClaimItems('@item.Id')"*@
+                        @*data-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>*@
+                    }
+                </td>
+                <td>  @Html.DisplayFor(modelItem => item.ExpenseDateOfClaim)</td>
+                <td>  @Html.DisplayFor(modelItem => item.ClaimStatus)</td>
+                <td>  @Html.DisplayFor(modelItem => item.EmployeeName)</td>
+                <td>  @Html.DisplayFor(modelItem => item.CreditCardNo)</td>
+                <td>  @Html.DisplayFor(modelItem => item.ExpenseClaimType)</td>
+                <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
+                <td>  @Html.DisplayFor(modelItem => item.AccommodationTotal)</td>
+                <td>  @Html.DisplayFor(modelItem => item.ToolsTotal)</td>
+                <td>  @Html.DisplayFor(modelItem => item.MealsTotal)</td>
+                <td>  @Html.DisplayFor(modelItem => item.OtherTotal)</td>
+                <td>  @Html.DisplayFor(modelItem => item.TravelTotal)</td>
+                <td>  @Html.DisplayFor(modelItem => item.ExpenseTotal)</td>
+                <td>  @Html.DisplayFor(modelItem => item.SharePointFileLocation)</td>
+            </tr>
             }
         </tbody>
     </table>
