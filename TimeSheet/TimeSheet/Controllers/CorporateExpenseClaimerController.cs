@@ -126,6 +126,31 @@ namespace TimeSheet.Controllers
         }
 
         [HttpPost]
+        public ActionResult ExportInvoiceItems()
+        {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            GridView gv = new GridView();
+            gv.DataSource = ImportInvoiceDataService.GetInvoiceLineItems().Result;
+            gv.DataBind();
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", $"attachment; filename=ExpenseClaims-{DateTime.Now.ToShortDateString()}.xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            gv.RenderControl(htw);
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+            return RedirectToAction("ExpenseClaims", " CorporateExpenseClaimer");
+        }
+
+        [HttpPost]
         public ActionResult ImportInvoices()
         {
             try
@@ -224,7 +249,7 @@ namespace TimeSheet.Controllers
         public ActionResult InvoiceApprovals()
         {
             //<ImportInvoiceDataModel>> GetExpenseClaims()
-            var Invoices =  ImportInvoiceDataService.GetExpenseClaims().Result;
+            var Invoices =  ImportInvoiceDataService.GetInvoiceLineItems().Result;
             return View(Invoices);
         }
         [HttpPost]
@@ -308,6 +333,62 @@ namespace TimeSheet.Controllers
                 }
             }
             return value;
+        }
+
+        [HttpGet]
+        public ActionResult InvoiceApprovedItems()
+        {
+            var Invoices = ImportInvoiceDataService.GetApprovedInvoiceLineItems().Result;
+            return View(Invoices);
+        }
+
+        [HttpPost]
+        public ActionResult ExportApprovedInvoices()
+        {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            GridView gv = new GridView();
+            gv.DataSource = ImportInvoiceDataService.GetApprovedInvoiceLineItems().Result;
+            gv.DataBind();
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", $"attachment; filename=ExpenseClaims-{DateTime.Now.ToShortDateString()}.xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            gv.RenderControl(htw);
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+            return RedirectToAction("ExpenseClaims", " CorporateExpenseClaimer");
+        }
+        [HttpPost]
+        public ActionResult ExportAllInvoices()
+        {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            GridView gv = new GridView();
+            gv.DataSource = ImportInvoiceDataService.ExportAllInvoices().Result;
+            gv.DataBind();
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", $"attachment; filename=ExpenseClaims-{DateTime.Now.ToShortDateString()}.xls");
+            Response.ContentType = "application/ms-excel";
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new System.Web.UI.HtmlTextWriter(sw);
+            gv.RenderControl(htw);
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+            return RedirectToAction("ExpenseClaims", " CorporateExpenseClaimer");
         }
     }
 }
