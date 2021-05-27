@@ -20,6 +20,14 @@ namespace TimeSheet.Models
 		public decimal? MealsCost { get; set; }
 		public decimal? AccommodationCost { get; set; }
 		public decimal? ToolsCost { get; set; }
+		public decimal? WHTools_Consumables { get; set; }
+		public decimal? VehicleRepairs_Maintenance { get; set; }
+		public decimal? Monthly_Subscriptions { get; set; }
+		public decimal? ITExpenses { get; set; }
+		public decimal? Postage { get; set; }
+		public decimal? Telephone { get; set; }
+		public decimal? StaffAmenities { get; set; }
+		public decimal? ClientEntertainment { get; set; }
 		public decimal? OtherCost { get; set; }
 		public decimal? ExpenseTotal { get; set; }
 		public DateTime? CreatedDate { get; set; }

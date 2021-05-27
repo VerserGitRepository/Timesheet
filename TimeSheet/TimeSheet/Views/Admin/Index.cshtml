@@ -24,7 +24,9 @@
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">RESOURCES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEPROJECTS">PROJECTS</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEACTIVITIES">ACTIVITIES</a></li>
-                @*<li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEUSER">USER ROLE</a></li>*@
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#">CORPORATE CARD HOLDER</a></li>
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#">SUPPLIER GL CODES</a></li>
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#">INVOICE SUPPLIERS</a></li>
             </ul>
         </nav>
         <div class="tab-content" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
@@ -33,7 +35,6 @@
                 <table class="table table-bordered table-responsive" id="tblCustomersTable">
                     <thead style="background-color:lightgray">
                         <tr>
-
                             <th>
                                 Opportunity
                             </th>
@@ -52,12 +53,10 @@
                             </th>
                         </tr>
                     </thead>
-
                     @foreach (var item in Model.OpportunitesList)
 
                     {
                     <tr>
-
                         <td>
                             @item.Opportunitynumber
                             <input class="hidden" type="text" id="hdnOpportunitynumber" value="@item.Opportunitynumber" />

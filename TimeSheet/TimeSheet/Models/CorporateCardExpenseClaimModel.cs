@@ -25,7 +25,16 @@ namespace TimeSheet.Models
 		public string CreditCardNo { get; set; }
 		[Required]
 		public string SharePointFileLocation { get; set; }
-	
+
+		public decimal? WHTools_ConsumablesTotal { get; set; }
+		public decimal? VehicleRepairs_MaintenanceTotal { get; set; }
+		public decimal? Monthly_SubscriptionsTotal { get; set; }
+		public decimal? ITExpensesTotal { get; set; }
+		public decimal? PostageTotal { get; set; }
+		public decimal? TelephoneTotal { get; set; }
+		public decimal? StaffAmenitiesTotal { get; set; }
+		public decimal? ClientEntertainmentTotal { get; set; }
+
 		public decimal? TravelTotal { get; set; }
 		public decimal? MealsTotal { get; set; }
 		public decimal? AccommodationTotal { get; set; }	
