@@ -1,239 +1,305 @@
 ﻿@model TimeSheet.Models.ImportInvoiceDataModel
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="container">
-        <div class="modal-header" style="background-color:lightgray;">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h5 class="modal-title text-center">Create New Invoice Line</h5>
-        </div>
-        <div style="align-content:center; align-self:flex-start; align-items:flex-start;padding:15px; background-color:white;">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-horizontal">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.SupplierName, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+<div class="container-fluid" style="margin-left:3%; margin-right:3%">
+    <div class="modal-header" style="background-color:lightgray">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h5 class="modal-title text-center">Create New Invoice Line</h5>
+    </div>
 
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Line, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Line, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Line, "", new { @class = "text-danger" })
-                            </div>
+    <div class="row" style="margin-left:0px; margin-right:0px; background-color:#fff">
+        <div class="col-md-12" style="margin-top:10px">
+            <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px; ">
+                <div class="form-group" style="margin-top:5px; margin-bottom:0px">
+                    <div class="form-group col-md-6">
+                        @Html.Label("Supplier Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px;">
+                            <input type="text" class="form-control form-control-sm" id="txtSupplierName" name="SupplierName">
                         </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.ReceivedInvoiceDate, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.ReceivedInvoiceDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.ReceivedInvoiceDate, "", new { @class = "text-danger" })
-                            </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Received Invoice Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="date" class="form-control form-control-sm" id="txtReceivedInvoiceDate" name="ReceivedInvoiceDate">
                         </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.InvoiceAmount_ex_gst, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.InvoiceAmount_ex_gst, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.InvoiceAmount_ex_gst, "", new { @class = "text-danger" })
-                            </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Invoice Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="date" class="form-control form-control-sm" id="txtInvoiceDate" name="InvoiceDate">
                         </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.InvoiceAmount_Inc_gst, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.InvoiceAmount_Inc_gst, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.InvoiceAmount_Inc_gst, "", new { @class = "text-danger" })
-                            </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Invoice Number:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="text" class="form-control form-control-sm" id="txtInvoiceNumber" name="InvoiceNumber">
                         </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.InvoiceStatus, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.InvoiceStatus, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.InvoiceStatus, "", new { @class = "text-danger" })
-                            </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Term:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="text" class="form-control form-control-sm" id="txtTerm" name="Term">
                         </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Invoice_Date, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Invoice_Date, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Invoice_Date, "", new { @class = "text-danger" })
-                            </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("Due Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="date" class="form-control form-control-sm" id="txtDueDate" name="DueDate">
                         </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.InvoiceNumber, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.InvoiceNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Project_Job, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Project_Job, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Project_Job, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Approver, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Approver, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Approver, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Invoice_Description, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Invoice_Description, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Invoice_Description, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.PM_Warehouse_HO, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.PM_Warehouse_HO, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.PM_Warehouse_HO, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.ApprovedBy, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.ApprovedBy, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.ApprovedBy, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.ApprovedDate, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.ApprovedDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.ApprovedDate, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Term, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Term, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Term, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.DueDate, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.POShortage, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.POShortage, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.POShortage, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.POShortageComment, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.POShortageComment, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.POShortageComment, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.GLDescription, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.GLDescription, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.GLDescription, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.GLCode, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.GLCode, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.GLCode, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Branch, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.Branch, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Branch, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.DateRecordedinMYOB, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.DateRecordedinMYOB, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.DateRecordedinMYOB, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.MYOBItemNumber, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.MYOBItemNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.MYOBItemNumber, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.InvoiceLocation, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.InvoiceLocation, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.InvoiceLocation, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-11" style="margin-left:40px; margin-top:10px">
-                            <input type="submit" value="Create" class="btn btn-warning pull-right" />
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="row" style="margin-left:0px; margin-right:0px; background-color:#fff">
+        <div class="col-md-12" style="margin-top:10px">
+            <form id="MainForm">
+                <div class="form-group col-md-2">
+                    @Html.Label("PO#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtPO" name="PO" placeholder="PO#">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Opp#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtOpp" name="Opp" placeholder="Opp#">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Line:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtLine" name="Line" placeholder="Line">
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.Label("InvoiceAmount_ex_gst:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoiceAmount_ex_gst" name="InvoiceAmount_ex_gst" placeholder="InvoiceAmount_ex_gst">
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.Label("TaxCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtTaxCode" name="TaxCode" placeholder="TaxCode">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Project_Job:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtProject_Job" name="Project_Job" placeholder="Project_Job">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Approver:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtApprover" name="Approver" placeholder="Approver">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Invoice_Detail:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoice_Description" name="Invoice_Detail" placeholder="Invoice_Detail">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("PM/WH/HO:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtPM_Warehouse_HO" name="PM_Warehouse_HO" placeholder="PM_Warehouse_HO">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Status:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <select type="text" class="form-control form-control-sm col-md-12 " id="dpdInvoiceStatus" name="InvoiceStatus">
+                        <option></option>
+                        <option>Approved</option>
+                        <option>Disputed</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Comments:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtComments" name="Comments" placeholder="Comments">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("GLDescription:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtGLDescription" name="GLDescription" placeholder="GLDescription">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("GLCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtGLCode" name="GLCode" placeholder="GLCode">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtBranch" name="Branch" placeholder="Branch">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtDateRecordedinMYOB" name="DateRecordedinMYOB" placeholder="DateRecordedinMYOB">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("MYOBItemNumber:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtMYOBItemNumber" name="MYOBItemNumber" placeholder="MYOBItemNumber">
+                </div>
+                <div class="form-group col-md-2">
+                    @Html.Label("InvoiceLocation:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                    <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoiceLocation" name="InvoiceLocation" placeholder="InvoiceLocation">
+                </div>
+                <input type="button" id="add-row" class="btn btn-warning btn-sm pull-right" style="margin-top:30px" value="Add Row">
+            </form>
+            <table id="CreateNewInvoiceLineTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
+                <thead style="background-color:orange; color: white">
+                    <tr>
+                        <th>Select</th>
+                        <th>PO#</th>
+                        <th>Opp#</th>
+                        <th>Line</th>
+                        <th>InvoiceAmount ex gst</th>
+                        <th>Tax Code</th>
+                        <th>Project Job</th>
+                        <th>Approver</th>
+                        <th>Invoice Detail</th>
+                        <th>PM/WH/HO</th>
+                        <th>Status</th>
+                        <th>Comments</th>
+                        <th>GL Description</th>
+                        <th>GL Code</th>
+                        <th>Branch</th>
+                        <th>Date Recorded in MYOB</th>
+                        <th>MYOB Item Number</th>
+                        <th>Invoice Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <button type="button" id="delete-row" class="btn btn-warning btn-sm pull-right" style="margin-bottom:10px">Delete Row</button>
+        </div>
+    </div>
+
+    <div class="row" style="margin-left:0px; margin-right:0px; background-color:#fff">
+        <div class="col-md-12" style="margin-top:5px">
+            <button type="submit" class="btn btn-warning btn-sm pull-right" id="CreateInvoiceLineBtn" style="font-size:16px;">Submit</button>
+        </div>
+    </div>
+
+</div>
 }
 
-    @*@section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }*@
+<script>
+    $(document).ready(function () {
+
+        var CreateNewInvoiceLine = {};
+        CreateNewInvoiceLine.CreateNewInvoiceLineItems = new Array();
+
+        $("#add-row").click(function () {
+            var PO = $("#txtPO").val();
+            var Opp = $("#txtOpp").val();
+            var Line = $("#txtLine").val();
+            var InvoiceAmount_ex_gst = $("#txtInvoiceAmount_ex_gst").val();
+            var TaxCode = $("#txtTaxCode").val();
+            var ProjectJob = $("#txtProject_Job").val();
+            var Approver = $("#txtApprover").val();
+            var InvoiceDescription = $("#txtInvoice_Description").val();
+            var PMWarehouseHO = $("#txtPM_Warehouse_HO").val();
+            var InvoiceStatus = $("#dpdInvoiceStatus").val();
+            var Comments = $("#txtComments").val();
+            var GLDescription = $("#txtGLDescription").val();
+            var GLCode = $("#txtGLCode").val();
+            var Branch = $("#txtBranch").val();
+            var DateRecordedinMYOB = $("#txtDateRecordedinMYOB").val();
+            var MYOBItemNumber = $("#txtMYOBItemNumber").val();
+            var InvoiceLocation = $("#txtInvoiceLocation").val();
+            var markup = "<tr><td><input type='checkbox' name='record'></td><td>"
+                + PO + "</td><td>"
+                + Opp + "</td><td>"
+                + Line + "</td><td>"
+                + InvoiceAmount_ex_gst + "</td><td>"
+                + TaxCode + "</td><td>"
+                + ProjectJob + "</td><td>"
+                + Approver + "</td><td>"
+                + InvoiceDescription + "</td><td>"
+                + PMWarehouseHO + "</td><td>"
+                + InvoiceStatus + "</td><td>"
+                + Comments + "</td><td>"
+                + GLDescription + "</td><td>"
+                + GLCode + "</td><td>"
+                + Branch + "</td><td>"
+                + DateRecordedinMYOB + "</td><td>"
+                + MYOBItemNumber + "</td><td>"
+                + InvoiceLocation + "</td></tr>";
+            $("#CreateNewInvoiceLineTable tbody").append(markup);
+            var InvoiceLineItem = {};
+            //InvoiceLineItem.ClaimDate = PO;
+            //InvoiceLineItem.Supplier = Opp;
+            InvoiceLineItem.Line = Line;
+            InvoiceLineItem.InvoiceAmount_ex_gst = InvoiceAmount_ex_gst;
+            //InvoiceLineItem.Project = TaxCode;
+            InvoiceLineItem.Project_Job = ProjectJob;
+            InvoiceLineItem.Approver = Approver;
+            InvoiceLineItem.Invoice_Description = InvoiceDescription;
+            InvoiceLineItem.PM_Warehouse_HO = PMWarehouseHO;
+            //InvoiceLineItem.ToolsCost = InvoiceStatus;
+            InvoiceLineItem.POShortageComment = Comments;
+            InvoiceLineItem.GLDescription = GLDescription;
+            InvoiceLineItem.GLCode = GLCode;
+            InvoiceLineItem.Branch = Branch;
+            InvoiceLineItem.DateRecordedinMYOB = DateRecordedinMYOB;
+            InvoiceLineItem.MYOBItemNumber = MYOBItemNumber;
+            InvoiceLineItem.InvoiceLocation = InvoiceLocation;
+            CreateNewInvoiceLine.CreateNewInvoiceLineItems.push(InvoiceLineItem);
+        });
+
+        $("#CreateInvoiceLineBtn").click(function () {
+
+            CreateNewInvoiceLine.SupplierName = $("#txtSupplierName").val();
+            CreateNewInvoiceLine.ReceivedInvoiceDate = $("#txtReceivedInvoiceDate").val();
+            CreateNewInvoiceLine.InvoiceDate = $("#txtInvoiceDate").val();
+            CreateNewInvoiceLine.InvoiceNumber = $("#txtInvoiceNumber").val();
+            CreateNewInvoiceLine.Term = $("#txtTerm").val();
+            CreateNewInvoiceLine.DueDate = $("#txtDueDate").val();
+
+            var ErrorMessage = '';
+
+            if (CreateNewInvoiceLine.SupplierName == '') {
+                ErrorMessage += 'Supplier Name is Required.\n ';
+            }
+            if (CreateNewInvoiceLine.ReceivedInvoiceDate == '') {
+                ErrorMessage += 'Received Invoice Date is Required. \n';
+
+            }
+            if (CreateNewInvoiceLine.InvoiceDate == '') {
+                ErrorMessage += 'Invoice Date is Required. \n';
+            }
+            if (CreateNewInvoiceLine.InvoiceNumber == '') {
+                ErrorMessage += 'Invoice Number is Required. \n';
+            }
+            if (CreateNewInvoiceLine.Term == '') {
+                ErrorMessage += 'Term is Required. \n';
+            }
+            if (CreateNewInvoiceLine.DueDate == '') {
+                ErrorMessage += 'Due Date is Required. \n';
+            }
+
+            if (CreateNewInvoiceLine.CreateNewInvoiceLineItems.length == 0) {
+                ErrorMessage += 'At least One Invoice Line is Required. \n';
+            }
+            if (ErrorMessage != '') {
+                $.alert({
+                    title: 'Validation Errors',
+                    content: ErrorMessage,
+                    // .css("color", "red"),
+                });
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                //url: "./CreateExpenseClaimItemEntity",
+                data: JSON.stringify(CreateNewInvoiceLine),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    //   window.location.href = "./ExportTimesSheetToExcel?path=" + r.fileName;
+                    //window.location.href = "./ExpenseClaims";
+                }
+            });
+        });
+
+        // Find and remove selected table rows
+        $("#delete-row").click(function () {
+            $("#CreateNewInvoiceLineTable tbody").find('input[name="record"]').each(function () {
+                if ($(this).is(":checked")) {
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+    });
+</script>
