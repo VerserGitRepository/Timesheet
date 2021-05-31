@@ -20,104 +20,86 @@
     <div class="container-fluid" style="width:100%;border-color:lightgray">
         <nav>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li style="background-color:lightgray; font:14px; color:black" class="active"><a data-toggle="tab" href="#tblCustomers">OPPORTUNITIES</a></li>
+                <li style="background-color:lightgray" class="active"><a data-toggle="tab" href="#tblCustomers">OPPORTUNITIES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGERESOURCES">RESOURCES</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEPROJECTS">PROJECTS</a></li>
                 <li style="background-color:lightgray"><a data-toggle="tab" href="#MANAGEACTIVITIES">ACTIVITIES</a></li>
-                <li style="background-color:lightgray"><a data-toggle="tab" href="#">CORPORATE CARD HOLDER</a></li>
-                <li style="background-color:lightgray"><a data-toggle="tab" href="#">SUPPLIER GL CODES</a></li>
-                <li style="background-color:lightgray"><a data-toggle="tab" href="#">INVOICE SUPPLIERS</a></li>
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#CORPORATECARDHOLDER">CORPORATE CARD HOLDER</a></li>
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#SUPPLIERGLCODES">SUPPLIER GL CODES</a></li>
+                <li style="background-color:lightgray"><a data-toggle="tab" href="#INVOICESUPPLIERS">INVOICE SUPPLIERS</a></li>
             </ul>
         </nav>
-        <div class="tab-content" @*style="border-width:thin;border-style:solid;border-color:gray;width:100%;padding-top:10px;border-width:thin;margin-right:0px;border-color:lightgray"*@>
+        <div class="tab-content">
 
             <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="tblCustomersTable">
                     <thead style="background-color:lightgray">
                         <tr>
-                            <th>
-                                Opportunity
-                            </th>
-                            <th>
-                                Project
-                            </th>
-                            <th>
-                                ProjectManager
-                            </th>
-                            <th>
-                                SalesManager
-                            </th>
-                            <th></th>
-                            <th>
-                                Is Active
-                            </th>
+                            <th>Opportunity</th>
+                            <th>Project</th>
+                            <th>ProjectManager</th>
+                            <th>SalesManager</th>
+                            <th>Edit</th>
+                            <th>Active Status</th>
                         </tr>
                     </thead>
                     @foreach (var item in Model.OpportunitesList)
 
                     {
-                    <tr>
-                        <td>
-                            @item.Opportunitynumber
-                            <input class="hidden" type="text" id="hdnOpportunitynumber" value="@item.Opportunitynumber" />
-                        </td>
-                        @*<td>
+                        <tr>
+                            <td>
+                                @item.Opportunitynumber
+                                <input class="hidden" type="text" id="hdnOpportunitynumber" value="@item.Opportunitynumber" />
+                            </td>
+                            @*<td>
                             @item.Projectname
                             <input class="hidden" type="text" id="hdnProjectname" value="@item.ProjectID" />
                         </td>*@
-                        <td>
-                            <span>@item.Projectname</span>
-                            @Html.DropDownList("ProjectList", Model.ProjectDetailsList.Select(i => new SelectListItem { Text = i.projectName, Value = i.Id.ToString() }), new { @id = "ddlProject", @style = "display:none" })
-                            <input class="hidden" type="text" id="hdnProject" value="@item.Projectname" />
+                            <td>
+                                <span>@item.Projectname</span>
+                                @Html.DropDownList("ProjectList", Model.ProjectDetailsList.Select(i => new SelectListItem { Text = i.projectName, Value = i.Id.ToString() }), new { @id = "ddlProject", @style = "display:none" })
+                                <input class="hidden" type="text" id="hdnProject" value="@item.Projectname" />
 
-                        </td>
-                        <td>
-                            <span>@item.ProjectManager</span>
-                            @Html.DropDownList("PMList", Model.ProjectManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlPM", @style = "display:none" })
-                            <input class="hidden" type="text" id="hdnPM" value="@item.ProjectManager" />
-                        </td>
-                        <td>
-                            <span>@item.SalesManager</span>
-                            @Html.DropDownList("SMList", Model.SalesManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlSM", @style = "display:none" })
-                            <input class="hidden" type="text" id="hdnSM" value="@item.SalesManager" />
-                        </td>
-                        <td>
-                            <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Edit</strong></span>
-                            </a>
-                            <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                <span><strong>Update</strong></span>
-                            </a>
-                            <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                <span><strong>Cancel</strong></span>
-                            </a>
-                        </td>
-                        <td>
-                            <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.Isactive].Assigned" @(item.Isactive ? "checked" : "") value="@item.Isactive" id="OpportunityCheckBoxID" onchange="OpportunityIdChange(this);" />
-                        </td>
-                    </tr>
+                            </td>
+                            <td>
+                                <span>@item.ProjectManager</span>
+                                @Html.DropDownList("PMList", Model.ProjectManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlPM", @style = "display:none" })
+                                <input class="hidden" type="text" id="hdnPM" value="@item.ProjectManager" />
+                            </td>
+                            <td>
+                                <span>@item.SalesManager</span>
+                                @Html.DropDownList("SMList", Model.SalesManagerList.Select(i => new SelectListItem { Text = i.Value, Value = i.Id.ToString() }), new { @id = "ddlSM", @style = "display:none" })
+                                <input class="hidden" type="text" id="hdnSM" value="@item.SalesManager" />
+                            </td>
+                            <td>
+                                <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Edit</strong></span>
+                                </a>
+                                <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Update</strong></span>
+                                </a>
+                                <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    <span><strong>Cancel</strong></span>
+                                </a>
+                            </td>
+                            <td>
+                                <input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.Isactive].Assigned" @(item.Isactive ? "checked" : "") value="@item.Isactive" id="OpportunityCheckBoxID" onchange="OpportunityIdChange(this);" />
+                            </td>
+                        </tr>
                     }
                 </table>
             </div>
-
 
             <div id="MANAGERESOURCES" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="MANAGERESOURCES">
                     <thead style="background-color:lightgray">
                         <tr>
-                            <th>
-                                Resource Name
-                            </th>
-                            <th>
-                                Warehouse
-                            </th>
-
-                            <th>
-                                Is Active
-                            </th>
+                            <th>Resource Name</th>
+                            <th>Warehouse</th>
+                            <th>Active Status</th>
                         </tr>
                     </thead>
 
@@ -142,14 +124,8 @@
                 <table class="table table-bordered table-responsive" id="MANAGEPROJECTS">
                     <thead style="background-color:lightgray">
                         <tr>
-                            <th>
-                                PROJECT NAME
-                            </th>
-
-
-                            <th>
-                                Is Active
-                            </th>
+                            <th>PROJECT NAME</th>
+                            <th>Active Status</th>
                         </tr>
                     </thead>
 
@@ -173,18 +149,10 @@
                 <table class="table table-bordered table-responsive table-hover" id="MANAGEACTIVITIES">
                     <thead style="background-color:lightgray">
                         <tr>
-                            <th>
-                                Opportunity Number
-                            </th>
-                            <th>
-                                Project Name
-                            </th>
-                            <th>
-                                Activity
-                            </th>
-                            <th>
-                                Is Active
-                            </th>
+                            <th>Opportunity Number</th>
+                            <th>Project Name</th>
+                            <th>Activity</th>
+                            <th>Active Status</th>
 
                         </tr>
                     </thead>
@@ -205,6 +173,144 @@
                     }
                 </table>
             </div>
+
+            <div id="CORPORATECARDHOLDER" class="tab-pane fade" role="tabpanel">
+                <table class="table table-bordered table-responsive table-hover" id="CORPORATECARDHOLDER">
+                    <thead style="background-color:lightgray">
+                        <tr>
+                            <th>Id</th>
+                            <th>CardHolderName</th>
+                            <th>MonthlyLimit</th>
+                            <th>Branch</th>
+                            <th>CardHolderManager</th>
+                            <th>IsActive</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model.CorporateCardHolderlist)
+
+
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.CardHolderName</td>
+                            <td>@item.MonthlyLimit</td>
+                            <td>@item.Branch</td>
+                            <td>@item.CardHolderManager</td>
+                            <td>
+                                @*<input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.isActive].Assigned" @(item.isActive ? "checked" : "") id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />*@
+                            </td>
+                            <td>
+                                <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Edit</strong></span>
+                                </a>
+                                <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Update</strong></span>
+                                </a>
+                                <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    <span><strong>Cancel</strong></span>
+                                </a>
+                            </td>
+
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div id="SUPPLIERGLCODES" class="tab-pane fade" role="tabpanel">
+                <table class="table table-bordered table-responsive table-hover" id="CORPORATECARDHOLDER">
+                    <thead style="background-color:lightgray">
+                        <tr>
+                            <th>Id</th>
+                            <th>Fk_InvoiceSupplierID</th>
+                            <th>GLDescription</th>
+                            <th>GLNumber</th>
+                            <th>IsActive</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model.SuppliersGLCodelist)
+
+
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Fk_InvoiceSupplierID</td>
+                            <td>@item.GLDescription</td>
+                            <td>@item.GLNumber</td>
+                            <td>
+                                @*<input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.isActive].Assigned" @(item.isActive ? "checked" : "") id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />*@
+                            </td>
+                            <td>
+                                <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Edit</strong></span>
+                                </a>
+                                <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Update</strong></span>
+                                </a>
+                                <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    <span><strong>Cancel</strong></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div id="INVOICESUPPLIERS" class="tab-pane fade" role="tabpanel">
+                <table class="table table-bordered table-responsive table-hover" id="CORPORATECARDHOLDER">
+                    <thead style="background-color:lightgray">
+                        <tr>
+                            <th>Id</th>
+                            <th>SupplierName</th>
+                            <th>Term</th>
+                            <th>Branch</th>
+                            <th>GLDescription</th>
+                            <th>IsActive</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model.InvoiceSupplierlist)
+
+
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.SupplierName</td>
+                            <td>@item.Term</td>
+                            <td>@item.Branch</td>
+                            <td>@item.GLDescription</td>
+                            <td>
+                                @*<input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.isActive].Assigned" @(item.isActive ? "checked" : "") id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />*@
+                            </td>
+                            <td>
+                                <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Edit</strong></span>
+                                </a>
+                                <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                    <span><strong>Update</strong></span>
+                                </a>
+                                <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    <span><strong>Cancel</strong></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
         </div>
     </div>
 </section>
@@ -327,6 +433,9 @@
         $('table#MANAGERESOURCES').DataTable();
         $('table#MANAGEPROJECTS').DataTable();
         $('table#MANAGEACTIVITIES').DataTable();
+        $('table#CORPORATECARDHOLDER').DataTable();
+        $('table#SUPPLIERGLCODES').DataTable();
+        $('table#CORPORATECARDHOLDER').DataTable();
 
         $(function () {
             $("#tabs").tabs();
