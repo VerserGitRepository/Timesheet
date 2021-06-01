@@ -30,7 +30,6 @@
             </ul>
         </nav>
         <div class="tab-content">
-
             <div id="tblCustomers" class="tab-pane fade  in active" role="tabpanel">
                 <table class="table table-bordered table-responsive" id="tblCustomersTable">
                     <thead style="background-color:lightgray">
@@ -182,6 +181,7 @@
                             <th>CardHolderName</th>
                             <th>MonthlyLimit</th>
                             <th>Branch</th>
+                            <th>Bank</th>
                             <th>CardHolderManager</th>
                             <th>IsActive</th>
                             <th></th>
@@ -189,38 +189,35 @@
                     </thead>
 
                     @foreach (var item in Model.CorporateCardHolderlist)
-
-
                     {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.CardHolderName</td>
-                            <td>@item.MonthlyLimit</td>
-                            <td>@item.Branch</td>
-                            <td>@item.CardHolderManager</td>
-                            <td>
-                                @*<input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.isActive].Assigned" @(item.isActive ? "checked" : "") id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />*@
-                            </td>
-                            <td>
-                                <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    <span><strong>Edit</strong></span>
-                                </a>
-                                <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
-                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    <span><strong>Update</strong></span>
-                                </a>
-                                <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    <span><strong>Cancel</strong></span>
-                                </a>
-                            </td>
-
-                        </tr>
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CardHolderName</td>
+                    <td>@item.MonthlyLimit</td>
+                    <td>@item.Branch</td>
+                    <td>@item.Bank</td>
+                    <td>@item.CardHolderManager</td>
+                    <td>
+                        @*<input data-size="mini" type="checkbox" data-toggle="toggle" name="AssignedGroups[@item.isActive].Assigned" @(item.isActive ? "checked" : "") id="ActivityCheckBoxID" onchange="ActivityIdChange(this);" />*@
+                    </td>
+                    <td>
+                        <a class="Edit btn btn-warning a-btn-slide-text" href="javascript:;">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Edit</strong></span>
+                        </a>
+                        <a class="Update btn btn-success a-btn-slide-text" href="javascript:;" style="display:none" id="Update">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <span><strong>Update</strong></span>
+                        </a>
+                        <a class="Cancel btn btn-danger a-btn-slide-text" href="javascript:;" style="display:none">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            <span><strong>Cancel</strong></span>
+                        </a>
+                    </td>
+                </tr>
                     }
                 </table>
             </div>
-
             <div id="SUPPLIERGLCODES" class="tab-pane fade" role="tabpanel">
                 <table class="table table-bordered table-responsive table-hover" id="CORPORATECARDHOLDER">
                     <thead style="background-color:lightgray">
@@ -310,7 +307,6 @@
                     }
                 </table>
             </div>
-
         </div>
     </div>
 </section>
@@ -435,7 +431,7 @@
         $('table#MANAGEACTIVITIES').DataTable();
         $('table#CORPORATECARDHOLDER').DataTable();
         $('table#SUPPLIERGLCODES').DataTable();
-        $('table#CORPORATECARDHOLDER').DataTable();
+       
 
         $(function () {
             $("#tabs").tabs();

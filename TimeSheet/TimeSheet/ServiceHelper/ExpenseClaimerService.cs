@@ -45,7 +45,6 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
-
         public static async Task<List<CorporateCardExpenseClaimItemsModel>> GetExpenseClaimItemsById(int ClaimId)
         {
             var ReturnResult = new List<CorporateCardExpenseClaimItemsModel>();

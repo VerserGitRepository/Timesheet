@@ -12,6 +12,7 @@ namespace TimeSheet.Models
 		public decimal? MonthlyLimit { get; set; }
 		public string Branch { get; set; }
 		public string CardHolderManager { get; set; }
+		public string Bank { get; set; }
 		public bool IsActive { get; set; }
 	}
 }
