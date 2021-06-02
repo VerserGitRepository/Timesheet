@@ -1,4 +1,4 @@
-﻿@model TimeSheet.Models.ImportInvoiceDataModel
+﻿@model TimeSheet.Models.InvoiceViewModel
 
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -184,7 +184,7 @@
     $(document).ready(function () {
 
         var CreateNewInvoiceLine = {};
-        CreateNewInvoiceLine.CreateNewInvoiceLineItems = new Array();
+        CreateNewInvoiceLine.InvoiceLineItems = new Array();
 
         $("#add-row").click(function () {
             var PO = $("#txtPO").val();
@@ -255,7 +255,7 @@
             InvoiceLineItem.DateRecordedinMYOB = DateRecordedinMYOB;
             InvoiceLineItem.MYOBItemNumber = MYOBItemNumber;
             InvoiceLineItem.InvoiceLocation = InvoiceLocation;
-            CreateNewInvoiceLine.CreateNewInvoiceLineItems.push(InvoiceLineItem);
+            CreateNewInvoiceLine.InvoiceLineItems.push(InvoiceLineItem);
         });
 
         $("#CreateInvoiceLineBtn").click(function () {
@@ -289,7 +289,7 @@
                 ErrorMessage += 'Due Date is Required. \n';
             }
 
-            if (CreateNewInvoiceLine.CreateNewInvoiceLineItems.length == 0) {
+            if (CreateNewInvoiceLine.InvoiceLineItems.length == 0) {
                 ErrorMessage += 'At least One Invoice Line is Required. \n';
             }
             if (ErrorMessage != '') {
@@ -302,7 +302,7 @@
             }
             $.ajax({
                 type: "POST",
-                //url: "./CreateExpenseClaimItemEntity",
+                url: "./CreateNewInvoiceLine",
                 data: JSON.stringify(CreateNewInvoiceLine),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
