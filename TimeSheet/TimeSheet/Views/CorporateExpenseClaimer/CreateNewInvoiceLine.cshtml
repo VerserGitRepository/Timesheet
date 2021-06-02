@@ -34,9 +34,9 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            @Html.Label("Invoice Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                            @Html.Label("Invoice_Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                             <div class="col-md-6" style="margin-top:7px">
-                                <input type="date" class="form-control form-control-sm" id="txtInvoiceDate" name="InvoiceDate">
+                                <input type="date" class="form-control form-control-sm" id="txtInvoice_Date" name="Invoice_Date">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -96,8 +96,8 @@
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtApprover" name="Approver" placeholder="Approver">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Invoice_Detail:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
-                        <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoice_Description" name="Invoice_Detail" placeholder="Invoice_Detail">
+                        @Html.Label("Invoice_Description:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoice_Description" name="Invoice_Description" placeholder="Invoice_Description">
                     </div>
                     <div class="form-group col-md-2">
                         @Html.Label("PM/WH/HO:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
@@ -129,7 +129,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
-                        <input class="form-control form-control-sm col-md-12" type="text" id="txtDateRecordedinMYOB" name="DateRecordedinMYOB" placeholder="DateRecordedinMYOB">
+                        <input class="form-control form-control-sm col-md-12" type="date" id="txtDateRecordedinMYOB" name="DateRecordedinMYOB" placeholder="DateRecordedinMYOB">
                     </div>
                     <div class="form-group col-md-2">
                         @Html.Label("MYOBItemNumber:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
@@ -194,7 +194,7 @@
             var TaxCode = $("#txtTaxCode").val();
             var ProjectJob = $("#txtProject_Job").val();
             var Approver = $("#txtApprover").val();
-            var InvoiceDescription = $("#txtInvoice_Description").val();
+            var Invoice_Description = $("#txtInvoice_Description").val();
             var PMWarehouseHO = $("#txtPM_Warehouse_HO").val();
             var InvoiceStatus = $("#dpdInvoiceStatus").val();
             var Comments = $("#txtComments").val();
@@ -212,7 +212,7 @@
                 + TaxCode + "</td><td>"
                 + ProjectJob + "</td><td>"
                 + Approver + "</td><td>"
-                + InvoiceDescription + "</td><td>"
+                + Invoice_Description + "</td><td>"
                 + PMWarehouseHO + "</td><td>"
                 + InvoiceStatus + "</td><td>"
                 + Comments + "</td><td>"
@@ -223,7 +223,7 @@
                 + MYOBItemNumber + "</td><td>"
                 + InvoiceLocation + "</td></tr>";
             if (PO == '' || Opp == '' || Line == '' || InvoiceAmount_ex_gst == '' || TaxCode == '' || ProjectJob == '' || Approver == ''
-                || InvoiceDescription == '' || PMWarehouseHO == '' || InvoiceStatus == '' || Comments == '' || GLDescription == ''
+                || Invoice_Description == '' || PMWarehouseHO == '' || InvoiceStatus == '' || Comments == '' || GLDescription == ''
                 || GLCode == '' || Branch == '' || DateRecordedinMYOB == '' || MYOBItemNumber == '' || InvoiceLocation == '') {
                 $.alert({
                     title: 'Validation Errors',
@@ -232,7 +232,7 @@
                 });
             }
             if (PO != '' & Opp != '' & Line != '' & InvoiceAmount_ex_gst != '' & TaxCode != '' & ProjectJob != '' & Approver != ''
-                & InvoiceDescription != '' & PMWarehouseHO != '' & InvoiceStatus != '' & Comments != '' & GLDescription != ''
+                & Invoice_Description != '' & PMWarehouseHO != '' & InvoiceStatus != '' & Comments != '' & GLDescription != ''
                 & GLCode != '' & Branch != '' & DateRecordedinMYOB != '' & MYOBItemNumber != '' & InvoiceLocation != '') {
                 $("#CreateNewInvoiceLineTable tbody").append(markup);
             }
@@ -245,7 +245,7 @@
             //InvoiceLineItem.Project = TaxCode;
             InvoiceLineItem.Project_Job = ProjectJob;
             InvoiceLineItem.Approver = Approver;
-            InvoiceLineItem.Invoice_Description = InvoiceDescription;
+            InvoiceLineItem.Invoice_Description = Invoice_Description;
             InvoiceLineItem.PM_Warehouse_HO = PMWarehouseHO;
             //InvoiceLineItem.ToolsCost = InvoiceStatus;
             InvoiceLineItem.POShortageComment = Comments;
@@ -262,7 +262,7 @@
 
             CreateNewInvoiceLine.SupplierName = $("#txtSupplierName").val();
             CreateNewInvoiceLine.ReceivedInvoiceDate = $("#txtReceivedInvoiceDate").val();
-            CreateNewInvoiceLine.InvoiceDate = $("#txtInvoiceDate").val();
+            CreateNewInvoiceLine.Invoice_Date = $("#txtInvoice_Date").val();
             CreateNewInvoiceLine.InvoiceNumber = $("#txtInvoiceNumber").val();
             CreateNewInvoiceLine.Term = $("#txtTerm").val();
             CreateNewInvoiceLine.DueDate = $("#txtDueDate").val();
@@ -276,7 +276,7 @@
                 ErrorMessage += 'Received Invoice Date is Required. \n';
 
             }
-            if (CreateNewInvoiceLine.InvoiceDate == '') {
+            if (CreateNewInvoiceLine.Invoice_Date == '') {
                 ErrorMessage += 'Invoice Date is Required. \n';
             }
             if (CreateNewInvoiceLine.InvoiceNumber == '') {
