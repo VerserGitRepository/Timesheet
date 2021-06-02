@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TimeSheet.Models.ImportInvoiceDataModel>
+﻿@model IEnumerable<TimeSheet.Models.InvoiceViewModel>
 @{
     ViewBag.Title = "InvoiceApprovals";
 }
@@ -17,7 +17,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 <div class="col-md-12" style="margin-top:55px; margin-bottom:5px">
-    <div class="pull-right">
+    @*<div class="pull-right">
         @using (Html.BeginForm("ImportInvoices", "CorporateExpenseClaimer", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
@@ -30,7 +30,7 @@
                 </div>
             </div>
         }
-    </div>
+    </div>*@
     <div class="pull-right" style="margin-top:10px; margin-right:10px">
         @using (Html.BeginForm("ExportInvoiceItems", "CorporateExpenseClaimer", FormMethod.Post))
         {
@@ -44,6 +44,7 @@
              Register New Invoice
         </button>
     </div>
+
     <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
         <thead style="background-color:orange; color: white">
             <tr>
@@ -78,36 +79,36 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td style="text-align:center">
+                    @*<td style="text-align:center">
                         @using (Html.BeginForm("UpdateInvoiceLine", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
                         {
                             <button type="submit" class="btn btn-warning- btn-sm">
                                 @Html.DisplayFor(modelItem => item.InvoiceNumber)
                             </button>
                         }
-                    </td>
-                    <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
+                    </td>*@
+                    @*<td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
                     <td>  @Html.DisplayFor(modelItem => item.InvoiceAmount_ex_gst)</td>
                     <td>  @Html.DisplayFor(modelItem => item.Invoice_Description)</td>
                     <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
                     <td>  @Html.DisplayFor(modelItem => item.InvoiceStatus)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.Approver)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Approver)</td>*@
                     @*<td>  @Html.DisplayFor(modelItem => item.Line)</td>*@
-                    <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
+                    @*<td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
                     <td>  @Html.DisplayFor(modelItem => item.Project_Job)</td>
                     <td>  @Html.DisplayFor(modelItem => item.PM_Warehouse_HO)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>*@
                     @*<td>  @Html.DisplayFor(modelItem => item.ApprovedDate)</td>*@
-                    <td>  @Html.DisplayFor(modelItem => item.Comments)</td>
+                    @*<td>  @Html.DisplayFor(modelItem => item.Comments)</td>
                     <td>  @Html.DisplayFor(modelItem => item.Term)</td>
                     <td>  @Html.DisplayFor(modelItem => item.DueDate)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.POShortage)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.POShortage)</td>*@
                     @*<td>  @Html.DisplayFor(modelItem => item.POShortageComment)</td>*@
                     @*<td>  @Html.DisplayFor(modelItem => item.GLDescription)</td>*@
-                    <td>  @Html.DisplayFor(modelItem => item.GLCode)</td>
-                    <td>  @Html.DisplayFor(modelItem => item.Branch)</td>
+                    @*<td>  @Html.DisplayFor(modelItem => item.GLCode)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Branch)</td>*@
                     @*<td>  @Html.DisplayFor(modelItem => item.MYOBItemNumber)</td>*@
-                    <td>  @Html.DisplayFor(modelItem => item.InvoiceLocation)</td>
+                    @*<td>  @Html.DisplayFor(modelItem => item.InvoiceLocation)</td>
 
                     <td style="text-align:center">
                         <div style="padding-left:0;padding-bottom:2px">
@@ -128,11 +129,13 @@
                                 }
                             }
                         </div>
-                    </td>
+                    </td>*@
                 </tr>
             }
         </tbody>
     </table>
+
+
 </div>
 
 <div class="modal fade" id="myModal" role="dialog" data-url='@Url.Action("CreateNewInvoiceLine","CorporateExpenseClaimer")'></div>

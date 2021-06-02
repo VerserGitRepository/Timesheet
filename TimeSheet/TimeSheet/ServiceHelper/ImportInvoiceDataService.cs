@@ -13,7 +13,7 @@ namespace TimeSheet.ServiceHelper
     {
         private static readonly string TimeSheetAPIURl = ConfigurationManager.AppSettings["TimeSheetBaseURL"] + ConfigurationManager.AppSettings["TimeSheetRootDirectory"];
 
-        public static void AddImportedInvoiceLines(List<ImportInvoiceDataModel> InvoiceDataRequest)
+        public static void AddImportedInvoiceLines(List<InvoiceViewModel> InvoiceDataRequest)
         {
             var _json = Newtonsoft.Json.JsonConvert.SerializeObject(InvoiceDataRequest);
             using (HttpClient client = new HttpClient())
@@ -32,7 +32,7 @@ namespace TimeSheet.ServiceHelper
             }
         }
 
-        public static void CreateInvoiceItem(ImportInvoiceDataModel InvoiceDataRequest)
+        public static void CreateInvoiceItem(InvoiceViewModel InvoiceDataRequest)
         {
             var _json = Newtonsoft.Json.JsonConvert.SerializeObject(InvoiceDataRequest);
             using (HttpClient client = new HttpClient())
@@ -51,44 +51,44 @@ namespace TimeSheet.ServiceHelper
             }
         }
 
-        public static async Task<IEnumerable<ImportInvoiceDataModel>> GetInvoiceLineItems()
+        public static async Task<IEnumerable<InvoiceViewModel>> GetInvoiceLineItems()
         {
-            var ReturnResult = new List<ImportInvoiceDataModel>();
+            var ReturnResult = new List<InvoiceViewModel>();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
                 HttpResponseMessage response = client.GetAsync(string.Format("ExpenseClaims/InvoiceList")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<List<ImportInvoiceDataModel>>();
+                    ReturnResult = await response.Content.ReadAsAsync<List<InvoiceViewModel>>();
                 }
             }
             return ReturnResult;
         }
-        public static async Task<IEnumerable<ImportInvoiceDataModel>> GetApprovedInvoiceLineItems()
+        public static async Task<IEnumerable<InvoiceViewModel>> GetApprovedInvoiceLineItems()
         {
-            var ReturnResult = new List<ImportInvoiceDataModel>();
+            var ReturnResult = new List<InvoiceViewModel>();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
                 HttpResponseMessage response = client.GetAsync(string.Format("ExpenseClaims/GetApprovedInvoiceLineItems")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<List<ImportInvoiceDataModel>>();
+                    ReturnResult = await response.Content.ReadAsAsync<List<InvoiceViewModel>>();
                 }
             }
             return ReturnResult;
         }
-        public static async Task<IEnumerable<ImportInvoiceDataModel>> ExportAllInvoices()
+        public static async Task<IEnumerable<InvoiceViewModel>> ExportAllInvoices()
         {
-            var ReturnResult = new List<ImportInvoiceDataModel>();
+            var ReturnResult = new List<InvoiceViewModel>();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
                 HttpResponseMessage response = client.GetAsync(string.Format("ExpenseClaims/ExportAllInvoices")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<List<ImportInvoiceDataModel>>();
+                    ReturnResult = await response.Content.ReadAsAsync<List<InvoiceViewModel>>();
                 }
             }
             return ReturnResult;
@@ -144,16 +144,16 @@ namespace TimeSheet.ServiceHelper
             }
         }
 
-        public static async Task<ImportInvoiceDataModel> GetInvoiceLineItem(int InvoiceID)
+        public static async Task<InvoiceViewModel> GetInvoiceLineItem(int InvoiceID)
         {
-            var ReturnResult = new ImportInvoiceDataModel();
+            var ReturnResult = new InvoiceViewModel();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
                 HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{InvoiceID}/GetInvoiceLineItem")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<ImportInvoiceDataModel>();
+                    ReturnResult = await response.Content.ReadAsAsync<InvoiceViewModel>();
                 }
                 else
                 {
@@ -163,7 +163,7 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
-        public static void UpdateInvoiceLineItem(ImportInvoiceDataModel UpdateInvoiceDataRequest)
+        public static void UpdateInvoiceLineItem(InvoiceViewModel UpdateInvoiceDataRequest)
         {
             var _json = Newtonsoft.Json.JsonConvert.SerializeObject(UpdateInvoiceDataRequest);
             using (HttpClient client = new HttpClient())

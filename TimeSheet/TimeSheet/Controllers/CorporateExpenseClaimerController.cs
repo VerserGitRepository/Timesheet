@@ -150,92 +150,92 @@ namespace TimeSheet.Controllers
             return RedirectToAction("ExpenseClaims", " CorporateExpenseClaimer");
         }
 
+        //[HttpPost]
+        //public ActionResult ImportInvoices()
+        //{
+        //    try
+        //    {             
+
+        //        HttpPostedFileBase file = Request.Files["file"];
+        //        if (file.ContentLength > 0)
+        //        {
+        //            string _FileName = Path.GetFileName(file.FileName);
+        //            string _path = Path.Combine(Server.MapPath("~/InvoiceExcelFiles"), _FileName);
+        //            file.SaveAs(_path);
+        //            using (SpreadsheetDocument doc = SpreadsheetDocument.Open(_path, false))
+        //            {
+        //                WorkbookPart wbPart = doc.WorkbookPart;
+        //                Sheet mysheet = (Sheet)doc.WorkbookPart.Workbook.Sheets.ChildElements.GetItem(0);
+        //                Worksheet Worksheet = ((WorksheetPart)wbPart.GetPartById(mysheet.Id)).Worksheet;
+
+        //                //Note: worksheet has 8 children and the first child[1] = sheetviewdimension,....child[4]=sheetdata  
+        //                int wkschildno = 4;
+        //                SheetData Rows = (SheetData)Worksheet.ChildElements.GetItem(wkschildno);
+        //                var assetList = new List<InvoiceViewModel>();
+        //                for (int row = 1; row < Rows.Count(); row++)
+        //                {
+        //                    Row currentrow = (Row)Rows.ChildElements.GetItem(row);
+        //                    if (!string.IsNullOrEmpty(GetCellValue((Cell)currentrow.ChildElements.GetItem(0), wbPart)))
+        //                    {
+        //                        CultureInfo provider = CultureInfo.InvariantCulture;                             
+
+        //                        var asset = new InvoiceViewModel();
+        //                        asset.SupplierName = GetCellValue((Cell)currentrow.ChildElements.GetItem(0), wbPart);
+        //                        asset.Line = GetCellValue((Cell)currentrow.ChildElements.GetItem(1), wbPart);
+        //                        string _ReceivedInvoiceDate = GetCellValue((Cell)currentrow.ChildElements.GetItem(2), wbPart);
+        //                        DateTime dateTime16 = DateTime.ParseExact(_ReceivedInvoiceDate, new string[] {"dd/MM/yyyy" }, provider, DateTimeStyles.None);
+        //                        asset.ReceivedInvoiceDate = dateTime16;// Convert.ToDateTime();
+        //                        asset.InvoiceAmount_ex_gst =Convert.ToDecimal( GetCellValue((Cell)currentrow.ChildElements.GetItem(3), wbPart));
+        //                        string _Invoice_Date = GetCellValue((Cell)currentrow.ChildElements.GetItem(4), wbPart);
+        //                        DateTime dateTime17 = DateTime.ParseExact(_Invoice_Date, new string[] {"dd/MM/yyyy" }, provider, DateTimeStyles.None);
+        //                        asset.Invoice_Date = dateTime17;// Convert.ToDateTime(GetCellValue((Cell)currentrow.ChildElements.GetItem(4), wbPart));
+        //                        asset.InvoiceNumber = GetCellValue((Cell)currentrow.ChildElements.GetItem(5), wbPart);
+        //                        asset.Project_Job = GetCellValue((Cell)currentrow.ChildElements.GetItem(6), wbPart);
+        //                        asset.Approver = GetCellValue((Cell)currentrow.ChildElements.GetItem(7), wbPart);
+        //                        asset.Invoice_Description = GetCellValue((Cell)currentrow.ChildElements.GetItem(8), wbPart);
+        //                        asset.PM_Warehouse_HO = GetCellValue((Cell)currentrow.ChildElements.GetItem(9), wbPart);
+        //                        asset.Comments= GetCellValue((Cell)currentrow.ChildElements.GetItem(10), wbPart);
+        //                        asset.Term = GetCellValue((Cell)currentrow.ChildElements.GetItem(11), wbPart);
+        //                        string _DueDate= GetCellValue((Cell)currentrow.ChildElements.GetItem(12), wbPart);
+        //                        DateTime dateTime12 = DateTime.ParseExact(_DueDate, new string[] { "dd/MM/yyyy" }, provider, DateTimeStyles.None);
+        //                        asset.DueDate = dateTime12;
+        //                        asset.POShortage = GetCellValue((Cell)currentrow.ChildElements.GetItem(13), wbPart);
+        //                        asset.POShortageComment = GetCellValue((Cell)currentrow.ChildElements.GetItem(14), wbPart);
+        //                        asset.GLDescription = GetCellValue((Cell)currentrow.ChildElements.GetItem(15), wbPart);
+        //                        asset.GLCode = GetCellValue((Cell)currentrow.ChildElements.GetItem(16), wbPart);
+        //                        asset.Branch = GetCellValue((Cell)currentrow.ChildElements.GetItem(17), wbPart);
+        //                        asset.MYOBItemNumber = GetCellValue((Cell)currentrow.ChildElements.GetItem(18), wbPart);
+        //                        assetList.Add(asset);
+        //                      //  Approved / Disputed Status Comments(for internal purpose)	Term Due Date PO Shortage PO Shortage 
+        //                        //Comment GL Description  GL code Branch Date Recorded in MYOB MYOB Item Number
+        //                    }
+        //                    else
+        //                    {
+        //                        break;
+        //                    }
+        //                }
+
+        //                 ImportInvoiceDataService.AddImportedInvoiceLines(assetList);                        
+        //            }
+        //            //Delete the file after reading
+        //            // System.IO.File.Delete(_path);
+        //        }
+        //        else
+        //        {
+        //            System.Web.HttpContext.Current.Session["ErrorMessage"] = "File Not choosen Please a file";
+        //        }
+        //    }
+        //    catch (System.Exception Ex)
+        //    {
+        //        System.Web.HttpContext.Current.Session["ErrorMessage"] = Ex.Message;
+        //    }
+        //    return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+        //}
+
         [HttpPost]
-        public ActionResult ImportInvoices()
+        public ActionResult CreateNewInvoiceLine(InvoiceViewModel _ImportInvoiceDataModel)
         {
-            try
-            {             
-
-                HttpPostedFileBase file = Request.Files["file"];
-                if (file.ContentLength > 0)
-                {
-                    string _FileName = Path.GetFileName(file.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/InvoiceExcelFiles"), _FileName);
-                    file.SaveAs(_path);
-                    using (SpreadsheetDocument doc = SpreadsheetDocument.Open(_path, false))
-                    {
-                        WorkbookPart wbPart = doc.WorkbookPart;
-                        Sheet mysheet = (Sheet)doc.WorkbookPart.Workbook.Sheets.ChildElements.GetItem(0);
-                        Worksheet Worksheet = ((WorksheetPart)wbPart.GetPartById(mysheet.Id)).Worksheet;
-
-                        //Note: worksheet has 8 children and the first child[1] = sheetviewdimension,....child[4]=sheetdata  
-                        int wkschildno = 4;
-                        SheetData Rows = (SheetData)Worksheet.ChildElements.GetItem(wkschildno);
-                        var assetList = new List<ImportInvoiceDataModel>();
-                        for (int row = 1; row < Rows.Count(); row++)
-                        {
-                            Row currentrow = (Row)Rows.ChildElements.GetItem(row);
-                            if (!string.IsNullOrEmpty(GetCellValue((Cell)currentrow.ChildElements.GetItem(0), wbPart)))
-                            {
-                                CultureInfo provider = CultureInfo.InvariantCulture;                             
-
-                                var asset = new ImportInvoiceDataModel();
-                                asset.SupplierName = GetCellValue((Cell)currentrow.ChildElements.GetItem(0), wbPart);
-                                asset.Line = GetCellValue((Cell)currentrow.ChildElements.GetItem(1), wbPart);
-                                string _ReceivedInvoiceDate = GetCellValue((Cell)currentrow.ChildElements.GetItem(2), wbPart);
-                                DateTime dateTime16 = DateTime.ParseExact(_ReceivedInvoiceDate, new string[] {"dd/MM/yyyy" }, provider, DateTimeStyles.None);
-                                asset.ReceivedInvoiceDate = dateTime16;// Convert.ToDateTime();
-                                asset.InvoiceAmount_ex_gst =Convert.ToDecimal( GetCellValue((Cell)currentrow.ChildElements.GetItem(3), wbPart));
-                                string _Invoice_Date = GetCellValue((Cell)currentrow.ChildElements.GetItem(4), wbPart);
-                                DateTime dateTime17 = DateTime.ParseExact(_Invoice_Date, new string[] {"dd/MM/yyyy" }, provider, DateTimeStyles.None);
-                                asset.Invoice_Date = dateTime17;// Convert.ToDateTime(GetCellValue((Cell)currentrow.ChildElements.GetItem(4), wbPart));
-                                asset.InvoiceNumber = GetCellValue((Cell)currentrow.ChildElements.GetItem(5), wbPart);
-                                asset.Project_Job = GetCellValue((Cell)currentrow.ChildElements.GetItem(6), wbPart);
-                                asset.Approver = GetCellValue((Cell)currentrow.ChildElements.GetItem(7), wbPart);
-                                asset.Invoice_Description = GetCellValue((Cell)currentrow.ChildElements.GetItem(8), wbPart);
-                                asset.PM_Warehouse_HO = GetCellValue((Cell)currentrow.ChildElements.GetItem(9), wbPart);
-                                asset.Comments= GetCellValue((Cell)currentrow.ChildElements.GetItem(10), wbPart);
-                                asset.Term = GetCellValue((Cell)currentrow.ChildElements.GetItem(11), wbPart);
-                                string _DueDate= GetCellValue((Cell)currentrow.ChildElements.GetItem(12), wbPart);
-                                DateTime dateTime12 = DateTime.ParseExact(_DueDate, new string[] { "dd/MM/yyyy" }, provider, DateTimeStyles.None);
-                                asset.DueDate = dateTime12;
-                                asset.POShortage = GetCellValue((Cell)currentrow.ChildElements.GetItem(13), wbPart);
-                                asset.POShortageComment = GetCellValue((Cell)currentrow.ChildElements.GetItem(14), wbPart);
-                                asset.GLDescription = GetCellValue((Cell)currentrow.ChildElements.GetItem(15), wbPart);
-                                asset.GLCode = GetCellValue((Cell)currentrow.ChildElements.GetItem(16), wbPart);
-                                asset.Branch = GetCellValue((Cell)currentrow.ChildElements.GetItem(17), wbPart);
-                                asset.MYOBItemNumber = GetCellValue((Cell)currentrow.ChildElements.GetItem(18), wbPart);
-                                assetList.Add(asset);
-                              //  Approved / Disputed Status Comments(for internal purpose)	Term Due Date PO Shortage PO Shortage 
-                                //Comment GL Description  GL code Branch Date Recorded in MYOB MYOB Item Number
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-
-                         ImportInvoiceDataService.AddImportedInvoiceLines(assetList);                        
-                    }
-                    //Delete the file after reading
-                    // System.IO.File.Delete(_path);
-                }
-                else
-                {
-                    System.Web.HttpContext.Current.Session["ErrorMessage"] = "File Not choosen Please a file";
-                }
-            }
-            catch (System.Exception Ex)
-            {
-                System.Web.HttpContext.Current.Session["ErrorMessage"] = Ex.Message;
-            }
-            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
-        }
-
-        [HttpPost]
-        public ActionResult CreateNewInvoiceLine(ImportInvoiceDataModel _ImportInvoiceDataModel)
-        {
-            ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
+           ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
 
@@ -281,7 +281,7 @@ namespace TimeSheet.Controllers
             return View(UpdatebleItem);
         }
         [HttpPost]
-        public ActionResult UpdateInvoiceLineItem(ImportInvoiceDataModel InvoiceLineItemModel)
+        public ActionResult UpdateInvoiceLineItem(InvoiceViewModel InvoiceLineItemModel)
         {
            ImportInvoiceDataService.UpdateInvoiceLineItem(InvoiceLineItemModel);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
