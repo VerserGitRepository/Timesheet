@@ -66,45 +66,45 @@
             <div class="col-md-12" style="margin-top:10px">
                 <form id="MainForm">
                     <div class="form-group col-md-2">
-                        @Html.Label("PO#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("PO#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtPO" name="PO" placeholder="PO#">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Opp#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("Opp#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtOpp" name="Opp" placeholder="Opp#">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Line:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("Line:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtLine" name="Line" placeholder="Line">
                     </div>
 
                     <div class="form-group col-md-2">
-                        @Html.Label("InvoiceAmount_ex_gst:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("InvoiceAmount_ex_gst:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoiceAmount_ex_gst" name="InvoiceAmount_ex_gst" placeholder="InvoiceAmount_ex_gst">
                     </div>
 
                     <div class="form-group col-md-2">
-                        @Html.Label("TaxCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("TaxCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtTaxCode" name="TaxCode" placeholder="TaxCode">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Project_Job:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("Project_Job:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtProject_Job" name="Project_Job" placeholder="Project_Job">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Approver:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("Approver:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtApprover" name="Approver" placeholder="Approver">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Invoice_Description:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("Invoice_Description:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoice_Description" name="Invoice_Description" placeholder="Invoice_Description">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("PM/WH/HO:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("PM/WH/HO:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtPM_Warehouse_HO" name="PM_Warehouse_HO" placeholder="PM_Warehouse_HO">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Status:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("Status:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <select type="text" class="form-control form-control-sm col-md-12 " id="dpdInvoiceStatus" name="InvoiceStatus">
                             <option></option>
                             <option>Approved</option>
@@ -112,20 +112,26 @@
                         </select>
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Comments:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("Comments:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtComments" name="Comments" placeholder="Comments">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("GLDescription:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("GLDescription:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtGLDescription" name="GLDescription" placeholder="GLDescription">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("GLCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
+                        @Html.Label("GLCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
                         <input class="form-control form-control-sm col-md-12" type="text" id="txtGLCode" name="GLCode" placeholder="GLCode">
                     </div>
                     <div class="form-group col-md-2">
-                        @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
-                        <input class="form-control form-control-sm col-md-12" type="text" id="txtBranch" name="Branch" placeholder="Branch">
+                        @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                        <select type="text" class="form-control form-control-sm" id="txtBranch" name="Branch">
+                            <option></option>
+                            <option>Sydney</option>
+                            <option>Melbourne</option>
+                            <option>Brisbane</option>
+                            <option>Canberra</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-2">
                         @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px" })
