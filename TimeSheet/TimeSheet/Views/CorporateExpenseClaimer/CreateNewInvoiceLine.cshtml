@@ -184,7 +184,7 @@
     $(document).ready(function () {
 
         var CreateNewInvoiceLine = {};
-        CreateNewInvoiceLine.InvoiceLineItems = new Array();
+        CreateNewInvoiceLine.InvoiceLineItem = new Array();
 
         $("#add-row").click(function () {
             var PO = $("#txtPO").val();
@@ -237,25 +237,25 @@
                 $("#CreateNewInvoiceLineTable tbody").append(markup);
             }
 
-            var InvoiceLineItem = {};
+            var InvoiceItem = {};
             //InvoiceLineItem.ClaimDate = PO;
             //InvoiceLineItem.Supplier = Opp;
-            InvoiceLineItem.Line = Line;
-            InvoiceLineItem.InvoiceAmount_ex_gst = InvoiceAmount_ex_gst;
+            InvoiceItem.Line = Line;
+            InvoiceItem.InvoiceAmount_ex_gst = InvoiceAmount_ex_gst;
             //InvoiceLineItem.Project = TaxCode;
-            InvoiceLineItem.Project_Job = ProjectJob;
-            InvoiceLineItem.Approver = Approver;
-            InvoiceLineItem.Invoice_Description = Invoice_Description;
-            InvoiceLineItem.PM_Warehouse_HO = PMWarehouseHO;
+            InvoiceItem.Project_Job = ProjectJob;
+            InvoiceItem.Approver = Approver;
+            InvoiceItem.Invoice_Description = Invoice_Description;
+            InvoiceItem.PM_Warehouse_HO = PMWarehouseHO;
             //InvoiceLineItem.ToolsCost = InvoiceStatus;
-            InvoiceLineItem.POShortageComment = Comments;
-            InvoiceLineItem.GLDescription = GLDescription;
-            InvoiceLineItem.GLCode = GLCode;
-            InvoiceLineItem.Branch = Branch;
-            InvoiceLineItem.DateRecordedinMYOB = DateRecordedinMYOB;
-            InvoiceLineItem.MYOBItemNumber = MYOBItemNumber;
-            InvoiceLineItem.InvoiceLocation = InvoiceLocation;
-            CreateNewInvoiceLine.InvoiceLineItems.push(InvoiceLineItem);
+            InvoiceItem.POShortageComment = Comments;
+            InvoiceItem.GLDescription = GLDescription;
+            InvoiceItem.GLCode = GLCode;
+            InvoiceItem.Branch = Branch;
+            InvoiceItem.DateRecordedinMYOB = DateRecordedinMYOB;
+            InvoiceItem.MYOBItemNumber = MYOBItemNumber;
+            InvoiceItem.InvoiceLocation = InvoiceLocation;
+            CreateNewInvoiceLine.InvoiceLineItem.push(InvoiceItem);
         });
 
         $("#CreateInvoiceLineBtn").click(function () {

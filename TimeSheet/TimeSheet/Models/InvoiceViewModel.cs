@@ -10,7 +10,7 @@ namespace TimeSheet.Models
     {
         public InvoiceViewModel()
         {
-            InvoiceLineItems = new List<InvoiceLineItemsViewModel>();
+            InvoiceLineItem = new List<InvoiceLineItemsViewModel>();
         }
         public int Id { get; set; }
         [Required]
@@ -29,8 +29,7 @@ namespace TimeSheet.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DueDate { get; set; }
-
-        public List<InvoiceLineItemsViewModel> InvoiceLineItems { get; set; }
+        public List<InvoiceLineItemsViewModel> InvoiceLineItem { get; set; }
 
     }
 }
