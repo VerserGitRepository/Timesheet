@@ -67,6 +67,7 @@ namespace TimeSheet.ServiceHelper
         }
         public static async Task<IEnumerable<InvoiceViewModel>> GetApprovedInvoiceLineItems()
         {
+
             var ReturnResult = new List<InvoiceViewModel>();
             using (HttpClient client = new HttpClient())
             {
