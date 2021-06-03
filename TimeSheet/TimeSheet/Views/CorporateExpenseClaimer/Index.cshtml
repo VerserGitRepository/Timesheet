@@ -23,7 +23,7 @@
             </div>
             <div class="form-group-sm col-md-8 pull-right">
                 <div class="col-md-12" style="text-align:center">
-                    <h3 style="font-weight:600">CREDIT CARD EXPENSE REPORT</h3>
+                    <h5 style="font-weight:600">CREDIT CARD EXPENSE REPORT</h5>
                 </div>
             </div>
             <div class="form-group-sm col-md-2 pull-right">
@@ -82,7 +82,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group col-md-6" style="margin-bottom:35px; margin-top:10px">
+                @*<div class="form-group col-md-6" style="margin-bottom:35px; margin-top:10px">
                     @Html.Label("Claim-Status:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                     <div class="col-md-6" style="margin-top:7px">
                         <select type="text" class="form-control form-control-sm col-md-3" id="txtExpenseClaimStatus" name="ClaimStatus" title="Claim-Status">
@@ -92,7 +92,7 @@
                             <option>UnApproved</option>
                         </select>
                     </div>
-                </div>
+                </div>*@
             </div>
             </div>
         </div>
@@ -282,14 +282,14 @@
             @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtOther" name="Other" placeholder="Other">
         </div>
-        <div class="form-group col-md-2">
+        @*<div class="form-group col-md-2">
             @Html.Label("Status:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <select type="text" class="form-control form-control-sm col-md-12 " id="dpdClaimItemStatus" name="ClaimItemStatus" title="Claim-Status">
                 <option></option>
                 <option>Approved</option>
                 <option>UnApproved</option>
             </select>
-        </div>
+        </div>*@
         <input type="button" id="add-row" class="btn btn-warning btn-sm pull-right" value="Add Row" style="margin-bottom:10px; margin-top:10px; margin-right:22px" />
     </form>
     <table id="CreditCardTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
@@ -315,7 +315,7 @@
                 <th>StaffAmenities</th>
                 <th>ClientEntertainment</th>
                 <th>Other</th>
-                <th>Status</th>
+                @*<th>Status</th>*@
                 <th>Total</th>
             </tr>
         </thead>
@@ -331,20 +331,20 @@
 
             <form id="testForm">
 
-                <div class="form-group col-md-3">
+                @*<div class="form-group col-md-3">
                     @Html.Label("Branch Manager:", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
                     <div class="col-md-8" style="margin-top:5px">
                         <input type="text" class="form-control form-control-sm" id="txtBranchManager" name="BranchManager" placeholder="">
                     </div>
-                </div>
+                </div>*@
                 <div class=" form-group col-md-3">
-                    @Html.Label("Manager Signature: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
+                    @Html.Label("Manager Approval: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
                     <div class="col-md-8" style="margin-top:5px">
                         <input type="text" class="form-control form-control-sm" id="txtManagerSignature" name="ManagerSignature" placeholder="">
                     </div>
                 </div>
                 <div class="form-group col-md-3">
-                    @Html.Label("Invoices Location: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
+                    @Html.Label("Receipts Location: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
                     <div class="col-md-8" style="margin-top:5px">
                         <input type="text" class="form-control form-control-sm" id="txtInvoicesLocation" name="InvoicesLocation" placeholder="">
                     </div>
@@ -482,7 +482,7 @@
             CliamLineItem.StaffAmenitiesTotal = StaffAmenities;
             CliamLineItem.ClientEntertainmentTotal = ClientEntertainment;
             CliamLineItem.OtherCost = Other;
-            CliamLineItem.ClaimItemStatus = ClaimItemStatus;           
+            //CliamLineItem.ClaimItemStatus = ClaimItemStatus;           
             CliamLineItem.TravelCost = Travel;
             CliamLineItem.ExpenseTotal = Total;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
@@ -510,8 +510,7 @@
             MainModelExpenseCliams.TelephoneTotal = _Telephone;
             MainModelExpenseCliams.StaffAmenitiesTotal = _StaffAmenities;
             MainModelExpenseCliams.ClientEntertainmentTotal = _ClientEntertainment;
-
-            MainModelExpenseCliams.ClaimStatus = $("#txtExpenseClaimStatus").val();
+            //MainModelExpenseCliams.ClaimStatus = $("#txtExpenseClaimStatus").val();
             MainModelExpenseCliams.ExpenseTotal = _totalExpense;
 
             var ErrorMessage = '';
