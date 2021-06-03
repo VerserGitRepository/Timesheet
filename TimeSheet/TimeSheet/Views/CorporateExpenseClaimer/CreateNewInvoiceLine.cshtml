@@ -237,17 +237,15 @@
                 $("#CreateNewInvoiceLineTable tbody").append(markup);
             }
 
-            var InvoiceItem = {};
-            //InvoiceLineItem.ClaimDate = PO;
-            //InvoiceLineItem.Supplier = Opp;
+            var InvoiceItem = {};          
             InvoiceItem.Line = Line;
             InvoiceItem.InvoiceAmount_ex_gst = InvoiceAmount_ex_gst;
-            //InvoiceLineItem.Project = TaxCode;
+            //InvoiceItem.Project = TaxCode;
             InvoiceItem.Project_Job = ProjectJob;
             InvoiceItem.Approver = Approver;
             InvoiceItem.Invoice_Description = Invoice_Description;
             InvoiceItem.PM_Warehouse_HO = PMWarehouseHO;
-            //InvoiceLineItem.ToolsCost = InvoiceStatus;
+            //InvoiceItem.ToolsCost = InvoiceStatus;
             InvoiceItem.POShortageComment = Comments;
             InvoiceItem.GLDescription = GLDescription;
             InvoiceItem.GLCode = GLCode;
@@ -289,7 +287,7 @@
                 ErrorMessage += 'Due Date is Required. \n';
             }
 
-            if (CreateNewInvoiceLine.InvoiceLineItems.length == 0) {
+            if (CreateNewInvoiceLine.InvoiceLineItem.length == 0) {
                 ErrorMessage += 'At least One Invoice Line is Required. \n';
             }
             if (ErrorMessage != '') {
