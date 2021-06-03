@@ -63,13 +63,13 @@ namespace TimeSheet.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SupplierInvoiceItems(int ClaimId)
+        public ActionResult SupplierInvoiceItems(int InvoiceId)
         {
             if (!UserRoles.IsLoginActive())
             {
                 return RedirectToAction("Login", "Login");
             }
-            var ClaimItemsData = ExpenseClaimerService.GetSupplierInvoiceItemsById(ClaimId).Result;
+            var ClaimItemsData = ExpenseClaimerService.GetSupplierInvoiceItemsById(InvoiceId).Result;
             return View(ClaimItemsData);
         }
         [HttpPost]
@@ -294,9 +294,9 @@ namespace TimeSheet.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UpdateInvoiceLine(int InvoiceId)
+        public ActionResult UpdateInvoiceLine(int InvoiceItemId)
         {
-           var UpdatebleItem= ImportInvoiceDataService.GetInvoiceLineItem(InvoiceId).Result;
+           var UpdatebleItem= ImportInvoiceDataService.GetInvoiceLineItem(InvoiceItemId).Result;
             return View(UpdatebleItem);
         }
         [HttpPost]
@@ -367,6 +367,9 @@ namespace TimeSheet.Controllers
             return View(Invoices);
         }
 
+        //ApproveSupplierInvoiceItem(int InvoiceItemId)
+
+        // UnApproveSupplierInvoiceItem(int InvoiceItemId)
         [HttpPost]
         public ActionResult ExportApprovedInvoices()
         {

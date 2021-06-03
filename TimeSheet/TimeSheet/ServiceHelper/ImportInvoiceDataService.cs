@@ -144,16 +144,16 @@ namespace TimeSheet.ServiceHelper
             }
         }
 
-        public static async Task<InvoiceViewModel> GetInvoiceLineItem(int InvoiceID)
+        public static async Task<InvoiceLineItemsViewModel> GetInvoiceLineItem(int InvoiceLineItemID)
         {
-            var ReturnResult = new InvoiceViewModel();
+            var ReturnResult = new InvoiceLineItemsViewModel();
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{InvoiceID}/GetInvoiceLineItem")).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{InvoiceLineItemID}/GetInvoiceLineItemById")).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    ReturnResult = await response.Content.ReadAsAsync<InvoiceViewModel>();
+                    ReturnResult = await response.Content.ReadAsAsync<InvoiceLineItemsViewModel>();
                 }
                 else
                 {
