@@ -30,6 +30,7 @@ namespace TimeSheet.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DueDate { get; set; }
         public List<InvoiceLineItemsViewModel> InvoiceLineItem { get; set; }
-
+        public decimal? InvoiceTotal { get; set; }
+        public string InvoiceStatus { get; set; }
     }
 }
