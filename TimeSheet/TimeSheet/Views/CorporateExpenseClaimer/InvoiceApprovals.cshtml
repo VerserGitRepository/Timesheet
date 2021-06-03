@@ -65,7 +65,7 @@
             {
             <tr>
                 <td style="text-align:center">
-                    @using (Html.BeginForm("", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
+                    @using (Html.BeginForm("SupplierInvoiceItems", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
                     {
                         <button type="submit" class="btn btn-warning- btn-sm">
                             @Html.DisplayFor(modelItem => item.InvoiceNumber)

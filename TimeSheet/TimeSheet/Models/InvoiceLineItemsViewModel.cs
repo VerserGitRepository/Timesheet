@@ -8,6 +8,8 @@ namespace TimeSheet.Models
 {
     public class InvoiceLineItemsViewModel
     {
+
+        public int Id { get; set; }
         [Required]
         public decimal? InvoiceAmount_ex_gst { get; set; }
         public decimal? InvoiceAmount_Inc_gst { get; set; }

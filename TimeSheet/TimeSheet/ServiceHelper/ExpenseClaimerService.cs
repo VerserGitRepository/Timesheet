@@ -61,6 +61,22 @@ namespace TimeSheet.ServiceHelper
             return ReturnResult;
         }
 
+        public static async Task<List<InvoiceLineItemsViewModel>> GetSupplierInvoiceItemsById(int InvoiceId)
+        {
+            var ReturnResult = new List<InvoiceLineItemsViewModel>();
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{InvoiceId}/GetInvoiceLineItem")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    ReturnResult = await response.Content.ReadAsAsync<List<InvoiceLineItemsViewModel>>();
+                }
+            }
+            return ReturnResult;
+        }
+
         public static async Task<CorporateCardExpenseClaimItemsModel> GetExpenseClaimItem(int ClaimItemId)
         {
             var ReturnResult = new CorporateCardExpenseClaimItemsModel();

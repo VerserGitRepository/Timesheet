@@ -54,6 +54,24 @@ namespace TimeSheet.Controllers
             var ClaimItemsData = ExpenseClaimerService.GetExpenseClaimItemsById(ClaimId).Result;
             return View(ClaimItemsData);
         }
+        public ActionResult SupplierInvoiceItems()
+        {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SupplierInvoiceItems(int ClaimId)
+        {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            var ClaimItemsData = ExpenseClaimerService.GetSupplierInvoiceItemsById(ClaimId).Result;
+            return View(ClaimItemsData);
+        }
         [HttpPost]
         public ActionResult UpdateExpenseClaimItem(int ClaimItemId)
         {
@@ -235,6 +253,7 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult CreateNewInvoiceLine(InvoiceViewModel _ImportInvoiceDataModel)
         {
+           // var json = Newtonsoft.Json.JsonConvert.SerializeObject(_ImportInvoiceDataModel);
            ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
