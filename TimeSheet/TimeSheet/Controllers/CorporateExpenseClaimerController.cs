@@ -367,6 +367,19 @@ namespace TimeSheet.Controllers
             return View(Invoices);
         }
 
+        [HttpPost]
+        public ActionResult ApproveSupplierInvoiceItem(int InvoiceItemId)
+        {
+            ImportInvoiceDataService.ApproveExpenseInvoice(InvoiceItemId);
+            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+        }
+        [HttpPost]
+        public ActionResult UnApproveSupplierInvoiceItem(int InvoiceItemId)
+        {
+            ImportInvoiceDataService.DisputedExpenseInvoice(InvoiceItemId);
+            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+        }
+
         //ApproveSupplierInvoiceItem(int InvoiceItemId)
 
         // UnApproveSupplierInvoiceItem(int InvoiceItemId)
