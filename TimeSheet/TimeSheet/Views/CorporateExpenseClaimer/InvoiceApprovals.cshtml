@@ -17,7 +17,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
 <div class="col-md-12" style="margin-top:55px; margin-bottom:5px">
-    @*<div class="pull-right">
+    <div class="pull-right">
         @using (Html.BeginForm("ImportInvoices", "CorporateExpenseClaimer", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
@@ -30,7 +30,7 @@
                 </div>
             </div>
         }
-    </div>*@
+    </div>
     <div class="pull-right" style="margin-top:10px; margin-right:10px">
         @using (Html.BeginForm("ExportInvoiceItems", "CorporateExpenseClaimer", FormMethod.Post))
         {
@@ -138,7 +138,7 @@
 
 </div>
 
-<div class="modal fade" id="myModal" role="dialog" data-url='@Url.Action("CreateNewInvoiceLine","CorporateExpenseClaimer")'></div>
+<div class="modal fade" id="myModal" role="dialog" data-url='@Url.Action("CreateNewInvoiceLine","CorporateExpenseClaimer")' data-keyboard="false" data-backdrop="static"></div>
 
 <script>
     $(document).ready(function () {
