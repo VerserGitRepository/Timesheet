@@ -53,7 +53,6 @@ namespace TimeSheet.ServiceHelper
             return WarehousesList;
         }
 
-        
         public static async Task<List<ListItemViewModel>> Resources()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -132,7 +131,6 @@ namespace TimeSheet.ServiceHelper
             return projectsList;
         }
 
-        
         public static async Task<List<ListItemViewModel>> StatusList()
         {
             List<ListItemViewModel> projectsList = new List<ListItemViewModel>();
@@ -238,8 +236,34 @@ namespace TimeSheet.ServiceHelper
             return DropDownListItems;
         }
 
+        public static async Task<List<ListItems>> GetSuppliers()
+        {
+            var Suppliers = new List<ListItems>();         
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(TimeSheetAPIURl);
+                    HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaimListItems/GetInvoiceSupplierList")).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                    Suppliers = await response.Content.ReadAsAsync<List<ListItems>>();
+                    }
+                }           
+            return Suppliers;
+        }
+        public static async Task<List<ListItems>> GetSuppliersGLCodes()
+        {
+            var Suppliers = new List<ListItems>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(TimeSheetAPIURl);
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaimListItems/GetSuppliersGLCodes")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Suppliers = await response.Content.ReadAsAsync<List<ListItems>>();
+                }
+            }
+            return Suppliers;
+        }
     }
 }
-
-
 //https://versergateway.com.au/TimesheetCostModelServicesDev/ListItems/HRBookingResources

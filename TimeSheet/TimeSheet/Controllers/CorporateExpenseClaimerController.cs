@@ -17,7 +17,7 @@ using TimeSheet.ServiceHelper;
 namespace TimeSheet.Controllers
 {
     public class CorporateExpenseClaimerController : Controller
-    {        
+    {
         public ActionResult Index()
         {
             if (!UserRoles.IsLoginActive())
@@ -32,10 +32,10 @@ namespace TimeSheet.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-            var ClaimData= ExpenseClaimerService.GetExpenseClaims().Result;
+            var ClaimData = ExpenseClaimerService.GetExpenseClaims().Result;
             return View(ClaimData);
         }
-       
+
         public ActionResult ExpenseClaimItems()
         {
             if (!UserRoles.IsLoginActive())
@@ -80,13 +80,13 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Login", "Login");
             }
             var ClaimItemsData = ExpenseClaimerService.GetExpenseClaimItem(ClaimItemId).Result;
-            return View(ClaimItemsData);           
+            return View(ClaimItemsData);
         }
 
         [HttpPost]
-        public ActionResult ApproveExpenseClaimItem(int ClaimItemId,string claimItemStatus)
+        public ActionResult ApproveExpenseClaimItem(int ClaimItemId, string claimItemStatus)
         {
-             ExpenseClaimerService.ApproveExpenseClaimItem(ClaimItemId, claimItemStatus);
+            ExpenseClaimerService.ApproveExpenseClaimItem(ClaimItemId, claimItemStatus);
             return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
         }
 
@@ -124,7 +124,7 @@ namespace TimeSheet.Controllers
             if (!UserRoles.IsLoginActive())
             {
                 return RedirectToAction("Login", "Login");
-            }            
+            }
 
             GridView gv = new GridView();
             gv.DataSource = ExpenseClaimerService.ExportExpenseClaims().Result; ;
@@ -253,13 +253,13 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult CreateNewInvoiceLine(InvoiceViewModel _ImportInvoiceDataModel)
         {
-           // var json = Newtonsoft.Json.JsonConvert.SerializeObject(_ImportInvoiceDataModel);
-           ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
+            // var json = Newtonsoft.Json.JsonConvert.SerializeObject(_ImportInvoiceDataModel);
+            ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
 
         [HttpGet]
-        public ActionResult CreateNewInvoiceLine() 
+        public ActionResult CreateNewInvoiceLine()
         {
             return View();
         }
@@ -268,11 +268,11 @@ namespace TimeSheet.Controllers
         public ActionResult InvoiceApprovals()
         {
             //<ImportInvoiceDataModel>> GetExpenseClaims()
-            var Invoices =  ImportInvoiceDataService.GetInvoiceLineItems().Result;
+            var Invoices = ImportInvoiceDataService.GetInvoiceLineItems().Result;
             return View(Invoices);
         }
         [HttpPost]
-        public ActionResult ApproveInvoice(int InvoiceId) 
+        public ActionResult ApproveInvoice(int InvoiceId)
         {
             ImportInvoiceDataService.ApproveExpenseInvoice(InvoiceId);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
@@ -282,7 +282,7 @@ namespace TimeSheet.Controllers
         {
             ImportInvoiceDataService.UpdateInvoicePaid(InvoiceId);
             return RedirectToAction("InvoiceApprovedItems", "CorporateExpenseClaimer");
-        }        
+        }
         [HttpPost]
         public ActionResult DisputedInvoice(int InvoiceId)
         {
@@ -290,19 +290,19 @@ namespace TimeSheet.Controllers
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
         public ActionResult UpdateInvoiceLine()
-        {           
+        {
             return View();
         }
         [HttpPost]
         public ActionResult UpdateInvoiceLine(int InvoiceItemId)
         {
-           var UpdatebleItem= ImportInvoiceDataService.GetInvoiceLineItem(InvoiceItemId).Result;
+            var UpdatebleItem = ImportInvoiceDataService.GetInvoiceLineItem(InvoiceItemId).Result;
             return View(UpdatebleItem);
         }
         [HttpPost]
         public ActionResult UpdateInvoiceLineItem(InvoiceViewModel InvoiceLineItemModel)
         {
-           ImportInvoiceDataService.UpdateInvoiceLineItem(InvoiceLineItemModel);
+            ImportInvoiceDataService.UpdateInvoiceLineItem(InvoiceLineItemModel);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
         private static string GetCellValue(Cell theCell, WorkbookPart wbPart)
@@ -430,6 +430,19 @@ namespace TimeSheet.Controllers
             Response.Flush();
             Response.End();
             return RedirectToAction("ExpenseClaims", " CorporateExpenseClaimer");
+        }
+
+        [HttpGet]
+        public ActionResult GetSuppliers()
+        {
+            var _ItemTypes = ListItemService.GetSuppliers().Result;
+            return Json(_ItemTypes, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetGLCodes()
+        {
+            var _ItemTypes = ListItemService.GetSuppliersGLCodes().Result;
+            return Json(_ItemTypes, JsonRequestBehavior.AllowGet);
         }
     }
 }
