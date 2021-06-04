@@ -128,7 +128,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         @Html.Label("GLCode:", htmlAttributes: new { @class = "control-label col-md-6", style = "margin-top:5px; padding-left:0" })
-                        <select type="text" class="form-control form-control-sm" id="ddlGLCode" name="GLCode"></select>
+                        <select type="text" class="form-control form-control-sm" id="ddlGLCode" name="GLCode" placeholder="GLCode"></select>
                         @*<input class="form-control form-control-sm col-md-12" type="text" id="txtGLCode" name="GLCode" placeholder="GLCode">*@
                     </div>
                     <div class="form-group col-md-2">
@@ -226,8 +226,8 @@
             var PMWarehouseHO = $("#txtPM_Warehouse_HO").val();
             var InvoiceStatus = $("#dpdInvoiceStatus").val();
             var Comments = $("#txtComments").val();
-            var GLDescription = $("#txtGLDescription").val();
-            var GLCode = $("#txtGLCode").val();
+            var GLDescription = $("#ddlGLDescription").val();
+            var GLCode = $("#ddlGLCode").val();
             var Branch = $("#txtBranch").val();
             var DateRecordedinMYOB = $("#txtDateRecordedinMYOB").val();
             var MYOBItemNumber = $("#txtMYOBItemNumber").val();
