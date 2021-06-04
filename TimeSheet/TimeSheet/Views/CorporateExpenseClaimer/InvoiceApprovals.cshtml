@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "InvoiceApprovals";
 }
-
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
@@ -16,6 +15,7 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://unpkg.com/balloon-css/balloon.min.css">
+
 <div class="col-md-12" style="margin-top:55px; margin-bottom:5px">
 
     <div class="pull-right" style="margin-top:10px; margin-right:10px">
@@ -26,11 +26,11 @@
             </button>
         }
     </div>
-    <div class="pull-right" style="margin-top:10px; margin-right:10px">
+    @*<div class="pull-right" style="margin-top:10px; margin-right:10px">
         <button type="button" class="btn btn-warning btn-sm" id="Invoice">
-             Register New Invoice
+            Register New Invoice
         </button>
-    </div>
+    </div>*@
 
     <table id="InvoicesTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
         <thead style="background-color:orange; color: white">
@@ -48,54 +48,32 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td style="text-align:center">
-                    @using (Html.BeginForm("SupplierInvoiceItems", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
-                    {
-                        <button type="submit" class="btn btn-warning- btn-sm">
-                            @Html.DisplayFor(modelItem => item.InvoiceNumber)
-                        </button>
-                    }
-                </td>
-                <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
-                <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
-                <td>  @Html.DisplayFor(modelItem => item.InvoiceTotal)</td>
-                <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
-                <td>  @Html.DisplayFor(modelItem => item.InvoiceStatus)</td>
-                <td>  @Html.DisplayFor(modelItem => item.Term)</td>
-                <td>  @Html.DisplayFor(modelItem => item.DueDate)</td>
-                @*<td style="text-align:center">
-            <div style="padding-left:0;padding-bottom:2px">
-                @if (item.InvoiceStatus.Contains("Requested") || item.InvoiceStatus.Contains("Disputed") || item.InvoiceStatus.Contains("UnApproved"))
-                {
-                    using (Html.BeginForm("ApproveInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
-                    {
-                        <button type="submit" class="btn btn-sm btn-success" style="font-size:9px; font-weight:500">APPROVE</button>
-                    }
-                }
-            </div>
-            <div style="padding-left:0">
-                @if (item.InvoiceStatus.Contains("Requested"))
-                {
-                    using (Html.BeginForm("DisputedInvoice", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
-                    {
-                        <button type="submit" class="btn btn-sm btn-danger" style="font-size:9px; font-weight:500">DISPUTED</button>
-                    }
-                }
-            </div>
-        </td>*@
-            </tr>
+                <tr>
+                    <td style="text-align:center">
+                        @using (Html.BeginForm("SupplierInvoiceItems", "CorporateExpenseClaimer", new { InvoiceId = item.Id }, FormMethod.Post))
+                        {
+                            <button type="submit" class="btn btn-warning- btn-sm">
+                                @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                            </button>
+                        }
+                    </td>
+                    <td>  @Html.DisplayFor(modelItem => item.SupplierName)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Invoice_Date)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceTotal)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.ReceivedInvoiceDate)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.InvoiceStatus)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.Term)</td>
+                    <td>  @Html.DisplayFor(modelItem => item.DueDate)</td>                   
+                </tr>
             }
         </tbody>
     </table>
-
-
 </div>
 
-<div class="modal fade" id="myModal" role="dialog" data-url='@Url.Action("CreateNewInvoiceLine","CorporateExpenseClaimer")' data-keyboard="false" data-backdrop="static"></div>
+@*<div class="modal fade" id="myModal" role="dialog" data-url='@Url.Action("CreateNewInvoiceLine","CorporateExpenseClaimer")' data-keyboard="false" data-backdrop="static"></div>*@
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function () {    
 
         $('#InvoicesTable').dataTable({
             responsive: true,
@@ -105,23 +83,19 @@
         });
         $('.dataTables_filter').addClass('pull-right');
     });
+    //$(document).ready(function () {
 
+    //    $('#Invoice').click(function () {
 
-    $(document).ready(function () {
+    //        var url = $('#myModal').data('url');
+    //        $.get(url, function (data) {
 
-        $('#Invoice').click(function () {
+    //            $("#myModal").html(data);
+    //            $("#myModal").modal('show');
+    //        });
+    //    });
 
-            var url = $('#myModal').data('url');
-            $.get(url, function (data) {
-
-                $("#myModal").html(data);
-                $("#myModal").modal('show');
-            });
-        });
-
-    });
-
-
+    //});
 </script>
 
 
