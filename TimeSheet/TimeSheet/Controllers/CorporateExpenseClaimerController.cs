@@ -370,19 +370,15 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ApproveSupplierInvoiceItem(int InvoiceItemId)
         {
-            ImportInvoiceDataService.ApproveExpenseInvoice(InvoiceItemId);
+            ImportInvoiceDataService.ApproveSupplierInvoiceItem(true,InvoiceItemId);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
         [HttpPost]
         public ActionResult UnApproveSupplierInvoiceItem(int InvoiceItemId)
         {
-            ImportInvoiceDataService.DisputedExpenseInvoice(InvoiceItemId);
+            ImportInvoiceDataService.ApproveSupplierInvoiceItem(false,InvoiceItemId);
             return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
-
-        //ApproveSupplierInvoiceItem(int InvoiceItemId)
-
-        // UnApproveSupplierInvoiceItem(int InvoiceItemId)
         [HttpPost]
         public ActionResult ExportApprovedInvoices()
         {
@@ -442,6 +438,12 @@ namespace TimeSheet.Controllers
         public ActionResult GetGLCodes()
         {
             var _ItemTypes = ListItemService.GetSuppliersGLCodes().Result;
+            return Json(_ItemTypes, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetCardHolders()
+        {
+            var _ItemTypes = ListItemService.GetCardHolders().Result;
             return Json(_ItemTypes, JsonRequestBehavior.AllowGet);
         }
     }
