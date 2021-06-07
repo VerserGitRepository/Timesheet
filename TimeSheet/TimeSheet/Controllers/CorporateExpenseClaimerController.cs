@@ -114,7 +114,7 @@ namespace TimeSheet.Controllers
             {
                 return RedirectToAction("Login", "Login");
             }
-            ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);
+          //  ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);
             return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
         }
 
@@ -251,11 +251,12 @@ namespace TimeSheet.Controllers
         //}
 
         [HttpPost]
-        public ActionResult CreateNewInvoiceLine(InvoiceViewModel _ImportInvoiceDataModel)
+        public JsonResult CreateNewInvoiceLine(InvoiceViewModel _ImportInvoiceDataModel)
         {
             // var json = Newtonsoft.Json.JsonConvert.SerializeObject(_ImportInvoiceDataModel);
-            ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
-            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+            var returnvalue=ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
+            return Json(returnvalue, JsonRequestBehavior.AllowGet);
+          //  return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
         }
 
         [HttpGet]

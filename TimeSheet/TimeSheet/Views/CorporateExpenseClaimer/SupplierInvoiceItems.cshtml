@@ -93,17 +93,20 @@
                         <button type="submit" class="Edit btn btn-sm btn-warning a-btn-slide-text"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
                     }
                 </td>
-                <td width="10%" style="text-align:center">
+                <td width="9%" style="text-align:center">
                     <div class="col-md-6">
-                        @using (Html.BeginForm("ApproveSupplierInvoiceItem", "CorporateExpenseClaimer", new { InvoiceItemId = item.Id }, FormMethod.Post))
+                        @if (item.InvoiceStatus == "UnApproved" || item.InvoiceStatus == "Disputed")
                         {
-                            <button type="submit" class="btn btn-success" style="font-size:9px; font-weight:500">APPROVE</button>
+                            using (Html.BeginForm("ApproveSupplierInvoiceItem", "CorporateExpenseClaimer", new { InvoiceItemId = item.Id }, FormMethod.Post))
+                            {
+                                <button type="submit" class="btn btn-success" style="font-size:9px; font-weight:500">APPROVE</button>
+                            }
                         }
                     </div>
                     <div class="col-md-6">
                         @using (Html.BeginForm("UnApproveSupplierInvoiceItem", "CorporateExpenseClaimer", new { InvoiceItemId = item.Id }, FormMethod.Post))
                         {
-                            <button type="submit" class="btn btn-danger" style="font-size:9px; font-weight:500">UnApprove</button>
+                        <button type="submit" class="btn btn-danger" style="font-size:9px; font-weight:500">DISPUTE</button>
                         }
                     </div>
                 </td>

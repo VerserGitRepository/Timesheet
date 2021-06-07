@@ -32,16 +32,18 @@ namespace TimeSheet.ServiceHelper
             }
         }
 
-        public static void CreateInvoiceItem(InvoiceViewModel InvoiceDataRequest)
+        public static bool CreateInvoiceItem(InvoiceViewModel InvoiceDataRequest)
         {
-            var _json = Newtonsoft.Json.JsonConvert.SerializeObject(InvoiceDataRequest);
+            // var _json = Newtonsoft.Json.JsonConvert.SerializeObject(InvoiceDataRequest);
+            bool ReturnResult = false;
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
                 HttpResponseMessage response = client.PostAsJsonAsync(string.Format("ExpenseClaims/CreateInvoiceItem"), InvoiceDataRequest).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    //var  ReturnResult =  response.Content.ReadAsAsync<bool>();
+                    //  ReturnResult = response.Content.ReadAsAsync<bool>();
+                    ReturnResult = true;
                     HttpContext.Current.Session["ResultMessage"] = "Invoice Created Successfully!";
                 }
                 else
@@ -49,6 +51,7 @@ namespace TimeSheet.ServiceHelper
                     HttpContext.Current.Session["ErrorMessage"] = "Invoice Creation Failed!";
                 }
             }
+            return ReturnResult;
         }
 
         public static async Task<IEnumerable<InvoiceViewModel>> GetInvoiceLineItems()
