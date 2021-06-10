@@ -361,7 +361,6 @@
             var Date = $("#txtDate").val();
             var Supplier = $("#txtSupplier").val();
             var Description = $("#txtDescription").val();
-            //var Branch = $("#txtBranch").val();
             var Project = $("#txtProject").val();
             var PONumber = $("#txtPONumber").val();
             var Travel = $("#txtTravel").val();
@@ -417,7 +416,6 @@
                 + Date + "</td><td>"
                 + Supplier + "</td><td>"
                 + Description + "</td><td>"
-                //+ Branch + "</td><td>"
                 + Project + "</td><td>"
                 + PONumber + "</td><td>"
                 + Travel + "</td><td>"
@@ -437,7 +435,7 @@
             if (Date == '' || Supplier == '' || Supplier == -1 || Description == '' || Project == '' || PONumber == '' || Travel == ''
                 || Acommodation == '' || Meals == '' || Tools == '' || WHTools_Consumables == '' || txtVehicleRepairs_Maintenance == ''
                 || txtMonthly_Subscriptions == '' || ITExpenses == '' || Postage == '' || Telephone == '' || StaffAmenities == '' || ClientEntertainment == ''
-                || Other == '' || Total == '') {
+                || Other == '') {
                 $.alert({
                     title: 'Validation Errors',
                     content: 'Please complete all forms.',
@@ -451,7 +449,6 @@
             CliamLineItem.ClaimDate = Date;
             CliamLineItem.Supplier = Supplier;
             CliamLineItem.ItemDescription = Description;
-            CliamLineItem.Branch = Branch;
             CliamLineItem.Project = Project;
             CliamLineItem.PONumber = Travel;
             CliamLineItem.PONumber = PONumber;
@@ -509,9 +506,6 @@
             if (MainModelExpenseCliams.ExpenseClaimType == '') {
                 ErrorMessage += 'ExpenseClaimType is Required. \n';
             }
-            if (MainModelExpenseCliams.EmployeeSignature == '') {
-                ErrorMessage += 'EmployeeSignature is Required. \n';
-            }
             if (MainModelExpenseCliams.Approvedby == '') {
                 ErrorMessage += 'Approvedby is Required. \n';
             }
@@ -522,21 +516,6 @@
             if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length == 0) {
                 ErrorMessage += 'At least One Expense ClaimItems is Required. \n';
             }
-            //if (MainModelExpenseCliams.SharePointFileLocation == '') {
-            //    ErrorMessage += 'Date in table is Required. \n';
-            //}
-            //if (MainModelExpenseCliams.SharePointFileLocation == '') {
-            //    ErrorMessage += 'Supplier in the table is Required. \n';
-            //}
-            //if (MainModelExpenseCliams.SharePointFileLocation == '') {
-            //    ErrorMessage += 'Description in the table is Required. \n';
-            //}
-            //if (MainModelExpenseCliams.SharePointFileLocation == '') {
-            //    ErrorMessage += 'Branch in the table is Required. \n';
-            //}
-            //if (MainModelExpenseCliams.SharePointFileLocation == '') {
-            //    ErrorMessage += 'Project in the table is Required. \n';
-            //}
             if (ErrorMessage != '') {
                 $.alert({
                     title: 'Validation Errors',
