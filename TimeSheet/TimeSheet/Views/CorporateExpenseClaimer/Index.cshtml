@@ -55,24 +55,24 @@
                     </div>
                 </div>
                 @*<div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">
-            @Html.Label("Employee Signature:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-            <div class="col-md-6" style="margin-top:7px">
-                <input type="text" class="form-control form-control-sm" id="txtEmployeeSignature" name="EmployeeSignature">
-            </div>
-        </div>*@
+                        @Html.Label("Employee Signature:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="text" class="form-control form-control-sm" id="txtEmployeeSignature" name="EmployeeSignature">
+                        </div>
+                    </div>*@
 
-            <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">               
-                @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                <div class="col-md-6" style="margin-top:7px">
-                    <select type="text" class="form-control form-control-sm" id="txtBranch" name="Branch">
-                        <option value="-1">Select a Supplier</option>
-                        <option>Sydney</option>
-                        <option>Melbourne</option>
-                        <option>Brisbane</option>
-                        <option>Canberra</option>
-                    </select>
+                <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">
+                    @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <div class="col-md-6" style="margin-top:7px">
+                        <select type="text" class="form-control form-control-sm" id="txtBranch" name="Branch">
+                            <option value="-1">Select a Supplier</option>
+                            <option>Sydney</option>
+                            <option>Melbourne</option>
+                            <option>Brisbane</option>
+                            <option>Canberra</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
                 <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">
                     @Html.Label("Approved by:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
@@ -210,7 +210,7 @@
             @Html.Label("Description:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtDescription" name="Description" placeholder="Description">
         </div>
-    
+
         <div class="form-group col-md-2">
             @Html.Label("Project:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtProject" name="Project" placeholder="Project">
@@ -434,7 +434,7 @@
                 + ClientEntertainment + "</td><td>"
                 + Other + "</td><td>"
                 + Total + "</td></tr>";
-            if (Date == '' || Supplier == '' || Supplier == -1 || Description == '' || Branch == '' || Branch == -1 || Project == '' || PONumber == '' || Travel == ''
+            if (Date == '' || Supplier == '' || Supplier == -1 || Description == '' || Project == '' || PONumber == '' || Travel == ''
                 || Acommodation == '' || Meals == '' || Tools == '' || WHTools_Consumables == '' || txtVehicleRepairs_Maintenance == ''
                 || txtMonthly_Subscriptions == '' || ITExpenses == '' || Postage == '' || Telephone == '' || StaffAmenities == '' || ClientEntertainment == ''
                 || Other == '' || Total == '') {
@@ -443,13 +443,10 @@
                     content: 'Please complete all forms.',
                     // .css("color", "red"),
                 });
+                return false;
             }
-            if (Date != '' & Supplier != '' & Supplier != -1 & Supplier != -1 & Description != '' & Branch != '' & Branch != -1 & Project != '' & PONumber != ''
-                & Travel != '' & Acommodation != '' & Meals != '' & Tools != '' & WHTools_Consumables != ''
-                & txtVehicleRepairs_Maintenance != '' & txtMonthly_Subscriptions != '' & ITExpenses != '' & Postage != '' & Branch != ''
-                & Telephone != '' & StaffAmenities != '' & ClientEntertainment != '') {
-                $("table tbody").append(markup);
-            }
+            $("table tbody").append(markup);
+
             var CliamLineItem = {};
             CliamLineItem.ClaimDate = Date;
             CliamLineItem.Supplier = Supplier;
