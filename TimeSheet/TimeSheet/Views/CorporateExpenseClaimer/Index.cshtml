@@ -377,40 +377,7 @@
             var ClientEntertainment = $("#txtClientEntertainment").val();
             var Other = $("#txtOther").val();
             var ClaimItemStatus = $("#dpdClaimItemStatus").val();
-            _totalExpense += (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
-                + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
-                + parseInt(ClientEntertainment) + parseInt(Other) + parseInt(Travel));
-            _RowtotalExpense = (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
-                + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
-                + parseInt(ClientEntertainment) + parseInt(Other) + parseInt(Travel));
-            _TravelTotal += (parseInt(Travel));
-            _ToolsTotal += (parseInt(Tools));
 
-            _WHTools_Consumables += (parseInt(WHTools_Consumables));
-            _VehicleRepairs_Maintenance += (parseInt(txtVehicleRepairs_Maintenance));
-            _Monthly_Subscriptions += (parseInt(txtMonthly_Subscriptions));
-            _ITExpenses += (parseInt(ITExpenses));
-            _Postage += (parseInt(Postage));
-            _Telephone += (parseInt(Telephone));
-            _StaffAmenities += (parseInt(StaffAmenities));
-            _ClientEntertainment += (parseInt(ClientEntertainment));
-            _OtherTotal += (parseInt(Other));
-            _MealsTotal += (parseInt(Meals));
-            _AccommodationTotal += (parseInt(Acommodation));
-            $("#lbltraveltotal").val(_TravelTotal);
-            $("#lblOthertotal").val(_OtherTotal);
-            $("#lblToolstotal").val(_ToolsTotal);
-            $("#lblWHTools_Consumablestotal").val(_WHTools_Consumables);
-            $("#lblVehicleRepairs_Maintenancetotal").val(_VehicleRepairs_Maintenance);
-            $("#lblMonthly_Subscriptionstotal").val(_Monthly_Subscriptions);
-            $("#lblITExpensestotal").val(_ITExpenses);
-            $("#lblPostagetotal").val(_Postage);
-            $("#lblTelephonetotal").val(_Telephone);
-            $("#lblStaffAmenitiestotal").val(_StaffAmenities);
-            $("#lblClientEntertainmenttotal").val(_ClientEntertainment);
-            $("#lblMealstotal").val(_MealsTotal);
-            $("#lblaccomdationtotal").val(_AccommodationTotal);
-            $("#lbltotalExpense").val(_totalExpense);
             var Total = _RowtotalExpense;
             var markup = "<tr><td><input type='checkbox' name='record'></td><td>"
                 + Date + "</td><td>"
@@ -467,6 +434,44 @@
             CliamLineItem.TravelCost = Travel;
             CliamLineItem.ExpenseTotal = Total;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
+
+            if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
+                _totalExpense += (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
+                    + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
+                    + parseInt(ClientEntertainment) + parseInt(Other) + parseInt(Travel));
+                _RowtotalExpense = (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
+                    + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
+                    + parseInt(ClientEntertainment) + parseInt(Other) + parseInt(Travel));
+                _TravelTotal += (parseInt(Travel));
+                _ToolsTotal += (parseInt(Tools));
+                _WHTools_Consumables += (parseInt(WHTools_Consumables));
+                _VehicleRepairs_Maintenance += (parseInt(txtVehicleRepairs_Maintenance));
+                _Monthly_Subscriptions += (parseInt(txtMonthly_Subscriptions));
+                _ITExpenses += (parseInt(ITExpenses));
+                _Postage += (parseInt(Postage));
+                _Telephone += (parseInt(Telephone));
+                _StaffAmenities += (parseInt(StaffAmenities));
+                _ClientEntertainment += (parseInt(ClientEntertainment));
+                _OtherTotal += (parseInt(Other));
+                _MealsTotal += (parseInt(Meals));
+                _AccommodationTotal += (parseInt(Acommodation));
+
+                $("#lbltraveltotal").val(_TravelTotal);
+                $("#lblOthertotal").val(_OtherTotal);
+                $("#lblToolstotal").val(_ToolsTotal);
+                $("#lblWHTools_Consumablestotal").val(_WHTools_Consumables);
+                $("#lblVehicleRepairs_Maintenancetotal").val(_VehicleRepairs_Maintenance);
+                $("#lblMonthly_Subscriptionstotal").val(_Monthly_Subscriptions);
+                $("#lblITExpensestotal").val(_ITExpenses);
+                $("#lblPostagetotal").val(_Postage);
+                $("#lblTelephonetotal").val(_Telephone);
+                $("#lblStaffAmenitiestotal").val(_StaffAmenities);
+                $("#lblClientEntertainmenttotal").val(_ClientEntertainment);
+                $("#lblMealstotal").val(_MealsTotal);
+                $("#lblaccomdationtotal").val(_AccommodationTotal);
+                $("#lbltotalExpense").val(_totalExpense);
+            }
+
         });
         $("#CreateClaimBtn").click(function () {
             MainModelExpenseCliams.EmployeeName = $("#txtemployeeName").val();
