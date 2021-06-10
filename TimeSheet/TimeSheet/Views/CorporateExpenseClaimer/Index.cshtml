@@ -48,9 +48,9 @@
                         <select type="text" class="form-control form-control-sm" id="txtemployeeName" name="employeeName"></select>
                     </div>
                 </div>
-                <div class="form-group col-md-4" style="margin-bottom:10px; margin-top:20px">
-                    @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-4", style = "text-align:center" })
-                    <div class="col-md-4" style="margin-top:7px">
+                <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:20px">
+                    @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <div class="col-md-6" style="margin-top:7px">
                         <input type="date" class="form-control form-control-sm" id="txtDateofClaim" name="DateofClaim">
                     </div>
                 </div>
@@ -63,13 +63,15 @@
 
             <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">               
                 @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                <select type="text" class="form-control form-control-sm" id="txtBranch" name="Branch">
-                    <option value="-1">Select a Supplier</option>
-                    <option>Sydney</option>
-                    <option>Melbourne</option>
-                    <option>Brisbane</option>
-                    <option>Canberra</option>
-                </select>
+                <div class="col-md-6" style="margin-top:7px">
+                    <select type="text" class="form-control form-control-sm" id="txtBranch" name="Branch">
+                        <option value="-1">Select a Supplier</option>
+                        <option>Sydney</option>
+                        <option>Melbourne</option>
+                        <option>Brisbane</option>
+                        <option>Canberra</option>
+                    </select>
+                </div>
             </div>
 
                 <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">
@@ -279,7 +281,7 @@
                 <th>Date</th>
                 <th>Supplier</th>
                 <th>Description</th>
-                <th>Branch</th>
+                @*<th>Branch</th>*@
                 <th>Project</th>
                 <th>PO</th>
                 <th>Travel</th>
@@ -308,15 +310,15 @@
         <div class="form-group" style="margin-bottom:0; padding-bottom:0">
             <form id="testForm">
 
-                <div class=" form-group col-md-3">
+                <div class=" form-group col-md-4">
                     @Html.Label("Manager Approval: ", htmlAttributes: new { @class = "control-label col-md-4", style = "padding-top:12px" })
-                    <div class="col-md-8" style="margin-top:5px">
+                    <div class="col-md-6" style="margin-top:5px">
                         <input type="text" class="form-control form-control-sm" id="txtManagerSignature" name="ManagerSignature" placeholder="">
                     </div>
                 </div>
-                <div class="form-group col-md-5">
-                    @Html.Label("Receipts SharePoint Location: ", htmlAttributes: new { @class = "control-label col-md-5", style = "padding-top:12px" })
-                    <div class="col-md-8" style="margin-top:5px">
+                <div class="form-group col-md-4">
+                    @Html.Label("Receipts SharePoint Location: ", htmlAttributes: new { @class = "control-label col-md-6", style = "padding-top:12px" })
+                    <div class="col-md-6" style="margin-top:5px">
                         <input type="text" class="form-control form-control-sm" id="txtInvoicesLocation" name="InvoicesLocation" placeholder="">
                     </div>
                 </div>
@@ -359,7 +361,7 @@
             var Date = $("#txtDate").val();
             var Supplier = $("#txtSupplier").val();
             var Description = $("#txtDescription").val();
-            var Branch = $("#txtBranch").val();
+            //var Branch = $("#txtBranch").val();
             var Project = $("#txtProject").val();
             var PONumber = $("#txtPONumber").val();
             var Travel = $("#txtTravel").val();
@@ -415,7 +417,7 @@
                 + Date + "</td><td>"
                 + Supplier + "</td><td>"
                 + Description + "</td><td>"
-                + Branch + "</td><td>"
+                //+ Branch + "</td><td>"
                 + Project + "</td><td>"
                 + PONumber + "</td><td>"
                 + Travel + "</td><td>"
@@ -475,7 +477,7 @@
         $("#CreateClaimBtn").click(function () {
             MainModelExpenseCliams.EmployeeName = $("#txtemployeeName").val();
             MainModelExpenseCliams.ExpenseDateOfClaim = $("#txtDateofClaim").val();
-            MainModelExpenseCliams.EmployeeSignature = $("#txtEmployeeSignature").val();
+            MainModelExpenseCliams.Branch = $("#txtBranch").val();
             MainModelExpenseCliams.Approvedby = $("#txtApprovedby").val();
             MainModelExpenseCliams.CreditCardNo = $("#txtCreditCardNo").val();
             MainModelExpenseCliams.ExpenseClaimType = $("#txtExpenseClaimType").val();
@@ -500,7 +502,9 @@
             }
             if (MainModelExpenseCliams.DateofClaim == '') {
                 ErrorMessage += 'DateofClaim is Required. \n';
-
+            }
+            if (MainModelExpenseCliams.Branch == '' || MainModelExpenseCliams.EmployeeName == -1) {
+                ErrorMessage += 'Branch is Required. \n';
             }
             if (MainModelExpenseCliams.CreditCardNo == '') {
                 ErrorMessage += 'CreditCardNo is Required. \n';
