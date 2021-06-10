@@ -93,15 +93,35 @@
                     </td>
                     <td width="10%" style="text-align:center">
                         <div class="col-md-6" style="padding-left:0">
-                            @using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "Approved" }, FormMethod.Post))
+                            @if (item.ClaimItemStatus != null && item.ClaimItemStatus =="UnApproved")
                             {
-                                <button type="submit" class="btn btn-success btn-sm" style="font-size:9px; font-weight:500">APPROVE</button>
+                                using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "Approved" }, FormMethod.Post))
+                                {
+                                    <button type="submit" class="btn btn-success btn-sm" style="font-size:9px; font-weight:500">APPROVE</button>
+                                }
+                            }
+                            else if (item.ClaimItemStatus == null)
+                            {
+                                using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "Approved" }, FormMethod.Post))
+                                {
+                                    <button type="submit" class="btn btn-success btn-sm" style="font-size:9px; font-weight:500">APPROVE</button>
+                                }
                             }
                         </div>
                         <div class="col-md-6" style="padding-left:0">
-                            @using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "UnApproved" }, FormMethod.Post))
+                            @if (item.ClaimItemStatus != null && item.ClaimItemStatus=="Approved")
                             {
-                                <button type="submit" class="btn btn-danger btn-sm" style="font-size:9px; font-weight:500">UnApprove</button>
+                                using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "UnApproved" }, FormMethod.Post))
+                                {
+                                    <button type="submit" class="btn btn-danger btn-sm" style="font-size:9px; font-weight:500">UnApprove</button>
+                                }
+                            }
+                            else if(item.ClaimItemStatus == null)
+                            {
+                                using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "UnApproved" }, FormMethod.Post))
+                                {
+                                    <button type="submit" class="btn btn-danger btn-sm" style="font-size:9px; font-weight:500">UnApprove</button>
+                                }
                             }
                         </div>
                     </td>
@@ -116,11 +136,17 @@
 <hr />
 
 <div class="col-md-12">
-    <input action="action"
-           class="btn btn-warning"
-           onclick="window.history.go(-1); return false;"
-           type="submit"
-           value="Back" />
+    @*<input action="action"
+        class="btn btn-warning"
+        onclick="window.history.go(-1); return false;"
+        type="submit"
+        value="Back" />*@
+
+    @using (Html.BeginForm("ExpenseClaims", "CorporateExpenseClaimer", FormMethod.Get))
+    {
+        <button type="submit" class="btn btn-warning btn-sm" style="font-size:9px; font-weight:500" value="Back">Back</button>
+    }
+
 </div>
 
 

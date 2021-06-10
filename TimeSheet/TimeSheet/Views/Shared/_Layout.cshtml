@@ -42,9 +42,8 @@
                             <li><a href="@Url.Action("AllBookingEntries", "Home")" style="padding-top:8px; padding-bottom:8px">ALL BOOKING</a></li>
                         </ul>
                     </li>
-
                     <li class="dropdown" id="dropmenu">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="color:white; font-weight:600">CALENDAR AND TIMELINE</a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="color:white; font-weight:600">TIMELINES</a>
                         <ul class="dropdown-menu" style="background-color:white !important">
                             <li><a href="@Url.Action("Index", "ManageCalender")" style="padding-top:8px; padding-bottom:8px">RESOURCE CALENDAR</a></li>
                             <li><a href="@Url.Action("Index", "ResourceTimeline")" style="padding-top:8px; padding-bottom:8px">RESOURCE TIMELINE</a></li>
@@ -65,6 +64,21 @@
                             </ul>
                         </li>
                     }
+                    @if (UserRoles.UserCanRegisterPMTimesheet())
+                    {
+                        <li class="dropdown" id="dropmenu">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#" style="color:white; font-weight:600">EXPENSES </a>
+                            <ul class="dropdown-menu" style="background-color:white !important">
+                                <li data-toggle="tooltip" data-placement="bottom" title="Corporate Expense Claimer"><a href="@Url.Action("Index", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">CREATE EXPENSE CLAIM</a></li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Corporate Expense Claimer"><a href="@Url.Action("CreateNewInvoiceLine", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">CREATE SUPPLIER INVOICE</a></li>
+
+                                <li data-toggle="tooltip" data-placement="bottom" title="Corporate Expense Claimer"><a href="@Url.Action("ExpenseClaims", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">EXPENSE CLAIMS</a></li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Corporate Expense Claimer"><a href="@Url.Action("ExpenseClaims", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">CORPORATE CARD CLAIMS</a></li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Personal Expense Claimer"><a href="@Url.Action("InvoiceApprovals", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">INVOICE APPROVALS</a></li>
+                                <li data-toggle="tooltip" data-placement="bottom" title="Personal Expense Claimer"><a href="@Url.Action("InvoiceApprovedItems", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">APPROVED INVOICES</a></li>
+                             </ul>
+                        </li>
+                    }
                     @if (UserRoles.SiteAdmin())
                     {
                         <li class="dropdown" id="dropmenu">
@@ -73,14 +87,6 @@
                                 <li data-toggle="tooltip" data-placement="bottom" title="Unpaid Timesheet Report"><a href="@Url.Action("WeeklyReport", "Finanace")" style="padding-top:8px; padding-bottom:8px">UNPAID</a></li>
                                 <li data-toggle="tooltip" data-placement="bottom" title="Approved Overtime Timesheet Report"><a href="@Url.Action("OvertimeReport", "Finanace")" style="padding-top:8px; padding-bottom:8px">OVERTIME</a></li>
                                 <li data-toggle="tooltip" data-placement="bottom" title="Paid Timesheet Report"><a href="@Url.Action("monthlyReport", "Finanace")" style="padding-top:8px; padding-bottom:8px">PAID</a></li>
-
-                                <li data-toggle="tooltip" data-placement="bottom" title="Corporate Expense Claimer"><a href="@Url.Action("Index", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">CREATE EXPENSE CLAIM</a></li>
-                                <li data-toggle="tooltip" data-placement="bottom" title="Corporate Expense Claimer"><a href="@Url.Action("CreateNewInvoiceLine", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">CREATE SUPPLIER INVOICE</a></li>
-
-                                <li data-toggle="tooltip" data-placement="bottom" title="Corporate Expense Claimer"><a href="@Url.Action("ExpenseClaims", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">EXPENSE CLAIMS</a></li>
-
-                                <li data-toggle="tooltip" data-placement="bottom" title="Personal Expense Claimer"><a href="@Url.Action("InvoiceApprovals", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">INVOICE APPROVALS</a></li>
-                                <li data-toggle="tooltip" data-placement="bottom" title="Personal Expense Claimer"><a href="@Url.Action("InvoiceApprovedItems", "CorporateExpenseClaimer")" style="padding-top:8px; padding-bottom:8px">APPROVED INVOICES</a></li>
 
                             </ul>
                         </li>
@@ -126,7 +132,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 @HttpContext.Current.Session["ResultMessage"]
             </div>
-        @@HttpContext.Current.Session["ResultMessage"] = null;
+@@HttpContext.Current.Session["ResultMessage"] = null;
         }
         @if (HttpContext.Current.Session["InfoMessage"] != null)
         {
@@ -134,7 +140,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 @HttpContext.Current.Session["InfoMessage"]
             </div>
-        @@HttpContext.Current.Session["InfoMessage"] = null;
+@@HttpContext.Current.Session["InfoMessage"] = null;
         }
         @if (HttpContext.Current.Session["ErrorMessage"] != null)
         {
@@ -142,14 +148,14 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 @HttpContext.Current.Session["ErrorMessage"]
             </div>
-        @@HttpContext.Current.Session["ErrorMessage"] = null;
+@@HttpContext.Current.Session["ErrorMessage"] = null;
         }
         @RenderBody()
     </div>
     @*<hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year - Verser TIME SCHEDULER</p>
-    </footer>*@
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Verser TIME SCHEDULER</p>
+        </footer>*@
 
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
@@ -164,14 +170,15 @@
 <style>
 
     #dropmenu {
-        background-color:black;
+        background-color: black;
     }
+
         #dropmenu :hover {
             background-color: #f79636;
         }
 
     #dropitem {
-        background-color:white;
+        background-color: white;
     }
 
         #dropitem :hover {

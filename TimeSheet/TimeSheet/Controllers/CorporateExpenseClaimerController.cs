@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TimeSheet.Models;
@@ -36,17 +37,23 @@ namespace TimeSheet.Controllers
             return View(ClaimData);
         }
 
-        public ActionResult ExpenseClaimItems()
+        public ActionResult ExpenseClaimItems(int? ClaimId)
         {
             if (!UserRoles.IsLoginActive())
             {
                 return RedirectToAction("Login", "Login");
+            }
+            if (ClaimId > 0)
+            {
+                var ClaimItemsData = ExpenseClaimerService.GetExpenseClaimItemsById(Convert.ToInt32(ClaimId)).Result;
+                return View(ClaimItemsData);
             }
             return View();
         }
         [HttpPost]
         public ActionResult ExpenseClaimItems(int ClaimId)
         {
+            Session["ClaimId"] = ClaimId;
             if (!UserRoles.IsLoginActive())
             {
                 return RedirectToAction("Login", "Login");
@@ -54,17 +61,23 @@ namespace TimeSheet.Controllers
             var ClaimItemsData = ExpenseClaimerService.GetExpenseClaimItemsById(ClaimId).Result;
             return View(ClaimItemsData);
         }
-        public ActionResult SupplierInvoiceItems()
+        public ActionResult SupplierInvoiceItems(int? InvoiceId)
         {
             if (!UserRoles.IsLoginActive())
             {
                 return RedirectToAction("Login", "Login");
+            }
+            if (InvoiceId >0)
+            {
+                var ClaimItemsData = ExpenseClaimerService.GetSupplierInvoiceItemsById(Convert.ToInt32(InvoiceId)).Result;
+                return View(ClaimItemsData);
             }
             return View();
         }
         [HttpPost]
         public ActionResult SupplierInvoiceItems(int InvoiceId)
         {
+            Session["InvoiceId"]= InvoiceId;
             if (!UserRoles.IsLoginActive())
             {
                 return RedirectToAction("Login", "Login");
@@ -87,7 +100,16 @@ namespace TimeSheet.Controllers
         public ActionResult ApproveExpenseClaimItem(int ClaimItemId, string claimItemStatus)
         {
             ExpenseClaimerService.ApproveExpenseClaimItem(ClaimItemId, claimItemStatus);
-            return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
+            var ClaimId = Session["ClaimId"];
+            if (ClaimId != null)
+            {
+                return RedirectToAction("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = Convert.ToInt32(ClaimId) });
+            }
+            else
+            {
+                return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
+            }
+           
         }
 
         //ApproveExpenseClaimItem
@@ -372,13 +394,32 @@ namespace TimeSheet.Controllers
         public ActionResult ApproveSupplierInvoiceItem(int InvoiceItemId)
         {
             ImportInvoiceDataService.ApproveSupplierInvoiceItem(true,InvoiceItemId);
-            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+
+            var InvoiceId = Session["InvoiceId"];
+            if (InvoiceId != null)
+            {
+                return RedirectToAction("SupplierInvoiceItems", "CorporateExpenseClaimer",new {invoiceId= Convert.ToInt32(InvoiceId) });
+               
+            }
+            else
+            {               
+               return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+            }           
         }
         [HttpPost]
         public ActionResult UnApproveSupplierInvoiceItem(int InvoiceItemId)
         {
             ImportInvoiceDataService.ApproveSupplierInvoiceItem(false,InvoiceItemId);
-            return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+            var InvoiceId = Session["InvoiceId"];
+            if (InvoiceId != null)
+            {
+                return RedirectToAction("SupplierInvoiceItems", "CorporateExpenseClaimer", new { invoiceId = Convert.ToInt32(InvoiceId) });
+
+            }
+            else
+            {
+                return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+            }
         }
         [HttpPost]
         public ActionResult ExportApprovedInvoices()
