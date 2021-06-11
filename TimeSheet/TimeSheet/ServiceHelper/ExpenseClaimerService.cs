@@ -112,8 +112,9 @@ namespace TimeSheet.ServiceHelper
             }
         }
 
-        public static void RegisterExpenseClaim(CorporateCardExpenseClaimModel RegisterClaimRequest)
+        public static bool RegisterExpenseClaim(CorporateCardExpenseClaimModel RegisterClaimRequest)
         {
+            bool ReturnFlag = false;
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
@@ -122,13 +123,16 @@ namespace TimeSheet.ServiceHelper
                 if (response.IsSuccessStatusCode)
                 {
                     //var  ReturnResult =  response.Content.ReadAsAsync<bool>();
+                    ReturnFlag = true;
                     HttpContext.Current.Session["ResultMessage"] = "Expense ClaimItem Updated Successfully!";
+
                 }
                 else
                 {
                     HttpContext.Current.Session["ErrorMessage"] = "Expense ClaimItem Updated Failed!";
                 }
             }
+            return ReturnFlag;
         }
 
         public static void ApproveExpenseClaimItem(int ClaimitemId, string ClaimitemStatus)

@@ -34,9 +34,8 @@ namespace TimeSheet.Controllers
                 return RedirectToAction("Login", "Login");
             }
             var ClaimData = ExpenseClaimerService.GetExpenseClaims().Result;
-            return View(ClaimData);
+            return View(ClaimData); 
         }
-
         public ActionResult ExpenseClaimItems(int? ClaimId)
         {
             if (!UserRoles.IsLoginActive())
@@ -108,10 +107,8 @@ namespace TimeSheet.Controllers
             else
             {
                 return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
-            }
-           
+            }           
         }
-
         //ApproveExpenseClaimItem
         [HttpPost]
         public ActionResult UpdateExpenseClaimItemEntity(CorporateCardExpenseClaimItemsModel ClaimItemsUpdateModel)
@@ -126,18 +123,14 @@ namespace TimeSheet.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateExpenseClaimItemEntity(CorporateCardExpenseClaimModel ClaimItemsUpdateModel)
+        public JsonResult CreateExpenseClaimItemEntity(CorporateCardExpenseClaimModel ClaimItemsUpdateModel)
         {
-            if (!ModelState.IsValid)
+            bool returnvalue = false;
+            if (UserRoles.IsLoginActive() && ModelState.IsValid)
             {
-                return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
-            }
-            if (!UserRoles.IsLoginActive())
-            {
-                return RedirectToAction("Login", "Login");
-            }
-          //  ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);
-            return RedirectToAction("ExpenseClaims", "CorporateExpenseClaimer");
+                returnvalue= ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);
+            }           
+            return Json(returnvalue, JsonRequestBehavior.AllowGet);            
         }
 
         [HttpPost]
@@ -274,23 +267,28 @@ namespace TimeSheet.Controllers
 
         [HttpPost]
         public JsonResult CreateNewInvoiceLine(InvoiceViewModel _ImportInvoiceDataModel)
-        {
-            // var json = Newtonsoft.Json.JsonConvert.SerializeObject(_ImportInvoiceDataModel);
+        {            
             var returnvalue=ImportInvoiceDataService.CreateInvoiceItem(_ImportInvoiceDataModel);
-            return Json(returnvalue, JsonRequestBehavior.AllowGet);
-          //  return RedirectToAction("InvoiceApprovals", "CorporateExpenseClaimer");
+            return Json(returnvalue, JsonRequestBehavior.AllowGet);        
         }
 
         [HttpGet]
         public ActionResult CreateNewInvoiceLine()
         {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
             return View();
         }
 
         [HttpGet]
         public ActionResult InvoiceApprovals()
         {
-            //<ImportInvoiceDataModel>> GetExpenseClaims()
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
             var Invoices = ImportInvoiceDataService.GetInvoiceLineItems().Result;
             return View(Invoices);
         }
@@ -314,6 +312,10 @@ namespace TimeSheet.Controllers
         }
         public ActionResult UpdateInvoiceLine()
         {
+            if (!UserRoles.IsLoginActive())
+            {
+                return RedirectToAction("Login", "Login");
+            }
             return View();
         }
         [HttpPost]

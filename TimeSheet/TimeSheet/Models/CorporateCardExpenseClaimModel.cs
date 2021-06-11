@@ -20,12 +20,10 @@ namespace TimeSheet.Models
 		[Required]
 		public string ApprovedBy { get; set; }
 		[Required]
-		public string ExpenseClaimType { get; set; }
-		[Required]
-		public string CreditCardNo { get; set; }
+		public string ExpenseClaimType { get; set; }		
+		
 		[Required]
 		public string SharePointFileLocation { get; set; }
-
 		public decimal? WHTools_ConsumablesTotal { get; set; }
 		public decimal? VehicleRepairs_MaintenanceTotal { get; set; }
 		public decimal? Monthly_SubscriptionsTotal { get; set; }
@@ -34,17 +32,12 @@ namespace TimeSheet.Models
 		public decimal? TelephoneTotal { get; set; }
 		public decimal? StaffAmenitiesTotal { get; set; }
 		public decimal? ClientEntertainmentTotal { get; set; }
-
 		public decimal? TravelTotal { get; set; }
 		public decimal? MealsTotal { get; set; }
 		public decimal? AccommodationTotal { get; set; }	
-
 		public decimal? ToolsTotal { get; set; }
-
-		public string ClaimStatus { get; set; }
-		
-		public decimal? OtherTotal { get; set; }
-	
+		public string ClaimStatus { get; set; }		
+		public decimal? OtherTotal { get; set; }	
 		public decimal ExpenseTotal { get; set; }
 		public bool? IsEmailApproved { get; set; }
 		public DateTime? CreatedDate { get; set; }
