@@ -487,8 +487,22 @@ namespace TimeSheet.Controllers
         [HttpGet]
         public ActionResult GetCardHolders()
         {
-            var _ItemTypes = ListItemService.GetCardHolders().Result;
+            var _ItemTypes = ListItemService.Resources().Result;// ListItemService.GetCardHolders().Result;
+            return Json(_ItemTypes, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetResourceList()
+        {
+            var _ItemTypes = ListItemService.Resources().Result;
+            return Json(_ItemTypes, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetProjectList()
+        {
+            var _ItemTypes = TimeSheetAPIHelperService.CostModelProject().Result;
             return Json(_ItemTypes, JsonRequestBehavior.AllowGet);
         }
     }
+
 }

@@ -37,7 +37,7 @@
                 <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:20px">
                     @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                     <div class="col-md-6" style="margin-top:7px;">
-                        <select type="text" class="form-control form-control-sm" id="txtemployeeName" name="employeeName"></select>
+                        <select type="text" class="form-control col-md-6" id="txtemployeeName" name="employeeName"></select>
                     </div>
                 </div>
                 <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:20px">
@@ -50,7 +50,7 @@
                     @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                     <div class="col-md-6" style="margin-top:7px">
                         <select type="text" class="form-control form-control-sm" id="txtBranch" name="Branch">
-                            <option value="-1">Select a Supplier</option>
+                            <option value="-1">Select a Branch</option>
                             <option>Sydney</option>
                             <option>Melbourne</option>
                             <option>Brisbane</option>
@@ -58,19 +58,18 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">
                     @Html.Label("Approved by:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                     <div class="col-md-6" style="margin-top:7px">
-                        <input type="text" class="form-control form-control-sm" id="txtApprovedby" name="Approvedby">
+                        <select type="text" class="form-control col-md-6" id="txtApprovedby" name="Approvedby"></select>
                     </div>
                 </div>
                 @*<div class="form-group col-md-6" style="margin-bottom:40px; margin-top:10px">
-                    @Html.Label("Credit Card No:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <input type="text" class="form-control form-control-sm" id="txtCreditCardNo" name="CreditCardNo">
-                    </div>
-                </div>*@
+                        @Html.Label("Credit Card No:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <div class="col-md-6" style="margin-top:7px">
+                            <input type="text" class="form-control form-control-sm" id="txtCreditCardNo" name="CreditCardNo">
+                        </div>
+                    </div>*@
                 <div class="form-group col-md-6" style="margin-bottom:40px; margin-top:10px">
                     @Html.Label("Claim-Type:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                     <div class="col-md-6" style="margin-top:7px">
@@ -189,7 +188,8 @@
         </div>
         <div class="form-group col-md-2">
             @Html.Label("Supplier:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-            <select type="text" class="form-control form-control-sm col-md-12" id="txtSupplier" name="Supplier" placeholder="Supplier"></select>
+            @*<select type="text" class="form-control form-control-sm col-md-12" id="txtSupplier" name="Supplier" placeholder="Supplier"></select>*@
+            <input class="form-control form-control-sm col-md-12" type="text" id="txtSupplier" name="Supplier" placeholder="Supplier">
         </div>
         <div class="form-group col-md-2">
             @Html.Label("Description:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
@@ -198,7 +198,8 @@
 
         <div class="form-group col-md-2">
             @Html.Label("Project:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-            <input class="form-control form-control-sm col-md-12" type="text" id="txtProject" name="Project" placeholder="Project">
+            <select type="text" class="form-control col-md-12" id="txtProject" name="Supplier" placeholder="Project"></select>
+            @*<input class="form-control form-control-sm col-md-12" type="text" id="txtProject" name="Project" placeholder="Project">*@
         </div>
         <div class="form-group col-md-2">
             @Html.Label("PO Number:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
@@ -265,7 +266,7 @@
                 <th>Select</th>
                 <th>Date</th>
                 <th>Supplier</th>
-                <th>Description</th>             
+                <th>Description</th>
                 <th>Project</th>
                 <th>PO</th>
                 <th>Travel</th>
@@ -321,7 +322,10 @@
     $(document).ready(function () {
         $("select").select2();
         CardHolderLoadDropDowns();
-        SupplierLoadDropDowns();
+        //SupplierLoadDropDowns();
+        GetProjectList();
+        ApprovedbyLoadDropDowns();
+
         var MainModelExpenseCliams = {};
         MainModelExpenseCliams.CorporateCardExpenseClaimItems = new Array();
         var _totalExpense = 0;
@@ -384,6 +388,21 @@
                 + ClientEntertainment + "</td><td>"
                 + Other + "</td><td>"
                 + Total + "</td></tr>";
+
+        // public decimal ? AccommodationCost { get; set; }
+		//public decimal ? ToolsCost { get; set; }
+		//public decimal ? WHTools_Consumables { get; set; }
+		//public decimal ? VehicleRepairs_Maintenance { get; set; }
+		//public decimal ? Monthly_Subscriptions { get; set; }
+		//public decimal ? ITExpenses { get; set; }
+		//public decimal ? Postage { get; set; }
+		//public decimal ? Telephone { get; set; }
+		//public decimal ? StaffAmenities { get; set; }
+		//public decimal ? ClientEntertainment { get; set; }
+		//public decimal ? OtherCost { get; set; }
+		//public decimal ? ExpenseTotal { get; set; }
+		//public DateTime ? CreatedDate { get; set; }
+
             if (Date == '' || Supplier == '' || Supplier == -1 || Description == '' || Project == '' || PONumber == '' || Travel == ''
                 || Acommodation == '' || Meals == '' || Tools == '' || WHTools_Consumables == '' || txtVehicleRepairs_Maintenance == ''
                 || txtMonthly_Subscriptions == '' || ITExpenses == '' || Postage == '' || Telephone == '' || StaffAmenities == '' || ClientEntertainment == ''
@@ -407,19 +426,18 @@
             CliamLineItem.AccommodationCost = Acommodation;
             CliamLineItem.MealsCost = Meals;
             CliamLineItem.ToolsCost = Tools;
-            CliamLineItem.WHTools_ConsumablesTotal = WHTools_Consumables;
-            CliamLineItem.VehicleRepairs_MaintenanceTotal = txtVehicleRepairs_Maintenance;
-            CliamLineItem.Monthly_SubscriptionsTotal = txtMonthly_Subscriptions;
-            CliamLineItem.ITExpensesTotal = ITExpenses;
-            CliamLineItem.PostageTotal = Postage;
-            CliamLineItem.TelephoneTotal = Telephone;
-            CliamLineItem.StaffAmenitiesTotal = StaffAmenities;
-            CliamLineItem.ClientEntertainmentTotal = ClientEntertainment;
+            CliamLineItem.WHTools_Consumables = WHTools_Consumables;
+            CliamLineItem.VehicleRepairs_Maintenance = txtVehicleRepairs_Maintenance;
+            CliamLineItem.Monthly_Subscriptions = txtMonthly_Subscriptions;
+            CliamLineItem.ITExpenses = ITExpenses;
+            CliamLineItem.Postage = Postage;
+            CliamLineItem.Telephone = Telephone;
+            CliamLineItem.StaffAmenities = StaffAmenities;
+            CliamLineItem.ClientEntertainment = ClientEntertainment;
             CliamLineItem.OtherCost = Other;
             CliamLineItem.TravelCost = Travel;
             CliamLineItem.ExpenseTotal = Total;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
-
             if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
                 _totalExpense += (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
                     + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
@@ -454,7 +472,6 @@
                 $("#lblaccomdationtotal").val(_AccommodationTotal);
                 $("#lbltotalExpense").val(_totalExpense);
             }
-
         });
         $("#CreateClaimBtn").click(function () {
             MainModelExpenseCliams.EmployeeName = $("#txtemployeeName").val();
@@ -524,7 +541,7 @@
                     //   window.location.href = "./ExportTimesSheetToExcel?path=" + r.fileName;
                     $.alert({
                         title: 'ExpenseClaim Registered Successfuly!',
-                        content: ''                       
+                        content: ''
                     });
                     window.location.href = "./ExpenseClaims";
                 }
@@ -587,31 +604,48 @@
                datatype: "json",
                success: function (data) {
                    var s = '<option value="-1">Select a CardHolders</option>';
-               for (var i = 0; i < data.length; i++) {
-                   s += '<option value="' + data[i].Id + '">' + data[i].Value + '</option>';
+                   for (var i = 0; i < data.length; i++) {
+                       s += '<option value="' + data[i].Value + '">' + data[i].Value + '</option>';
                }
                    $("#txtemployeeName").html(s);
            }
           });
     }
-    function SupplierLoadDropDowns()
+
+    function ApprovedbyLoadDropDowns()
         {
             $.ajax({
                     type: "GET",
-                    url: '@Url.Action("GetSuppliers", "CorporateExpenseClaimer")',
+                    url: '@Url.Action("GetCardHolders", "CorporateExpenseClaimer")',
                     contentType: "application/json; charset=utf-8",
                     data: {},
                     datatype: "json",
                     success: function (data) {
-                        var s = '<option value="-1">Select a Supplier</option>';
-                    for (var i = 0; i < data.length; i++) {
-                        s += '<option value="' + data[i].Id + '">' + data[i].Value + '</option>';
+                        var s = '<option value="-1">Select a Approvedby</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            s += '<option value="' + data[i].Value + '">' + data[i].Value + '</option>';
                     }
-                        $("#txtSupplier").html(s);
+                        $("#txtApprovedby").html(s);
                 }
                 });
-        }
-
+    }
+    function GetProjectList()
+        {
+            $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetProjectList", "CorporateExpenseClaimer")',
+                    contentType: "application/json; charset=utf-8",
+                    data: {},
+                    datatype: "json",
+                    success: function (data) {
+                        var s = '<option value="-1">Select a Project</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            s += '<option value="' + data[i].Value + '">' + data[i].Value + '</option>';
+                    }
+                        $("#txtProject").html(s);
+                }
+            });
+    }
 </script>
 
 <style>
