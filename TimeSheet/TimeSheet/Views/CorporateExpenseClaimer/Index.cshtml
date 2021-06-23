@@ -259,6 +259,7 @@
         <thead style="background-color:orange; color: white">
             <tr>
                 <th>Select</th>
+                <th>Id</th>
                 <th>Date</th>
                 <th>Supplier</th>
                 <th>Description</th>
@@ -269,8 +270,8 @@
                 <th>Acommodation</th>
                 <th>Meals</th>
                 <th>Tools</th>
-                <th>WHTools-Consumables</th>
-                <th>VehicleRepairs-Maintenance</th>
+                <th>WHConsumables</th>
+                <th>VehicleMaintenance</th>
                 <th>Subscriptions</th>
                 <th>ITExpenses</th>
                 <th>Postage</th>
@@ -319,8 +320,7 @@
         //SupplierLoadDropDowns();
         GetProjectList();
         ApprovedbyLoadDropDowns();
-
-
+       
         var MainModelExpenseCliams = {};
         MainModelExpenseCliams.CorporateCardExpenseClaimItems = new Array();
         var _totalExpense = 0;
@@ -340,7 +340,8 @@
         var _AccommodationTotal = 0;
 
         $("#add-row").click(function () {
-
+           
+           
             var Date = $("#txtDate").val();
             var Supplier = $("#txtSupplier").val();
             var Description = $("#txtDescription").val();
@@ -410,9 +411,8 @@
 
             var CliamLineItem = {};
 
-            CliamLineItem.Id = parseInt(MainModelExpenseCliams.CorporateCardExpenseClaimItems.length + 1);
-            alert(CliamLineItem.Id);
-
+            CliamLineItem.Id = MainModelExpenseCliams.CorporateCardExpenseClaimItems.length;
+          //  alert(CliamLineItem.Id);
             CliamLineItem.ClaimDate = Date;
             CliamLineItem.Supplier = Supplier;
             CliamLineItem.ItemDescription = Description;
@@ -434,6 +434,8 @@
             CliamLineItem.Branch = ExpenseItemBranch;
             CliamLineItem.ExpenseTotal = Total;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
+
+
             if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
                 _totalExpense += (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
                     + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
@@ -548,17 +550,16 @@
         $("#delete-row").click(function () {
             $("table tbody").find('input[name="record"]').each(function () {
                 if ($(this).is(":checked")) {
+                    var evID = $(this).closest('tr').index();
+                   // alert(evID);
                     $(this).parents("tr").remove();
-                    var evID = $(this).parents('tr').attr("val");
-                    alert(evID);
+                    MainModelExpenseCliams.CorporateCardExpenseClaimItems.splice(evID,1);
                 }
             });
-            RemoveListItemValue(MainModelExpenseCliams, 1);
+          (MainModelExpenseCliams, 1);
         });
 
-        function RemoveListItemValue(modellistitem, RemoveId) {
-            alert(modellistitem.CorporateCardExpenseClaimItems.Id);
-        }
+      
 
         $(function () {
             var MainForm = $("#MainForm")

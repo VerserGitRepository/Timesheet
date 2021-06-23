@@ -134,12 +134,12 @@ namespace TimeSheet.ServiceHelper
             return ReturnFlag;
         }
 
-        public static void ApproveExpenseClaimItem(int ClaimitemId, string ClaimitemStatus, string ClaimApprover)
+        public static void ApproveExpenseClaimItem(int ClaimitemId, string ClaimitemStatus, string ClaimApprover,string Unapprovecomments)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimitemId}/{ClaimitemStatus}/{ClaimApprover}/ApproveExpenseClaimItem")).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimitemId}/{ClaimitemStatus}/{ClaimApprover}/{UnapproveAjaxSend}/ApproveExpenseClaimItem")).Result;
 
                 if (response.IsSuccessStatusCode)
                 {

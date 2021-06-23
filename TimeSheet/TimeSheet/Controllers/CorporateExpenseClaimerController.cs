@@ -96,10 +96,10 @@ namespace TimeSheet.Controllers
         }
 
         [HttpPost]
-        public ActionResult ApproveExpenseClaimItem(int ClaimItemId, string claimItemStatus)
+        public ActionResult ApproveExpenseClaimItem(int ClaimItemId, string claimItemStatus,string unapprovalComments)
         {
             string ClaimApprover = UserRoles.GetLoggedInActiveUser();
-            ExpenseClaimerService.ApproveExpenseClaimItem(ClaimItemId, claimItemStatus, ClaimApprover);
+            ExpenseClaimerService.ApproveExpenseClaimItem(ClaimItemId, claimItemStatus, ClaimApprover, unapprovalComments);
             var ClaimId = Session["ClaimId"];
             if (ClaimId != null)
             {
