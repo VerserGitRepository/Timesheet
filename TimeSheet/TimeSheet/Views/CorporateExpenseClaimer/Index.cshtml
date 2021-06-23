@@ -238,6 +238,18 @@
             <input class="form-control form-control-sm col-md-12" type="text" id="txtClientEntertainment" name="ClientEntertainment" placeholder="$ Client Entertainment Cost">
         </div>
         <div class="form-group col-md-2">
+            @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+
+            <select type="text" class="form-control form-control-sm" id="txtExpenseItemBranch" name="Branch">
+                <option value="-1">Select a Branch</option>
+                <option>Sydney</option>
+                <option>Melbourne</option>
+                <option>Brisbane</option>
+                <option>Canberra</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-2">
             @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtOther" name="Other" placeholder="$ Other Cost">
         </div>
@@ -265,6 +277,7 @@
                 <th>Telephone</th>
                 <th>StaffAmenities</th>
                 <th>ClientEntertainment</th>
+
                 <th>Other</th>
                 <th>Total</th>
             </tr>
@@ -333,6 +346,7 @@
             var Description = $("#txtDescription").val();
             var Project = $("#txtProject").val();
             var PONumber = $("#txtPONumber").val();
+            var ExpenseItemBranch = $("#txtExpenseItemBranch").val(); 
             var Travel = $("#txtTravel").val();
             var Acommodation = $("#txtAcommodation").val();
             var Meals = $("#txtMeals").val();
@@ -345,6 +359,7 @@
             var Telephone = $("#txtTelephone").val();
             var StaffAmenities = $("#txtStaffAmenities").val();
             var ClientEntertainment = $("#txtClientEntertainment").val();
+
             var Other = $("#txtOther").val();
             _RowtotalExpense = (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
                 + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
@@ -356,6 +371,7 @@
                 + Description + "</td><td>"
                 + Project + "</td><td>"
                 + PONumber + "</td><td>"
+                + ExpenseItemBranch + "</td><td>"
                 + Travel + "</td><td>"
                 + Acommodation + "</td><td>"
                 + Meals + "</td><td>"
@@ -408,6 +424,7 @@
             CliamLineItem.ClientEntertainment = ClientEntertainment;
             CliamLineItem.OtherCost = Other;
             CliamLineItem.TravelCost = Travel;
+            CliamLineItem.Branch = ExpenseItemBranch;
             CliamLineItem.ExpenseTotal = Total;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
             if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
