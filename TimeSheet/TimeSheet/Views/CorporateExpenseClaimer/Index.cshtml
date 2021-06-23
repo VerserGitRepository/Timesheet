@@ -15,167 +15,150 @@
 
 
 <div class="col-md-12" style="margin-top:10px">
-    <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px">
-        <div class="form-group" style="margin-bottom:0">
-            <div class="form-group-sm col-md-2 pull-right">
-                <div class="col-md-12" style="margin-top:10px">
-                    <img src="~/Images/CompanyLogo.jpg" style="height:30px; width:100px; float:right" />
-                </div>
+    <div class="row well" style="font-size:smaller; padding:0; margin-bottom:0px">
+        <div class="form-group-sm col-md-2 pull-right">
+            <div class="col-md-12" style="margin-top:10px">
+                <img src="~/Images/CompanyLogo.jpg" style="height:30px; width:100px; float:right" />
             </div>
-            <div class="form-group-sm col-md-8 pull-right">
-                <div class="col-md-12" style="text-align:center">
-                    <h4 style="font-weight:600; margin-top:18px">CREDIT CARD EXPENSE REPORT</h4>
-                </div>
+        </div>
+        <div class="form-group-sm col-md-8 pull-right">
+            <div class="col-md-12" style="text-align:center">
+                <h4 style="font-weight:600; margin-top:18px">CREDIT CARD EXPENSE REPORT</h4>
             </div>
         </div>
     </div>
 </div>
 <div class="row" style="margin-left:0px; margin-right:0px">
-    <div class="col-md-6" style="margin-top:10px">
-        <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px; ">
-            <div class="form-group" style="margin-top:5px; margin-bottom:0px">
-                <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:20px">
-                    @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px;">
-                        <select type="text" class="form-control col-md-6" id="txtemployeeName" name="employeeName"></select>
-                    </div>
+    <div class="col-md-4" style="margin-top:10px">
+        <div class="row well" style="font-size:smaller; padding:10px; margin-bottom:0px; ">
+
+                <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
+                    @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    <select type="text" class="form-control form-control-sm col-md-12" id="txtemployeeName" name="employeeName"></select>
                 </div>
-                <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:20px">
-                    @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <input type="date" class="form-control form-control-sm" id="txtDateofClaim" name="DateofClaim">
-                    </div>
+                <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
+                    @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    <input type="date" class="form-control form-control-sm col-md-12" id="txtDateofClaim" name="DateofClaim">
                 </div>
-                <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">
-                    @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <select type="text" class="form-control form-control-sm" id="txtBranch" name="Branch">
-                            <option value="-1">Select a Branch</option>
-                            <option>Sydney</option>
-                            <option>Melbourne</option>
-                            <option>Brisbane</option>
-                            <option>Canberra</option>
-                        </select>
-                    </div>
+                <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
+                    @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    <select type="text" class="form-control form-control-sm col-md-12" id="txtBranch" name="Branch">
+                        <option value="-1">Select a Supplier</option>
+                        <option>Sydney</option>
+                        <option>Melbourne</option>
+                        <option>Brisbane</option>
+                        <option>Canberra</option>
+                    </select>
                 </div>
-                <div class="form-group col-md-6" style="margin-bottom:10px; margin-top:10px">
-                    @Html.Label("Approved by:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <select type="text" class="form-control col-md-6" id="txtApprovedby" name="Approvedby"></select>
-                    </div>
+
+                <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
+                    @Html.Label("Approved by:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    <select type="text" class="form-control form-control-sm col-md-12" id="txtApprovedby" name="Approvedby"></select>
                 </div>
-                @*<div class="form-group col-md-6" style="margin-bottom:40px; margin-top:10px">
-                        @Html.Label("Credit Card No:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <div class="col-md-6" style="margin-top:7px">
-                            <input type="text" class="form-control form-control-sm" id="txtCreditCardNo" name="CreditCardNo">
-                        </div>
-                    </div>*@
-                <div class="form-group col-md-6" style="margin-bottom:40px; margin-top:10px">
-                    @Html.Label("Claim-Type:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6" style="margin-top:7px">
-                        <select type="text" class="form-control form-control-sm" id="txtExpenseClaimType" name="ExpenseClaimType" title="Claim-Type">
-                            <option value="-1">Select a ClaimType</option>
-                            <option>Corporate</option>
-                            <option>Personal</option>
-                        </select>
-                    </div>
+                <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
+                    @Html.Label("Claim-Type:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    <select type="text" class="form-control form-control-sm col-md-12" id="txtExpenseClaimType" name="ExpenseClaimType" title="Claim-Type">
+                        <option value="-1">Select a ClaimType</option>
+                        <option>Corporate</option>
+                        <option>Personal</option>
+                    </select>
                 </div>
-            </div>
+
         </div>
     </div>
-    <div class="col-md-6" style="margin-top:8px">
-        <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px">
-            <div class="form-group" style="margin-bottom:5px">
-                <div class="form-group col-md-12" style="padding-top:5px; padding-bottom:10px">
-                    @Html.Label("Expenses Summary", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center; font-weight:800" })
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; padding-top:0" })
-                    <div class="col-md-6">
-                        <input type="text" id="lbltraveltotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Accommodation:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; padding-top:0" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblaccomdationtotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Meals:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; padding-top:0" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblMealstotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Tools:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; padding-top:0" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblToolstotal" />
-                    </div>
-                </div>
+    <div class="col-md-8" style="margin-top:10px">
+        <div class="row well" style="font-size:smaller; padding:0; margin-bottom:0px">
 
-                <div class="form-group col-md-6">
-                    @Html.Label("WHConsumables:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblWHTools_Consumablestotal" placeholder="$ WHTools Or Consumables Total" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Vehicle Maintenance:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblVehicleRepairs_Maintenancetotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Subscriptions:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblMonthly_Subscriptionstotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("ITExpenses:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; padding-top:0" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblITExpensestotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Postage:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; padding-top:0" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblPostagetotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Telephone:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; padding-top:0" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblTelephonetotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Staff Amenities:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblStaffAmenitiestotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Client Entertainment:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblClientEntertainmenttotal" />
-                    </div>
-                </div>
-
-                <div class="form-group col-md-6">
-                    @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; padding-top:0" })
-                    <div class="col-md-6">
-                        <input type="text" id="lblOthertotal" />
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                    @Html.Label("Grand Total Amount:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                    <div class="col-md-6">
-                        <input type="text" id="lbltotalExpense" />
-                    </div>
+            <div class="form-group col-md-12" style="padding-top:5px; padding-bottom:10px">
+                @Html.Label("Expenses Summary", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center; font-weight:800" })
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Travel:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lbltraveltotal" />
                 </div>
             </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Accommodation:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblaccomdationtotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Meals:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblMealstotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Tools:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblToolstotal" />
+                </div>
+            </div>
+
+            <div class="form-group col-md-2">
+                @Html.Label("WHToolsOrConsumables:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblWHTools_Consumablestotal" placeholder="$ WHTools Or Consumables Total" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Vehicle Maintenance:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblVehicleRepairs_Maintenancetotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Monthly Subscriptions:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblMonthly_Subscriptionstotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("ITExpenses:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblITExpensestotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Postage:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblPostagetotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Telephone:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblTelephonetotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Staff Amenities:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblStaffAmenitiestotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Client Entertainment:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblClientEntertainmenttotal" />
+                </div>
+            </div>
+
+            <div class="form-group col-md-2" style="margin-bottom:10px">
+                @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lblOthertotal" />
+                </div>
+            </div>
+            <div class="form-group col-md-2" style="margin-bottom:10px">
+                @Html.Label("Grand Total Amount:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-top:0" })
+                <div class="col-md-12">
+                    <input type="text" id="lbltotalExpense" />
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -222,15 +205,15 @@
             <input class="form-control form-control-sm col-md-12" type="text" id="txtTools" name="Tools" placeholder="$ Tools Cost">
         </div>
         <div class="form-group col-md-2">
-            @Html.Label("WHConsumables:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+            @Html.Label("WHTools_Consumables:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtWHTools_Consumables" name="WHTools_Consumables" placeholder="$ WHTools Or Consumables Cost">
         </div>
         <div class="form-group col-md-2">
-            @Html.Label("VehicleMaintenance:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+            @Html.Label("VehicleRepairs_Maintenance:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtVehicleRepairs_Maintenance" name="VehicleRepairs_Maintenance" placeholder="$ VehicleRepairs or Maintenance">
         </div>
         <div class="form-group col-md-2">
-            @Html.Label("Subscriptions:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+            @Html.Label("Monthly_Subscriptions:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtMonthly_Subscriptions" name="Monthly_Subscriptions" placeholder="$ Monthly Subscriptions Cost">
         </div>
         <div class="form-group col-md-2">
@@ -256,17 +239,6 @@
         <div class="form-group col-md-2">
             @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtOther" name="Other" placeholder="$ Other Cost">
-        </div>
-        <div class="form-group col-md-2">
-            @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-           
-                <select type="text" class="form-control form-control-sm" id="txtExpenseItemBranch" name="Branch">
-                    <option value="-1">Select a Branch</option>
-                    <option>Sydney</option>
-                    <option>Melbourne</option>
-                    <option>Brisbane</option>
-                    <option>Canberra</option>
-                </select>            
         </div>
         <input type="button" class="btn btn-danger btn-sm pull-right" id="delete-row" value="DELETE ROW" style="margin-bottom:10px; margin-top:30px; margin-right:12px" />
         <input type="button" id="add-row" class="btn btn-success btn-sm pull-right" value="ADD ROW" style="margin-bottom:10px; margin-top:30px; margin-right:10px" />
@@ -374,7 +346,6 @@
             var Telephone = $("#txtTelephone").val();
             var StaffAmenities = $("#txtStaffAmenities").val();
             var ClientEntertainment = $("#txtClientEntertainment").val();
-            var ExpenseItemBranch = $("#txtExpenseItemBranch").val(); 
             var Other = $("#txtOther").val();
             _RowtotalExpense = (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
                 + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
@@ -386,7 +357,6 @@
                 + Description + "</td><td>"
                 + Project + "</td><td>"
                 + PONumber + "</td><td>"
-                + ExpenseItemBranch + "</td><td>"            
                 + Travel + "</td><td>"
                 + Acommodation + "</td><td>"
                 + Meals + "</td><td>"
@@ -402,20 +372,6 @@
                 + Other + "</td><td>"
                 + Total + "</td></tr>";
 
-        // public decimal ? AccommodationCost { get; set; }
-		//public decimal ? ToolsCost { get; set; }
-		//public decimal ? WHTools_Consumables { get; set; }
-		//public decimal ? VehicleRepairs_Maintenance { get; set; }
-		//public decimal ? Monthly_Subscriptions { get; set; }
-		//public decimal ? ITExpenses { get; set; }
-		//public decimal ? Postage { get; set; }
-		//public decimal ? Telephone { get; set; }
-		//public decimal ? StaffAmenities { get; set; }
-		//public decimal ? ClientEntertainment { get; set; }
-		//public decimal ? OtherCost { get; set; }
-		//public decimal ? ExpenseTotal { get; set; }
-		//public DateTime ? CreatedDate { get; set; }
-
             if (Date == '' || Supplier == '' || Supplier == -1 || Description == '' || Project == '' || PONumber == '' || Travel == ''
                 || Acommodation == '' || Meals == '' || Tools == '' || WHTools_Consumables == '' || txtVehicleRepairs_Maintenance == ''
                 || txtMonthly_Subscriptions == '' || ITExpenses == '' || Postage == '' || Telephone == '' || StaffAmenities == '' || ClientEntertainment == ''
@@ -430,6 +386,10 @@
             $("table tbody").append(markup);
 
             var CliamLineItem = {};
+
+            CliamLineItem.Id = parseInt(MainModelExpenseCliams.CorporateCardExpenseClaimItems.length + 1);
+            alert(CliamLineItem.Id);
+
             CliamLineItem.ClaimDate = Date;
             CliamLineItem.Supplier = Supplier;
             CliamLineItem.ItemDescription = Description;
@@ -449,7 +409,6 @@
             CliamLineItem.ClientEntertainment = ClientEntertainment;
             CliamLineItem.OtherCost = Other;
             CliamLineItem.TravelCost = Travel;
-            CliamLineItem.Branch = ExpenseItemBranch;
             CliamLineItem.ExpenseTotal = Total;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
             if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
@@ -567,9 +526,16 @@
             $("table tbody").find('input[name="record"]').each(function () {
                 if ($(this).is(":checked")) {
                     $(this).parents("tr").remove();
+                    var evID = $(this).parents('tr').attr("val");
+                    alert(evID);
                 }
             });
+            RemoveListItemValue(MainModelExpenseCliams, 1);
         });
+
+        function RemoveListItemValue(modellistitem, RemoveId) {
+            alert(modellistitem.CorporateCardExpenseClaimItems.Id);
+        }
 
         $(function () {
             var MainForm = $("#MainForm")
