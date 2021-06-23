@@ -277,7 +277,6 @@
                 <th>Telephone</th>
                 <th>StaffAmenities</th>
                 <th>ClientEntertainment</th>
-
                 <th>Other</th>
                 <th>Total</th>
             </tr>
@@ -320,6 +319,7 @@
         //SupplierLoadDropDowns();
         GetProjectList();
         ApprovedbyLoadDropDowns();
+
 
         var MainModelExpenseCliams = {};
         MainModelExpenseCliams.CorporateCardExpenseClaimItems = new Array();
@@ -393,8 +393,17 @@
                 || Other == '') {
                 $.alert({
                     title: 'Validation Errors',
-                    content: 'Please complete all forms.',
+                    content: 'Please Fill All Mandatory Fields.',
                     // .css("color", "red"),
+                });
+                return false;
+            }
+            if (PONumber.length > 6)
+            {
+                $.alert({
+                    title: 'Validation Errors',
+                    content: 'PO Value Is Higher than 6 Digits! Please Enter Valid PO.',
+                    
                 });
                 return false;
             }
@@ -408,8 +417,7 @@
             CliamLineItem.ClaimDate = Date;
             CliamLineItem.Supplier = Supplier;
             CliamLineItem.ItemDescription = Description;
-            CliamLineItem.Project = Project;
-            CliamLineItem.PONumber = Travel;
+            CliamLineItem.Project = Project;            
             CliamLineItem.PONumber = PONumber;
             CliamLineItem.AccommodationCost = Acommodation;
             CliamLineItem.MealsCost = Meals;
@@ -588,6 +596,18 @@
                 })
             }
         });
+
+        //All number Validation 
+
+        $("#txtPONumber").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57) ) {               
+                event.preventDefault();
+            }          
+        });
+
+
+
     });
 
     function CardHolderLoadDropDowns()
