@@ -37,16 +37,11 @@
             <tr>
                 <th>ClaimID</th>
                 <th>ClaimDate</th>
-                <th>Status</th>
-                <th>EmployeeName</th>               
+                <th>EmployeeName</th>
                 <th>ExpenseClaimType</th>
                 <th>ApprovedBy</th>
-                <th>Accommodation</th>
-                <th>ToolsTotal</th>
-                <th>Meals</th>
-                <th>Other</th>
-                <th>Travel</th>
                 <th>Total</th>
+                <th>Status</th>
                 <th>SharePointFileLocation</th>
             </tr>
         </thead>
@@ -67,16 +62,11 @@
                     }
                 </td>
                 <td>  @Html.DisplayFor(modelItem => item.ExpenseDateOfClaim)</td>
-                <td>  @Html.DisplayFor(modelItem => item.ClaimStatus)</td>
-                <td>  @Html.DisplayFor(modelItem => item.EmployeeName)</td>               
+                <td>  @Html.DisplayFor(modelItem => item.EmployeeName)</td>
                 <td>  @Html.DisplayFor(modelItem => item.ExpenseClaimType)</td>
                 <td>  @Html.DisplayFor(modelItem => item.ApprovedBy)</td>
-                <td>  @Html.DisplayFor(modelItem => item.AccommodationTotal)</td>
-                <td>  @Html.DisplayFor(modelItem => item.ToolsTotal)</td>
-                <td>  @Html.DisplayFor(modelItem => item.MealsTotal)</td>
-                <td>  @Html.DisplayFor(modelItem => item.OtherTotal)</td>
-                <td>  @Html.DisplayFor(modelItem => item.TravelTotal)</td>
                 <td>  @Html.DisplayFor(modelItem => item.ExpenseTotal)</td>
+                <td>  @Html.DisplayFor(modelItem => item.ClaimStatus)</td>
                 <td>  @Html.DisplayFor(modelItem => item.SharePointFileLocation)</td>
             </tr>
             }

@@ -125,7 +125,6 @@ namespace TimeSheet.ServiceHelper
                     //var  ReturnResult =  response.Content.ReadAsAsync<bool>();
                     ReturnFlag = true;
                     HttpContext.Current.Session["ResultMessage"] = "Expense ClaimItem Updated Successfully!";
-
                 }
                 else
                 {
@@ -135,12 +134,12 @@ namespace TimeSheet.ServiceHelper
             return ReturnFlag;
         }
 
-        public static void ApproveExpenseClaimItem(int ClaimitemId, string ClaimitemStatus)
+        public static void ApproveExpenseClaimItem(int ClaimitemId, string ClaimitemStatus, string ClaimApprover)
         {
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimitemId}/{ClaimitemStatus}/ApproveExpenseClaimItem")).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimitemId}/{ClaimitemStatus}/{ClaimApprover}/ApproveExpenseClaimItem")).Result;
 
                 if (response.IsSuccessStatusCode)
                 {

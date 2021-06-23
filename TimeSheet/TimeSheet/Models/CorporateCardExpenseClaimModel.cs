@@ -14,14 +14,15 @@ namespace TimeSheet.Models
 		}
 		public int Id { get; set; }
 		[Required]
+		[DataType(DataType.Date)]
+		[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime ExpenseDateOfClaim { get; set; }
 		[Required]
 		public string EmployeeName { get; set; }
 		[Required]
 		public string ApprovedBy { get; set; }
 		[Required]
-		public string ExpenseClaimType { get; set; }		
-		
+		public string ExpenseClaimType { get; set; }	
 		[Required]
 		public string SharePointFileLocation { get; set; }
 		public decimal? WHTools_ConsumablesTotal { get; set; }
@@ -42,6 +43,8 @@ namespace TimeSheet.Models
 		public bool? IsEmailApproved { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? DateUpdated { get; set; }
+        public string CreatedBy { get; set; }
+		public string ClaimApprover { get; set; }
 		public virtual List<CorporateCardExpenseClaimItemsModel> CorporateCardExpenseClaimItems { get; set; }
 	}
 }

@@ -111,5 +111,21 @@ namespace TimeSheet.ServiceHelper
             }           
             return false;
         }
+        public static string GetLoggedInActiveUser()
+        {
+            string UserName = string.Empty;
+            if (HttpContext.Current.Session["Username"] != null || HttpContext.Current.Session["FullName"] != null)
+            {
+                if (HttpContext.Current.Session["Username"] != null)
+                {
+                    UserName = HttpContext.Current.Session["Username"].ToString();
+                }
+                else if (HttpContext.Current.Session["FullName"] != null)
+                {
+                    UserName = HttpContext.Current.Session["FullName"].ToString();
+                }
+            }
+            return UserName;
+        }
     }
 }

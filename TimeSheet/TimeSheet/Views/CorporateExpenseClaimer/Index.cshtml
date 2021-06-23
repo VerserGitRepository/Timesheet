@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    @Html.Label("WHToolsOrConsumables:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("WHConsumables:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                     <div class="col-md-6">
                         <input type="text" id="lblWHTools_Consumablestotal" placeholder="$ WHTools Or Consumables Total" />
                     </div>
@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.Label("Monthly Subscriptions:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("Subscriptions:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
                     <div class="col-md-6">
                         <input type="text" id="lblMonthly_Subscriptionstotal" />
                     </div>
@@ -222,15 +222,15 @@
             <input class="form-control form-control-sm col-md-12" type="text" id="txtTools" name="Tools" placeholder="$ Tools Cost">
         </div>
         <div class="form-group col-md-2">
-            @Html.Label("WHTools_Consumables:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+            @Html.Label("WHConsumables:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtWHTools_Consumables" name="WHTools_Consumables" placeholder="$ WHTools Or Consumables Cost">
         </div>
         <div class="form-group col-md-2">
-            @Html.Label("VehicleRepairs_Maintenance:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+            @Html.Label("VehicleMaintenance:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtVehicleRepairs_Maintenance" name="VehicleRepairs_Maintenance" placeholder="$ VehicleRepairs or Maintenance">
         </div>
         <div class="form-group col-md-2">
-            @Html.Label("Monthly_Subscriptions:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+            @Html.Label("Subscriptions:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtMonthly_Subscriptions" name="Monthly_Subscriptions" placeholder="$ Monthly Subscriptions Cost">
         </div>
         <div class="form-group col-md-2">
@@ -256,6 +256,17 @@
         <div class="form-group col-md-2">
             @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtOther" name="Other" placeholder="$ Other Cost">
+        </div>
+        <div class="form-group col-md-2">
+            @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+           
+                <select type="text" class="form-control form-control-sm" id="txtExpenseItemBranch" name="Branch">
+                    <option value="-1">Select a Branch</option>
+                    <option>Sydney</option>
+                    <option>Melbourne</option>
+                    <option>Brisbane</option>
+                    <option>Canberra</option>
+                </select>            
         </div>
         <input type="button" class="btn btn-danger btn-sm pull-right" id="delete-row" value="DELETE ROW" style="margin-bottom:10px; margin-top:30px; margin-right:12px" />
         <input type="button" id="add-row" class="btn btn-success btn-sm pull-right" value="ADD ROW" style="margin-bottom:10px; margin-top:30px; margin-right:10px" />
@@ -363,6 +374,7 @@
             var Telephone = $("#txtTelephone").val();
             var StaffAmenities = $("#txtStaffAmenities").val();
             var ClientEntertainment = $("#txtClientEntertainment").val();
+            var ExpenseItemBranch = $("#txtExpenseItemBranch").val(); 
             var Other = $("#txtOther").val();
             _RowtotalExpense = (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
                 + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
@@ -374,6 +386,7 @@
                 + Description + "</td><td>"
                 + Project + "</td><td>"
                 + PONumber + "</td><td>"
+                + ExpenseItemBranch + "</td><td>"            
                 + Travel + "</td><td>"
                 + Acommodation + "</td><td>"
                 + Meals + "</td><td>"
@@ -436,6 +449,7 @@
             CliamLineItem.ClientEntertainment = ClientEntertainment;
             CliamLineItem.OtherCost = Other;
             CliamLineItem.TravelCost = Travel;
+            CliamLineItem.Branch = ExpenseItemBranch;
             CliamLineItem.ExpenseTotal = Total;
             MainModelExpenseCliams.CorporateCardExpenseClaimItems.push(CliamLineItem);
             if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
