@@ -33,15 +33,15 @@
         <div class="row well" style="font-size:smaller; padding:10px; margin-bottom:0px; ">
 
                 <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
-                    @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    @Html.Label("Employee Name:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-left:0px" })
                     <select type="text" class="form-control form-control-sm col-md-12" id="txtemployeeName" name="employeeName"></select>
                 </div>
                 <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
-                    @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    @Html.Label("Date of Claim:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-left:0px" })
                     <input type="date" class="form-control form-control-sm col-md-12" id="txtDateofClaim" name="DateofClaim">
                 </div>
                 <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
-                    @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-left:0px" })
                     <select type="text" class="form-control form-control-sm col-md-12" id="txtBranch" name="Branch">
                         <option value="-1">Select a Supplier</option>
                         <option>Sydney</option>
@@ -52,11 +52,11 @@
                 </div>
 
                 <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
-                    @Html.Label("Approved by:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    @Html.Label("Approved by:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-left:0px" })
                     <select type="text" class="form-control form-control-sm col-md-12" id="txtApprovedby" name="Approvedby"></select>
                 </div>
                 <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
-                    @Html.Label("Claim-Type:", htmlAttributes: new { @class = "control-label col-md-12", style = "text-align:center" })
+                    @Html.Label("Claim-Type:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-left:0px" })
                     <select type="text" class="form-control form-control-sm col-md-12" id="txtExpenseClaimType" name="ExpenseClaimType" title="Claim-Type">
                         <option value="-1">Select a ClaimType</option>
                         <option>Corporate</option>
@@ -186,6 +186,17 @@
             @*<input class="form-control form-control-sm col-md-12" type="text" id="txtProject" name="Project" placeholder="Project">*@
         </div>
         <div class="form-group col-md-2">
+            @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+
+            <select type="text" class="form-control form-control-sm" id="txtExpenseItemBranch" name="Branch">
+                <option value="-1">Select a Branch</option>
+                <option>Sydney</option>
+                <option>Melbourne</option>
+                <option>Brisbane</option>
+                <option>Canberra</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
             @Html.Label("PO Number:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtPONumber" name="PONumber" placeholder="PO Number">
         </div>
@@ -238,18 +249,6 @@
             <input class="form-control form-control-sm col-md-12" type="text" id="txtClientEntertainment" name="ClientEntertainment" placeholder="$ Client Entertainment Cost">
         </div>
         <div class="form-group col-md-2">
-            @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-
-            <select type="text" class="form-control form-control-sm" id="txtExpenseItemBranch" name="Branch">
-                <option value="-1">Select a Branch</option>
-                <option>Sydney</option>
-                <option>Melbourne</option>
-                <option>Brisbane</option>
-                <option>Canberra</option>
-            </select>
-        </div>
-
-        <div class="form-group col-md-2">
             @Html.Label("Other:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
             <input class="form-control form-control-sm col-md-12" type="text" id="txtOther" name="Other" placeholder="$ Other Cost">
         </div>
@@ -264,6 +263,7 @@
                 <th>Supplier</th>
                 <th>Description</th>
                 <th>Project</th>
+                <th>Branch</th>
                 <th>PO</th>
                 <th>Travel</th>
                 <th>Acommodation</th>
@@ -359,7 +359,6 @@
             var Telephone = $("#txtTelephone").val();
             var StaffAmenities = $("#txtStaffAmenities").val();
             var ClientEntertainment = $("#txtClientEntertainment").val();
-
             var Other = $("#txtOther").val();
             _RowtotalExpense = (parseInt(Acommodation) + parseInt(Meals) + parseInt(Tools) + parseInt(WHTools_Consumables) + parseInt(txtVehicleRepairs_Maintenance)
                 + parseInt(txtMonthly_Subscriptions) + parseInt(ITExpenses) + parseInt(Postage) + parseInt(Telephone) + parseInt(StaffAmenities)
@@ -370,8 +369,8 @@
                 + Supplier + "</td><td>"
                 + Description + "</td><td>"
                 + Project + "</td><td>"
-                + PONumber + "</td><td>"
                 + ExpenseItemBranch + "</td><td>"
+                + PONumber + "</td><td>"
                 + Travel + "</td><td>"
                 + Acommodation + "</td><td>"
                 + Meals + "</td><td>"
@@ -398,11 +397,11 @@
                 });
                 return false;
             }
-            if (PONumber.length > 6)
+            if (PONumber.length > 8)
             {
                 $.alert({
                     title: 'Validation Errors',
-                    content: 'PO Value Is Higher than 6 Digits! Please Enter Valid PO.',
+                    content: 'PO Value Is Higher than 8 Digits! Please Enter Valid PO.',
                     
                 });
                 return false;
@@ -606,6 +605,96 @@
             }          
         });
 
+        $("#txtTravel").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtAcommodation").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtMeals").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtTools").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtWHTools_Consumables").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtVehicleRepairs_Maintenance").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtMonthly_Subscriptions").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtITExpenses").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtPostage").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtTelephone").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtStaffAmenities").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtClientEntertainment").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtOther").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
 
 
     });

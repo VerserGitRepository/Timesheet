@@ -1,4 +1,5 @@
-﻿@model TimeSheet.Models.InvoiceViewModel
+﻿
+@model TimeSheet.Models.InvoiceViewModel
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -40,39 +41,31 @@
                 <div class="form-group" style="margin-top:5px; margin-bottom:0px">
                     <div class="form-group col-md-6">
                         @Html.Label("Supplier Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <div class="col-md-6" style="margin-top:7px;">
-                            <select type="text" class="form-control form-control-sm" id="ddlSupplierName" name="SupplierName"></select>
-                        </div>
+                        <select type="text" class="form-control form-control-sm col-md-6" id="ddlSupplierName" name="SupplierName"></select>
                     </div>
                     <div class="form-group col-md-6">
                         @Html.Label("Received Invoice Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <div class="col-md-6" style="margin-top:7px">
-                            <input type="date" class="form-control form-control-sm" id="txtReceivedInvoiceDate" name="ReceivedInvoiceDate">
-                        </div>
+                        <input type="date" class="form-control form-control-sm col-md-6" id="txtReceivedInvoiceDate" name="ReceivedInvoiceDate">
                     </div>
                     <div class="form-group col-md-6">
                         @Html.Label("Invoice_Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <div class="col-md-6" style="margin-top:7px">
-                            <input type="date" class="form-control form-control-sm" id="txtInvoice_Date" name="Invoice_Date">
-                        </div>
+                        <input type="date" class="form-control form-control-sm col-md-6" id="txtInvoice_Date" name="Invoice_Date">
                     </div>
                     <div class="form-group col-md-6">
                         @Html.Label("Invoice Number:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <div class="col-md-6" style="margin-top:7px">
-                            <input type="text" class="form-control form-control-sm" id="txtInvoiceNumber" name="InvoiceNumber">
-                        </div>
+                        <input type="text" class="form-control form-control-sm col-md-6" id="txtInvoiceNumber" name="InvoiceNumber">
                     </div>
                     <div class="form-group col-md-6">
                         @Html.Label("Term:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <div class="col-md-6" style="margin-top:7px">
-                            <input type="text" class="form-control form-control-sm" id="txtTerm" name="Term">
-                        </div>
+                        <input type="text" class="form-control form-control-sm col-md-6" id="txtTerm" name="Term">
                     </div>
                     <div class="form-group col-md-6">
                         @Html.Label("Due Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <div class="col-md-6" style="margin-top:7px">
-                            <input type="date" class="form-control form-control-sm" id="txtDueDate" name="DueDate">
-                        </div>
+                        <input type="date" class="form-control form-control-sm col-md-6" id="txtDueDate" name="DueDate">
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                        <input class="form-control form-control-sm col-md-6" type="date" id="txtDateRecordedinMYOB" name="DateRecordedinMYOB" placeholder="DateRecordedinMYOB">
                     </div>
                 </div>
             </div>
@@ -162,10 +155,6 @@
                         <option>Canberra</option>
                     </select>
                 </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="date" id="txtDateRecordedinMYOB" name="DateRecordedinMYOB" placeholder="DateRecordedinMYOB">
-                </div>
                 <button type="button" id="delete-row" class="btn btn-danger btn-sm pull-right" style="margin-top:30px; ">Delete Row</button>
                 <input type="button" id="add-row" class="btn btn-success btn-sm pull-right" style="margin-top: 30px;margin-right:5px;" value="Add Row">
             </form>
@@ -188,7 +177,6 @@
                         <th>GL Code</th>
                         <th>GL Description</th>
                         <th>Branch</th>
-                        <th>Date Recorded in MYOB</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -232,7 +220,7 @@
             var GLCode = $("#ddlGLCode").val();
             var GLDescription = $("#ddlGLDescription").val();
             var Branch = $("#ddlBranch").val();
-            var DateRecordedinMYOB = $("#txtDateRecordedinMYOB").val();
+            //var DateRecordedinMYOB = $("#txtDateRecordedinMYOB").val();
             var markup = "<tr><td><input type='checkbox' name='record'></td><td>"
                 + PO + "</td><td>"
                 + Opp + "</td><td>"
@@ -248,11 +236,10 @@
                 + InvoiceLocation + "</td><td>"
                 + GLCode + "</td><td>"
                 + GLDescription + "</td><td>"
-                + Branch + "</td><td>"
-                + DateRecordedinMYOB + "</td></tr>";
+                + Branch + "</td></tr>";
             if (PO == '' || Opp == '' || Line == '' || InvoiceAmount_ex_gst == '' || TaxCode == '' || ProjectJob == '' || Approver == ''
                 || Invoice_Description == '' || PMWarehouseHO == '' || Comments == '' || MYOBItemNumber == '' || InvoiceLocation == ''
-                || GLCode == '' || GLCode == -1 || GLDescription == '' || GLDescription == -1 || Branch == '' || Branch == -1 || DateRecordedinMYOB == '' ) {
+                || GLCode == '' || GLCode == -1 || GLDescription == '' || GLDescription == -1 || Branch == '' || Branch == -1) {
                 $.alert({
                     title: 'Validation Errors',
                     content: 'Please complete all forms.',
@@ -260,6 +247,34 @@
                 });
                 return false;
             }
+
+            if (PO.length > 8 || PO.length < 8) {
+                $.alert({
+                    title: 'Validation Errors',
+                    content: 'PO Value must be 8 Digits! Please Enter Valid PO.',
+
+                });
+                return false;
+            }
+
+            if (Opp.length > 6 || Opp.length < 6) {
+                $.alert({
+                    title: 'Validation Errors',
+                    content: 'Opp Value must be 6 Digits! Please Enter Valid Opp.',
+
+                });
+                return false;
+            }
+
+            if (TaxCode.length > 3 || TaxCode.length < 3) {
+                $.alert({
+                    title: 'Validation Errors',
+                    content: 'Tax Code Value must be 3 Digits! Please Enter Valid Tax Code.',
+
+                });
+                return false;
+            }
+
             $("#CreateNewInvoiceLineTable tbody").append(markup);
 
             var InvoiceItem = {};
@@ -276,7 +291,7 @@
             InvoiceItem.GLCode = GLCode;
             InvoiceItem.GLDescription = GLDescription;
             InvoiceItem.Branch = Branch;
-            InvoiceItem.DateRecordedinMYOB = DateRecordedinMYOB;
+            //InvoiceItem.DateRecordedinMYOB = DateRecordedinMYOB;
             CreateNewInvoiceLine.InvoiceLineItem.push(InvoiceItem);
         });
 
@@ -288,6 +303,7 @@
             CreateNewInvoiceLine.InvoiceNumber = $("#txtInvoiceNumber").val();
             CreateNewInvoiceLine.Term = $("#txtTerm").val();
             CreateNewInvoiceLine.DueDate = $("#txtDueDate").val();
+            CreateNewInvoiceLine.DateRecordedinMYOB = $("#txtDateRecordedinMYOB").val();
 
             var ErrorMessage = '';
 
@@ -310,6 +326,11 @@
             if (CreateNewInvoiceLine.DueDate == '') {
                 ErrorMessage += 'Due Date is Required. \n';
             }
+
+            if (CreateNewInvoiceLine.DateRecordedinMYOB == '') {
+                ErrorMessage += 'Date Recorded in MYOB is Required. \n';
+            }
+
 
             if (CreateNewInvoiceLine.InvoiceLineItem.length == 0) {
                 ErrorMessage += 'At least One Invoice Line is Required. \n';
@@ -348,7 +369,24 @@
                 }
             });
         });
+
+        $("#txtOpp").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#txtTaxCode").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
     });
+
+
 
     function SupplierLoadDropDowns()
     {
