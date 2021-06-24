@@ -43,7 +43,7 @@
                 <div class="form-group col-md-6" style="margin-bottom:0px; margin-top:0px">
                     @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "padding-left:0px" })
                     <select type="text" class="form-control form-control-sm col-md-12" id="txtBranch" name="Branch">
-                        <option value="-1">Select a Supplier</option>
+                        <option value="-1">Select a Branch</option>
                         <option>Sydney</option>
                         <option>Melbourne</option>
                         <option>Brisbane</option>
@@ -556,17 +556,15 @@
                 }
             });          
         });
-
-
         function UpdateSummaryOFRemovedItem(RmEventId) {
             if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
 
                 _totalExpense = parseInt(_totalExpense - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ExpenseTotal)                             
                 _TravelTotal = parseInt(_TravelTotal - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Travel);
-                _ToolsTotal = parseInt(MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Tools);
+                _ToolsTotal = parseInt(_ToolsTotal-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Tools);
                 _WHTools_Consumables =parseInt(_WHTools_Consumables-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].WHTools_Consumables);
                 _VehicleRepairs_Maintenance = parseInt(_VehicleRepairs_Maintenance-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].VehicleRepairs_Maintenance);
-                _Monthly_Subscriptions = parseInt(_VehicleRepairs_Maintenance-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Monthly_Subscriptions);
+                _Monthly_Subscriptions = parseInt(_Monthly_Subscriptions-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Monthly_Subscriptions);
                  _ITExpenses = parseInt(_ITExpenses-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ITExpenses);
                 _Postage = parseInt(_Postage-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Postage);
                 _Telephone = parseInt(_Telephone-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Telephone);
@@ -606,8 +604,7 @@
                 MainModelExpenseCliams.ClientEntertainmentTotal = _ClientEntertainment;
                 MainModelExpenseCliams.ExpenseTotal = _totalExpense;
             }
-        }
-      
+        }     
 
         $(function () {
             var MainForm = $("#MainForm")

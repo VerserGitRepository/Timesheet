@@ -133,7 +133,7 @@ namespace TimeSheet.Controllers
             if (UserRoles.IsLoginActive() && ModelState.IsValid)
             {
                 ClaimItemsUpdateModel.CreatedBy = UserRoles.GetLoggedInActiveUser();                
-             ///   returnvalue = ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);     
+                returnvalue = ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);     
             }           
             return Json(returnvalue, JsonRequestBehavior.AllowGet);            
         }
