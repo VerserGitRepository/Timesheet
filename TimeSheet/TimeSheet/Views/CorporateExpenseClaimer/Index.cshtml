@@ -410,7 +410,6 @@
             var CliamLineItem = {};
 
             CliamLineItem.Id = MainModelExpenseCliams.CorporateCardExpenseClaimItems.length;
-          //  alert(CliamLineItem.Id);
             CliamLineItem.ClaimDate = Date;
             CliamLineItem.Supplier = Supplier;
             CliamLineItem.ItemDescription = Description;
@@ -556,23 +555,24 @@
                 }
             });          
         });
+
         function UpdateSummaryOFRemovedItem(RmEventId) {
             if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
 
                 _totalExpense = parseInt(_totalExpense - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ExpenseTotal)                             
-                _TravelTotal = parseInt(_TravelTotal - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Travel);
-                _ToolsTotal = parseInt(_ToolsTotal-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Tools);
-                _WHTools_Consumables =parseInt(_WHTools_Consumables-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].WHTools_Consumables);
-                _VehicleRepairs_Maintenance = parseInt(_VehicleRepairs_Maintenance-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].VehicleRepairs_Maintenance);
-                _Monthly_Subscriptions = parseInt(_Monthly_Subscriptions-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Monthly_Subscriptions);
-                 _ITExpenses = parseInt(_ITExpenses-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ITExpenses);
-                _Postage = parseInt(_Postage-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Postage);
-                _Telephone = parseInt(_Telephone-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Telephone);
-                _StaffAmenities = parseInt(_StaffAmenities-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].StaffAmenities);
-                _ClientEntertainment = parseInt(_ClientEntertainment-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ClientEntertainment);
-                _OtherTotal = parseInt(_OtherTotal-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Other);
-                _MealsTotal = parseInt(_MealsTotal-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Meals);
-                _AccommodationTotal = parseInt(_AccommodationTotal-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Acommodation);
+                _TravelTotal = parseInt(_TravelTotal - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].TravelCost);
+                _ToolsTotal = parseInt(_ToolsTotal - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ToolsCost);
+                _WHTools_Consumables = parseInt(_WHTools_Consumables - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].WHTools_Consumables);
+                _VehicleRepairs_Maintenance = parseInt(_VehicleRepairs_Maintenance - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].VehicleRepairs_Maintenance);
+                _Monthly_Subscriptions = parseInt(_Monthly_Subscriptions - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Monthly_Subscriptions);
+                _ITExpenses = parseInt(_ITExpenses - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ITExpenses);
+                _Postage = parseInt(_Postage - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Postage);
+                _Telephone = parseInt(_Telephone - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Telephone);
+                _StaffAmenities = parseInt(_StaffAmenities - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].StaffAmenities);
+                _ClientEntertainment = parseInt(_ClientEntertainment - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ClientEntertainment);
+                _OtherTotal = parseInt(_OtherTotal - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].OtherCost);
+                _MealsTotal = parseInt(_MealsTotal - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].MealsCost);
+                _AccommodationTotal = parseInt(_AccommodationTotal - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].AccommodationCost);
 
                 $("#lbltraveltotal").val(_TravelTotal);
                 $("#lblOthertotal").val(_OtherTotal);
@@ -589,20 +589,20 @@
                 $("#lblaccomdationtotal").val(_AccommodationTotal);
                 $("#lbltotalExpense").val(_totalExpense);
 
-                MainModelExpenseCliams.OtherTotal = _OtherTotal;
-                MainModelExpenseCliams.TravelTotal = _TravelTotal;
-                MainModelExpenseCliams.MealsTotal = _MealsTotal;
-                MainModelExpenseCliams.AccommodationTotal = _AccommodationTotal;
-                MainModelExpenseCliams.ToolsTotal = _ToolsTotal;
-                MainModelExpenseCliams.WHTools_ConsumablesTotal = _WHTools_Consumables;
-                MainModelExpenseCliams.VehicleRepairs_MaintenanceTotal = _VehicleRepairs_Maintenance;
-                MainModelExpenseCliams.Monthly_SubscriptionsTotal = _Monthly_Subscriptions;
-                MainModelExpenseCliams.ITExpensesTotal = _ITExpenses;
-                MainModelExpenseCliams.PostageTotal = _Postage;
-                MainModelExpenseCliams.TelephoneTotal = _Telephone;
-                MainModelExpenseCliams.StaffAmenitiesTotal = _StaffAmenities;
-                MainModelExpenseCliams.ClientEntertainmentTotal = _ClientEntertainment;
-                MainModelExpenseCliams.ExpenseTotal = _totalExpense;
+                //MainModelExpenseCliams.OtherTotal = _OtherTotal;
+                //MainModelExpenseCliams.TravelTotal = _TravelTotal;
+                //MainModelExpenseCliams.MealsTotal = _MealsTotal;
+                //MainModelExpenseCliams.AccommodationTotal = _AccommodationTotal;
+                //MainModelExpenseCliams.ToolsTotal = _ToolsTotal;
+                //MainModelExpenseCliams.WHTools_ConsumablesTotal = _WHTools_Consumables;
+                //MainModelExpenseCliams.VehicleRepairs_MaintenanceTotal = _VehicleRepairs_Maintenance;
+                //MainModelExpenseCliams.Monthly_SubscriptionsTotal = _Monthly_Subscriptions;
+                //MainModelExpenseCliams.ITExpensesTotal = _ITExpenses;
+                //MainModelExpenseCliams.PostageTotal = _Postage;
+                //MainModelExpenseCliams.TelephoneTotal = _Telephone;
+                //MainModelExpenseCliams.StaffAmenitiesTotal = _StaffAmenities;
+                //MainModelExpenseCliams.ClientEntertainmentTotal = _ClientEntertainment;
+                //MainModelExpenseCliams.ExpenseTotal = _totalExpense;
             }
         }     
 
