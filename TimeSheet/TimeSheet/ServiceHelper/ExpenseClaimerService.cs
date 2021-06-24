@@ -139,7 +139,7 @@ namespace TimeSheet.ServiceHelper
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(TimeSheetAPIURl);
-                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimitemId}/{ClaimitemStatus}/{ClaimApprover}/{UnapproveAjaxSend}/ApproveExpenseClaimItem")).Result;
+                HttpResponseMessage response = client.GetAsync(string.Format($"ExpenseClaims/{ClaimitemId}/{ClaimitemStatus}/{ClaimApprover}/{Unapprovecomments}/ApproveExpenseClaimItem")).Result;
 
                 if (response.IsSuccessStatusCode)
                 {

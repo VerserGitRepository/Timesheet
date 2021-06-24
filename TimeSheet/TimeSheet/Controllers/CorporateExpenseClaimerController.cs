@@ -98,11 +98,15 @@ namespace TimeSheet.Controllers
         [HttpPost]
         public ActionResult ApproveExpenseClaimItem(int ClaimItemId, string claimItemStatus,string unapprovalComments)
         {
-            string ClaimApprover = UserRoles.GetLoggedInActiveUser();
-            ExpenseClaimerService.ApproveExpenseClaimItem(ClaimItemId, claimItemStatus, ClaimApprover, unapprovalComments);
+            string ClaimApprover = UserRoles.GetLoggedInActiveUser();          
             var ClaimId = Session["ClaimId"];
-            if (ClaimId != null)
+            if (ClaimId != null && ClaimApprover !=null)
             {
+                if (string.IsNullOrEmpty(unapprovalComments))
+                {
+                    unapprovalComments = "Approved";
+                }
+                ExpenseClaimerService.ApproveExpenseClaimItem(ClaimItemId, claimItemStatus, ClaimApprover, unapprovalComments);
                 return RedirectToAction("ExpenseClaimItems", "CorporateExpenseClaimer", new { ClaimId = Convert.ToInt32(ClaimId) });
             }
             else
@@ -128,12 +132,11 @@ namespace TimeSheet.Controllers
             bool returnvalue = false;
             if (UserRoles.IsLoginActive() && ModelState.IsValid)
             {
-                ClaimItemsUpdateModel.CreatedBy = UserRoles.GetLoggedInActiveUser();
-                returnvalue = ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);
+                ClaimItemsUpdateModel.CreatedBy = UserRoles.GetLoggedInActiveUser();                
+             ///   returnvalue = ExpenseClaimerService.RegisterExpenseClaim(ClaimItemsUpdateModel);     
             }           
             return Json(returnvalue, JsonRequestBehavior.AllowGet);            
         }
-
         [HttpPost]
         public ActionResult ExportExpenseClaims()
         {

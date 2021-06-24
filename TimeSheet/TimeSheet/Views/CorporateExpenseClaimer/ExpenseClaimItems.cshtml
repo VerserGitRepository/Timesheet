@@ -38,6 +38,7 @@
                 <th>Accomdation</th>
                 <th>Other</th>
                 <th>ExpenseTotal</th>
+                <th>Comments</th>
                 <th>Edit</th>
                 <th></th>
             </tr>
@@ -45,129 +46,132 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr style="font-size:smaller">
-                    <td class="Id"> <span>@item.Id</span> </td>
+            <tr style="font-size:smaller">
+                <td class="Id"> <span>@item.Id</span> </td>
 
-                    <td class="CandidateName">
-                        @Html.DisplayFor(modelItem => item.ClaimDate)
-                    </td>
-                    <td class="CandidateName">
-                        @Html.DisplayFor(modelItem => item.ClaimItemStatus)
-                    </td>
-                    <td class="Activity">
-                        @Html.DisplayFor(modelItem => item.Branch)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Supplier)
-                    </td>
+                <td class="CandidateName">
+                    @Html.DisplayFor(modelItem => item.ClaimDate)
+                </td>
+                <td class="CandidateName">
+                    @Html.DisplayFor(modelItem => item.ClaimItemStatus)
+                </td>
+                <td class="Activity">
+                    @Html.DisplayFor(modelItem => item.Branch)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier)
+                </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Project)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ItemDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PONumber)
-                    </td>
-                    <td class="Day">
-                        @Html.DisplayFor(modelItem => item.MealsCost)
-                    </td>
-                    <td class="Day">
-                        @Html.DisplayFor(modelItem => item.TravelCost)
-                    </td>
-                    <td class="Day">
-                        @Html.DisplayFor(modelItem => item.AccommodationCost)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OtherCost)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ExpenseTotal)
-                    </td>
-                    <td style="text-align:center">
-                        @using (Html.BeginForm("UpdateExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id }, FormMethod.Post))
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PONumber)
+                </td>
+                <td class="Day">
+                    @Html.DisplayFor(modelItem => item.MealsCost)
+                </td>
+                <td class="Day">
+                    @Html.DisplayFor(modelItem => item.TravelCost)
+                </td>
+                <td class="Day">
+                    @Html.DisplayFor(modelItem => item.AccommodationCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OtherCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpenseTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comments)
+                </td>
+                <td style="text-align:center">
+                    @using (Html.BeginForm("UpdateExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id }, FormMethod.Post))
+                    {
+                        <button type="submit" class="Edit btn btn-sm btn-warning a-btn-slide-text"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                    }
+                </td>
+                <td width="10%" style="text-align:center">
+                    <div class="col-md-6" style="padding-left:0">
+                        @if (item.ClaimItemStatus != null && item.ClaimItemStatus == "UnApproved")
                         {
-                            <button type="submit" class="Edit btn btn-sm btn-warning a-btn-slide-text"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button>
+                            using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "Approved" }, FormMethod.Post))
+                            {
+                                <button type="submit" class="btn btn-success btn-sm" style="font-size:9px; font-weight:500">APPROVE</button>
+                            }
                         }
-                    </td>
-                    <td width="10%" style="text-align:center">
-                        <div class="col-md-6" style="padding-left:0">
-                            @if (item.ClaimItemStatus != null && item.ClaimItemStatus == "UnApproved")
+                        else if (item.ClaimItemStatus == null)
+                        {
+                            using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "Approved" }, FormMethod.Post))
                             {
-                                using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "Approved" }, FormMethod.Post))
-                                {
-                                    <button type="submit" class="btn btn-success btn-sm" style="font-size:9px; font-weight:500">APPROVE</button>
-                                }
+                                <button type="submit" class="btn btn-success btn-sm" style="font-size:9px; font-weight:500">APPROVE</button>
                             }
-                            else if (item.ClaimItemStatus == null)
-                            {
-                                using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = item.Id, claimItemStatus = "Approved" }, FormMethod.Post))
-                                {
-                                    <button type="submit" class="btn btn-success btn-sm" style="font-size:9px; font-weight:500">APPROVE</button>
-                                }
-                            }
-                        </div>
-                        <div class="col-md-6" style="padding-left:0">
-                            @if (item.ClaimItemStatus != null && item.ClaimItemStatus == "Approved")
-                            {
-                                <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter" style="font-size:9px; font-weight:500">UnApprove</button>
+                        }
+                    </div>
+                    <div class="col-md-6" style="padding-left:0">
+                        @if (item.ClaimItemStatus != null && item.ClaimItemStatus == "Approved")
+                        {
+                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter" style="font-size:9px; font-weight:500">UnApprove</button>
 
-                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="exampleModalLongTitle">UnApproval Comments</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input type="text" id="txtunapprovecomments1" class="form-control col-md-12" placeholder="Please Enter UnApproval Comments!" style="align-self:center">
-                                            </div>
-                                            <div class="modal-footer">
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="exampleModalLongTitle">UnApproval Comments</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" id="txtunapprovecomments1" class="form-control col-md-12" placeholder="Please Enter UnApproval Comments!" style="align-self:center">
+                                        </div>
+                                        <div class="modal-footer">
 
-                                                @*@using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = @item.Id, claimItemStatus = "UnApproved", UnApprovecomments= txtunapprovecomments }, FormMethod.Post))
-                                                {*@
-                                                    <button type="submit" class="btn btn-danger" onclick="UNApproveExpenseClaimItem(@item.Id);">UnApprove</button>
-                                                @*}*@
-                                            </div>
+                                            @*@using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = @item.Id, claimItemStatus = "UnApproved", UnApprovecomments= txtunapprovecomments }, FormMethod.Post))
+                                    {*@
+                                            <button type="submit" class="btn btn-danger" onclick="UNApproveExpenseClaimItem(@item.Id);">UnApprove</button>
+                                            @*}*@
                                         </div>
                                     </div>
                                 </div>
-                            }
-                            else if (item.ClaimItemStatus == null)
-                            {
-                                <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter" style="font-size:9px; font-weight:500">UnApprove</button>
-                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="exampleModalLongTitle">UnApproval Comments</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input type="text" id="txtunapprovecomments2" class="form-control col-md-12" placeholder="Please Enter UnApproval Comments!">
-                                            </div>
-                                            <div class="modal-footer">
-                                                @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
-                                                @*@using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = @item.Id, claimItemStatus = "UnApproved" }, FormMethod.Post))
-                                                {*@
-                                                    <button type="submit" class="btn btn-danger" onclick="UNApproveExpenseClaimItem(@item.Id);">UnApprove</button>
-                                                @*}*@
-                                            </div>
+                            </div>
+                        }
+                        else if (item.ClaimItemStatus == null)
+                        {
+                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter" style="font-size:9px; font-weight:500">UnApprove</button>
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="exampleModalLongTitle">UnApproval Comments</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="text" id="txtunapprovecomments2" class="form-control col-md-12" placeholder="Please Enter UnApproval Comments!">
+                                        </div>
+                                        <div class="modal-footer">
+                                            @*<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>*@
+                                            @*@using (Html.BeginForm("ApproveExpenseClaimItem", "CorporateExpenseClaimer", new { ClaimItemId = @item.Id, claimItemStatus = "UnApproved" }, FormMethod.Post))
+                                    {*@
+                                            <button type="submit" class="btn btn-danger" onclick="UNApproveExpenseClaimItem(@item.Id);">UnApprove</button>
+                                            @*}*@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                            }
-                        </div>
+                        }
+                    </div>
 
-                      
-                    </td>
-                </tr>
+
+                </td>
+            </tr>
             }
         </tbody>
     </table>

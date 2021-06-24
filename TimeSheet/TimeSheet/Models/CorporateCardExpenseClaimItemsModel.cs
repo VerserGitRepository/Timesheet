@@ -32,5 +32,6 @@ namespace TimeSheet.Models
 		public decimal? ExpenseTotal { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? DateUpdated { get; set; }
+		public string Comments { get; set; }
 	}
 }

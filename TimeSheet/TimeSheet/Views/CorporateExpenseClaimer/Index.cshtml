@@ -258,8 +258,7 @@
     <table id="CreditCardTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:x-small; font-weight:600">
         <thead style="background-color:orange; color: white">
             <tr>
-                <th>Select</th>
-                <th>Id</th>
+                <th>Select</th>              
                 <th>Date</th>
                 <th>Supplier</th>
                 <th>Description</th>
@@ -339,8 +338,7 @@
         var _MealsTotal = 0;
         var _AccommodationTotal = 0;
 
-        $("#add-row").click(function () {
-           
+        $("#add-row").click(function () {           
            
             var Date = $("#txtDate").val();
             var Supplier = $("#txtSupplier").val();
@@ -550,15 +548,65 @@
         $("#delete-row").click(function () {
             $("table tbody").find('input[name="record"]').each(function () {
                 if ($(this).is(":checked")) {
-                    var evID = $(this).closest('tr').index();
-                   // alert(evID);
+                    var evID = $(this).closest('tr').index();                    
                     $(this).parents("tr").remove();
-                    MainModelExpenseCliams.CorporateCardExpenseClaimItems.splice(evID,1);
+                 
+                    UpdateSummaryOFRemovedItem(evID);
+                    MainModelExpenseCliams.CorporateCardExpenseClaimItems.splice(evID, 1);                                     
                 }
-            });
-          (MainModelExpenseCliams, 1);
+            });          
         });
 
+
+        function UpdateSummaryOFRemovedItem(RmEventId) {
+            if (MainModelExpenseCliams.CorporateCardExpenseClaimItems.length != 0) {
+
+                _totalExpense = parseInt(_totalExpense - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ExpenseTotal)                             
+                _TravelTotal = parseInt(_TravelTotal - MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Travel);
+                _ToolsTotal = parseInt(MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Tools);
+                _WHTools_Consumables =parseInt(_WHTools_Consumables-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].WHTools_Consumables);
+                _VehicleRepairs_Maintenance = parseInt(_VehicleRepairs_Maintenance-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].VehicleRepairs_Maintenance);
+                _Monthly_Subscriptions = parseInt(_VehicleRepairs_Maintenance-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Monthly_Subscriptions);
+                 _ITExpenses = parseInt(_ITExpenses-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ITExpenses);
+                _Postage = parseInt(_Postage-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Postage);
+                _Telephone = parseInt(_Telephone-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Telephone);
+                _StaffAmenities = parseInt(_StaffAmenities-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].StaffAmenities);
+                _ClientEntertainment = parseInt(_ClientEntertainment-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].ClientEntertainment);
+                _OtherTotal = parseInt(_OtherTotal-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Other);
+                _MealsTotal = parseInt(_MealsTotal-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Meals);
+                _AccommodationTotal = parseInt(_AccommodationTotal-MainModelExpenseCliams.CorporateCardExpenseClaimItems[RmEventId].Acommodation);
+
+                $("#lbltraveltotal").val(_TravelTotal);
+                $("#lblOthertotal").val(_OtherTotal);
+                $("#lblToolstotal").val(_ToolsTotal);
+                $("#lblWHTools_Consumablestotal").val(_WHTools_Consumables);
+                $("#lblVehicleRepairs_Maintenancetotal").val(_VehicleRepairs_Maintenance);
+                $("#lblMonthly_Subscriptionstotal").val(_Monthly_Subscriptions);
+                $("#lblITExpensestotal").val(_ITExpenses);
+                $("#lblPostagetotal").val(_Postage);
+                $("#lblTelephonetotal").val(_Telephone);
+                $("#lblStaffAmenitiestotal").val(_StaffAmenities);
+                $("#lblClientEntertainmenttotal").val(_ClientEntertainment);
+                $("#lblMealstotal").val(_MealsTotal);
+                $("#lblaccomdationtotal").val(_AccommodationTotal);
+                $("#lbltotalExpense").val(_totalExpense);
+
+                MainModelExpenseCliams.OtherTotal = _OtherTotal;
+                MainModelExpenseCliams.TravelTotal = _TravelTotal;
+                MainModelExpenseCliams.MealsTotal = _MealsTotal;
+                MainModelExpenseCliams.AccommodationTotal = _AccommodationTotal;
+                MainModelExpenseCliams.ToolsTotal = _ToolsTotal;
+                MainModelExpenseCliams.WHTools_ConsumablesTotal = _WHTools_Consumables;
+                MainModelExpenseCliams.VehicleRepairs_MaintenanceTotal = _VehicleRepairs_Maintenance;
+                MainModelExpenseCliams.Monthly_SubscriptionsTotal = _Monthly_Subscriptions;
+                MainModelExpenseCliams.ITExpensesTotal = _ITExpenses;
+                MainModelExpenseCliams.PostageTotal = _Postage;
+                MainModelExpenseCliams.TelephoneTotal = _Telephone;
+                MainModelExpenseCliams.StaffAmenitiesTotal = _StaffAmenities;
+                MainModelExpenseCliams.ClientEntertainmentTotal = _ClientEntertainment;
+                MainModelExpenseCliams.ExpenseTotal = _totalExpense;
+            }
+        }
       
 
         $(function () {
