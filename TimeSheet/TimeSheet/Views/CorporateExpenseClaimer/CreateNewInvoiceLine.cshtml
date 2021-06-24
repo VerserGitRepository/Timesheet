@@ -238,7 +238,7 @@
                 + GLDescription + "</td><td>"
                 + Branch + "</td></tr>";
             if (PO == '' || Opp == '' || Line == '' || InvoiceAmount_ex_gst == '' || TaxCode == '' || ProjectJob == '' || Approver == ''
-                || Invoice_Description == '' || PMWarehouseHO == '' || Comments == '' || MYOBItemNumber == '' || InvoiceLocation == ''
+                || Invoice_Description == '' || PMWarehouseHO == '' || MYOBItemNumber == '' || InvoiceLocation == ''
                 || GLCode == '' || GLCode == -1 || GLDescription == '' || GLDescription == -1 || Branch == '' || Branch == -1) {
                 $.alert({
                     title: 'Validation Errors',
@@ -326,12 +326,6 @@
             if (CreateNewInvoiceLine.DueDate == '') {
                 ErrorMessage += 'Due Date is Required. \n';
             }
-
-            if (CreateNewInvoiceLine.DateRecordedinMYOB == '') {
-                ErrorMessage += 'Date Recorded in MYOB is Required. \n';
-            }
-
-
             if (CreateNewInvoiceLine.InvoiceLineItem.length == 0) {
                 ErrorMessage += 'At least One Invoice Line is Required. \n';
             }
@@ -365,10 +359,13 @@
         $("#delete-row").click(function () {
             $("#CreateNewInvoiceLineTable tbody").find('input[name="record"]').each(function () {
                 if ($(this).is(":checked")) {
+                    var evID = $(this).closest('tr').index();  
                     $(this).parents("tr").remove();
+                    CreateNewInvoiceLine.InvoiceLineItem.splice(evID, 1);   
                 }
             });
         });
+
 
         $("#txtPO").on("keypress keyup blur", function (event) {
             $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
