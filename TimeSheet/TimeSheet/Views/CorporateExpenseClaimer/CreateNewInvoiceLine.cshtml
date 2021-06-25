@@ -37,31 +37,31 @@
         <div class="col-md-12" style="margin-top:10px">
             <div class="row well" style="font-size:smaller; padding:0; margin-bottom:0px; ">
                 <div class="form-group col-md-6" style="margin-top:10px">
-                    @Html.Label("Supplier Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("Supplier Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; margin-top:5px" })
                     <select type="text" class="form-control form-control-sm col-md-6" id="ddlSupplierName" name="SupplierName"></select>
                 </div>
                 <div class="form-group col-md-6" style="margin-top:10px">
-                    @Html.Label("Received Invoice Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("Received Invoice Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; margin-top:5px" })
                     <input type="date" class="form-control form-control-sm col-md-6" id="txtReceivedInvoiceDate" name="ReceivedInvoiceDate">
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.Label("Invoice_Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("Invoice_Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; margin-top:5px" })
                     <input type="date" class="form-control form-control-sm col-md-6" id="txtInvoice_Date" name="Invoice_Date">
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.Label("Invoice Number:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("Invoice Number:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; margin-top:5px" })
                     <input type="text" class="form-control form-control-sm col-md-6" id="txtInvoiceNumber" name="InvoiceNumber">
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.Label("Term:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("Term:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; margin-top:5px" })
                     <input type="text" class="form-control form-control-sm col-md-6" id="txtTerm" name="Term">
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.Label("Due Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("Due Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; margin-top:5px" })
                     <input type="text" class="form-control form-control-sm col-md-6" id="lblDueDate" name="DueDate">
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center; margin-top:5px" })
                     <input class="form-control form-control-sm col-md-6" type="date" id="txtDateRecordedinMYOB" name="DateRecordedinMYOB" placeholder="DateRecordedinMYOB">
                 </div>
             </div>
@@ -188,8 +188,46 @@
         CardHolderLoadDropDowns();
         $("select").select2();
 
-        var Invoice_Date = $("#txtInvoice_Date").val();
-        $("#lblDueDate").val(Invoice_Date);
+        $("#lblDueDate").prop("readonly", true);
+
+        $("#txtTerm").change(function () {
+            var addDays = $("#txtTerm").val() ? $("#txtTerm").val() : 0;
+            var startDateVal = $("#txtInvoice_Date").val();
+            var ModifyInDate = new Date(setDateFormat(startDateVal));
+            var NewDate = ModifyInDate.setDate(ModifyInDate.getDate() + parseInt(addDays));
+            NewDate = new Date(NewDate);
+            if (NewDate != "Invalid Date")
+                $("#lblDueDate").val(setDateFormat(NewDate));
+        });
+
+        $("#txtInvoice_Date").change(function () {
+            var addDays = $("#txtTerm").val() ? $("#txtTerm").val() : 0;
+            var startDateVal = $("#txtInvoice_Date").val();
+            var ModifyInDate = new Date(setDateFormat(startDateVal));
+            var NewDate = ModifyInDate.setDate(ModifyInDate.getDate() + parseInt(addDays));
+            NewDate = new Date(NewDate);
+            if (NewDate != "Invalid Date")
+                $("#lblDueDate").val(setDateFormat(NewDate));
+        });
+
+        function setDateFormat(date) {
+            DateObj = new Date(date);
+            var day = DateObj.getDate();
+            var month = DateObj.getMonth() + 1;
+            var fullYear = DateObj.getFullYear().toString();
+            var setformattedDate = '';
+            setformattedDate = getDigitToFormat(month) + '/' + getDigitToFormat(day) + '/' + fullYear;
+            return setformattedDate;
+        }
+        function getDigitToFormat(val) {
+
+            if (val < 10) {
+                val = '0' + val;
+            }
+
+            return val.toString();
+        }
+
 
         var CreateNewInvoiceLine = {};
         CreateNewInvoiceLine.InvoiceLineItem = new Array();
@@ -210,7 +248,6 @@
             var GLCode = $("#ddlGLCode").val();
             var GLDescription = $("#ddlGLDescription").val();
             var Branch = $("#ddlBranch").val();
-            //var DateRecordedinMYOB = $("#txtDateRecordedinMYOB").val();
             var markup = "<tr><td><input type='checkbox' name='record'></td><td>"
                 + PO + "</td><td>"
                 + Opp + "</td><td>"
@@ -290,7 +327,6 @@
             InvoiceItem.GLCode = GLCode;
             InvoiceItem.GLDescription = GLDescription;
             InvoiceItem.Branch = Branch;
-            //InvoiceItem.DateRecordedinMYOB = DateRecordedinMYOB;
             CreateNewInvoiceLine.InvoiceLineItem.push(InvoiceItem);
         });
 
@@ -301,7 +337,7 @@
             CreateNewInvoiceLine.Invoice_Date = $("#txtInvoice_Date").val();
             CreateNewInvoiceLine.InvoiceNumber = $("#txtInvoiceNumber").val();
             CreateNewInvoiceLine.Term = $("#txtTerm").val();
-            CreateNewInvoiceLine.DueDate = $("#txtDueDate").val();
+            CreateNewInvoiceLine.DueDate = $("#lblDueDate").val();
             CreateNewInvoiceLine.DateRecordedinMYOB = $("#txtDateRecordedinMYOB").val();
 
 
