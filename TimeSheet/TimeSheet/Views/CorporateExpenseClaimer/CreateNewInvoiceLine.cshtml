@@ -266,6 +266,15 @@
                 return false;
             }
 
+            if (PO[0] !== Opp[0] || PO[1] !== Opp[1] || PO[2] !== Opp[2] || PO[3] !== Opp[3] || PO[4] !== Opp[4] || PO[5] !== Opp[5]) {
+                $.alert({
+                    title: 'Validation Errors',
+                    content: 'The first 6 digits of PO and Opp should be the same! Please Enter Valid PO or Opp.',
+
+                });
+                return false;
+            }
+
             if (TaxCode.length > 3 || TaxCode.length < 3) {
                 $.alert({
                     title: 'Validation Errors',
@@ -381,6 +390,13 @@
             }
         });
 
+        $("#txtLine").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
         $("#txtInvoiceAmount_ex_gst").on("keypress keyup blur", function (event) {
             $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
             if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -389,13 +405,6 @@
         });
 
         $("#txtTaxCode").on("keypress keyup blur", function (event) {
-            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
-            if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-                event.preventDefault();
-            }
-        });
-
-        $("#txtMYOBItemNumber").on("keypress keyup blur", function (event) {
             $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
             if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                 event.preventDefault();
