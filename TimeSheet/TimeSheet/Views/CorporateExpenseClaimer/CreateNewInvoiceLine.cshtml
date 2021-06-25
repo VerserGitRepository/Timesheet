@@ -19,174 +19,158 @@
     @Html.AntiForgeryToken()
 
     <div class="col-md-12" style="margin-top:10px">
-        <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px">
-            <div class="form-group" style="margin-bottom:0">
-                <div class="form-group-sm col-md-2 pull-right">
-                    <div class="col-md-12" style="margin-top:20px">
-                        <img src="~/Images/CompanyLogo.jpg" style="height:30px; width:100px; float:right" />
-                    </div>
+        <div class="row well" style="font-size:smaller; padding:0; margin-bottom:0px">
+            <div class="form-group-sm col-md-2 pull-right">
+                <div class="col-md-12" style="margin-top:10px">
+                    <img src="~/Images/CompanyLogo.jpg" style="height:30px; width:100px; float:right" />
                 </div>
-                <div class="form-group-sm col-md-8 pull-right">
-                    <div class="col-md-12" style="text-align:center">
-                        <h4 style="font-weight:600; margin-top:18px">Create New Invoice Line</h4>
-                    </div>
+            </div>
+            <div class="form-group-sm col-md-8 pull-right">
+                <div class="col-md-12" style="text-align:center">
+                    <h4 style="font-weight:600; margin-top:14px; margin-bottom:14px">Create New Invoice Line</h4>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row" style="margin-left:0px; margin-right:0px; background-color:#fff">
+    <div class="row" style="margin-left:0px; margin-right:0px">
         <div class="col-md-12" style="margin-top:10px">
-            <div class="form-horizontal well" style="font-size:smaller; padding:0; margin-bottom:0px; ">
-                <div class="form-group" style="margin-top:5px; margin-bottom:0px">
-                    <div class="form-group col-md-6">
-                        @Html.Label("Supplier Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <select type="text" class="form-control form-control-sm col-md-6" id="ddlSupplierName" name="SupplierName"></select>
-                    </div>
-                    <div class="form-group col-md-6">
-                        @Html.Label("Received Invoice Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <input type="date" class="form-control form-control-sm col-md-6" id="txtReceivedInvoiceDate" name="ReceivedInvoiceDate">
-                    </div>
-                    <div class="form-group col-md-6">
-                        @Html.Label("Invoice_Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <input type="date" class="form-control form-control-sm col-md-6" id="txtInvoice_Date" name="Invoice_Date">
-                    </div>
-                    <div class="form-group col-md-6">
-                        @Html.Label("Invoice Number:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <input type="text" class="form-control form-control-sm col-md-6" id="txtInvoiceNumber" name="InvoiceNumber">
-                    </div>
-                    <div class="form-group col-md-6">
-                        @Html.Label("Term:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <input type="text" class="form-control form-control-sm col-md-6" id="txtTerm" name="Term">
-                    </div>
-                    <div class="form-group col-md-6">
-                        @Html.Label("Due Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <input type="date" class="form-control form-control-sm col-md-6" id="txtDueDate" name="DueDate">
-                    </div>
-                    <div class="form-group col-md-6">
-                        @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
-                        <input class="form-control form-control-sm col-md-6" type="date" id="txtDateRecordedinMYOB" name="DateRecordedinMYOB" placeholder="DateRecordedinMYOB">
-                    </div>
+            <div class="row well" style="font-size:smaller; padding:0; margin-bottom:0px; ">
+                <div class="form-group col-md-6" style="margin-top:10px">
+                    @Html.Label("Supplier Name:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <select type="text" class="form-control form-control-sm col-md-6" id="ddlSupplierName" name="SupplierName"></select>
+                </div>
+                <div class="form-group col-md-6" style="margin-top:10px">
+                    @Html.Label("Received Invoice Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <input type="date" class="form-control form-control-sm col-md-6" id="txtReceivedInvoiceDate" name="ReceivedInvoiceDate">
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.Label("Invoice_Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <input type="date" class="form-control form-control-sm col-md-6" id="txtInvoice_Date" name="Invoice_Date">
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.Label("Invoice Number:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <input type="text" class="form-control form-control-sm col-md-6" id="txtInvoiceNumber" name="InvoiceNumber">
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.Label("Term:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <input type="text" class="form-control form-control-sm col-md-6" id="txtTerm" name="Term">
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.Label("Due Date:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <input type="text" class="form-control form-control-sm col-md-6" id="lblDueDate" name="DueDate">
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.Label("DateRecordedinMYOB:", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:center" })
+                    <input class="form-control form-control-sm col-md-6" type="date" id="txtDateRecordedinMYOB" name="DateRecordedinMYOB" placeholder="DateRecordedinMYOB">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row" style="margin-left:0px; margin-right:0px; background-color:#fff">
-        <div class="col-md-12" style="margin-top:10px">
-            <form id="MainForm">
-                <div class="form-group col-md-2">
-                    @Html.Label("PO#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtPO" name="PO" placeholder="PO#">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("Opp#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtOpp" name="Opp" placeholder="Opp#">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("Line:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtLine" name="Line" placeholder="Line">
-                </div>
+    <div class="row well" style="margin-left:0px; margin-right:0px; margin-top:10px;margin-bottom:10px; padding:5px">
+        <form id="MainForm">
+            <div class="form-group col-md-2">
+                @Html.Label("PO#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtPO" name="PO" placeholder="PO#">
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Opp#:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtOpp" name="Opp" placeholder="Opp#">
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Line:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtLine" name="Line" placeholder="Line">
+            </div>
 
-                <div class="form-group col-md-2">
-                    @Html.Label("InvoiceAmount:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoiceAmount_ex_gst" name="InvoiceAmount_ex_gst" placeholder="$InvoiceAmount Ex GST">
-                </div>
+            <div class="form-group col-md-2">
+                @Html.Label("InvoiceAmount:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoiceAmount_ex_gst" name="InvoiceAmount_ex_gst" placeholder="$InvoiceAmount Ex GST">
+            </div>
 
-                <div class="form-group col-md-2">
-                    @Html.Label("TaxCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtTaxCode" name="TaxCode" placeholder="TaxCode">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("Project:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtProject_Job" name="Project_Job" placeholder="Project_Job">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("Approver:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtApprover" name="Approver" placeholder="Approver">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("Description:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoice_Description" name="Invoice_Description" placeholder="Invoice Description">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("PM/WH/HO:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtPM_Warehouse_HO" name="PM_Warehouse_HO" placeholder="PM_Warehouse_HO">
-                </div>
-                @*<div class="form-group col-md-2">
-                        @Html.Label("Status:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                        <select type="text" class="form-control form-control-sm col-md-12 " id="dpdInvoiceStatus" name="InvoiceStatus">
-                            <option></option>
-                            <option>Approved</option>
-                            <option>Disputed</option>
-                        </select>
-                    </div>*@
-                <div class="form-group col-md-2">
-                    @Html.Label("Comments:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtComments" name="Comments" placeholder="Comments">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("MYOBItemNumber:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtMYOBItemNumber" name="MYOBItemNumber" placeholder="MYOBItemNumber">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("InvoiceLocation:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoiceLocation" name="InvoiceLocation" placeholder="InvoiceLocation">
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("GLCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <select type="text" class="form-control form-control-sm col-md-12" id="ddlGLCode" name="GLCode"></select>
-                    @*<input class="form-control form-control-sm col-md-12" type="text" id="txtGLCode" name="GLCode" placeholder="GLCode">*@
-                </div>
-                <div class="form-group col-md-2">
-                    @Html.Label("GLDescription:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    @*<input class="form-control form-control-sm col-md-12" type="text" id="txtGLDescription" name="GLDescription" placeholder="GLDescription">*@
+            <div class="form-group col-md-2">
+                @Html.Label("TaxCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtTaxCode" name="TaxCode" placeholder="TaxCode">
+            </div>
+            <div class="form-group col-md-2" style="margin-bottom:21px">
+                @Html.Label("Project:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <select type="text" class="form-control col-md-12" id="txtProject_Job" name="Supplier" placeholder="Project"></select>
+            </div>
+            <div class="form-group col-md-2" style="margin-bottom:21px">
+                @Html.Label("Approver:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <select type="text" class="form-control col-md-12" id="txtApprover" name="Approvedby"></select>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Description:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoice_Description" name="Invoice_Description" placeholder="Invoice Description">
+            </div>
+            <div class="form-group col-md-2" style="margin-bottom:21px">
+                @Html.Label("PM/WH/HO:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                @*<input class="form-control form-control-sm col-md-12" type="text" id="txtPM_Warehouse_HO" name="PM_Warehouse_HO" placeholder="PM_Warehouse_HO">*@
+                <select type="text" class="form-control form-control-sm col-md-12" id="txtPM_Warehouse_HO" name="employeeName"></select>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("Comments:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtComments" name="Comments" placeholder="Comments">
+            </div>
+            <div class="form-group col-md-2" style="margin-bottom:21px">
+                @Html.Label("GLDescription:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <select type="text" class="form-control form-control-sm col-md-12" id="ddlGLDescription" name="GLDescription"></select>
+            </div>
+            <div class="form-group col-md-2" style="margin-bottom:21px">
+                @Html.Label("GLCode:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <select type="text" class="form-control form-control-sm col-md-12" id="ddlGLCode" name="GLCode"></select>
+            </div>
+            <div class="form-group col-md-2" style="margin-bottom:21px">
+                @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <select type="text" class="form-control form-control-sm col-md-12" id="ddlBranch" name="Branch">
+                    <option>Select Branch</option>
+                    <option>Sydney</option>
+                    <option>Melbourne</option>
+                    <option>Brisbane</option>
+                    <option>Canberra</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("MYOBItemNumber:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtMYOBItemNumber" name="MYOBItemNumber" placeholder="MYOBItemNumber">
+            </div>
+            <div class="form-group col-md-2">
+                @Html.Label("InvoiceLocation:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
+                <input class="form-control form-control-sm col-md-12" type="text" id="txtInvoiceLocation" name="InvoiceLocation" placeholder="InvoiceLocation">
+            </div>
 
-                    <select type="text" class="form-control form-control-sm col-md-12" id="ddlGLDescription" name="GLDescription"></select>
-                </div>
-
-                <div class="form-group col-md-2">
-                    @Html.Label("Branch:", htmlAttributes: new { @class = "control-label col-md-12", style = "margin-top:5px; padding-left:0" })
-                    <select type="text" class="form-control form-control-sm col-md-12" id="ddlBranch" name="Branch">
-                        <option>Select Branch</option>
-                        <option>Sydney</option>
-                        <option>Melbourne</option>
-                        <option>Brisbane</option>
-                        <option>Canberra</option>
-                    </select>
-                </div>
-                <button type="button" id="delete-row" class="btn btn-danger btn-sm pull-right" style="margin-top:30px; ">Delete Row</button>
-                <input type="button" id="add-row" class="btn btn-success btn-sm pull-right" style="margin-top: 30px;margin-right:5px;" value="Add Row">
-            </form>
-            <table id="CreateNewInvoiceLineTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
-                <thead style="background-color:orange; color: white">
-                    <tr>
-                        <th>Select</th>
-                        <th>PO#</th>
-                        <th>Opp#</th>
-                        <th>Line</th>
-                        <th>InvoiceAmount ex gst</th>
-                        <th>Tax Code</th>
-                        <th>Project Job</th>
-                        <th>Approver</th>
-                        <th>Invoice Detail</th>
-                        <th>PM/WH/HO</th>
-                        <th>Comments</th>
-                        <th>MYOB Item Number</th>
-                        <th>Invoice Location</th>
-                        <th>GL Code</th>
-                        <th>GL Description</th>
-                        <th>Branch</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+            <button type="button" id="delete-row" class="btn btn-danger btn-sm pull-right" style="margin-top:30px; ">Delete Row</button>
+            <input type="button" id="add-row" class="btn btn-success btn-sm pull-right" style="margin-top: 30px;margin-right:5px;" value="Add Row">
+        </form>
+        <table id="CreateNewInvoiceLineTable" class="table table-bordered table-hover table-sm table-responsive" style="font-size:smaller; font-weight:600">
+            <thead style="background-color:orange; color: white">
+                <tr>
+                    <th>Select</th>
+                    <th>PO#</th>
+                    <th>Opp#</th>
+                    <th>Line</th>
+                    <th>InvoiceAmount ex gst</th>
+                    <th>Tax Code</th>
+                    <th>Project Job</th>
+                    <th>Approver</th>
+                    <th>Invoice Detail</th>
+                    <th>PM/WH/HO</th>
+                    <th>Comments</th>
+                    <th>MYOB Item Number</th>
+                    <th>Invoice Location</th>
+                    <th>GL Code</th>
+                    <th>GL Description</th>
+                    <th>Branch</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 
-    <div class="row well" style="margin-left:15px; margin-right:15px; padding:0">
-        <div class="col-md-12" style="margin-top:5px">
+    <div class="row" style="margin-left:15px; margin-right:15px; margin-top:10px;margin-bottom:10px">
+        <div class="row well" style="font-size:smaller; padding:5px; margin-bottom:0px">
             <button type="submit" class="btn btn-warning btn-sm pull-right" id="CreateInvoiceLineBtn" style="font-size:13px; margin-bottom:5px;font-weight:600">REGISTER INVOICE</button>
         </div>
     </div>
@@ -199,7 +183,13 @@
         SupplierLoadDropDowns();
         GLCodeLoadDropDowns();
         GLCodeDescriptionLoadDropDowns();
+        GetProjectList();
+        ApprovedbyLoadDropDowns();
+        CardHolderLoadDropDowns();
         $("select").select2();
+
+        var Invoice_Date = $("#txtInvoice_Date").val();
+        $("#lblDueDate").val(Invoice_Date);
 
         var CreateNewInvoiceLine = {};
         CreateNewInvoiceLine.InvoiceLineItem = new Array();
@@ -314,6 +304,7 @@
             CreateNewInvoiceLine.DueDate = $("#txtDueDate").val();
             CreateNewInvoiceLine.DateRecordedinMYOB = $("#txtDateRecordedinMYOB").val();
 
+
             var ErrorMessage = '';
 
             if (CreateNewInvoiceLine.SupplierName == '' || CreateNewInvoiceLine.SupplierName == -1) {
@@ -368,9 +359,9 @@
         $("#delete-row").click(function () {
             $("#CreateNewInvoiceLineTable tbody").find('input[name="record"]').each(function () {
                 if ($(this).is(":checked")) {
-                    var evID = $(this).closest('tr').index();  
+                    var evID = $(this).closest('tr').index();
                     $(this).parents("tr").remove();
-                    CreateNewInvoiceLine.InvoiceLineItem.splice(evID, 1);   
+                    CreateNewInvoiceLine.InvoiceLineItem.splice(evID, 1);
                 }
             });
         });
@@ -469,22 +460,57 @@
           });
     }
 
-     @*function GLCodeLoadDropDowns()
-    {
-        $.ajax({
-               type: "GET",
-               url: '@Url.Action("GetGLCodes", "CorporateExpenseClaimer")',
-               contentType: "application/json; charset=utf-8",
-             data: {},
-               datatype: "json",
-               success: function (data) {
-                   var s = '<option value="-1">Select GL-Description</option>';
-               for (var i = 0; i < data.length; i++) {
-                   s += '<option value="' + data[i].Value + '">' + data[i].Value + '</option>';
+    function GetProjectList()
+        {
+            $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetProjectList", "CorporateExpenseClaimer")',
+                    contentType: "application/json; charset=utf-8",
+                    data: {},
+                    datatype: "json",
+                    success: function (data) {
+                        var s = '<option value="-1">Select a Project</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            s += '<option value="' + data[i].Value + '">' + data[i].Value + '</option>';
+                    }
+                        $("#txtProject_Job").html(s);
+                }
+            });
+    }
+
+    function ApprovedbyLoadDropDowns()
+        {
+            $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetCardHolders", "CorporateExpenseClaimer")',
+                    contentType: "application/json; charset=utf-8",
+                    data: {},
+                    datatype: "json",
+                    success: function (data) {
+                        var s = '<option value="-1">Select a Approvedby</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            s += '<option value="' + data[i].Value + '">' + data[i].Value + '</option>';
+                    }
+                        $("#txtApprover").html(s);
+                }
+            });
+    }
+    function CardHolderLoadDropDowns()
+        {
+            $.ajax({
+                   type: "GET",
+                   url: '@Url.Action("GetCardHolders", "CorporateExpenseClaimer")',
+                   contentType: "application/json; charset=utf-8",
+                 data: {},
+                   datatype: "json",
+                   success: function (data) {
+                       var s = '<option value="-1">Select a PM_Warehouse_HO</option>';
+                       for (var i = 0; i < data.length; i++) {
+                           s += '<option value="' + data[i].Value + '">' + data[i].Value + '</option>';
+                   }
+                       $("#txtPM_Warehouse_HO").html(s);
                }
-               $("#ddlGLCode").html(s);
-           }
-          });
-    }*@
+            });
+    }
 
 </script>
