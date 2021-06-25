@@ -188,8 +188,10 @@
         CardHolderLoadDropDowns();
         $("select").select2();
 
+        //Due date read only
         $("#lblDueDate").prop("readonly", true);
 
+        //calculate the due date 
         $("#txtTerm").change(function () {
             var addDays = $("#txtTerm").val() ? $("#txtTerm").val() : 0;
             var startDateVal = $("#txtInvoice_Date").val();
@@ -229,9 +231,11 @@
         }
 
 
+        //set array
         var CreateNewInvoiceLine = {};
         CreateNewInvoiceLine.InvoiceLineItem = new Array();
 
+        //Add rows to table
         $("#add-row").click(function () {
             var PO = $("#txtPO").val();
             var Opp = $("#txtOpp").val();
@@ -264,6 +268,8 @@
                 + GLCode + "</td><td>"
                 + GLDescription + "</td><td>"
                 + Branch + "</td></tr>";
+
+            //Validation table
             if (PO == '' || Opp == '' || Line == '' || InvoiceAmount_ex_gst == '' || TaxCode == '' || ProjectJob == '' || Approver == ''
                 || Invoice_Description == '' || PMWarehouseHO == '' || MYOBItemNumber == '' || InvoiceLocation == ''
                 || GLCode == '' || GLCode == -1 || GLDescription == '' || GLDescription == -1 || Branch == '' || Branch == -1) {
@@ -330,6 +336,7 @@
             CreateNewInvoiceLine.InvoiceLineItem.push(InvoiceItem);
         });
 
+        //Add values to summary
         $("#CreateInvoiceLineBtn").click(function () {
 
             CreateNewInvoiceLine.SupplierName = $("#ddlSupplierName").val();
@@ -403,6 +410,7 @@
         });
 
 
+        //All number Validation 
         $("#txtPO").on("keypress keyup blur", function (event) {
             $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
             if ((e.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -441,7 +449,7 @@
     });
 
 
-
+    //All drop-downs
     function SupplierLoadDropDowns()
     {
         $.ajax({

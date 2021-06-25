@@ -318,6 +318,7 @@
         GetProjectList();
         ApprovedbyLoadDropDowns();
 
+        //Summary read only
         $("#lbltraveltotal").prop("readonly", true);
         $("#lblOthertotal").prop("readonly", true);
         $("#lblToolstotal").prop("readonly", true);
@@ -332,7 +333,8 @@
         $("#lblMealstotal").prop("readonly", true);
         $("#lblaccomdationtotal").prop("readonly", true);
         $("#lbltotalExpense").prop("readonly", true);
-       
+
+        //Summary initialization
         var MainModelExpenseCliams = {};
         MainModelExpenseCliams.CorporateCardExpenseClaimItems = new Array();
         var _totalExpense = 0;
@@ -351,6 +353,7 @@
         var _MealsTotal = 0;
         var _AccommodationTotal = 0;
 
+        //Add rows to table
         $("#add-row").click(function () {           
            
             var Date = $("#txtDate").val();
@@ -398,6 +401,7 @@
                 + Other + "</td><td>"
                 + Total + "</td></tr>";
 
+            //Validation table
             if (Date == '' || Supplier == '' || Supplier == -1 || Description == '' || Project == '' || PONumber == '' || Travel == ''
                 || Acommodation == '' || Meals == '' || Tools == '' || WHTools_Consumables == '' || txtVehicleRepairs_Maintenance == ''
                 || txtMonthly_Subscriptions == '' || ITExpenses == '' || Postage == '' || Telephone == '' || StaffAmenities == '' || ClientEntertainment == ''
@@ -409,17 +413,18 @@
                 });
                 return false;
             }
-            if (PONumber.length > 8)
+            if (PONumber.length > 8 || PONumber.length < 8)
             {
                 $.alert({
                     title: 'Validation Errors',
-                    content: 'PO Value Is Higher than 8 Digits! Please Enter Valid PO.',
+                    content: 'PO Value must be 8 Digits! Please Enter Valid PO.',
                     
                 });
                 return false;
             }
             $("table tbody").append(markup);
 
+            //Add values to summary
             var CliamLineItem = {};
 
             CliamLineItem.Id = MainModelExpenseCliams.CorporateCardExpenseClaimItems.length;
@@ -481,6 +486,8 @@
                 $("#lbltotalExpense").val(_totalExpense);
             }
         });
+
+        //Submit whole page
         $("#CreateClaimBtn").click(function () {
             MainModelExpenseCliams.EmployeeName = $("#txtemployeeName").val();
             MainModelExpenseCliams.ExpenseDateOfClaim = $("#txtDateofClaim").val();
@@ -513,9 +520,6 @@
             if (MainModelExpenseCliams.Branch == '' || MainModelExpenseCliams.EmployeeName == -1) {
                 ErrorMessage += 'Branch is Required. \n';
             }
-            //if (MainModelExpenseCliams.CreditCardNo == '') {
-            //    ErrorMessage += 'CreditCardNo is Required. \n';
-            //}
             if (MainModelExpenseCliams.ExpenseClaimType == '') {
                 ErrorMessage += 'ExpenseClaimType is Required. \n';
             }
@@ -758,6 +762,8 @@
 
     });
 
+
+    //All drop-downs
     function CardHolderLoadDropDowns()
     {
         $.ajax({
