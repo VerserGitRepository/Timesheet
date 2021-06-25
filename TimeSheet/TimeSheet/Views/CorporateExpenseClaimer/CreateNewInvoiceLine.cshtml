@@ -270,9 +270,9 @@
                 + Branch + "</td></tr>";
 
             //Validation table
-            if (PO == '' || Opp == '' || Line == '' || InvoiceAmount_ex_gst == '' || TaxCode == '' || ProjectJob == '' || Approver == ''
-                || Invoice_Description == '' || PMWarehouseHO == '' || MYOBItemNumber == '' || InvoiceLocation == ''
-                || GLCode == '' || GLCode == -1 || GLDescription == '' || GLDescription == -1 || Branch == '' || Branch == -1) {
+            if (PO == '' || Opp == '' || Line == '' || InvoiceAmount_ex_gst == '' || TaxCode == '' || ProjectJob == '' || ProjectJob == -1 || Approver == '' || Approver == -1
+                || Invoice_Description == '' || PMWarehouseHO == '' || PMWarehouseHO == -1 || MYOBItemNumber == '' || InvoiceLocation == ''
+                || GLCode == '' || GLCode == -1 || GLDescription == '' || GLDescription == -1 || Branch == '' || Branch == 'Select Branch') {
                 $.alert({
                     title: 'Validation Errors',
                     content: 'Please complete all forms.',
