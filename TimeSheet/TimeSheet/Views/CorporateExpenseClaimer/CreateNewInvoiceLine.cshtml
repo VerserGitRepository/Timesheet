@@ -252,6 +252,8 @@
             var GLCode = $("#ddlGLCode").val();
             var GLDescription = $("#ddlGLDescription").val();
             var Branch = $("#ddlBranch").val();
+
+
             var markup = "<tr><td><input type='checkbox' name='record'></td><td>"
                 + PO + "</td><td>"
                 + Opp + "</td><td>"
@@ -333,6 +335,8 @@
             InvoiceItem.GLCode = GLCode;
             InvoiceItem.GLDescription = GLDescription;
             InvoiceItem.Branch = Branch;
+            InvoiceItem.PONumber = PO;
+            InvoiceItem.OpportunityNumber = Opp;
             CreateNewInvoiceLine.InvoiceLineItem.push(InvoiceItem);
         });
 

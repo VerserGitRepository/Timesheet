@@ -34,5 +34,7 @@ namespace TimeSheet.Models
         public DateTime? DateRecordedinMYOB { get; set; }
         public string MYOBItemNumber { get; set; }
         public string InvoiceLocation { get; set; }
+        public string PONumber { get; set; }
+        public int? OpportunityNumber { get; set; }
     }
 }
